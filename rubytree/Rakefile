@@ -7,7 +7,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.2.1'
+PKG_VERSION = '0.2.2'
 PKG_FILES = FileList[
                 '[A-Z]*',
                 'lib/**/*.rb',
@@ -15,19 +15,19 @@ PKG_FILES = FileList[
                 ]
 
 spec = Gem::Specification.new do |s|
-    s.name = "tree"
+    s.name = "rubytree"
     s.version = PKG_VERSION
     s.platform = Gem::Platform::RUBY
     s.author = "Anupam Sengupta"
     s.email = "anupamsg@gmail.com"
     s.summary = "Ruby implementation of the Tree data structure."
-    
+
     s.description = <<-END
     Provides a generic tree data structure with ability to
     store keyed node elements in the tree. The implementation
     mixes in the Enumerable module.
     END
-    
+
     s.has_rdoc = true
     s.extra_rdoc_files = ['README']
     s.autorequire = "tree"
