@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Komodo Project File - DO NOT EDIT -->
+<project id="10879293488L1f66221c0x192" name="rubytree" kpf_version="2">
+<preference-set id="">
+  <string id="import_dirname">/Users/anupam/code/ruby/tree</string>
+</preference-set>
+<file url="Rakefile" id="1087929D200L5bf526260x192" name="Rakefile">
+</file>
+<file url="README" id="1087929D200L32c5b020x192" name="README">
+</file>
+<folder url="lib" id="1087929D208L18b6d10d0x192" name="lib">
+<file url="lib/tree.rb" id="1087929D200L7fe6d61e0x192" name="tree.rb">
+</file>
+</folder>
+<folder url="test" id="1087929D20AL4c74b8a30x192" name="test">
+<file url="test/person.rb" id="1087929D200L58557cfd0x192" name="person.rb">
+</file>
+<file url="test/testtree.rb" id="1087929D200L4d15ae160x192" name="testtree.rb">
+</file>
+</folder>
+</project>

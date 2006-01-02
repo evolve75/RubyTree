@@ -1,0 +1,54 @@
+require 'rubygems'
+require 'rake/clean'
+require 'rake/gempackagetask'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+desc "Default Task"
+task :default => :gem
+
+PKG_VERSION = '0.2.1'
+PKG_FILES = FileList[
+                '[A-Z]*',
+                'lib/**/*.rb',
+                'test/**/*.rb'
+                ]
+
+spec = Gem::Specification.new do |s|
+    s.name = "tree"
+    s.version = PKG_VERSION
+    s.platform = Gem::Platform::RUBY
+    s.author = "Anupam Sengupta"
+    s.email = "anupamsg@gmail.com"
+    s.summary = "Ruby implementation of the Tree data structure."
+    
+    s.description = <<-END
+    Provides a generic tree data structure with ability to
+    store keyed node elements in the tree. The implementation
+    mixes in the Enumerable module.
+    END
+    
+    s.has_rdoc = true
+    s.extra_rdoc_files = ['README']
+    s.autorequire = "tree"
+    s.files = PKG_FILES.to_a
+    s.test_files = Dir.glob('test/test*.rb')
+end
+
+Rake::GemPackageTask.new(spec) do |pkg|
+    pkg.need_zip = true
+    pkg.need_tar = true
+end
+
+Rake::TestTask.new do |t|
+    t.libs << "test"
+    t.test_files = FileList['test/test*.rb']
+    t.verbose = true
+end
+
+Rake::RDocTask.new do |rd|
+    rd.rdoc_files.include("README", "lib/**/*.rb")
+end
+
+
+

@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: Tree::TreeNode</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">Tree::TreeNode</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/lib/tree_rb.html">
+                lib/tree.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+                Object
+            </td>
+        </tr>
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+The <a href="../Tree.html">Tree</a> node class implementation. Mixes in the
+Enumerable module.
+</p>
+<h2>Example</h2>
+<p>
+require &#8216;tree&#8217;
+</p>
+<p>
+myTreeRoot = <a
+href="TreeNode.html#M000001">Tree::TreeNode.new</a>(&quot;ROOT&quot;,
+&quot;Root Content&quot;)
+</p>
+<p>
+myTreeRoot &lt;&lt; <a
+href="TreeNode.html#M000001">Tree::TreeNode.new</a>(&quot;CHILD1&quot;,
+&quot;Child1 Content&quot;) &lt;&lt; <a
+href="TreeNode.html#M000001">Tree::TreeNode.new</a>(&quot;GRANDCHILD1&quot;,
+&quot;GrandChild1 Content&quot;)
+</p>
+<p>
+myTreeRoot &lt;&lt; <a
+href="TreeNode.html#M000001">Tree::TreeNode.new</a>(&quot;CHILD2&quot;,
+&quot;Child2 Content&quot;)
+</p>
+<p>
+myTreeRoot.printTree
+</p>
+<p>
+child1 = myTreeRoot[&quot;CHILD1&quot;]
+</p>
+<p>
+grandChild1 = myTreeRoot[&quot;CHILD1&quot;][&quot;GRANDCHILD1&quot;]
+</p>
+<p>
+siblingsOfChild1Array = child1.siblings
+</p>
+<p>
+immediateChildrenArray = myTreeRoot.children
+</p>
+<p>
+# Process all nodes
+</p>
+<p>
+myTreeRoot.each { |node| node.content.reverse }
+</p>
+<p>
+myTreeRoot.remove!(child1) # Remove the child
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000003">&lt;&lt;</a>&nbsp;&nbsp;
+      <a href="#M000019">&lt;=&gt;</a>&nbsp;&nbsp;
+      <a href="#M000013">[]</a>&nbsp;&nbsp;
+      <a href="#M000022">_dump</a>&nbsp;&nbsp;
+      <a href="#M000023">_load</a>&nbsp;&nbsp;
+      <a href="#M000004">add</a>&nbsp;&nbsp;
+      <a href="#M000011">children</a>&nbsp;&nbsp;
+      <a href="#M000021">createDumpRep</a>&nbsp;&nbsp;
+      <a href="#M000012">each</a>&nbsp;&nbsp;
+      <a href="#M000020">freezeTree!</a>&nbsp;&nbsp;
+      <a href="#M000010">hasChildren?</a>&nbsp;&nbsp;
+      <a href="#M000008">hasContent?</a>&nbsp;&nbsp;
+      <a href="#M000009">isRoot?</a>&nbsp;&nbsp;
+      <a href="#M000015">length</a>&nbsp;&nbsp;
+      <a href="#M000001">new</a>&nbsp;&nbsp;
+      <a href="#M000016">printTree</a>&nbsp;&nbsp;
+      <a href="#M000005">remove!</a>&nbsp;&nbsp;
+      <a href="#M000007">removeAll!</a>&nbsp;&nbsp;
+      <a href="#M000006">removeFromParent!</a>&nbsp;&nbsp;
+      <a href="#M000017">root</a>&nbsp;&nbsp;
+      <a href="#M000018">siblings</a>&nbsp;&nbsp;
+      <a href="#M000014">size</a>&nbsp;&nbsp;
+      <a href="#M000002">to_s</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name">Enumerable</span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">content</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">content</td>
+          <td class="context-item-value">&nbsp;[W]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">name</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">parent</td>
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000023.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000023.html');return false;">
+          <span class="method-name">_load</span><span class="method-args">(str)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000001.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000001.html');return false;">
+          <span class="method-name">new</span><span class="method-args">(name, content = nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Constructor which expects the name of the node
+</p>
+<p>
+name of the node is expected to be unique across the tree.
+</p>
+<p>
+The content can be of any type, and is defaulted to <em>nil</em>.
+</p>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000003" class="method-detail">
+        <a name="M000003"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000003.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000003.html');return false;">
+          <span class="method-name">&lt;&lt;</span><span class="method-args">(child)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Convenience synonym for Tree#add method. This method allows a convenient
+method to add children hierarchies in the tree. E.g. root &lt;&lt; child
+&lt;&lt; grand_child
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000019" class="method-detail">
+        <a name="M000019"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000019.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000019.html');return false;">
+          <span class="method-name">&lt;=&gt;</span><span class="method-args">(other)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Provides a comparision operation for the nodes. Comparision is based on the
+natural character-set ordering for the node names.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000013.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000013.html');return false;">
+          <span class="method-name">[]</span><span class="method-args">(key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the requested node from the set of immediate children.
+</p>
+<p>
+If the key is <em>numeric</em>, then the in-sequence array of children is
+accessed (see Tree#children). If the key is not <em>numeric</em>, then it
+is assumed to be the <b>name</b> of the child node to be returned.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000022" class="method-detail">
+        <a name="M000022"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000022.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000022.html');return false;">
+          <span class="method-name">_dump</span><span class="method-args">(depth)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000004.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000004.html');return false;">
+          <span class="method-name">add</span><span class="method-args">(child)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Adds the specified child node to the receiver node. The child node&#8217;s
+parent is set to be the receiver. The child is added as the last child in
+the current list of children for the receiver node.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000011.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000011.html');return false;">
+          <span class="method-name">children</span><span class="method-args">() {|child| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of all the immediate children. If a block is given, yields
+each child node to the block.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000021" class="method-detail">
+        <a name="M000021"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000021.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000021.html');return false;">
+          <span class="method-name">createDumpRep</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Creates a dump representation
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000012.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000012.html');return false;">
+          <span class="method-name">each</span><span class="method-args">() {|self| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns every node (including the receiver node) from the tree to the
+specified block.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000020" class="method-detail">
+        <a name="M000020"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000020.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000020.html');return false;">
+          <span class="method-name">freezeTree!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Freezes all nodes in the tree
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000010.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000010.html');return false;">
+          <span class="method-name">hasChildren?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Indicates whether this node has any immediate child nodes.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000008.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000008.html');return false;">
+          <span class="method-name">hasContent?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Indicates whether this node has any associated content.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000009.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000009.html');return false;">
+          <span class="method-name">isRoot?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Indicates whether this node is a root node. Note that orphaned children
+will also be reported as root nodes.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000015.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000015.html');return false;">
+          <span class="method-name">length</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Convenience synonym for Tree#size
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000016.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000016.html');return false;">
+          <span class="method-name">printTree</span><span class="method-args">(tab = 0)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Pretty prints the tree starting with the receiver node.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000005.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000005.html');return false;">
+          <span class="method-name">remove!</span><span class="method-args">(child)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes the specified child node from the receiver node. The removed
+children nodes are orphaned but available if an alternate reference exists.
+Returns the child node.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000007.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000007.html');return false;">
+          <span class="method-name">removeAll!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes all children from the receiver node.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000006.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000006.html');return false;">
+          <span class="method-name">removeFromParent!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Removes this node from its parent. If this is the root node, then does
+nothing.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000017.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000017.html');return false;">
+          <span class="method-name">root</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the root for this node.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000018.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000018.html');return false;">
+          <span class="method-name">siblings</span><span class="method-args">() {|sibling if sibling != self| ...}</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns an array of siblings for this node. If a block is provided, yeilds
+each of the sibling nodes to the block.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000014.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000014.html');return false;">
+          <span class="method-name">size</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the total number of nodes in this tree, rooted at the receiver
+node.
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
+
+        <div class="method-heading">
+          <a href="TreeNode.src/M000002.html" target="Code" class="method-signature"
+            onclick="popupCode('TreeNode.src/M000002.html');return false;">
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Print the string representation of this node.
+</p>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
