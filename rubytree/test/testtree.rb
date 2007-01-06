@@ -36,6 +36,7 @@ class TC_TreeTest < Test::Unit::TestCase
         assert(@root.isRoot?, "Should identify as root")
         assert(!@root.hasChildren?, "Cannot have any children")
         assert_equal(1, @root.size, "Number of nodes should be one")
+        assert_nil(@root.siblings, "Root cannot have any children")
 
         assert_raise(RuntimeError) { Tree::TreeNode.new(nil) }
     end

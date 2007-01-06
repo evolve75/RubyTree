@@ -209,13 +209,13 @@ module Tree
         end
 
         # Returns an array of siblings for this node.
-        # If a block is provided, yeilds each of the sibling
-        # nodes to the block.
+        # If a block is provided, yields each of the sibling
+        # nodes to the block. The root always has nil siblings.
         def siblings
+            return nil if isRoot?
             if block_given?
-                return nil if isRoot?
                 for sibling in parent.children
-		    yield sibling if sibling != self
+		              yield sibling if sibling != self
                 end
             else
                 siblings = []
