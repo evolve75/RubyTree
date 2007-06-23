@@ -8,11 +8,58 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
+# Copyright (c) 2007, Anupam Sengupta
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# - Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# - Redistributions in binary form must reproduce the above copyright notice, this
+#   list of conditions and the following disclaimer in the documentation and/or
+#   other materials provided with the distribution.
+#
+# - Neither the name of the organization nor the names of its contributors may
+#   be used to endorse or promote products derived from this software without
+#   specific prior written permission.
+#
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
 module Tree
 
     # The Tree node class implementation. Mixes in the Enumerable
     # module.
+    #
     # == Example
+    #
+    #  The following code-snippet implements this tree structure:
+    #
+    #                    +------------+
+    #                    |    ROOT    |
+    #                    +-----+------+
+    #            +-------------+------------+
+    #            |                          |
+    #    +-------+-------+          +-------+-------+
+    #    |  CHILD 1      |          |  CHILD 2      |
+    #    +-------+-------+          +---------------+
+    #            |
+    #            |
+    #    +-------+-------+
+    #    | GRANDCHILD 1  |
+    #    +---------------+
     #
     # require 'tree'
     #
@@ -45,7 +92,7 @@ module Tree
 
         @@fieldSep = '|'
         @@recordSep = "\n"
-        
+
         # Constructor which expects the name of the node
         #
         # name of the node is expected to be unique across the
@@ -53,9 +100,9 @@ module Tree
         #
         # The content can be of any type, and is defaulted to _nil_.
         def initialize(name, content = nil)
-                
+
                 raise "Node name HAS to be provided" if name == nil
-                
+
                 @name = name
                 @content = content
 
@@ -80,7 +127,7 @@ module Tree
             @parent = parent
         end
 
-        # Convenience synonym for Tree#add method. 
+        # Convenience synonym for Tree#add method.
         # This method allows a convenient method to add
         # children hierarchies in the tree.
         # E.g. root << child << grand_child
@@ -118,7 +165,7 @@ module Tree
         def removeFromParent!
             @parent.remove!(self) unless isRoot?
         end
-        
+
         # Removes all children from the receiver node.
         def removeAll!
             for child in @children
@@ -169,14 +216,14 @@ module Tree
 
         # Returns the requested node from the set of immediate
         # children.
-        # 
+        #
         # If the key is _numeric_, then the in-sequence array of
         # children is accessed (see Tree#children).
         # If the key is not _numeric_, then it is assumed to be
         # the *name* of the child node to be returned.
         def [](key)
             raise "Key needs to be provided" if key == nil
-            
+
             if key.kind_of?(Integer)
                 @children[key]
             else
@@ -215,7 +262,7 @@ module Tree
             return nil if isRoot?
             if block_given?
                 for sibling in parent.children
-		              yield sibling if sibling != self
+                              yield sibling if sibling != self
                 end
             else
                 siblings = []
@@ -236,20 +283,20 @@ module Tree
         def freezeTree!
             each {|node| node.freeze}
         end
-        
+
         # Creates a dump representation
         def createDumpRep
             strRep = String.new
             strRep << @name << @@fieldSep << (isRoot? ? @name : @parent.name)
             strRep << @@fieldSep << Marshal.dump(@content) << @@recordSep
         end
-        
+
         def _dump(depth)
             strRep = String.new
             each {|node| strRep << node.createDumpRep}
             strRep
         end
-        
+
         def TreeNode.loadDumpRep(str)
             nodeHash = Hash.new
             rootNode = nil
@@ -266,13 +313,13 @@ module Tree
             end
             rootNode
         end
-        
+
         def TreeNode._load(str)
             loadDumpRep(str)
         end
-        
+
         protected :parent=, :setAsRoot!
         private_class_method :loadDumpRep
-        
+
     end
 end
