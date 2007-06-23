@@ -1,3 +1,6 @@
+# tree.rb
+#
+# Revision: $Revision$
 #
 # = tree.rb - Generic Tree implementation
 #

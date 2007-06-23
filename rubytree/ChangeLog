@@ -1,0 +1,17 @@
+2007-06-23  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/testtree.rb: Added the Copyright and License header.
+
+	* test/person.rb: Added the Copyright and License header.
+
+	* lib/tree.rb: Added the Copyright and License header.
+
+	* Rakefile: Added the LICENSE and Changelog to be part of the RDoc task.
+
+	* README: Added documentation in the README, including install
+	instructions and an example.
+
+	* LICENSE: Added the BSD LICENSE file.
+
+	* Changelog: Added the Changelog file.
+
