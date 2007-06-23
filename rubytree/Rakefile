@@ -55,6 +55,8 @@ spec = Gem::Specification.new do |s|
     Provides a generic tree data structure with ability to
     store keyed node elements in the tree. The implementation
     mixes in the Enumerable module.
+
+    Website:  http://rubytree.rubyforge.org/
     END
 
     s.has_rdoc = true
@@ -76,7 +78,7 @@ Rake::TestTask.new do |t|
 end
 
 Rake::RDocTask.new do |rd|
-    rd.rdoc_files.include("README", "lib/**/*.rb")
+    rd.rdoc_files.include("README", "LICENSE", "lib/**/*.rb")
 end
 
 
