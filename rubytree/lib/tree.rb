@@ -98,7 +98,7 @@ module Tree
 
         # Constructor which expects the name of the node
         #
-        # name of the node is expected to be unique across the
+        # Name of the node is expected to be unique across the
         # tree.
         #
         # The content can be of any type, and is defaulted to _nil_.
@@ -251,7 +251,7 @@ module Tree
             children {|child| child.printTree(tab + 4)}
         end
 
-        # Returns the root for this node.
+        # Returns the root for this tree.
         def root
             root = self
             root = root.parent while !root.isRoot?
@@ -287,7 +287,7 @@ module Tree
             each {|node| node.freeze}
         end
 
-        # Creates a dump representation
+        # Creates a dump representation and returns the same as a string
         def createDumpRep
             strRep = String.new
             strRep << @name << @@fieldSep << (isRoot? ? @name : @parent.name)
@@ -300,6 +300,7 @@ module Tree
             strRep
         end
 
+        # Loads a dump representation of the tree from the specified string
         def TreeNode.loadDumpRep(str)
             nodeHash = Hash.new
             rootNode = nil
@@ -317,6 +318,7 @@ module Tree
             rootNode
         end
 
+        # Loads a dump representation of the tree from the specified string.
         def TreeNode._load(str)
             loadDumpRep(str)
         end
