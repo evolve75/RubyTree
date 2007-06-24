@@ -1,5 +1,7 @@
 2007-06-23  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* Rakefile: Added the LICENSE and ChangeLog to the extra RDoc files.
+
 	* lib/tree.rb: Minor updates to the comments.
 
 	* test/testtree.rb: Added the Copyright and License header.
