@@ -11,7 +11,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2007, Anupam Sengupta
+# Copyright (c) 2006, 2007 Anupam Sengupta
 #
 # All rights reserved.
 #
