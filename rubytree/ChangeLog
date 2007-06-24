@@ -1,5 +1,10 @@
 2007-06-23  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* lib/tree.rb (Tree::TreeNode::isLeaf): Added a isLeaf? method.
+
+	* test/testtree.rb (TC_TreeTest::test_removeFromParent): Added
+	test for isLeaf? method
+
 	* Rakefile: Added the LICENSE and ChangeLog to the extra RDoc files.
 
 	* lib/tree.rb: Minor updates to the comments.

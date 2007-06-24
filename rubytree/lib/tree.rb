@@ -200,6 +200,12 @@ module Tree
             @children.length != 0
         end
 
+        # Indicates whether this node is a 'leaf' - i.e., one without
+        # any children
+        def isLeaf?
+          !hasChildren?
+        end
+
         # Returns an array of all the immediate children.
         # If a block is given, yields each child node to the block.
         def children
