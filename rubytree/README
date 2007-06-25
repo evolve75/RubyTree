@@ -1,4 +1,4 @@
-= RubyTree
+= Rubytree
 
   (c) 2006, 2007 Anupam Sengupta
   http://rubytree.rubyforge.org
@@ -7,23 +7,23 @@
 
 == License
 
-RubyTree has been released under the BSD License. See the file LICENSE for
+Rubytree has been released under the BSD License. See the file COPYING for
 details.
 
 == Introduction
 
-RubyTree is a simple implementation of the generic Tree data structure.  This
+Rubytree is a simple implementation of the generic Tree data structure.  This
 implementation is node-centric, where the individual nodes on the tree are the
 primary objects and drive the structure.
 
-== Getting RubyTree
+== Getting Rubytree
 
-RubyTree is an open source project and is hosted at
+Rubytree is an open source project and is hosted at
 http://rubyforge.org/projects/rubytree
 
 The project home page is: http://rubytree.rubyforge.org
 
-RubyTree can be downloaded as a Ruby Gem or as a tar/zip file from:
+Rubytree can be downloaded as a Ruby Gem or as a tar/zip file from:
 
 http://rubyforge.org/frs/?group_id=1215&release_id=8817
 
@@ -35,9 +35,9 @@ The file name is one of:
 
 Download the appropriate file-type.
 
-== Installing RubyTree
+== Installing Rubytree
 
-It is recommended to install RubyTree as a Ruby Gem, as this is an easy way to
+It is recommended to install Rubytree as a Ruby Gem, as this is an easy way to
 keep the version updated, and keep multiple versions of the library available on
 your system.
 
@@ -46,7 +46,7 @@ To Install the Gem, from a Terminal/CLI command prompt, issue the command:
 
    gem install rubytree
 
-This should install the gem file for RubyTree. Note that you may need to be a
+This should install the gem file for Rubytree. Note that you may need to be a
 super-user (root) to successfully install the gem.
 
 === Installing from the tgz/zip file
@@ -108,7 +108,7 @@ the text mode ri documentation:
 
 == LICENSE
 
-RubyTree is licensed under BSD license.
+Rubytree is licensed under BSD license.
 
 Copyright (c) 2007, Anupam Sengupta
 

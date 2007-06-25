@@ -219,8 +219,14 @@ module Tree
         # Returns every node (including the receiver node) from the
         # tree to the specified block.
         def each &block
-            yield self
-            children { |child| child.each(&block) }
+          yield self
+          children { |child| child.each(&block) }
+        end
+
+        # Yields all leaf nodes from this node to the specified block
+        # May yield this node as well if this is a leaf node.
+        def each_leaf &block
+          self.each { |node| yield(node) if node.isLeaf? }
         end
 
         # Returns the requested node from the set of immediate

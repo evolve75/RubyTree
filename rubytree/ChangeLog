@@ -1,3 +1,12 @@
+2007-06-24  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/testtree.rb, lib/tree.rb: Added the each_leaf traversal method.
+
+	* README: Replaced all occurrances of LICENSE with COPYING
+	and lowercased all instances of the word 'RubyTree'.
+
+	* Rakefile: Replaced all occurrances of LICENSE with COPYING
+
 2007-06-23  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* lib/tree.rb (Tree::TreeNode::isLeaf): Added a isLeaf? method.

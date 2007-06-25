@@ -50,6 +50,24 @@ class TC_TreeTest < Test::Unit::TestCase
 
   end
 
+  # Create this structure for the tests
+  #
+  #          +----------+
+  #          |  ROOT    |
+  #          +-+--------+
+  #            |
+  #            |    +---------------+
+  #            +----+  CHILD1       |
+  #            |    +---------------+
+  #            |
+  #            |    +---------------+
+  #            +----+  CHILD2       |
+  #            |    +---------------+
+  #            |
+  #            |    +---------------+   +------------------+
+  #            +----+  CHILD3       +---+  CHILD4          |
+  #                 +---------------+   +------------------+
+  #
   def loadChildren
     @root << @child1
     @root << @child2
@@ -227,6 +245,20 @@ class TC_TreeTest < Test::Unit::TestCase
     assert(nodes.include?(@child1), "Should have child 1")
     assert(nodes.include?(@child2), "Should have child 2")
     assert(nodes.include?(@child3), "Should have child 3")
+    assert(nodes.include?(@child4), "Should have child 4")
+  end
+
+  def test_each_leaf
+    loadChildren
+
+    nodes = []
+    @root.each_leaf { |node| nodes << node }
+
+    assert_equal(3, nodes.length, "Should have THREE LEAF NODES")
+    assert(!nodes.include?(@root), "Should not have root")
+    assert(nodes.include?(@child1), "Should have child 1")
+    assert(nodes.include?(@child2), "Should have child 2")
+    assert(!nodes.include?(@child3), "Should not have child 3")
     assert(nodes.include?(@child4), "Should have child 4")
   end
 

@@ -40,7 +40,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.2.4'
+PKG_VERSION = '0.2.5'
 PKG_FILES = FileList[
                 '[A-Z]*',
                 'lib/**/*.rb',
@@ -64,7 +64,7 @@ spec = Gem::Specification.new do |s|
     END
 
     s.has_rdoc = true
-    s.extra_rdoc_files = ['README', 'LICENSE', 'ChangeLog']
+    s.extra_rdoc_files = ['README', 'COPYING', 'ChangeLog']
     s.autorequire = "tree"
     s.files = PKG_FILES.to_a
     s.test_files = Dir.glob('test/test*.rb')
@@ -82,7 +82,7 @@ Rake::TestTask.new do |t|
 end
 
 Rake::RDocTask.new do |rd|
-    rd.rdoc_files.include("README", "LICENSE", "ChangeLog", "lib/**/*.rb")
+    rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
 end
 
 
