@@ -1,7 +1,12 @@
+2007-07-08  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* Rakefile: Added a developer target for generating rdoc for the
+	website.
+
 2007-06-24  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/testtree.rb, lib/tree.rb: Added the each_leaf traversal method.
-
+v
 	* README: Replaced all occurrances of LICENSE with COPYING
 	and lowercased all instances of the word 'RubyTree'.
 

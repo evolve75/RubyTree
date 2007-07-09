@@ -40,7 +40,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.2.5'
+PKG_VERSION = '0.3.0'
 PKG_FILES = FileList[
                 '[A-Z]*',
                 'lib/**/*.rb',
@@ -83,6 +83,13 @@ end
 
 Rake::RDocTask.new do |rd|
     rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
+    rd.title = "Rubytree Documentation"
+end
+
+Rake::RDocTask.new(:rdoc_www) do |rd|
+    rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
+    rd.title = "Rubytree Documentation"
+    rd.template = "rubytree-template.rb"
 end
 
 
