@@ -1,7 +1,7 @@
 # Rakefile
 #
-# Revision: $Revision$ by $Author$
-#           $Name$
+# $Revision$ by $Author$
+# $Name$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -34,6 +34,9 @@
 #
 #
 # $Log$
+# Revision 1.13  2007/07/17 03:36:30  anupamsg
+# Minor CVS keywords changes.
+#
 # Revision 1.12  2007/07/17 03:19:28  anupamsg
 # Removed DOS ^M characters.
 #

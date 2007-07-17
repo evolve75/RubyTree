@@ -1,7 +1,7 @@
 # person.rb
 #
-# Revision: $Revision$ by $Author$
-#           $Name$
+# $Revision$ by $Author$
+# $Name$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -34,6 +34,9 @@
 #
 #
 # $Log$
+# Revision 1.7  2007/07/17 03:36:32  anupamsg
+# Minor CVS keywords changes.
+#
 # Revision 1.6  2007/07/17 03:19:28  anupamsg
 # Removed DOS ^M characters.
 #

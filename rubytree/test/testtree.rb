@@ -2,8 +2,8 @@
 
 # testtree.rb
 #
-# Revision: $Revision$ by $Author$
-#           $Name$
+# $Revision$ by $Author$
+# $Name$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -36,6 +36,9 @@
 #
 #
 # $Log$
+# Revision 1.10  2007/07/17 03:36:32  anupamsg
+# Minor CVS keywords changes.
+#
 # Revision 1.9  2007/07/17 03:16:53  anupamsg
 # Added the CVS Log and author keywords
 #
