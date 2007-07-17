@@ -34,14 +34,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
-# $Log$
-# Revision 1.10  2007/07/17 03:36:32  anupamsg
-# Minor CVS keywords changes.
-#
-# Revision 1.9  2007/07/17 03:16:53  anupamsg
-# Added the CVS Log and author keywords
-#
 
 require 'test/unit'
 require 'tree'
@@ -428,3 +420,10 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_same(pers, @root.content, "Content should be the same")
   end
 end
+
+__END__
+
+# $Log$
+# Revision 1.11  2007/07/17 03:39:29  anupamsg
+# Moved the CVS Log keyword to end of the files.
+#

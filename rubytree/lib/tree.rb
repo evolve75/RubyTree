@@ -41,14 +41,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
-# $Log$
-# Revision 1.11  2007/07/17 03:36:32  anupamsg
-# Minor CVS keywords changes.
-#
-# Revision 1.10  2007/07/17 03:16:53  anupamsg
-# Added the CVS Log and author keywords
-#
 
 # This module provides a TreeNode class which is the primary class for all
 # nodes represented in the Tree.
@@ -467,3 +459,8 @@ if __FILE__ == $0
   puts child1.nextSibling
   root.printTree
 end
+
+# $Log$
+# Revision 1.12  2007/07/17 03:39:28  anupamsg
+# Moved the CVS Log keyword to end of the files.
+#

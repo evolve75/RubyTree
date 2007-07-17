@@ -32,17 +32,6 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#
-# $Log$
-# Revision 1.7  2007/07/17 03:36:32  anupamsg
-# Minor CVS keywords changes.
-#
-# Revision 1.6  2007/07/17 03:19:28  anupamsg
-# Removed DOS ^M characters.
-#
-# Revision 1.5  2007/07/17 03:16:53  anupamsg
-# Added the CVS Log and author keywords
-#
 
 # Define a simple class for testing the RubyTree implementation
 class Person
@@ -58,3 +47,8 @@ class Person
     end
 
 end
+
+# $Log$
+# Revision 1.8  2007/07/17 03:39:28  anupamsg
+# Moved the CVS Log keyword to end of the files.
+#
