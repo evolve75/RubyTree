@@ -2,7 +2,8 @@
 
 # testtree.rb
 #
-# Revision: $Revision$
+# Revision: $Revision$ by $Author$
+#           $Name$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -32,6 +33,12 @@
 # ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
+# $Log$
+# Revision 1.9  2007/07/17 03:16:53  anupamsg
+# Added the CVS Log and author keywords
+#
 
 require 'test/unit'
 require 'tree'

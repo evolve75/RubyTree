@@ -1,6 +1,7 @@
 # tree.rb
 #
-# Revision: $Revision$
+# Revision: $Revision$ by $Author$
+#           $Name$
 #
 # = tree.rb - Generic Tree implementation
 #
@@ -39,7 +40,12 @@
 # ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
+#
+#
+# $Log$
+# Revision 1.10  2007/07/17 03:16:53  anupamsg
+# Added the CVS Log and author keywords
+#
 
 # This module provides a TreeNode class which is the primary class for all
 # nodes represented in the Tree.

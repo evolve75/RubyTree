@@ -3,7 +3,7 @@
   (c) 2006, 2007 Anupam Sengupta
   http://rubytree.rubyforge.org
 
-  Document Revision: $Revision$
+  Document Revision: $Revision$ by $Author$
 
 == License
 
@@ -63,6 +63,10 @@ From a command line/terminal prompt, you can issue the following command to view
 the text mode ri documentation:
 
     ri Tree::TreeNode
+
+Documentation on the web is available at:
+
+    http://rubytree.rubyforge.org/rdoc/
 
 == Example
 
