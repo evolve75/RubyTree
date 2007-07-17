@@ -1,5 +1,8 @@
 2007-07-16  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* Rakefile: Added an optional rtags task to generate TAGS file for
+	Emacs.
+
 	* lib/tree.rb (Tree::TreeNode): Added navigation methods for
 	siblings and children. Also added some convenience methods.
 

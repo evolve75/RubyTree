@@ -44,22 +44,22 @@ task :default => :gem
 
 PKG_VERSION = '0.4.0'
 PKG_FILES = FileList[
-                '[A-Z]*',
-                'lib/**/*.rb',
-                'test/**/*.rb'
-                ]
+                     '[A-Z]*',
+                     'lib/**/*.rb',
+                     'test/**/*.rb'
+                    ]
 
 spec = Gem::Specification.new do |s|
-    s.name = "rubytree"
-    s.version = PKG_VERSION
-    s.platform = Gem::Platform::RUBY
-    s.author = "Anupam Sengupta"
-    s.email = "anupamsg@gmail.com"
-    s.homepage = "http://rubytree.rubyforge.org/"
-    s.rubyforge_project = 'rubytree'
-    s.summary = "Ruby implementation of the Tree data structure."
+  s.name = "rubytree"
+  s.version = PKG_VERSION
+  s.platform = Gem::Platform::RUBY
+  s.author = "Anupam Sengupta"
+  s.email = "anupamsg@gmail.com"
+  s.homepage = "http://rubytree.rubyforge.org/"
+  s.rubyforge_project = 'rubytree'
+  s.summary = "Ruby implementation of the Tree data structure."
 
-    s.description = <<-END
+  s.description = <<-END
     Provides a generic tree data-structure with ability to
     store keyed node-elements in the tree. The implementation
     mixes in the Enumerable module.
@@ -67,37 +67,49 @@ spec = Gem::Specification.new do |s|
     Website:  http://rubytree.rubyforge.org/
     END
 
-    s.has_rdoc = true
-    s.extra_rdoc_files = ['README', 'COPYING', 'ChangeLog']
-    s.autorequire = "tree"
-    s.files = PKG_FILES.to_a
-    s.test_files = Dir.glob('test/test*.rb')
+  s.has_rdoc = true
+  s.extra_rdoc_files = ['README', 'COPYING', 'ChangeLog']
+  s.autorequire = "tree"
+  s.files = PKG_FILES.to_a
+  s.test_files = Dir.glob('test/test*.rb')
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|
-    pkg.need_zip = true
-    pkg.need_tar = true
+  pkg.need_zip = true
+  pkg.need_tar = true
 end
 
 Rake::TestTask.new do |t|
-    t.libs << "test"
-    t.test_files = FileList['test/test*.rb']
-    t.verbose = true
+  t.libs << "test"
+  t.test_files = FileList['test/test*.rb']
+  t.verbose = true
 end
 
 Rake::RDocTask.new do |rd|
-    rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
-    rd.title = "Rubytree Documentation"
+  rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
+  rd.title = "Rubytree Documentation"
 end
 
 Rake::RDocTask.new(:rdoc_www) do |rd|
-    rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
-    rd.title = "Rubytree Documentation"
-    rd.template = "rubytree-template.rb"
+  rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
+  rd.title = "Rubytree Documentation"
+  rd.template = "rubytree-template.rb"
 end
 
+# Optional TAGS Task.
+# Needs https://rubyforge.org/projects/rtagstask/
+begin
+  require 'rtagstask'
+  RTagsTask.new do |rd|
+    rd.vi = false
+  end
+  rescue LoadError
+end
 
 # $Log$
+# Revision 1.16  2007/07/17 05:34:03  anupamsg
+# Added an optional tags Rake-task for generating the TAGS file for Emacs.
+#
 # Revision 1.15  2007/07/17 04:42:45  anupamsg
 # Minor fixes to the Rakefile.
 #
