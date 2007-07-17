@@ -1,4 +1,4 @@
-= Rubytree
+= Rubytree 0.4.0
 
   (c) 2006, 2007 Anupam Sengupta
   http://rubytree.rubyforge.org
@@ -66,7 +66,7 @@ the text mode ri documentation:
 
 Documentation on the web is available at:
 
-    http://rubytree.rubyforge.org/rdoc/
+http://rubytree.rubyforge.org/rdoc/
 
 == Example
 
@@ -114,7 +114,7 @@ Documentation on the web is available at:
 
 Rubytree is licensed under BSD license.
 
-Copyright (c) 2007, Anupam Sengupta
+Copyright (c) 2006, 2007 Anupam Sengupta
 
 All rights reserved.
 

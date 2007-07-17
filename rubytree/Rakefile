@@ -42,7 +42,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.3.0'
+PKG_VERSION = '0.4.0'
 PKG_FILES = FileList[
                 '[A-Z]*',
                 'lib/**/*.rb',
@@ -55,6 +55,8 @@ spec = Gem::Specification.new do |s|
     s.platform = Gem::Platform::RUBY
     s.author = "Anupam Sengupta"
     s.email = "anupamsg@gmail.com"
+    s.homepage = "http://rubytree.rubyforge.org/"
+    s.rubyforge_project = 'rubytree'
     s.summary = "Ruby implementation of the Tree data structure."
 
     s.description = <<-END
@@ -96,6 +98,9 @@ end
 
 
 # $Log$
+# Revision 1.15  2007/07/17 04:42:45  anupamsg
+# Minor fixes to the Rakefile.
+#
 # Revision 1.14  2007/07/17 03:39:28  anupamsg
 # Moved the CVS Log keyword to end of the files.
 #
