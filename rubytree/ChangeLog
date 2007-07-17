@@ -1,3 +1,8 @@
+2007-07-16  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree.rb (Tree::TreeNode): Added navigation methods for
+	siblings and children. Also added some convenience methods.
+
 2007-07-08  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Added a developer target for generating rdoc for the

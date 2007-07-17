@@ -100,6 +100,46 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_same(@root, @child4.root, "Root should be ROOT")
   end
 
+  def test_firstSibling
+    loadChildren
+
+    assert_same(@root, @root.firstSibling, "Root's first sibling is itself")
+    assert_same(@child1, @child1.firstSibling, "Child1's first sibling is itself")
+    assert_same(@child1, @child2.firstSibling, "Child2's first sibling should be child1")
+    assert_same(@child1, @child3.firstSibling, "Child3's first sibling should be child1")
+    assert_not_same(@child1, @child4.firstSibling, "Child4's first sibling is itself")
+  end
+
+  def test_isFirstSibling
+    loadChildren
+
+    assert(@root.isFirstSibling?, "Root's first sibling is itself")
+    assert( @child1.isFirstSibling?, "Child1's first sibling is itself")
+    assert(!@child2.isFirstSibling?, "Child2 is not the first sibling")
+    assert(!@child3.isFirstSibling?, "Child3 is not the first sibling")
+    assert( @child4.isFirstSibling?, "Child4's first sibling is itself")
+  end
+
+  def test_isLastSibling
+    loadChildren
+
+    assert(@root.isLastSibling?, "Root's last sibling is itself")
+    assert(!@child1.isLastSibling?, "Child1 is not the last sibling")
+    assert(!@child2.isLastSibling?, "Child2 is not the last sibling")
+    assert( @child3.isLastSibling?, "Child3's last sibling is itself")
+    assert( @child4.isLastSibling?, "Child4's last sibling is itself")
+  end
+
+  def test_lastSibling
+    loadChildren
+
+    assert_same(@root, @root.lastSibling, "Root's last sibling is itself")
+    assert_same(@child3, @child1.lastSibling, "Child1's last sibling should be child3")
+    assert_same(@child3, @child2.lastSibling, "Child2's last sibling should be child3")
+    assert_same(@child3, @child3.lastSibling, "Child3's last sibling should be itself")
+    assert_not_same(@child3, @child4.lastSibling, "Child4's last sibling is itself")
+  end
+
   def test_siblings
     loadChildren
 
@@ -117,6 +157,33 @@ class TC_TreeTest < Test::Unit::TestCase
     @child4.siblings {|sibling| siblings << sibling}
     assert(siblings.empty?, "Should not have any children")
 
+  end
+
+  def test_isOnlyChild?
+    loadChildren
+
+    assert(!@child1.isOnlyChild?, "Child1 is not the only child")
+    assert(!@child2.isOnlyChild?, "Child2 is not the only child")
+    assert(!@child3.isOnlyChild?, "Child3 is not the only child")
+    assert( @child4.isOnlyChild?, "Child4 is not the only child")
+  end
+
+  def test_nextSibling
+    loadChildren
+
+    assert_equal(@child2, @child1.nextSibling, "Child1's next sibling is Child2")
+    assert_equal(@child3, @child2.nextSibling, "Child2's next sibling is Child3")
+    assert_nil(@child3.nextSibling, "Child3 does not have a next sibling")
+    assert_nil(@child4.nextSibling, "Child4 does not have a next sibling")
+  end
+
+  def test_previousSibling
+    loadChildren
+
+    assert_nil(@child1.previousSibling, "Child1 does not have previous sibling")
+    assert_equal(@child1, @child2.previousSibling, "Child2's previous sibling is Child1")
+    assert_equal(@child2, @child3.previousSibling, "Child3's previous sibling is Child2")
+    assert_nil(@child4.previousSibling, "Child4 does not have a previous sibling")
   end
 
   def test_add
@@ -217,6 +284,24 @@ class TC_TreeTest < Test::Unit::TestCase
 
   end
 
+  def test_firstChild
+    loadChildren
+
+    assert_equal(@child1, @root.firstChild, "Root's first child is Child1")
+    assert_nil(@child1.firstChild, "Child1 does not have any children")
+    assert_equal(@child4, @child3.firstChild, "Child3's first child is Child4")
+
+  end
+
+  def test_lastChild
+    loadChildren
+
+    assert_equal(@child3, @root.lastChild, "Root's last child is Child3")
+    assert_nil(@child1.lastChild, "Child1 does not have any children")
+    assert_equal(@child4, @child3.lastChild, "Child3's last child is Child4")
+
+  end
+
   def test_find
     loadChildren
     foundNode = @root.find { |node| node == @child2}
@@ -229,6 +314,14 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_same(@child4, foundNode, "The node should be Child 4")
     foundNode = @root.find { |node| node.name == "NOT PRESENT" }
     assert_nil(foundNode, "The node should not be found")
+  end
+
+  def test_ancestors
+    loadChildren
+
+    assert_nil(@root.ancestors, "Root does not have any ancestors")
+    assert_equal([@root], @child1.ancestors, "Child1 has Root as its parent")
+    assert_equal([@child3, @root], @child4.ancestors, "Child4 has Child3 and Root as ancestors")
   end
 
   def test_each
