@@ -34,6 +34,9 @@
 #
 #
 # $Log$
+# Revision 1.6  2007/07/17 03:19:28  anupamsg
+# Removed DOS ^M characters.
+#
 # Revision 1.5  2007/07/17 03:16:53  anupamsg
 # Added the CVS Log and author keywords
 #

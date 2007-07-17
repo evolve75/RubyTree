@@ -34,6 +34,9 @@
 #
 #
 # $Log$
+# Revision 1.12  2007/07/17 03:19:28  anupamsg
+# Removed DOS ^M characters.
+#
 # Revision 1.11  2007/07/17 03:16:53  anupamsg
 # Added the CVS Log and author keywords
 #
@@ -98,6 +101,3 @@ Rake::RDocTask.new(:rdoc_www) do |rd|
     rd.title = "Rubytree Documentation"
     rd.template = "rubytree-template.rb"
 end
-
-
-
