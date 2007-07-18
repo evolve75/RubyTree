@@ -55,6 +55,7 @@ module Tree
     # parent is set to be the receiver.  The child nodes are added in the order
     # of addition, i.e., the first child added becomes the left node, and the
     # second child will be the second node.
+    # If only one child is present, then this will be the left child.
     def add(child)
       raise "Already has two child nodes" if @children.size == 2
 
@@ -68,7 +69,7 @@ module Tree
     end
 
     # Returns the right child node. Note that
-    # right child == last child
+    # right child == last child unless there is only one child.
     def rightChild
       children.last
     end
@@ -84,11 +85,30 @@ module Tree
       @children[1] = rightChild
       @childrenHash[rightChild.name] = rightChild
     end
+
+    # Returns true if this is the left child of its parent. Always returns false
+    # if this is the root node.
+    def isLeftChild?
+      return nil if isRoot?
+      self == parent.leftChild
+    end
+
+    # Returns true if this is the right child of its parent. Always returns false
+    # if this is the root node.
+    def isRightChild?
+      return nil if isRoot?
+      self == parent.rightChild
+    end
+
   end
 
 end
 
 # $Log$
+# Revision 1.2  2007/07/18 20:15:06  anupamsg
+# Added two predicate methods in BinaryTreeNode to determine whether a node
+# is a left or a right node.
+#
 # Revision 1.1  2007/07/18 19:33:27  anupamsg
 # Added a new binary tree implementation.
 #

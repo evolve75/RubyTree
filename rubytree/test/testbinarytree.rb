@@ -109,4 +109,26 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
     @root.rightChild = Tree::BinaryTreeNode.new("New Right Child")
     assert_equal("New Right Child", @root.rightChild.name, "The right child should now be the new child")
   end
+
+  def test_isLeftChild?
+    @root << @left_child1
+    @root << @right_child1
+
+    assert(@left_child1.isLeftChild?, "left_child1 should be the left child")
+    assert(!@right_child1.isLeftChild?, "left_child1 should be the left child")
+  end
+
+  def test_isRightChild?
+    @root << @left_child1
+    @root << @right_child1
+
+    assert(@right_child1.isRightChild?, "right_child1 should be the right child")
+    assert(!@left_child1.isRightChild?, "right_child1 should be the right child")
+  end
 end
+
+# $Log$
+# Revision 1.2  2007/07/18 20:15:06  anupamsg
+# Added two predicate methods in BinaryTreeNode to determine whether a node
+# is a left or a right node.
+#

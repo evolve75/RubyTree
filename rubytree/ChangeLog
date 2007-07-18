@@ -1,3 +1,16 @@
+2007-07-18  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode::is*Child):
+	Added tests for determining whether a node is a left or right
+	child.
+
+	* test/testbinarytree.rb: Added the test cases for the binary tree
+	implementation.
+	(TC_BinaryTreeTest::test_is*Child): Added tests for right or left
+	childs.
+
+	* lib/tree/binarytree.rb: Added the binary tree implementation.
+
  2007-07-17  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* lib/tree.rb (Tree::TreeNode::parentage): Renamed 'ancestors'

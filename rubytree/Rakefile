@@ -42,7 +42,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.3.1'
+PKG_VERSION = '0.4.0'
 PKG_FILES = FileList[
                      '[A-Z]*',
                      'lib/**/*.rb',
@@ -93,7 +93,7 @@ end
 Rake::RDocTask.new(:rdoc_www) do |rd|
   rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
   rd.title = "Rubytree Documentation"
-  rd.template = "rubytree-template.rb"
+#  rd.template = "rubytree-template.rb"
 end
 
 # Optional TAGS Task.
@@ -107,6 +107,10 @@ begin
 end
 
 # $Log$
+# Revision 1.18  2007/07/18 20:15:06  anupamsg
+# Added two predicate methods in BinaryTreeNode to determine whether a node
+# is a left or a right node.
+#
 # Revision 1.17  2007/07/18 07:17:34  anupamsg
 # Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
 # has been renamed to TreeNode.parentage.
