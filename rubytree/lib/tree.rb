@@ -3,7 +3,7 @@
 # $Revision$ by $Author$
 # $Name$
 #
-# = tree.rb - Generic Tree implementation
+# = tree.rb - Generic Multi-way Tree implementation
 #
 # Provides a generic tree data structure with ability to
 # store keyed node elements in the tree. The implementation
@@ -446,21 +446,10 @@ module Tree
   end
 end
 
-if __FILE__ == $0
-  root   = Tree::TreeNode.new("ROOT")
-  child1 = Tree::TreeNode.new("CHILD1")
-  child2 = Tree::TreeNode.new("CHILD2")
-  child3 = Tree::TreeNode.new("CHILD3")
-  grandchild1 = Tree::TreeNode.new("GRANDCHILD1")
-  root << child1 << grandchild1
-  root << child2
-  root << child3
-
-  puts child1.nextSibling
-  root.printTree
-end
-
 # $Log$
+# Revision 1.14  2007/07/18 19:33:27  anupamsg
+# Added a new binary tree implementation.
+#
 # Revision 1.13  2007/07/18 07:17:34  anupamsg
 # Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
 # has been renamed to TreeNode.parentage.
