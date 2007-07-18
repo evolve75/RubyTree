@@ -440,7 +440,7 @@ module Tree
       loadDumpRep(str)
     end
 
-    # Returns the depth of the tree from this node. A single leaf node has a
+    # Returns depth of the tree from this node. A single leaf node has a
     # depth of 1.
     def depth
       return 1 if isLeaf?
@@ -461,6 +461,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.16  2007/07/18 23:38:55  anupamsg
+# Minor updates to tree.rb
+#
 # Revision 1.15  2007/07/18 22:11:50  anupamsg
 # Added depth and breadth methods for the TreeNode.
 #
