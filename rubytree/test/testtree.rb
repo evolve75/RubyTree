@@ -318,12 +318,12 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_nil(foundNode, "The node should not be found")
   end
 
-  def test_ancestors
+  def test_parentage
     loadChildren
 
-    assert_nil(@root.ancestors, "Root does not have any ancestors")
-    assert_equal([@root], @child1.ancestors, "Child1 has Root as its parent")
-    assert_equal([@child3, @root], @child4.ancestors, "Child4 has Child3 and Root as ancestors")
+    assert_nil(@root.parentage, "Root does not have any parentage")
+    assert_equal([@root], @child1.parentage, "Child1 has Root as its parent")
+    assert_equal([@child3, @root], @child4.parentage, "Child4 has Child3 and Root as ancestors")
   end
 
   def test_each
@@ -424,6 +424,10 @@ end
 __END__
 
 # $Log$
+# Revision 1.12  2007/07/18 07:17:34  anupamsg
+# Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
+# has been renamed to TreeNode.parentage.
+#
 # Revision 1.11  2007/07/17 03:39:29  anupamsg
 # Moved the CVS Log keyword to end of the files.
 #

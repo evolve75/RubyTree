@@ -141,17 +141,17 @@ module Tree
 
     # Returns an array of ancestors in reversed order (the first element is the
     # immediate parent). Returns nil if this is a root node.
-    def ancestors
+    def parentage
       return nil if isRoot?
 
-      ancestorsArray = []
+      parentageArray = []
       prevParent = self.parent
       while (prevParent)
-        ancestorsArray << prevParent
+        parentageArray << prevParent
         prevParent = prevParent.parent
       end
 
-      ancestorsArray
+      parentageArray
     end
 
     # Protected method to set the parent node.
@@ -461,6 +461,10 @@ if __FILE__ == $0
 end
 
 # $Log$
+# Revision 1.13  2007/07/18 07:17:34  anupamsg
+# Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
+# has been renamed to TreeNode.parentage.
+#
 # Revision 1.12  2007/07/17 03:39:28  anupamsg
 # Moved the CVS Log keyword to end of the files.
 #

@@ -42,7 +42,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.4.0'
+PKG_VERSION = '0.3.1'
 PKG_FILES = FileList[
                      '[A-Z]*',
                      'lib/**/*.rb',
@@ -107,6 +107,10 @@ begin
 end
 
 # $Log$
+# Revision 1.17  2007/07/18 07:17:34  anupamsg
+# Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
+# has been renamed to TreeNode.parentage.
+#
 # Revision 1.16  2007/07/17 05:34:03  anupamsg
 # Added an optional tags Rake-task for generating the TAGS file for Emacs.
 #

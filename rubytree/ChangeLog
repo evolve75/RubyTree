@@ -1,3 +1,8 @@
+ 2007-07-17  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree.rb (Tree::TreeNode::parentage): Renamed 'ancestors'
+	method to 'parentage' to avoid clobbering Module.ancestors
+
 2007-07-16  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Added an optional rtags task to generate TAGS file for
