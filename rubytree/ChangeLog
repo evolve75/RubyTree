@@ -1,5 +1,12 @@
 2007-07-18  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* lib/tree.rb (Tree::TreeNode::depth): Added a tree depth
+	computation method.
+	(Tree::TreeNode::breadth): Added a tree breadth method.
+
+	* test/testtree.rb (TC_TreeTest::test_depth/test_breadth): Added a
+	test for the depth and breadth method.
+
 	* lib/tree/binarytree.rb (Tree::BinaryTreeNode::is*Child):
 	Added tests for determining whether a node is a left or right
 	child.

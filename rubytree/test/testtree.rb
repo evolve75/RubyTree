@@ -419,11 +419,50 @@ class TC_TreeTest < Test::Unit::TestCase
     @root.content = pers
     assert_same(pers, @root.content, "Content should be the same")
   end
+
+  def test_depth
+    assert_equal(1, @root.depth, "A single node's depth is 1")
+
+    @root << @child1
+    assert_equal(2, @root.depth, "This should be of depth 2")
+
+    @root << @child2
+    assert_equal(2, @root.depth, "This should be of depth 2")
+
+    @child2 << @child3
+    assert_equal(3, @root.depth, "This should be of depth 3")
+    assert_equal(2, @child2.depth, "This should be of depth 2")
+
+    @child3 << @child4
+    assert_equal(4, @root.depth, "This should be of depth 4")
+
+  end
+
+  def test_breadth
+  assert_equal(1, @root.breadth, "A single node's breadth is 1")
+
+  @root << @child1
+  assert_equal(1, @root.breadth, "This should be of breadth 1")
+
+  @root << @child2
+  assert_equal(2, @child1.breadth, "This should be of breadth 2")
+  assert_equal(2, @child2.breadth, "This should be of breadth 2")
+
+  @root << @child3
+  assert_equal(3, @child1.breadth, "This should be of breadth 3")
+  assert_equal(3, @child2.breadth, "This should be of breadth 3")
+
+  @child3 << @child4
+  assert_equal(1, @child4.breadth, "This should be of breadth 1")
+end
 end
 
 __END__
 
 # $Log$
+# Revision 1.13  2007/07/18 22:11:50  anupamsg
+# Added depth and breadth methods for the TreeNode.
+#
 # Revision 1.12  2007/07/18 07:17:34  anupamsg
 # Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
 # has been renamed to TreeNode.parentage.
