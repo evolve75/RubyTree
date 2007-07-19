@@ -116,6 +116,8 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 
     assert(@left_child1.isLeftChild?, "left_child1 should be the left child")
     assert(!@right_child1.isLeftChild?, "left_child1 should be the left child")
+
+    assert(!@root,isLeftChild?, "Root is neither left child nor right")
   end
 
   def test_isRightChild?
@@ -124,10 +126,14 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 
     assert(@right_child1.isRightChild?, "right_child1 should be the right child")
     assert(!@left_child1.isRightChild?, "right_child1 should be the right child")
+    assert(!@root,isRightChild?, "Root is neither left child nor right")
   end
 end
 
 # $Log$
+# Revision 1.3  2007/07/19 02:02:12  anupamsg
+# Removed useless files (including rdoc, which should be generated for each release.
+#
 # Revision 1.2  2007/07/18 20:15:06  anupamsg
 # Added two predicate methods in BinaryTreeNode to determine whether a node
 # is a left or a right node.
