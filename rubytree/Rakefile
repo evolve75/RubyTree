@@ -93,7 +93,7 @@ end
 Rake::RDocTask.new(:rdoc_www) do |rd|
   rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
   rd.title = "Rubytree Documentation"
-#  rd.template = "rubytree-template.rb"
+  rd.template = "rubytree-template.rb"
 end
 
 # Optional TAGS Task.
@@ -107,6 +107,9 @@ begin
 end
 
 # $Log$
+# Revision 1.19  2007/07/19 02:16:01  anupamsg
+# Release 0.4.0 (and minor fix in Rakefile).
+#
 # Revision 1.18  2007/07/18 20:15:06  anupamsg
 # Added two predicate methods in BinaryTreeNode to determine whether a node
 # is a left or a right node.
