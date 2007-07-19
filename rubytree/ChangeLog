@@ -1,5 +1,8 @@
 2007-07-18  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* test/testbinarytree.rb (TC_BinaryTreeTest::test_isLeftChild):
+	Minor syntax correction.
+
 	* lib/tree.rb (Tree::TreeNode::depth): Added a tree depth
 	computation method.
 	(Tree::TreeNode::breadth): Added a tree breadth method.
