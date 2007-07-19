@@ -1,5 +1,4 @@
 .DS_Store
 html
-pkg/*.*
-html/*.*
+pkg
 TAGS
