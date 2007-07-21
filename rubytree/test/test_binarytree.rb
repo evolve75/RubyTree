@@ -131,6 +131,9 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 end
 
 # $Log$
+# Revision 1.1  2007/07/21 04:52:37  anupamsg
+# Renamed the test files.
+#
 # Revision 1.4  2007/07/19 02:03:57  anupamsg
 # Minor syntax correction.
 #
