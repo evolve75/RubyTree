@@ -47,6 +47,8 @@
 # This module mixes in the Enumerable module.
 module Tree
 
+  VERSION = '0.4.1'
+
   # == TreeNode Class Description
   #
   # The node class for the tree representation. the nodes are named and have a
@@ -459,6 +461,10 @@ module Tree
 end
 
 # $Log$
+# Revision 1.18  2007/07/21 05:14:44  anupamsg
+# Added a VERSION constant to the Tree module,
+# and using the same in the Rakefile.
+#
 # Revision 1.17  2007/07/21 03:24:25  anupamsg
 # Minor edits to parameter names. User visible functionality does not change.
 #
