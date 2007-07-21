@@ -1,5 +1,8 @@
 2007-07-18  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode::leftChild /
+	rightChild): Minor cosmetic change on the parameter name.
+
 	* test/testbinarytree.rb (TC_BinaryTreeTest::test_isLeftChild):
 	Minor syntax correction.
 
@@ -21,7 +24,7 @@
 
 	* lib/tree/binarytree.rb: Added the binary tree implementation.
 
- 2007-07-17  Anupam Sengupta  <anupamsg@gmail.com>
+2007-07-17  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* lib/tree.rb (Tree::TreeNode::parentage): Renamed 'ancestors'
 	method to 'parentage' to avoid clobbering Module.ancestors
@@ -42,7 +45,7 @@
 2007-06-24  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/testtree.rb, lib/tree.rb: Added the each_leaf traversal method.
-v
+
 	* README: Replaced all occurrances of LICENSE with COPYING
 	and lowercased all instances of the word 'RubyTree'.
 

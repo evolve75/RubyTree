@@ -75,15 +75,15 @@ module Tree
     end
 
     # Sets the left child. If a previous child existed, it is replaced.
-    def leftChild=(leftChild)
-      @children[0] = leftChild
-      @childrenHash[leftChild.name] = leftChild
+    def leftChild=(child)
+      @children[0] = child
+      @childrenHash[child.name] = child
     end
 
     # Sets the right child. If a previous child existed, it is replaced.
-    def rightChild=(rightChild)
-      @children[1] = rightChild
-      @childrenHash[rightChild.name] = rightChild
+    def rightChild=(child)
+      @children[1] = child
+      @childrenHash[child.name] = child
     end
 
     # Returns true if this is the left child of its parent. Always returns false
@@ -105,6 +105,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.3  2007/07/21 03:24:25  anupamsg
+# Minor edits to parameter names. User visible functionality does not change.
+#
 # Revision 1.2  2007/07/18 20:15:06  anupamsg
 # Added two predicate methods in BinaryTreeNode to determine whether a node
 # is a left or a right node.

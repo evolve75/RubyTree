@@ -1,6 +1,6 @@
-= Rubytree 0.4.0
+= Rubytree 0.4.1
 
-  (c) 2006, 2007 Anupam Sengupta
+(c) 2006, 2007 Anupam Sengupta
   http://rubytree.rubyforge.org
 
   Document Revision: $Revision$ by $Author$
@@ -21,9 +21,9 @@ primary objects and drive the structure.
 Rubytree is an open source project and is hosted at
 http://rubyforge.org/projects/rubytree
 
-The project home page is: http://rubytree.rubyforge.org
+The project home page is http://rubytree.rubyforge.org
 
-Rubytree can be downloaded as a Ruby Gem or as a tar/zip file from:
+Rubytree can be downloaded as a Rubygem or as a tar/zip file from:
 
 http://rubyforge.org/frs/?group_id=1215&release_id=8817
 
@@ -66,25 +66,25 @@ the text mode ri documentation:
 
 Documentation on the web is available at:
 
-http://rubytree.rubyforge.org/rdoc/
+http://rubytree.rubyforge.org/rdoc
 
 == Example
 
- The following code-snippet implements this tree structure:
+The following code-snippet implements this tree structure:
 
-                   +------------+
-                   |    ROOT    |
-                   +-----+------+
-           +-------------+------------+
-           |                          |
-   +-------+-------+          +-------+-------+
-   |  CHILD 1      |          |  CHILD 2      |
-   +-------+-------+          +---------------+
-           |
-           |
-   +-------+-------+
-   | GRANDCHILD 1  |
-   +---------------+
+                 +------------+
+                 |    ROOT    |
+                 +-----+------+
+         +-------------+------------+
+         |                          |
+ +-------+-------+          +-------+-------+
+ |  CHILD 1      |          |  CHILD 2      |
+ +-------+-------+          +---------------+
+         |
+         |
+ +-------+-------+
+ | GRANDCHILD 1  |
+ +---------------+
 
  require 'tree'
 
@@ -132,7 +132,7 @@ are permitted provided that the following conditions are met:
   be used to endorse or promote products derived from this software without
   specific prior written permission.
 
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
 DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR

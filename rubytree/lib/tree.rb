@@ -160,7 +160,7 @@ module Tree
       @parent = parent
     end
 
-    # Convenience synonym for Tree#add method.  This method allows a convenient
+    # Convenience synonym for TreeNode#add method.  This method allows a convenient
     # method to add children hierarchies in the tree.
     #
     # E.g. root << child << grand_child
@@ -273,16 +273,16 @@ module Tree
 
     # Returns the requested node from the set of immediate children.
     #
-    # If the key is _numeric_, then the in-sequence array of children is
-    # accessed (see Tree#children).  If the key is not _numeric_, then it is
-    # assumed to be the *name* of the child node to be returned.
-    def [](key)
-      raise "Key needs to be provided" if key == nil
+    # If the parameter is _numeric_, then the in-sequence array of children is
+    # accessed (see Tree#children).  If the parameter is not _numeric_, then it
+    # is assumed to be the *name* of the child node to be returned.
+    def [](name_or_index)
+      raise "Name_or_index needs to be provided" if name_or_index == nil
 
-      if key.kind_of?(Integer)
-        @children[key]
+      if name_or_index.kind_of?(Integer)
+        @children[name_or_index]
       else
-        @childrenHash[key]
+        @childrenHash[name_or_index]
       end
     end
 
@@ -308,8 +308,6 @@ module Tree
         print(isLastSibling? ? "+" : "|")
         print "---"
         print(hasChildren? ? "+" : ">")
-
-#        print((' ' * level)  + "|--" + (hasChildren? ? "+" : ">"))
       end
 
       puts " #{name}"
@@ -461,6 +459,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.17  2007/07/21 03:24:25  anupamsg
+# Minor edits to parameter names. User visible functionality does not change.
+#
 # Revision 1.16  2007/07/18 23:38:55  anupamsg
 # Minor updates to tree.rb
 #

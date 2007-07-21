@@ -42,7 +42,7 @@ require 'rake/rdoctask'
 desc "Default Task"
 task :default => :gem
 
-PKG_VERSION = '0.4.0'
+PKG_VERSION = '0.4.1'
 PKG_FILES = FileList[
                      '[A-Z]*',
                      'lib/**/*.rb',
@@ -85,15 +85,16 @@ Rake::TestTask.new do |t|
   t.verbose = true
 end
 
-Rake::RDocTask.new do |rd|
+Rake::RDocTask.new(:rdoc) do |rd|
   rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
   rd.title = "Rubytree Documentation"
-end
 
-Rake::RDocTask.new(:rdoc_www) do |rd|
-  rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
-  rd.title = "Rubytree Documentation"
-  rd.template = "rubytree-template.rb"
+  # Use the template only if it is present, otherwise, the standard template is
+  # used.
+  template = "../allison/allison.rb"
+  rd.template = template if File.file?(template)
+
+  rd.options << '--line-numbers' << '--inline-source'
 end
 
 # Optional TAGS Task.
@@ -107,6 +108,9 @@ begin
 end
 
 # $Log$
+# Revision 1.20  2007/07/21 03:24:25  anupamsg
+# Minor edits to parameter names. User visible functionality does not change.
+#
 # Revision 1.19  2007/07/19 02:16:01  anupamsg
 # Release 0.4.0 (and minor fix in Rakefile).
 #
