@@ -1,3 +1,12 @@
+2007-08-30  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_binarytree.rb (TC_BinaryTreeTest::test_swap_children):
+	Added a test case for the children swap function.
+
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode::swap_children):
+	Added new function to swap the children. Other minor changes in
+	comments and code.
+
 2007-07-18  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* lib/tree/binarytree.rb (Tree::BinaryTreeNode::leftChild /

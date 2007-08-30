@@ -70,20 +70,21 @@ module Tree
 
     # Returns the right child node. Note that
     # right child == last child unless there is only one child.
+    # Returns nil if the right child does not exist.
     def rightChild
-      children.last
+      children[1]
     end
 
     # Sets the left child. If a previous child existed, it is replaced.
     def leftChild=(child)
       @children[0] = child
-      @childrenHash[child.name] = child
+      @childrenHash[child.name] = child if child # Assign the name mapping
     end
 
     # Sets the right child. If a previous child existed, it is replaced.
     def rightChild=(child)
       @children[1] = child
-      @childrenHash[child.name] = child
+      @childrenHash[child.name] = child if child # Assign the name mapping
     end
 
     # Returns true if this is the left child of its parent. Always returns false
@@ -100,11 +101,21 @@ module Tree
       self == parent.rightChild
     end
 
+    # Swaps the left and right childs
+    def swap_children
+      tempChild = leftChild
+      self.leftChild= rightChild
+      self.rightChild= tempChild
+    end
   end
 
 end
 
 # $Log$
+# Revision 1.4  2007/08/30 22:08:58  anupamsg
+# Added a new swap_children method for Binary Tree. Also added minor
+# documentation and test updates.
+#
 # Revision 1.3  2007/07/21 03:24:25  anupamsg
 # Minor edits to parameter names. User visible functionality does not change.
 #
