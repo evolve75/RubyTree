@@ -46,7 +46,7 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
     @root = Tree::BinaryTreeNode.new("ROOT", "Root Node")
 
     @left_child1  = Tree::BinaryTreeNode.new("A Child at Left", "Child Node @ left")
-    @right_child1 = Tree::BinaryTreeNode.new("B Child at right", "Child Node @ right")
+    @right_child1 = Tree::BinaryTreeNode.new("B Child at Right", "Child Node @ right")
 
   end
 
@@ -99,6 +99,13 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 
     @root.leftChild = Tree::BinaryTreeNode.new("New Left Child")
     assert_equal("New Left Child", @root.leftChild.name, "The left child should now be the new child")
+    assert_equal("B Child at Right", @root.lastChild.name, "The last child should now be the right child")
+
+    # Now set the left child as nil, and retest
+    @root.leftChild = nil
+    assert_nil(@root.leftChild, "The left child should now be nil")
+    assert_nil(@root.firstChild, "The first child is now nil")
+    assert_equal("B Child at Right", @root.lastChild.name, "The last child should now be the right child")
   end
 
   def test_right_assignment
@@ -108,6 +115,14 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 
     @root.rightChild = Tree::BinaryTreeNode.new("New Right Child")
     assert_equal("New Right Child", @root.rightChild.name, "The right child should now be the new child")
+    assert_equal("A Child at Left", @root.firstChild.name, "The first child should now be the left child")
+    assert_equal("New Right Child", @root.lastChild.name, "The last child should now be the right child")
+
+    # Now set the right child as nil, and retest
+    @root.rightChild = nil
+    assert_nil(@root.rightChild, "The right child should now be nil")
+    assert_equal("A Child at Left", @root.firstChild.name, "The first child should now be the left child")
+    assert_nil(@root.lastChild, "The first child is now nil")
   end
 
   def test_isLeftChild?
@@ -116,6 +131,10 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 
     assert(@left_child1.isLeftChild?, "left_child1 should be the left child")
     assert(!@right_child1.isLeftChild?, "left_child1 should be the left child")
+
+    # Now set the right child as nil, and retest
+    @root.rightChild = nil
+    assert(@left_child1.isLeftChild?, "left_child1 should be the left child")
 
     assert(!@root.isLeftChild?, "Root is neither left child nor right")
   end
@@ -126,11 +145,36 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 
     assert(@right_child1.isRightChild?, "right_child1 should be the right child")
     assert(!@left_child1.isRightChild?, "right_child1 should be the right child")
+
+    # Now set the left child as nil, and retest
+    @root.leftChild = nil
+    assert(@right_child1.isRightChild?, "right_child1 should be the right child")
     assert(!@root.isRightChild?, "Root is neither left child nor right")
+  end
+
+  def test_swap_children
+    @root << @left_child1
+    @root << @right_child1
+
+    assert(@right_child1.isRightChild?, "right_child1 should be the right child")
+    assert(!@left_child1.isRightChild?, "right_child1 should be the right child")
+
+    @root.swap_children
+    assert(@right_child1.isLeftChild?, "right_child1 should now be the left child")
+    assert(@left_child1.isRightChild?, "left_child1 should now be the right child")
+    assert_equal(@right_child1, @root.firstChild, "right_child1 should now be the first child")
+    assert_equal(@left_child1, @root.lastChild, "left_child1 should now be the last child")
+    assert_equal(@right_child1, @root[0], "right_child1 should now be the first child")
+    assert_equal(@left_child1, @root[1], "left_child1 should now be the last child")
+
   end
 end
 
 # $Log$
+# Revision 1.2  2007/08/30 22:06:13  anupamsg
+# Added a new swap_children method for the Binary Tree class.
+# Also made minor documentation updates and test additions.
+#
 # Revision 1.1  2007/07/21 04:52:37  anupamsg
 # Renamed the test files.
 #
