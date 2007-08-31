@@ -1,5 +1,13 @@
 2007-08-30  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* test/test_tree.rb (TC_TreeTest::test_preordered_each, TC_TreeTest::test_breadth_each, TC_TreeTest::test_detached_copy):
+	Added new tests for the new functions added to tree.rb.
+
+	* lib/tree.rb (Tree::TreeNode::detached_copy, Tree::TreeNode::preordered_each, Tree::TreeNode::breadth_each):
+	Added new functions for returning a detached copy of the node and
+	for performing breadth first traversal. Also added the pre-ordered
+	traversal function which is an alias of the existing 'each' method.
+
 	* test/test_binarytree.rb (TC_BinaryTreeTest::test_swap_children):
 	Added a test case for the children swap function.
 

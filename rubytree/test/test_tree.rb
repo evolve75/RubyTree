@@ -439,27 +439,121 @@ class TC_TreeTest < Test::Unit::TestCase
   end
 
   def test_breadth
-  assert_equal(1, @root.breadth, "A single node's breadth is 1")
+    assert_equal(1, @root.breadth, "A single node's breadth is 1")
 
-  @root << @child1
-  assert_equal(1, @root.breadth, "This should be of breadth 1")
+    @root << @child1
+    assert_equal(1, @root.breadth, "This should be of breadth 1")
 
-  @root << @child2
-  assert_equal(2, @child1.breadth, "This should be of breadth 2")
-  assert_equal(2, @child2.breadth, "This should be of breadth 2")
+    @root << @child2
+    assert_equal(2, @child1.breadth, "This should be of breadth 2")
+    assert_equal(2, @child2.breadth, "This should be of breadth 2")
 
-  @root << @child3
-  assert_equal(3, @child1.breadth, "This should be of breadth 3")
-  assert_equal(3, @child2.breadth, "This should be of breadth 3")
+    @root << @child3
+    assert_equal(3, @child1.breadth, "This should be of breadth 3")
+    assert_equal(3, @child2.breadth, "This should be of breadth 3")
 
-  @child3 << @child4
-  assert_equal(1, @child4.breadth, "This should be of breadth 1")
-end
+    @child3 << @child4
+    assert_equal(1, @child4.breadth, "This should be of breadth 1")
+  end
+
+  def test_breadth_each
+    j = Tree::TreeNode.new("j")
+    f = Tree::TreeNode.new("f")
+    k = Tree::TreeNode.new("k")
+    a = Tree::TreeNode.new("a")
+    d = Tree::TreeNode.new("d")
+    h = Tree::TreeNode.new("h")
+    z = Tree::TreeNode.new("z")
+
+    # The expected order of response
+    expected_array = [j,
+                      f, k,
+                      a, h, z,
+                      d]
+
+    # Create the following Tree
+    #        j         <-- level 0 (Root)
+    #      /   \
+    #     f      k     <-- level 1
+    #   /   \      \
+    #  a     h      z  <-- level 2
+    #   \
+    #    d             <-- level 3
+    j << f << a << d
+    f << h
+    j << k << z
+
+    result_array = []
+
+    # Create the response
+    j.breadth_each { |node| result_array << node.detached_copy }
+
+    expected_array.each_index do |i|
+      # Match only the names.
+      assert_equal(expected_array[i].name, result_array[i].name)
+    end
+
+  end
+
+
+  def test_preordered_each
+    j = Tree::TreeNode.new("j")
+    f = Tree::TreeNode.new("f")
+    k = Tree::TreeNode.new("k")
+    a = Tree::TreeNode.new("a")
+    d = Tree::TreeNode.new("d")
+    h = Tree::TreeNode.new("h")
+    z = Tree::TreeNode.new("z")
+
+    # The expected order of response
+    expected_array = [j, f, a, d, h, k, z]
+
+    # Create the following Tree
+    #        j         <-- level 0 (Root)
+    #      /   \
+    #     f      k     <-- level 1
+    #   /   \      \
+    #  a     h      z  <-- level 2
+    #   \
+    #    d             <-- level 3
+    j << f << a << d
+    f << h
+    j << k << z
+
+    result_array = []
+    j.preordered_each { |node| result_array << node.detached_copy}
+
+    expected_array.each_index do |i|
+      # Match only the names.
+      assert_equal(expected_array[i].name, result_array[i].name)
+    end
+  end
+
+  def test_detached_copy
+    loadChildren
+
+    assert(@root.hasChildren?, "The root should have children")
+    copy_of_root = @root.detached_copy
+    assert(!copy_of_root.hasChildren?, "The copy should not have children")
+    assert_equal(@root.name, copy_of_root.name, "The names should be equal")
+
+    # Try the same test with a child node
+    assert(!@child3.isRoot?, "Child 3 is not a root")
+    assert(@child3.hasChildren?, "Child 3 has children")
+    copy_of_child3 = @child3.detached_copy
+    assert(copy_of_child3.isRoot?, "Child 3's copy is a root")
+    assert(!copy_of_child3.hasChildren?, "Child 3's copy does not have children")
+  end
+
 end
 
 __END__
 
 # $Log$
+# Revision 1.2  2007/08/31 01:16:28  anupamsg
+# Added breadth and pre-order traversals for the tree. Also added a method
+# to return the detached copy of a node from the tree.
+#
 # Revision 1.1  2007/07/21 04:52:38  anupamsg
 # Renamed the test files.
 #

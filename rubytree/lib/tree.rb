@@ -47,7 +47,7 @@
 # This module mixes in the Enumerable module.
 module Tree
 
-  VERSION = '0.4.1'
+  VERSION = '0.4.2'
 
   # == TreeNode Class Description
   #
@@ -128,6 +128,11 @@ module Tree
 
       @childrenHash = Hash.new
       @children = []
+    end
+
+    # Returns a copy of this node, with the parent and children links removed.
+    def detached_copy
+      Tree::TreeNode.new(@name, @content ? @content.clone : nil)
     end
 
     # Print the string representation of this node.
@@ -261,14 +266,36 @@ module Tree
     end
 
     # Returns every node (including the receiver node) from the tree to the
-    # specified block. The traversal is depth first and from left to right.
+    # specified block. The traversal is depth first and from left to right in
+    # pre-ordered sequence.
     def each &block
       yield self
       children { |child| child.each(&block) }
     end
 
-    # Yields all leaf nodes from this node to the specified block. May yield this
-    # node as well if this is a leaf node.  Leaf traversal is left to right.
+    # Traverses the tree in a pre-ordered sequence. This is equivalent to
+    # TreeNode#each
+    def preordered_each &block
+      each &block
+    end
+
+    # Performs breadth first traversal of the tree rooted at this node. The
+    # traversal in a given level is from left to right.
+    def breadth_each &block
+      node_queue = [self]       # Create a queue with self as the initial entry
+
+      # Use a queue to do breadth traversal
+      until node_queue.empty?
+        node_to_traverse = node_queue.shift
+        yield node_to_traverse
+        # Enqueue the children from left to right.
+        node_to_traverse.children { |child| node_queue.push child }
+      end
+    end
+
+    # Yields all leaf nodes from this node to the specified block. May yield
+    # this node as well if this is a leaf node.  Leaf traversal depth first and
+    # left to right.
     def each_leaf &block
       self.each { |node| yield(node) if node.isLeaf? }
     end
@@ -461,6 +488,10 @@ module Tree
 end
 
 # $Log$
+# Revision 1.19  2007/08/31 01:16:27  anupamsg
+# Added breadth and pre-order traversals for the tree. Also added a method
+# to return the detached copy of a node from the tree.
+#
 # Revision 1.18  2007/07/21 05:14:44  anupamsg
 # Added a VERSION constant to the Tree module,
 # and using the same in the Rakefile.
