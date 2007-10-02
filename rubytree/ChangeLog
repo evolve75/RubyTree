@@ -6,6 +6,8 @@
 	* test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
 
 	* test/test_tree.rb: Removed dependency on the redundant "Person" class.
+	(TC_TreeTest::test_comparator): Added a new test for the spaceship operator.
+	(TC_TreeTest::test_hasContent): Added tests for hasContent? and length methods.
 
 2007-08-30  Anupam Sengupta  <anupamsg@gmail.com>
 

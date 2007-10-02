@@ -89,6 +89,7 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_equal("Root Node", @root.content, "Content should be 'Root Node'")
     assert(@root.isRoot?, "Should identify as root")
     assert(!@root.hasChildren?, "Cannot have any children")
+    assert(@root.hasContent?, "This root should have content")
     assert_equal(1, @root.size, "Number of nodes should be one")
     assert_nil(@root.siblings, "Root cannot have any children")
 
@@ -101,6 +102,50 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_same(@root, @root.root, "Root's root is self")
     assert_same(@root, @child1.root, "Root should be ROOT")
     assert_same(@root, @child4.root, "Root should be ROOT")
+  end
+
+  def test_hasContent
+    aNode = Tree::TreeNode.new("A Node")
+    assert_nil(aNode.content, "The node should not have content")
+    assert(!aNode.hasContent?, "The node should not have content")
+
+    aNode.content = "Something"
+    assert_not_nil(aNode.content, "The node should now have content")
+    assert(aNode.hasContent?, "The node should now have content")
+  end
+
+  def test_length
+    loadChildren
+
+    assert_equal(@root.size, @root.length, "Length and size methods should return the same result")
+  end
+
+  def test_comparator
+    firstNode  = Tree::TreeNode.new(1)
+    secondNode = Tree::TreeNode.new(2)
+
+    assert_equal(firstNode <=> nil, +1)
+    assert_equal(firstNode <=> secondNode, -1)
+
+    secondNode = Tree::TreeNode.new(1)
+    assert_equal(firstNode <=> secondNode, 0)
+
+    firstNode  = Tree::TreeNode.new("ABC")
+    secondNode = Tree::TreeNode.new("XYZ")
+
+    assert_equal(firstNode <=> nil, +1)
+    assert_equal(firstNode <=> secondNode, -1)
+
+    secondNode = Tree::TreeNode.new("ABC")
+    assert_equal(firstNode <=> secondNode, 0)
+  end
+
+  def test_to_s
+    aNode = Tree::TreeNode.new("A Node", "Some Content")
+
+    expectedString = "Node Name: A Node Content: Some Content Parent: <None> Children: 0 Total Nodes: 1"
+
+    assert_equal(expectedString, aNode.to_s, "The string representation should be same")
   end
 
   def test_firstSibling
@@ -548,6 +593,11 @@ end
 __END__
 
 # $Log$
+# Revision 1.4  2007/10/02 03:38:11  anupamsg
+# Removed dependency on the redundant "Person" class.
+# (TC_TreeTest::test_comparator): Added a new test for the spaceship operator.
+# (TC_TreeTest::test_hasContent): Added tests for hasContent? and length methods.
+#
 # Revision 1.3  2007/10/02 03:07:30  anupamsg
 # * Rakefile: Added an optional task for rcov code coverage.
 #
