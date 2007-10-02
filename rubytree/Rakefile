@@ -110,7 +110,17 @@ begin
   rescue LoadError
 end
 
-# $Log$
+# Optional RCOV Task
+begin
+  require 'rcov/rcovtask'
+  Rcov::RcovTask.new do |t|
+    t.test_files = FileList['test/test*.rb']
+   # t.verbose = true     # uncomment to see the executed commands
+  end
+  rescue LoadError
+end
+
+#Rakefile,v $
 # Revision 1.21  2007/07/21 05:14:43  anupamsg
 # Added a VERSION constant to the Tree module,
 # and using the same in the Rakefile.

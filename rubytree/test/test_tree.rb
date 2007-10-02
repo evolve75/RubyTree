@@ -37,10 +37,11 @@
 
 require 'test/unit'
 require 'tree'
-require 'person'
 
 # Test class for the Tree node.
 class TC_TreeTest < Test::Unit::TestCase
+
+  Person = Struct::new(:First, :last)
 
   def setup
     @root = Tree::TreeNode.new("ROOT", "Root Node")
@@ -383,9 +384,6 @@ class TC_TreeTest < Test::Unit::TestCase
   def test_dump
     loadChildren
 
-    pers = Person.new("John", "Doe")
-    #@root.content = pers
-
     data = Marshal.dump(@root)
 
     newRoot = Marshal.load(data)
@@ -415,7 +413,7 @@ class TC_TreeTest < Test::Unit::TestCase
   end
 
   def test_content
-    pers = Person.new("John", "Doe")
+    pers = Person::new("John", "Doe")
     @root.content = pers
     assert_same(pers, @root.content, "Content should be the same")
   end
@@ -550,6 +548,13 @@ end
 __END__
 
 # $Log$
+# Revision 1.3  2007/10/02 03:07:30  anupamsg
+# * Rakefile: Added an optional task for rcov code coverage.
+#
+# * test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
+#
+# * test/test_tree.rb: Removed dependency on the redundant "Person" class.
+#
 # Revision 1.2  2007/08/31 01:16:28  anupamsg
 # Added breadth and pre-order traversals for the tree. Also added a method
 # to return the detached copy of a node from the tree.

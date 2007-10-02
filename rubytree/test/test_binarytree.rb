@@ -37,7 +37,6 @@
 
 require 'test/unit'
 require 'tree/binarytree'
-require 'person'
 
 # Test class for the Tree node.
 class TC_BinaryTreeTest < Test::Unit::TestCase
@@ -171,6 +170,13 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 end
 
 # $Log$
+# Revision 1.3  2007/10/02 03:07:30  anupamsg
+# * Rakefile: Added an optional task for rcov code coverage.
+#
+# * test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
+#
+# * test/test_tree.rb: Removed dependency on the redundant "Person" class.
+#
 # Revision 1.2  2007/08/30 22:06:13  anupamsg
 # Added a new swap_children method for the Binary Tree class.
 # Also made minor documentation updates and test additions.

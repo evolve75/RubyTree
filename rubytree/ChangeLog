@@ -1,3 +1,11 @@
+2007-10-01  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* Rakefile: Added an optional task for rcov code coverage.
+
+	* test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
+
+	* test/test_tree.rb: Removed dependency on the redundant "Person" class.
+
 2007-08-30  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/test_tree.rb (TC_TreeTest::test_preordered_each, TC_TreeTest::test_breadth_each, TC_TreeTest::test_detached_copy):
