@@ -61,6 +61,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = "http://rubytree.rubyforge.org/"
   s.rubyforge_project = 'rubytree'
   s.summary = "Ruby implementation of the Tree data structure."
+  s.add_dependency('rake', '>= 0.7.2')
 
   s.description = <<-END
     Provides a generic tree data-structure with ability to
@@ -111,6 +112,7 @@ begin
 end
 
 # Optional RCOV Task
+# Needs http://eigenclass.org/hiki/rcov
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |t|

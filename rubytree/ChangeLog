@@ -1,6 +1,7 @@
 2007-10-01  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Added an optional task for rcov code coverage.
+	  Added a dependency for rake in the Gem Specification.
 
 	* test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
 
