@@ -1,3 +1,7 @@
+= 0.4.3 / 2007-10-09
+
+* Changes to the build mechanism (now uses Hoe).
+
 = 0.4.2 / 2007-10-01
 
 * Minor code refactoring. Changes in the Rakefile.

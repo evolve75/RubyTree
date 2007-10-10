@@ -47,7 +47,7 @@
 # This module mixes in the Enumerable module.
 module Tree
 
-  VERSION = '0.4.2'
+  VERSION = '0.4.3'
 
   # == TreeNode Class Description
   #
@@ -488,6 +488,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.20  2007/10/10 08:42:57  anupamsg
+# Release 0.4.3
+#
 # Revision 1.19  2007/08/31 01:16:27  anupamsg
 # Added breadth and pre-order traversals for the tree. Also added a method
 # to return the detached copy of a node from the tree.
