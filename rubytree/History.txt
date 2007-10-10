@@ -1,0 +1,3 @@
+= 0.4.2 / 2007-10-01
+
+* Minor code refactoring. Changes in the Rakefile.

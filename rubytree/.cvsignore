@@ -1,7 +1,9 @@
 .DS_Store
 html
+doc
 pkg
 coverage
 TAGS
 rubytree.kpf
 .config
+email.txt

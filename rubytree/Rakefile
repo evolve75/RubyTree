@@ -48,11 +48,10 @@ require 'fileutils'
 $:.push File.expand_path( File.join( File.dirname(__FILE__), 'lib' ) )
 require 'tree'         # To read the version information.
 
-
-PKG_NAME = "rubytree"
-PKG_VERSION = Tree::VERSION
-PKG_FULLNAME = PKG_NAME + "-" + PKG_VERSION
-PKG_SUMMARY = "Ruby implementation of the Tree data structure."
+PKG_NAME        = "rubytree"
+PKG_VERSION     = Tree::VERSION
+PKG_FULLNAME    = PKG_NAME + "-" + PKG_VERSION
+PKG_SUMMARY     = "Ruby implementation of the Tree data structure."
 PKG_DESCRIPTION = <<-END
     Provides a generic tree data-structure with ability to
     store keyed node-elements in the tree. The implementation
@@ -68,57 +67,90 @@ PKG_FILES = FileList[
                      'test/**/*.rb'
                     ]
 
-
-spec = Gem::Specification.new do |s|
-  s.name = PKG_NAME
-  s.version = PKG_VERSION
-  s.platform = Gem::Platform::RUBY
-  s.author = "Anupam Sengupta"
-  s.email = "anupamsg@gmail.com"
-  s.homepage = "http://rubytree.rubyforge.org/"
-  s.rubyforge_project = 'rubytree'
-  s.summary = PKG_SUMMARY
-  s.add_dependency('rake', '>= 0.7.2')
-  s.description = PKG_DESCRIPTION
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README', 'COPYING', 'ChangeLog']
-  s.autorequire = "tree"
-  s.files = PKG_FILES.to_a
-  s.test_files = Dir.glob('test/test*.rb')
-end
-
 # Default is to create a rubygem.
 desc "Default Task"
 task :default => :gem
 
-# End User Tasks ################################################################
+begin                           # Try loading hoe
+  require 'hoe'
+  # If Hoe is found, use it to define tasks
+  # =======================================
+  Hoe.new(PKG_NAME, PKG_VERSION) do |p|
+    p.rubyforge_name = PKG_NAME
+    p.author = "Anupam Sengupta"
+    p.email = "anupamsg@gmail.com"
+    p.summary = PKG_SUMMARY
+    p.description = PKG_DESCRIPTION
+    p.url = "http://rubytree.rubyforge.org/"
+    p.changes = p.paragraphs_of('History.txt', 0..1).join("\n\n")
+    p.remote_rdoc_dir = 'rdoc'
+    p.need_tar = true
+    p.need_zip = true
+    p.test_globs = ['test/test_*.rb']
+    p.spec_extras = {
+      :has_rdoc => true,
+      :platform => Gem::Platform::RUBY,
+      :has_rdoc => true,
+      :extra_rdoc_files => ['README', 'COPYING', 'ChangeLog', 'History.txt'],
+      :rdoc_options => ['--main', 'README'],
+      :autorequire => 'tree'
+    }
+  end
 
-desc "Prepares for installation"
-task :prepare do
-  ruby "setup.rb config"
-  ruby "setup.rb setup"
-end
+rescue LoadError                # If Hoe is not found
+  # If Hoe is not found, then use the usual Gemspec based Rake tasks
+  # ================================================================
+  spec = Gem::Specification.new do |s|
+    s.name = PKG_NAME
+    s.version = PKG_VERSION
+    s.platform = Gem::Platform::RUBY
+    s.author = "Anupam Sengupta"
+    s.email = "anupamsg@gmail.com"
+    s.homepage = "http://rubytree.rubyforge.org/"
+    s.rubyforge_project = 'rubytree'
+    s.summary = PKG_SUMMARY
+    s.add_dependency('rake', '>= 0.7.2')
+    s.description = PKG_DESCRIPTION
+    s.has_rdoc = true
+    s.extra_rdoc_files = ['README', 'COPYING', 'ChangeLog']
+    s.autorequire = "tree"
+    s.files = PKG_FILES.to_a
+    s.test_files = Dir.glob('test/test*.rb')
+  end
+
+  desc "Prepares for installation"
+  task :prepare do
+    ruby "setup.rb config"
+    ruby "setup.rb setup"
+  end
+
+  desc "Installs the package #{PKG_NAME}"
+  task :install => [:prepare] do
+    ruby "setup.rb install"
+  end
+
+  Rake::GemPackageTask.new(spec) do |pkg|
+    pkg.need_zip = true
+    pkg.need_tar = true
+  end
+
+  Rake::TestTask.new do |t|
+    t.libs << "test"
+    t.test_files = FileList['test/test*.rb']
+    t.verbose = true
+  end
+
+end                            # End loading Hoerc
+# ================================================================
 
 
-desc "Installs the package #{PKG_NAME}"
-task :install => [:prepare] do
-  ruby "setup.rb install"
-end
+# The following tasks are loaded independently of Hoe
 
-Rake::GemPackageTask.new(spec) do |pkg|
-  pkg.need_zip = true
-  pkg.need_tar = true
-end
-
-Rake::TestTask.new do |t|
-  t.libs << "test"
-  t.test_files = FileList['test/test*.rb']
-  t.verbose = true
-end
-
-Rake::RDocTask.new(:rdoc) do |rd|
+# Hoe's rdoc task is ugly.
+Rake::RDocTask.new(:docs) do |rd|
   rd.rdoc_files.include("README", "COPYING", "ChangeLog", "lib/**/*.rb")
-  rd.title = "Rubytree Documentation"
+  rd.rdoc_dir = 'doc'
+  rd.title = "#{PKG_FULLNAME} Documentation"
 
   # Use the template only if it is present, otherwise, the standard template is
   # used.
@@ -135,7 +167,7 @@ begin
   RTagsTask.new do |rd|
     rd.vi = false
   end
-  rescue LoadError
+rescue LoadError
 end
 
 # Optional RCOV Task
@@ -144,9 +176,9 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |t|
     t.test_files = FileList['test/test*.rb']
-   # t.verbose = true     # uncomment to see the executed commands
+    # t.verbose = true     # uncomment to see the executed commands
   end
-  rescue LoadError
+rescue LoadError
 end
 
 #Rakefile,v $

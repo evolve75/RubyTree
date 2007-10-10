@@ -1,7 +1,13 @@
+2007-10-10  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* README: Restructured the format.
+
+	* Rakefile: Added Hoe related logic. If not present, the Rakefile
+	will default to old behavior.
+
 2007-10-09  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Added setup.rb related tasks. Also added the setup.rb in the PKG_FILES list.
-
 
 2007-10-01  Anupam Sengupta  <anupamsg@gmail.com>
 

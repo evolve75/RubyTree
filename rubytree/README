@@ -1,27 +1,18 @@
-= Rubytree 0.4.2
+= Rubytree
 
-(c) 2006, 2007 Anupam Sengupta
+  (c) 2006, 2007 Anupam Sengupta
   http://rubytree.rubyforge.org
 
-  Document Revision: $Revision$ by $Author$
-
-== License
-
-Rubytree has been released under the BSD License. See the file COPYING for
-details.
-
-== Introduction
+== DESCRIPTION:
 
 Rubytree is a simple implementation of the generic Tree data structure.  This
 implementation is node-centric, where the individual nodes on the tree are the
 primary objects and drive the structure.
 
-== Getting Rubytree
+== INSTALL:
 
 Rubytree is an open source project and is hosted at
-http://rubyforge.org/projects/rubytree
-
-The project home page is http://rubytree.rubyforge.org
+http://rubytree.rubyforge.org
 
 Rubytree can be downloaded as a Rubygem or as a tar/zip file from:
 
@@ -34,8 +25,6 @@ The file name is one of:
     rubytree-<VERSION>.zip
 
 Download the appropriate file-type.
-
-== Installing Rubytree
 
 It is recommended to install Rubytree as a Ruby Gem, as this is an easy way to
 keep the version updated, and keep multiple versions of the library available on
@@ -54,7 +43,7 @@ super-user (root) to successfully install the gem.
 Extract the archive file (tgz or zip) and run the 'rake' command from the
 top-level source directory.
 
-== Documentation
+== DOCUMENTATION:
 
 The primary class for this implementation is Tree::TreeNode. See the
 class documentation for an usage example.
@@ -68,7 +57,7 @@ Documentation on the web is available at:
 
 http://rubytree.rubyforge.org/rdoc
 
-== Example
+== EXAMPLE:
 
 The following code-snippet implements this tree structure:
 
@@ -110,7 +99,7 @@ The following code-snippet implements this tree structure:
 
  myTreeRoot.remove!(child1) # Remove the child
 
-== LICENSE
+== LICENSE:
 
 Rubytree is licensed under BSD license.
 
@@ -142,3 +131,6 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+(Document Revision: $Revision$ by $Author$)
