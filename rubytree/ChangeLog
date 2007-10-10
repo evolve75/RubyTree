@@ -1,3 +1,7 @@
+2007-10-09  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* Rakefile: Added setup.rb related tasks.
+
 2007-10-01  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Added an optional task for rcov code coverage.
