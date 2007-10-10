@@ -63,6 +63,7 @@ PKG_DESCRIPTION = <<-END
 
 PKG_FILES = FileList[
                      '[A-Z]*',
+                     '*.rb',
                      'lib/**/*.rb',
                      'test/**/*.rb'
                     ]

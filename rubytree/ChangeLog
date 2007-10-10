@@ -1,6 +1,7 @@
 2007-10-09  Anupam Sengupta  <anupamsg@gmail.com>
 
-	* Rakefile: Added setup.rb related tasks.
+	* Rakefile: Added setup.rb related tasks. Also added the setup.rb in the PKG_FILES list.
+
 
 2007-10-01  Anupam Sengupta  <anupamsg@gmail.com>
 
