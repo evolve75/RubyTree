@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# testtree.rb
+# test_binarytree.rb
 #
 # $Revision$ by $Author$
 # $Name$
@@ -170,6 +170,9 @@ class TC_BinaryTreeTest < Test::Unit::TestCase
 end
 
 # $Log$
+# Revision 1.4  2007/12/18 23:11:29  anupamsg
+# Minor documentation changes in the binarytree class.
+#
 # Revision 1.3  2007/10/02 03:07:30  anupamsg
 # * Rakefile: Added an optional task for rcov code coverage.
 #

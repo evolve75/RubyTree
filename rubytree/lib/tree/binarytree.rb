@@ -101,7 +101,7 @@ module Tree
       self == parent.rightChild
     end
 
-    # Swaps the left and right childs
+    # Swaps the left and right children with each other
     def swap_children
       tempChild = leftChild
       self.leftChild= rightChild
@@ -112,6 +112,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.5  2007/12/18 23:11:29  anupamsg
+# Minor documentation changes in the binarytree class.
+#
 # Revision 1.4  2007/08/30 22:08:58  anupamsg
 # Added a new swap_children method for Binary Tree. Also added minor
 # documentation and test updates.

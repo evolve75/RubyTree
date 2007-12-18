@@ -1,3 +1,10 @@
+2007-11-12  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_binarytree.rb: Minor documentation correction.
+
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode::isRightChild):
+	Minor documentation change.
+
 2007-10-10  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* README: Restructured the format.
