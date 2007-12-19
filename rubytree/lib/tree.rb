@@ -47,7 +47,7 @@
 # This module mixes in the Enumerable module.
 module Tree
 
-  VERSION = '0.4.4'
+  VERSION = '0.5.0'
 
   # == TreeNode Class Description
   #
@@ -433,24 +433,24 @@ module Tree
       each {|node| node.freeze}
     end
 
-    # Creates the marshal-dump represention of this tree.
+    # Creates the marshal-dump represention of the tree rooted at this node.
     def marshal_dump
       self.collect { |node| node.createDumpRep }
     end
 
     # Creates a dump representation and returns the same as a hash
     def createDumpRep
-      { 'name' => @name, 'parent' => (isRoot? ? nil : @parent.name),  'content' => Marshal.dump(@content)}
+      { :name => @name, :parent => (isRoot? ? nil : @parent.name),  :content => Marshal.dump(@content)}
     end
 
-    # Loads a dump representation of the tree from the specified marshalled
-    # representation.
+    # Loads a marshalled dump of the tree and returns the root node of the
+    # reconstructed tree. See the Marshal class for additional details.
     def marshal_load(dumped_tree_array)
       nodes = { }
       for node_hash in dumped_tree_array do
-        name        = node_hash['name']
-        parent_name = node_hash['parent']
-        content     = Marshal.load(node_hash['content'])
+        name        = node_hash[:name]
+        parent_name = node_hash[:parent]
+        content     = Marshal.load(node_hash[:content])
 
         if parent_name then
           nodes[name] = current_node = Tree::TreeNode.new(name, content)
@@ -479,11 +479,17 @@ module Tree
     end
 
     protected :parent=, :setAsRoot!, :self_initialize
+    private :createDumpRep
 
   end
 end
 
 # $Log$
+# Revision 1.22  2007/12/19 06:22:03  anupamsg
+# Updated the marshalling logic to correctly handle non-string content. This
+# should fix the bug # 15614 ("When dumping with an Object as the content, you get
+# a delimiter collision")
+#
 # Revision 1.21  2007/12/19 02:24:17  anupamsg
 # Updated the marshalling logic to handle non-string contents on the nodes.
 #
