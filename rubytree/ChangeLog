@@ -1,3 +1,8 @@
+2007-12-19  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* Rakefile: Fixed a problem with reading the Tree::VERSION for the
+	gem packaging, if any prior version of the gem is already installed.
+
 2007-12-18  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* lib/tree.rb: Updated the marshalling logic to correctly handle

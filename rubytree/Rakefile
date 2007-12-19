@@ -45,7 +45,7 @@ require 'fileutils'
 
 # General Stuff ####################################################
 
-$:.push File.expand_path( File.join( File.dirname(__FILE__), 'lib' ) )
+$:.insert 0, File.expand_path( File.join( File.dirname(__FILE__), 'lib' ) )
 require 'tree'         # To read the version information.
 
 PKG_NAME        = "rubytree"
