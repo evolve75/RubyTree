@@ -5,6 +5,7 @@
 	(Tree::TreeNode::createDumpRep): Minor code change to use symbols
 	instead of string key names.
 	(Tree): Version number change to 0.5.0
+	(Tree::TreeNode::hasContent): Minor fix to the comments.
 
 	* test/test_tree.rb (TC_TreeTest::test_breadth_each): Updated test
 	cases for the marshalling logic.

@@ -223,7 +223,7 @@ module Tree
       @content != nil
     end
 
-    # Private method which sets this node as a root node.
+    # Protected method which sets this node as a root node.
     def setAsRoot!
       @parent = nil
     end
@@ -478,13 +478,16 @@ module Tree
       parent.children.size
     end
 
-    protected :parent=, :setAsRoot!, :self_initialize
-    private :createDumpRep
+    protected :parent=, :setAsRoot!, :self_initialize, :createDumpRep
 
   end
 end
 
 # $Log$
+# Revision 1.23  2007/12/19 06:25:00  anupamsg
+# (Tree::TreeNode): Minor fix to the comments.  Also fixed the private/protected
+# scope issue with the createDumpRep method.
+#
 # Revision 1.22  2007/12/19 06:22:03  anupamsg
 # Updated the marshalling logic to correctly handle non-string content. This
 # should fix the bug # 15614 ("When dumping with an Object as the content, you get
