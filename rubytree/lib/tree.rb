@@ -108,9 +108,6 @@ module Tree
     attr_reader :content, :name, :parent
     attr_writer :content
 
-    @@fieldSep = '|'
-    @@recordSep = "\n"
-
     # Constructor which expects the name of the node
     #
     # Name of the node is expected to be unique across the
@@ -484,6 +481,10 @@ module Tree
 end
 
 # $Log$
+# Revision 1.24  2007/12/19 06:39:17  anupamsg
+# Removed the unnecessary field and record separator constants.  Also updated the
+# history.txt file.
+#
 # Revision 1.23  2007/12/19 06:25:00  anupamsg
 # (Tree::TreeNode): Minor fix to the comments.  Also fixed the private/protected
 # scope issue with the createDumpRep method.

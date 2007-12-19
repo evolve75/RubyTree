@@ -1,3 +1,7 @@
+= 0.5.0 / 2007-12-18
+
+* Fixed the marshalling code to correctly handle non-string content.
+
 = 0.4.3 / 2007-10-09
 
 * Changes to the build mechanism (now uses Hoe).

@@ -3,6 +3,7 @@ ChangeLog
 History.txt
 Manifest.txt
 README
+TODO
 Rakefile
 lib/tree.rb
 lib/tree/binarytree.rb
