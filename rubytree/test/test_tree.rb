@@ -426,19 +426,48 @@ class TC_TreeTest < Test::Unit::TestCase
     #@root.printTree
   end
 
-  def test_dump
-    loadChildren
+  # Tests the binary dumping mechanism with an Object content node
+  def test_marshalling
+    # Setup Test Data
+    test_root = Tree::TreeNode.new("ROOT", "Root Node")
+    test_content = {"KEY1" => "Value1", "KEY2" => "Value2" }
+    test_child      = Tree::TreeNode.new("Child", test_content)
+    test_content2 = ["AValue1", "AValue2", "AValue3"]
+    test_grand_child = Tree::TreeNode.new("Grand Child 1", test_content2)
+    test_root << test_child << test_grand_child
 
-    data = Marshal.dump(@root)
+    # Perform the test operation
+    data = Marshal.dump(test_root) # Marshal
+    new_root = Marshal.load(data)  # And unmarshal
 
-    newRoot = Marshal.load(data)
-    assert(newRoot.isRoot?, "Must be a root node")
-    assert_equal("ROOT", newRoot.name, "Must identify as ROOT")
-    assert_equal("Root Node", newRoot.content, "Must have root's content")
-    #assert_equal(pers.first, newRoot.content.first, "Must be the same content")
-    assert_equal(@child4.name, newRoot['Child3']['Child31'].name, "Must be the grand child")
+    # Test the root node
+    assert_equal(test_root.name, new_root.name, "Must identify as ROOT")
+    assert_equal(test_root.content, new_root.content, "Must have root's content")
+    assert(new_root.isRoot?, "Must be the ROOT node")
+    assert(new_root.hasChildren?, "Must have a child node")
+
+    # Test the child node
+    new_child = new_root[test_child.name]
+    assert_equal(test_child.name, new_child.name, "Must have child 1")
+    assert(new_child.hasContent?, "Child must have content")
+    assert(new_child.isOnlyChild?, "Child must be the only child")
+
+    new_child_content = new_child.content
+    assert_equal(Hash, new_child_content.class, "Class of child's content should be a hash")
+    assert_equal(test_child.content.size, new_child_content.size, "The content should have same size")
+
+    # Test the grand-child node
+    new_grand_child = new_child[test_grand_child.name]
+    assert_equal(test_grand_child.name, new_grand_child.name, "Must have grand child")
+    assert(new_grand_child.hasContent?, "Grand-child must have content")
+    assert(new_grand_child.isOnlyChild?, "Grand-child must be the only child")
+
+    new_grand_child_content = new_grand_child.content
+    assert_equal(Array, new_grand_child_content.class, "Class of grand-child's content should be an Array")
+    assert_equal(test_grand_child.content.size, new_grand_child_content.size, "The content should have same size")
   end
 
+  # Test the collect method from the mixed-in Enumerable functionality.
   def test_collect
     loadChildren
     collectArray = @root.collect do |node|
@@ -448,6 +477,7 @@ class TC_TreeTest < Test::Unit::TestCase
     collectArray.each {|node| assert_equal("abc", node.content, "Should be 'abc'")}
   end
 
+  # Test freezing the tree
   def test_freezeTree
     loadChildren
     @root.content = "ABC"
@@ -457,12 +487,14 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_raise(TypeError) {@root[0].content = "123"}
   end
 
+  # Test whether the content is accesible
   def test_content
     pers = Person::new("John", "Doe")
     @root.content = pers
     assert_same(pers, @root.content, "Content should be the same")
   end
 
+  # Test the depth computation algorithm
   def test_depth
     assert_equal(1, @root.depth, "A single node's depth is 1")
 
@@ -478,9 +510,9 @@ class TC_TreeTest < Test::Unit::TestCase
 
     @child3 << @child4
     assert_equal(4, @root.depth, "This should be of depth 4")
-
   end
 
+  # Test the breadth computation algorithm
   def test_breadth
     assert_equal(1, @root.breadth, "A single node's breadth is 1")
 
@@ -499,6 +531,7 @@ class TC_TreeTest < Test::Unit::TestCase
     assert_equal(1, @child4.breadth, "This should be of breadth 1")
   end
 
+  # Test the breadth for each
   def test_breadth_each
     j = Tree::TreeNode.new("j")
     f = Tree::TreeNode.new("f")
@@ -526,16 +559,13 @@ class TC_TreeTest < Test::Unit::TestCase
     f << h
     j << k << z
 
-    result_array = []
-
     # Create the response
+    result_array = Array.new
     j.breadth_each { |node| result_array << node.detached_copy }
 
     expected_array.each_index do |i|
-      # Match only the names.
-      assert_equal(expected_array[i].name, result_array[i].name)
+      assert_equal(expected_array[i].name, result_array[i].name)      # Match only the names.
     end
-
   end
 
 
@@ -593,6 +623,9 @@ end
 __END__
 
 # $Log$
+# Revision 1.5  2007/12/19 02:24:18  anupamsg
+# Updated the marshalling logic to handle non-string contents on the nodes.
+#
 # Revision 1.4  2007/10/02 03:38:11  anupamsg
 # Removed dependency on the redundant "Person" class.
 # (TC_TreeTest::test_comparator): Added a new test for the spaceship operator.

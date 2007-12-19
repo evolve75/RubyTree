@@ -47,7 +47,7 @@
 # This module mixes in the Enumerable module.
 module Tree
 
-  VERSION = '0.4.3'
+  VERSION = '0.4.4'
 
   # == TreeNode Class Description
   #
@@ -118,12 +118,14 @@ module Tree
     #
     # The content can be of any type, and is defaulted to _nil_.
     def initialize(name, content = nil)
-
       raise "Node name HAS to be provided" if name == nil
+      self_initialize name, content
+    end
 
+    # A common initialization routine (also used by the marshalling code).
+    def self_initialize(name, content)
       @name = name
       @content = content
-
       self.setAsRoot!
 
       @childrenHash = Hash.new
@@ -276,7 +278,7 @@ module Tree
     # Traverses the tree in a pre-ordered sequence. This is equivalent to
     # TreeNode#each
     def preordered_each &block
-      each &block
+      each(&block)
     end
 
     # Performs breadth first traversal of the tree rooted at this node. The
@@ -431,40 +433,35 @@ module Tree
       each {|node| node.freeze}
     end
 
-    # Creates a dump representation and returns the same as a string
+    # Creates the marshal-dump represention of this tree.
+    def marshal_dump
+      self.collect { |node| node.createDumpRep }
+    end
+
+    # Creates a dump representation and returns the same as a hash
     def createDumpRep
-      strRep = String.new
-      strRep << @name << @@fieldSep << (isRoot? ? @name : @parent.name)
-      strRep << @@fieldSep << Marshal.dump(@content) << @@recordSep
+      { 'name' => @name, 'parent' => (isRoot? ? nil : @parent.name),  'content' => Marshal.dump(@content)}
     end
 
-    def _dump(depth)
-      strRep = String.new
-      each {|node| strRep << node.createDumpRep}
-      strRep
-    end
+    # Loads a dump representation of the tree from the specified marshalled
+    # representation.
+    def marshal_load(dumped_tree_array)
+      nodes = { }
+      for node_hash in dumped_tree_array do
+        name        = node_hash['name']
+        parent_name = node_hash['parent']
+        content     = Marshal.load(node_hash['content'])
 
-    # Loads a dump representation of the tree from the specified string
-    def TreeNode.loadDumpRep(str)
-      nodeHash = Hash.new
-      rootNode = nil
-      str.split(@@recordSep).each do |line|
-        name, parent, contentStr = line.split(@@fieldSep)
-        content = Marshal.load(contentStr)
-        currentNode = Tree::TreeNode.new(name, content)
-        nodeHash[name] = currentNode
-        if name != parent  # Do for a child node
-          nodeHash[parent].add(currentNode)
+        if parent_name then
+          nodes[name] = current_node = Tree::TreeNode.new(name, content)
+          nodes[parent_name].add current_node
         else
-          rootNode = currentNode
-        end
-      end
-      rootNode
-    end
+          # This is the root node, hence initialize self.
+          self_initialize(name, content)
 
-    # Loads a dump representation of the tree from the specified string.
-    def TreeNode._load(str)
-      loadDumpRep(str)
+          nodes[name] = self    # Add self to the
+         end
+      end
     end
 
     # Returns depth of the tree from this node. A single leaf node has a
@@ -481,13 +478,15 @@ module Tree
       parent.children.size
     end
 
-    protected :parent=, :setAsRoot!
-    private_class_method :loadDumpRep
+    protected :parent=, :setAsRoot!, :self_initialize
 
   end
 end
 
 # $Log$
+# Revision 1.21  2007/12/19 02:24:17  anupamsg
+# Updated the marshalling logic to handle non-string contents on the nodes.
+#
 # Revision 1.20  2007/10/10 08:42:57  anupamsg
 # Release 0.4.3
 #

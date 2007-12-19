@@ -1,3 +1,11 @@
+2007-12-18  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree.rb: Updated the marshalling logic to correctly handle
+	non-string content.
+
+	* test/test_tree.rb (TC_TreeTest::test_breadth_each): Updated test
+	cases for the marshalling logic.
+
 2007-11-12  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/test_binarytree.rb: Minor documentation correction.
