@@ -47,6 +47,7 @@
 # This module mixes in the Enumerable module.
 module Tree
 
+  # Rubytree Package Version
   VERSION = '0.5.0'
 
   # == TreeNode Class Description
@@ -116,11 +117,6 @@ module Tree
     # The content can be of any type, and is defaulted to _nil_.
     def initialize(name, content = nil)
       raise "Node name HAS to be provided" if name == nil
-      self_initialize name, content
-    end
-
-    # A common initialization routine (also used by the marshalling code).
-    def self_initialize(name, content)
       @name = name
       @content = content
       self.setAsRoot!
@@ -454,7 +450,7 @@ module Tree
           nodes[parent_name].add current_node
         else
           # This is the root node, hence initialize self.
-          self_initialize(name, content)
+          initialize(name, content)
 
           nodes[name] = self    # Add self to the
          end
@@ -481,6 +477,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.25  2007/12/19 20:28:05  anupamsg
+# Removed the unnecesary self_initialize method.
+#
 # Revision 1.24  2007/12/19 06:39:17  anupamsg
 # Removed the unnecessary field and record separator constants.  Also updated the
 # history.txt file.
