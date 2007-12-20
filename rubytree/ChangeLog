@@ -2,6 +2,8 @@
 
 	* lib/tree.rb (Tree::TreeNode::initialize): Removed the
 	unnecessary self_initialize method.
+	(Tree::TreeNode): Removed the spurious self_initialize from the
+	protected list.
 
 	* Rakefile: Fixed a problem with reading the Tree::VERSION for the
 	gem packaging, if any prior version of the gem is already installed.

@@ -471,12 +471,15 @@ module Tree
       parent.children.size
     end
 
-    protected :parent=, :setAsRoot!, :self_initialize, :createDumpRep
+    protected :parent=, :setAsRoot!, :createDumpRep
 
   end
 end
 
 # $Log$
+# Revision 1.26  2007/12/20 02:50:04  anupamsg
+# (Tree::TreeNode): Removed the spurious self_initialize from the protected list.
+#
 # Revision 1.25  2007/12/19 20:28:05  anupamsg
 # Removed the unnecesary self_initialize method.
 #
