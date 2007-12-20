@@ -1,9 +1,12 @@
 2007-12-19  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* README (Module): Modified the install instructions from source.
+
 	* lib/tree.rb (Tree::TreeNode::initialize): Removed the
 	unnecessary self_initialize method.
 	(Tree::TreeNode): Removed the spurious self_initialize from the
 	protected list.
+	(Module): Updated the minor version number.
 
 	* Rakefile: Fixed a problem with reading the Tree::VERSION for the
 	gem packaging, if any prior version of the gem is already installed.

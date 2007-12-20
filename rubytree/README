@@ -38,16 +38,8 @@ It is recommended to install Rubytree as a Ruby Gem, as this is an easy way to
 keep the version updated, and keep multiple versions of the library available on
 your system.
 
-If you download the other versions, you can issue the following command from
-within the extracted package directory using your terminal program to install
-the package:
-
-    ruby ./setup.rb
-
-You may need administrator/super-user privileges to complete the setup using
-this method.
-
 === Installing the Gem
+
 To Install the Gem, from a Terminal/CLI command prompt, issue the command:
 
    gem install rubytree
@@ -57,8 +49,13 @@ super-user (root) to successfully install the gem.
 
 === Installing from the tgz/zip file
 
-Extract the archive file (tgz or zip) and run the 'rake' command from the
-top-level source directory.
+Extract the archive file (tgz or zip) and run the following command from the
+top-level source directory:
+
+    ruby ./setup.rb
+
+You may need administrator/super-user privileges to complete the setup using
+this method.
 
 == DOCUMENTATION:
 

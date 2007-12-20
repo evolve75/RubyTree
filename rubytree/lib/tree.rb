@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.5.0'
+  VERSION = '0.5.1'
 
   # == TreeNode Class Description
   #
@@ -477,6 +477,10 @@ module Tree
 end
 
 # $Log$
+# Revision 1.28  2007/12/20 03:19:33  anupamsg
+# * README (Module): Modified the install instructions from source.
+# (Module): Updated the minor version number.
+#
 # Revision 1.27  2007/12/20 03:00:03  anupamsg
 # Minor code changes. Removed self_initialize from the protected methods' list.
 #
