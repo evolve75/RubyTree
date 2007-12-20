@@ -431,7 +431,7 @@ module Tree
       self.collect { |node| node.createDumpRep }
     end
 
-    # Creates a dump representation and returns the same as a hash
+    # Creates a dump representation and returns the same as a hash.
     def createDumpRep
       { :name => @name, :parent => (isRoot? ? nil : @parent.name),  :content => Marshal.dump(@content)}
     end
@@ -477,6 +477,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.27  2007/12/20 03:00:03  anupamsg
+# Minor code changes. Removed self_initialize from the protected methods' list.
+#
 # Revision 1.26  2007/12/20 02:50:04  anupamsg
 # (Tree::TreeNode): Removed the spurious self_initialize from the protected list.
 #
