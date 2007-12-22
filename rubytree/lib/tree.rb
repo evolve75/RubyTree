@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.5.1'
+  VERSION = '0.5.2'
 
   # == TreeNode Class Description
   #
@@ -132,13 +132,11 @@ module Tree
 
     # Print the string representation of this node.
     def to_s
-
       "Node Name: #{@name}" +
         " Content: " + (@content || "<Empty>") +
         " Parent: " + (isRoot?()  ? "<None>" : @parent.name) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
-
     end
 
     # Returns an array of ancestors in reversed order (the first element is the
@@ -452,7 +450,7 @@ module Tree
           # This is the root node, hence initialize self.
           initialize(name, content)
 
-          nodes[name] = self    # Add self to the
+          nodes[name] = self    # Add self to the list of nodes
          end
       end
     end
@@ -477,6 +475,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.29  2007/12/22 00:28:59  anupamsg
+# Added more test cases, and enabled ZenTest compatibility.
+#
 # Revision 1.28  2007/12/20 03:19:33  anupamsg
 # * README (Module): Modified the install instructions from source.
 # (Module): Updated the minor version number.

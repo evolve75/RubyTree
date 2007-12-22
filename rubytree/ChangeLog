@@ -1,3 +1,14 @@
+2007-12-21  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree.rb: Minor comment changes.
+
+	* test/test_tree.rb: Added the TestTree enclosing module, and
+	renamed tests to meet ZenTest requirements. Also added a few
+	missing test cases.
+
+	* test/test_binarytree.rb: Added the TestTree enclosing Module,
+	and renamed the tests to meet ZenTest requirements.
+
 2007-12-19  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* README (Module): Modified the install instructions from source.

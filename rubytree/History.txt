@@ -1,3 +1,12 @@
+= 0.5.2 / 2007-12-21
+
+* Added more test cases and enabled ZenTest compatibility for the test case
+  names.
+
+= 0.5.1 / 2007-12-20
+
+* Minor code refactoring.
+
 = 0.5.0 / 2007-12-18
 
 * Fixed the marshalling code to correctly handle non-string content.
