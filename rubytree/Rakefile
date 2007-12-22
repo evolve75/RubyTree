@@ -176,6 +176,7 @@ begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |t|
     t.test_files = FileList['test/test*.rb']
+    t.rcov_opts << "--exclude 'rcov.rb'" # rcov itself should not be profiled
     # t.verbose = true     # uncomment to see the executed commands
   end
 rescue LoadError

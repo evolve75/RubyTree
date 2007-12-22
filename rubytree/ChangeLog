@@ -1,5 +1,8 @@
 2007-12-21  Anupam Sengupta  <anupamsg@gmail.com>
 
+	* Rakefile: Added the rcov option to exclude rcov itself from
+	coverage reports.
+
 	* lib/tree.rb: Minor comment changes.
 
 	* test/test_tree.rb: Added the TestTree enclosing module, and
