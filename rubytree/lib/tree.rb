@@ -52,12 +52,12 @@ module Tree
 
   # == TreeNode Class Description
   #
-  # The node class for the tree representation. the nodes are named and have a
+  # The node class for the tree representation. the nodes are +named+ and have a
   # place-holder for the node data (i.e., the `content' of the node). The node
   # names are expected to be unique.  In addition, the node provides navigation
   # methods to traverse the tree.
   #
-  # The nodes can have any number of child nodes attached to it. Note that while
+  # A node can have any number of child nodes attached to it. Note that while
   # this implementation does not support directed graphs, the class itself makes
   # no restrictions on associating a node's CONTENT with multiple parent nodes.
   #
@@ -475,6 +475,9 @@ module Tree
 end
 
 # $Log$
+# Revision 1.30  2009/10/05 18:27:10  anupamsg
+# Minor editing of the comment and an addition to the .cvsignore.
+#
 # Revision 1.29  2007/12/22 00:28:59  anupamsg
 # Added more test cases, and enabled ZenTest compatibility.
 #
