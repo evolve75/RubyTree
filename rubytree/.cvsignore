@@ -9,3 +9,6 @@ html/
 pkg
 pkg/
 rubytree.kpf
+coverage.info
+ri/
+ri

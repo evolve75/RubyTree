@@ -1,3 +1,21 @@
+2010-01-01  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* Rakefile: Have migrated 100% to usage of Hoe for the rake
+	tasks. Have removed all legacy GemSpec and custom task definitions.
+
+	* .cvsignore: Added the coverage.info file to the excluded list.
+
+	* TODO: More TODO items.  Changed the file mode to use org-mode.
+
+	* History.txt: Added the change log summary.
+
+	* README: Updated the content to match the Hoe sections.  Minor
+	formatting performed.  Changed the line endings to Unix.
+
+	* COPYING: Minor formatting changes.
+
+	* lib/tree.rb (Tree): Updated the release version number.
+
 2007-12-21  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Added the rcov option to exclude rcov itself from

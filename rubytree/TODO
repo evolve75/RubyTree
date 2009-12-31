@@ -1,7 +1,9 @@
-# -*- mode: outline; coding: utf-8-unix; -*-
+# -*- mode: org; coding: utf-8-unix; -*-
 
-* Add logic in Rakefile to read the file list from Manifest.txt file.
+* TODO Get the version control moved from CVS to Subversion (request submitted to RubyForge)
+* TODO Add a YAML export method to the TreeNode class.
 
-* Add a YAML export method to the TreeNode class.
+* DONE Add logic in Rakefile to read the file list from Manifest.txt file.
+  CLOSED: [2009-12-31 Thu 23:37]
 
 

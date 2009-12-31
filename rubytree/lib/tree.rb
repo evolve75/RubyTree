@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.5.2'
+  VERSION = '0.5.3'
 
   # == TreeNode Class Description
   #
@@ -475,6 +475,11 @@ module Tree
 end
 
 # $Log$
+# Revision 1.31  2009/12/31 19:28:50  anupamsg
+# Migrated the rake build and install mechanism to use Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) exclusively.
+# Have removed all legacy custom tasks (including the old GemSpec).  Have also made some formatting modifications to the
+# documentation.  The release itself does not contain any user visible changes from a functionality point of view.
+#
 # Revision 1.30  2009/10/05 18:27:10  anupamsg
 # Minor editing of the comment and an addition to the .cvsignore.
 #
