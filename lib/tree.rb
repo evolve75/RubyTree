@@ -102,6 +102,7 @@ module Tree
   # myTreeRoot.each { |node| node.content.reverse }
   #
   # myTreeRoot.remove!(child1) # Remove the child
+  #
   class TreeNode
     include Enumerable
 
@@ -113,12 +114,10 @@ module Tree
     attr_reader   :parent
 
 
-    # Constructor which expects the name of the node
+    # Constructor which expects the name of the node.
+    # Name of the node is expected to be unique across the tree.
     #
-    # Name of the node is expected to be unique across the
-    # tree.
-    #
-    # The content can be of any type, defaults to _nil_.
+    # The content can be of any type, defaults to +nil+.
     def initialize(name, content = nil)
       raise "Node name HAS to be provided" if name == nil
       @name = name
@@ -129,7 +128,8 @@ module Tree
       @children = []
     end
 
-    # Returns a copy of this node, with the parent and children links removed.
+    # Returns a copy of this node, with the parent and children links removed.  The original node remains attached to
+    # its tree.
     def detached_copy
       Tree::TreeNode.new(@name, @content ? @content.clone : nil)
     end
@@ -144,7 +144,7 @@ module Tree
     end
 
     # Returns an array of ancestors in reversed order (the first element is the
-    # immediate parent). Returns _nil_ if this is the root node.
+    # immediate parent). Returns +nil+ if this is the root node.
     def parentage
       return nil if isRoot?
 
@@ -213,7 +213,7 @@ module Tree
       self
     end
 
-    # Indicates whether this node has any associated content.
+    # Returns +true+ if this node has any associated content.
     def hasContent?
       @content != nil
     end
@@ -223,19 +223,19 @@ module Tree
       @parent = nil
     end
 
-    # Indicates whether this node is a root node. Note that
+    # Returns +true+ if this is a root node. Note that
     # orphaned children will also be reported as root nodes.
     def isRoot?
       @parent == nil
     end
 
-    # Indicates whether this node has any immediate child nodes.
+    # Returns +true+ if this node has any immediate child nodes.
     def hasChildren?
       @children.length != 0
     end
 
-    # Indicates whether this node is a 'leaf' - i.e., one without
-    # any children
+    # Returns +true+ if this node is a 'leaf' - i.e., one without
+    # any children.
     def isLeaf?
       !hasChildren?
     end
@@ -341,7 +341,7 @@ module Tree
       children { |child| child.printTree(level + 1)}
     end
 
-    # Returns the root for this tree. Root's root is itself.
+    # Returns the root for this tree. Root's root is itself (Hence beware of any loop that can become infinite!)
     def root
       root = self
       root = root.parent while !root.isRoot?

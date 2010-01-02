@@ -45,15 +45,14 @@ require 'tree'
 
 module Tree
 
-  # Provides a Binary tree implementation. This tree node allows only two child
-  # nodes (left and right childs). It also provides direct access to the left
-  # and right children, including assignment to the same.
+  # Provides a Binary tree implementation. This tree node allows only two child nodes (left and right childs). It also
+  # provides direct access to the left or right child, including assignment to the same.
   class BinaryTreeNode < TreeNode
 
-    # Adds the specified child node to the receiver node.  The child node's
-    # parent is set to be the receiver.  The child nodes are added in the order
-    # of addition, i.e., the first child added becomes the left node, and the
-    # second child will be the second node.
+    # Adds the specified child node to the receiver node.  The child node's parent is set to be the receiver.  The child
+    # nodes are added in the order of addition, i.e., the first child added becomes the left node, and the second child
+    # will be the second node.
+    #
     # If only one child is present, then this will be the left child.
     def add(child)
       raise "Already has two child nodes" if @children.size == 2
@@ -61,15 +60,13 @@ module Tree
       super(child)
     end
 
-    # Returns the left child node. Note that
-    # left Child == first Child
+    # Returns the left child node. Note that left Child == first Child.
     def leftChild
       children.first
     end
 
-    # Returns the right child node. Note that
-    # right child == last child unless there is only one child.
-    # Returns nil if the right child does not exist.
+    # Returns the right child node. Note that right child == last child unless there is only one child.  Returns +nil+
+    # if the right child does not exist.
     def rightChild
       children[1]
     end
@@ -86,21 +83,19 @@ module Tree
       @childrenHash[child.name] = child if child # Assign the name mapping
     end
 
-    # Returns true if this is the left child of its parent. Always returns false
-    # if this is the root node.
+    # Returns +true+ if this is the left child of its parent.  Always returns +false+ if this is the root node.
     def isLeftChild?
       return nil if isRoot?
       self == parent.leftChild
     end
 
-    # Returns true if this is the right child of its parent. Always returns false
-    # if this is the root node.
+    # Returns +true+ if this is the right child of its parent. Always returns +false+ if this is the root node.
     def isRightChild?
       return nil if isRoot?
       self == parent.rightChild
     end
 
-    # Swaps the left and right child nodes with each other
+    # Swaps the left and right child nodes with each other.
     def swap_children
       tempChild = leftChild
       self.leftChild= rightChild
