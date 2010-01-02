@@ -100,7 +100,7 @@ module Tree
       self == parent.rightChild
     end
 
-    # Swaps the left and right children with each other
+    # Swaps the left and right child nodes with each other
     def swap_children
       tempChild = leftChild
       self.leftChild= rightChild
