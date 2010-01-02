@@ -2,8 +2,7 @@
 
 # test_binarytree.rb
 #
-# $Revision$ by $Author$
-# $Name$
+# $Revision$ by $Author$ on $Date$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -170,35 +169,3 @@ module TestTree
     end
   end
 end
-
-# $Log$
-# Revision 1.5  2007/12/22 00:28:59  anupamsg
-# Added more test cases, and enabled ZenTest compatibility.
-#
-# Revision 1.4  2007/12/18 23:11:29  anupamsg
-# Minor documentation changes in the binarytree class.
-#
-# Revision 1.3  2007/10/02 03:07:30  anupamsg
-# * Rakefile: Added an optional task for rcov code coverage.
-#
-# * test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
-#
-# * test/test_tree.rb: Removed dependency on the redundant "Person" class.
-#
-# Revision 1.2  2007/08/30 22:06:13  anupamsg
-# Added a new swap_children method for the Binary Tree class.
-# Also made minor documentation updates and test additions.
-#
-# Revision 1.1  2007/07/21 04:52:37  anupamsg
-# Renamed the test files.
-#
-# Revision 1.4  2007/07/19 02:03:57  anupamsg
-# Minor syntax correction.
-#
-# Revision 1.3  2007/07/19 02:02:12  anupamsg
-# Removed useless files (including rdoc, which should be generated for each release.
-#
-# Revision 1.2  2007/07/18 20:15:06  anupamsg
-# Added two predicate methods in BinaryTreeNode to determine whether a node
-# is a left or a right node.
-#

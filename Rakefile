@@ -1,7 +1,6 @@
 # Rakefile
 #
-# $Revision$ by $Author$
-# $Name$
+# $Revision$ by $Author$ on $Date$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -101,32 +100,3 @@ rescue LoadError
 
   END
 end
-
-#Rakefile,v $
-# Revision 1.21  2007/07/21 05:14:43  anupamsg
-# Added a VERSION constant to the Tree module,
-# and using the same in the Rakefile.
-#
-# Revision 1.20  2007/07/21 03:24:25  anupamsg
-# Minor edits to parameter names. User visible functionality does not change.
-#
-# Revision 1.19  2007/07/19 02:16:01  anupamsg
-# Release 0.4.0 (and minor fix in Rakefile).
-#
-# Revision 1.18  2007/07/18 20:15:06  anupamsg
-# Added two predicate methods in BinaryTreeNode to determine whether a node
-# is a left or a right node.
-#
-# Revision 1.17  2007/07/18 07:17:34  anupamsg
-# Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
-# has been renamed to TreeNode.parentage.
-#
-# Revision 1.16  2007/07/17 05:34:03  anupamsg
-# Added an optional tags Rake-task for generating the TAGS file for Emacs.
-#
-# Revision 1.15  2007/07/17 04:42:45  anupamsg
-# Minor fixes to the Rakefile.
-#
-# Revision 1.14  2007/07/17 03:39:28  anupamsg
-# Moved the CVS Log keyword to end of the files.
-#

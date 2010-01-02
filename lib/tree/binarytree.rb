@@ -1,7 +1,6 @@
 # binarytree.rb
 #
-# $Revision$ by $Author$
-# $Name$
+# $Revision$ by $Author$ on $Date$
 #
 # = binarytree.rb - Binary Tree implementation
 #
@@ -110,22 +109,3 @@ module Tree
   end
 
 end
-
-# $Log$
-# Revision 1.5  2007/12/18 23:11:29  anupamsg
-# Minor documentation changes in the binarytree class.
-#
-# Revision 1.4  2007/08/30 22:08:58  anupamsg
-# Added a new swap_children method for Binary Tree. Also added minor
-# documentation and test updates.
-#
-# Revision 1.3  2007/07/21 03:24:25  anupamsg
-# Minor edits to parameter names. User visible functionality does not change.
-#
-# Revision 1.2  2007/07/18 20:15:06  anupamsg
-# Added two predicate methods in BinaryTreeNode to determine whether a node
-# is a left or a right node.
-#
-# Revision 1.1  2007/07/18 19:33:27  anupamsg
-# Added a new binary tree implementation.
-#

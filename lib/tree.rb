@@ -1,7 +1,6 @@
 # tree.rb
 #
-# $Revision$ by $Author$
-# $Name$
+# $Revision$ by $Author$ on $Date$
 #
 # = tree.rb - Generic Multi-way Tree implementation
 #
@@ -473,75 +472,3 @@ module Tree
 
   end
 end
-
-# $Log$
-# Revision 1.31  2009/12/31 19:28:50  anupamsg
-# Migrated the rake build and install mechanism to use Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) exclusively.
-# Have removed all legacy custom tasks (including the old GemSpec).  Have also made some formatting modifications to the
-# documentation.  The release itself does not contain any user visible changes from a functionality point of view.
-#
-# Revision 1.30  2009/10/05 18:27:10  anupamsg
-# Minor editing of the comment and an addition to the .cvsignore.
-#
-# Revision 1.29  2007/12/22 00:28:59  anupamsg
-# Added more test cases, and enabled ZenTest compatibility.
-#
-# Revision 1.28  2007/12/20 03:19:33  anupamsg
-# * README (Module): Modified the install instructions from source.
-# (Module): Updated the minor version number.
-#
-# Revision 1.27  2007/12/20 03:00:03  anupamsg
-# Minor code changes. Removed self_initialize from the protected methods' list.
-#
-# Revision 1.26  2007/12/20 02:50:04  anupamsg
-# (Tree::TreeNode): Removed the spurious self_initialize from the protected list.
-#
-# Revision 1.25  2007/12/19 20:28:05  anupamsg
-# Removed the unnecesary self_initialize method.
-#
-# Revision 1.24  2007/12/19 06:39:17  anupamsg
-# Removed the unnecessary field and record separator constants.  Also updated the
-# history.txt file.
-#
-# Revision 1.23  2007/12/19 06:25:00  anupamsg
-# (Tree::TreeNode): Minor fix to the comments.  Also fixed the private/protected
-# scope issue with the createDumpRep method.
-#
-# Revision 1.22  2007/12/19 06:22:03  anupamsg
-# Updated the marshalling logic to correctly handle non-string content. This
-# should fix the bug # 15614 ("When dumping with an Object as the content, you get
-# a delimiter collision")
-#
-# Revision 1.21  2007/12/19 02:24:17  anupamsg
-# Updated the marshalling logic to handle non-string contents on the nodes.
-#
-# Revision 1.20  2007/10/10 08:42:57  anupamsg
-# Release 0.4.3
-#
-# Revision 1.19  2007/08/31 01:16:27  anupamsg
-# Added breadth and pre-order traversals for the tree. Also added a method
-# to return the detached copy of a node from the tree.
-#
-# Revision 1.18  2007/07/21 05:14:44  anupamsg
-# Added a VERSION constant to the Tree module,
-# and using the same in the Rakefile.
-#
-# Revision 1.17  2007/07/21 03:24:25  anupamsg
-# Minor edits to parameter names. User visible functionality does not change.
-#
-# Revision 1.16  2007/07/18 23:38:55  anupamsg
-# Minor updates to tree.rb
-#
-# Revision 1.15  2007/07/18 22:11:50  anupamsg
-# Added depth and breadth methods for the TreeNode.
-#
-# Revision 1.14  2007/07/18 19:33:27  anupamsg
-# Added a new binary tree implementation.
-#
-# Revision 1.13  2007/07/18 07:17:34  anupamsg
-# Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
-# has been renamed to TreeNode.parentage.
-#
-# Revision 1.12  2007/07/17 03:39:28  anupamsg
-# Moved the CVS Log keyword to end of the files.
-#

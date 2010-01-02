@@ -2,8 +2,7 @@
 
 # testtree.rb
 #
-# $Revision$ by $Author$
-# $Name$
+# $Revision$ by $Author$ on $Date$
 #
 # Copyright (c) 2006, 2007 Anupam Sengupta
 #
@@ -679,40 +678,3 @@ module TestTree
 end
 
 __END__
-
-# $Log$
-# Revision 1.6  2007/12/22 00:28:59  anupamsg
-# Added more test cases, and enabled ZenTest compatibility.
-#
-# Revision 1.5  2007/12/19 02:24:18  anupamsg
-# Updated the marshalling logic to handle non-string contents on the nodes.
-#
-# Revision 1.4  2007/10/02 03:38:11  anupamsg
-# Removed dependency on the redundant "Person" class.
-# (TC_TreeTest::test_comparator): Added a new test for the spaceship operator.
-# (TC_TreeTest::test_hasContent): Added tests for hasContent? and length methods.
-#
-# Revision 1.3  2007/10/02 03:07:30  anupamsg
-# * Rakefile: Added an optional task for rcov code coverage.
-#
-# * test/test_binarytree.rb: Removed the unnecessary dependency on "Person" class.
-#
-# * test/test_tree.rb: Removed dependency on the redundant "Person" class.
-#
-# Revision 1.2  2007/08/31 01:16:28  anupamsg
-# Added breadth and pre-order traversals for the tree. Also added a method
-# to return the detached copy of a node from the tree.
-#
-# Revision 1.1  2007/07/21 04:52:38  anupamsg
-# Renamed the test files.
-#
-# Revision 1.13  2007/07/18 22:11:50  anupamsg
-# Added depth and breadth methods for the TreeNode.
-#
-# Revision 1.12  2007/07/18 07:17:34  anupamsg
-# Fixed a  issue where TreeNode.ancestors was shadowing Module.ancestors. This method
-# has been renamed to TreeNode.parentage.
-#
-# Revision 1.11  2007/07/17 03:39:29  anupamsg
-# Moved the CVS Log keyword to end of the files.
-#
