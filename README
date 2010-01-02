@@ -57,6 +57,7 @@ As an example, the following code-snippet implements this tree structure:
 == REQUIREMENTS:
 
 * Ruby 1.8+  (http://www.ruby-lang.org)
+* Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html)
 
 == INSTALL:
 
