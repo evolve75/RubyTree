@@ -53,10 +53,10 @@ module Tree
   #
   # The node class for the tree representation. the nodes are +named+ and have a
   # place-holder for the node data (i.e., the `content' of the node). The node
-  # names are expected to be unique.  In addition, the node provides navigation
+  # names are required to be unique.  In addition, the node provides navigation
   # methods to traverse the tree.
   #
-  # A node can have any number of child nodes attached to it. Note that while
+  # A node can have any number of child nodes attached to it.  Note that while
   # this implementation does not support directed graphs, the class itself makes
   # no restrictions on associating a node's CONTENT with multiple parent nodes.
   #
@@ -105,15 +105,20 @@ module Tree
   class TreeNode
     include Enumerable
 
-    attr_reader :content, :name, :parent
-    attr_writer :content
+    # Name of this Node
+    attr_reader   :name
+    # Content of this Node
+    attr_accessor :content
+    # Parent of this Node
+    attr_reader   :parent
+
 
     # Constructor which expects the name of the node
     #
     # Name of the node is expected to be unique across the
     # tree.
     #
-    # The content can be of any type, and is defaulted to _nil_.
+    # The content can be of any type, defaults to _nil_.
     def initialize(name, content = nil)
       raise "Node name HAS to be provided" if name == nil
       @name = name
@@ -129,7 +134,7 @@ module Tree
       Tree::TreeNode.new(@name, @content ? @content.clone : nil)
     end
 
-    # Print the string representation of this node.
+    # Print the string representation of this node.  This is primary for debugging purposes.
     def to_s
       "Node Name: #{@name}" +
         " Content: " + (@content || "<Empty>") +
@@ -139,7 +144,7 @@ module Tree
     end
 
     # Returns an array of ancestors in reversed order (the first element is the
-    # immediate parent). Returns nil if this is a root node.
+    # immediate parent). Returns _nil_ if this is the root node.
     def parentage
       return nil if isRoot?
 
@@ -461,8 +466,9 @@ module Tree
       1 + @children.collect { |child| child.depth }.max
     end
 
-    # Returns breadth of the tree at this node level. A single node has a
-    # breadth of 1.
+    # Returns breadth of the tree at this node level. A single node has a breadth of 1.  Breadth is defined to be the
+    # number of nodes present as siblings to this node + 1 (this node itself), i.e., the number of children the parent
+    # of this node has.
     def breadth
       return 1 if isRoot?
       parent.children.size
