@@ -49,7 +49,9 @@ begin
     self.extra_rdoc_files           = ['README', 'COPYING', 'ChangeLog']
     self.url                        =  "http://rubytree.rubyforge.org"
     self.readme_file                = 'README'
-    self.spec_extras[:rdoc_options] = ['--main', 'README']
+    # Set the RDoc Options.
+    self.spec_extras[:rdoc_options] = ['--main', 'README', '--line-numbers']
+    self.spec_extras[:has_rdoc]     = true
 
     # Now the publishing settings
     self.remote_rdoc_dir            = 'rdoc'
