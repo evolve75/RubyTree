@@ -459,8 +459,15 @@ module Tree
       end
     end
 
-    # Returns depth of the tree from this node. A single leaf node has a
-    # depth of 1.
+    # Returns depth of the tree from this node. A single leaf node has a depth of 1.
+    #
+    #--
+    #
+    # TODO: This definition is incorrect and actually represents height of the tree.  The correct definition for
+    # 'depth' is the length of the path to its root.  Will need to change this function.
+    # See: http://en.wikipedia.org/wiki/Tree_%28data_structure%29#Terminology
+    #
+    #++
     def depth
       return 1 if isLeaf?
       1 + @children.collect { |child| child.depth }.max
