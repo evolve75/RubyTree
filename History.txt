@@ -1,6 +1,6 @@
 === 0.6.0 / 2010-01-03
 
-* Fixed the bug #22535[http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793] where the
+* Fixed the bug#22535[http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793] where the
   depth method was actually returning height+1 (not the depth).
 
 * Marked the Tree::TreeNode#depth method as *deprecated* (and introduced the run-time dependency on
