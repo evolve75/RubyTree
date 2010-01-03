@@ -276,7 +276,7 @@ module Tree
       each(&block)
     end
 
-    # Performs breadth first traversal of the tree rooted at this node. The
+    # Performs breadth first traversal of the tree starting at this node. The
     # traversal in a given level is from left to right.
     def breadth_each &block
       node_queue = [self]       # Create a queue with self as the initial entry
@@ -312,8 +312,11 @@ module Tree
       end
     end
 
-    # Returns the total number of nodes in this tree, rooted at the receiver
-    # node.
+    # Returns the total number of nodes in this tree, including this node.
+    #
+    # Size of the tree is defined as:
+    #
+    # Size:: The total number nodes in the subtree including this node.
     def size
       @children.inject(1) {|sum, node| sum + node.size}
     end
