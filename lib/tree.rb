@@ -41,13 +41,15 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require 'structured_warnings'   # To enable the deprecation of the depth method.
+
 # This module provides a TreeNode class which is the primary class for all
 # nodes represented in the Tree.
 # This module mixes in the Enumerable module.
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.5.3'
+  VERSION = '0.6.0'
 
   # == TreeNode Class Description
   #
@@ -462,16 +464,35 @@ module Tree
       end
     end
 
+    # Returns height of the (sub)tree from this node.  Height of a node is defined as:
+    #
+    # Height:: Length of the longest downward path to a leaf from the node.  Height of from the root node is height of
+    # the tree.  The height of a leaf node is zero.
+    def nodeHeight
+      return 0 if isLeaf?
+      1 + @children.collect { |child| child.nodeHeight }.max
+    end
+
+    # Returns depth this node in its (sub)tree.  Depth of a node is defined as:
+    #
+    # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
+    #
+    # Note that the deprecated method Tree::TreeNode#depth was incorrectly computing this value.  Please replace all
+    # calls to the old method by this one.
+    def nodeDepth
+      return 0 if isRoot?
+      1 + parent.nodeDepth
+    end
+
     # Returns depth of the tree from this node. A single leaf node has a depth of 1.
     #
-    #--
+    # This method is *DEPRECATED* and may be removed in the subsequent releases.  Note that per convention, the value
+    # returned by this method is actually the _height_ + 1 of the node, *not* the _depth_.
     #
-    # TODO: This definition is incorrect and actually represents height of the tree.  The correct definition for
-    # 'depth' is the length of the path to its root.  Will need to change this function.
-    # See: http://en.wikipedia.org/wiki/Tree_%28data_structure%29#Terminology
-    #
-    #++
+    # For correct and conventional behavior, please use Tree::TreeNode#nodeDepth and Tree::TreeNode#nodeHeight methods
+    # instead.
     def depth
+      warn DeprecatedMethodWarning, 'This method is deprecated.  Please use nodeDepth or nodeHeight instead (bug # 22535)'
       return 1 if isLeaf?
       1 + @children.collect { |child| child.depth }.max
     end

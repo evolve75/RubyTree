@@ -1,3 +1,14 @@
+2010-01-03  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree.rb (Tree::TreeNode#nodeDepth): Added the nodeDepth and
+	nodeHeight methods.  Deprecated the depth method.  This is the
+	bug-fix for bug # 22535.
+
+	* Rakefile: Added run-time dependency on the 'structured_warnings' gem.
+
+	* test/test_tree.rb: Added new test cases for the new nodeDepth
+	and nodeHeight methods.
+
 2010-01-01  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Have migrated 100% to usage of Hoe for the rake

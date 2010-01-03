@@ -36,6 +36,7 @@
 
 require 'test/unit'
 require 'tree'
+require 'structured_warnings'
 
 module TestTree
   # Test class for the Tree node.
@@ -81,6 +82,7 @@ module TestTree
       @root = nil
     end
 
+    # This test is for the root alone - without any children being linked
     def test_root_setup
       assert_not_nil(@root, "Root cannot be nil")
       assert_nil(@root.parent, "Parent of root node should be nil")
@@ -91,17 +93,20 @@ module TestTree
       assert(!@root.hasChildren?, "Cannot have any children")
       assert(@root.hasContent?, "This root should have content")
       assert_equal(1, @root.size, "Number of nodes should be one")
-      assert_nil(@root.siblings, "Root cannot have any children")
+      assert_nil(@root.siblings, "This root does not have any children")
 
+      assert_equal(0, @root.nodeHeight, "Root's height before adding any children is 0")
       assert_raise(RuntimeError) { Tree::TreeNode.new(nil) }
     end
 
+    # This test is for the state after the children are linked to the root
     def test_root
       loadChildren
 
       assert_same(@root, @root.root, "Root's root is self")
       assert_same(@root, @child1.root, "Root should be ROOT")
       assert_same(@root, @child4.root, "Root should be ROOT")
+      assert_equal(2, @root.nodeHeight, "Root's height after adding the children should be 2")
     end
 
     def test_hasContent_eh
@@ -236,6 +241,7 @@ module TestTree
     def test_add
       assert(!@root.hasChildren?, "Should not have any children")
 
+      assert_equal(1, @root.size, "Should have 1 node (the root)")
       @root.add(@child1)
 
       @root << @child2
@@ -309,9 +315,14 @@ module TestTree
       loadChildren
 
       assert(@root.hasChildren?, "Should have children")
-      assert_equal(5, @root.size, "Should have four nodes")
+      assert_equal(5, @root.size, "Should have five nodes")
       assert(@child3.hasChildren?, "Should have children")
       assert(!@child3.isLeaf?, "Should not be a leaf")
+
+      assert_equal(1, @child3.nodeHeight, "The subtree at Child 3 should have a height of 1")
+      for child in [@child1, @child2, @child4]
+        assert_equal(0, child.nodeHeight, "The subtree at #{child.name} should have a height of 0")
+      end
 
       children = []
       for child in @root.children
@@ -497,22 +508,62 @@ module TestTree
       assert_same(pers, @root.content, "Content should be the same")
     end
 
-    # Test the depth computation algorithm
+    # Test the depth computation algorithm.  Note that this is an incorrect computation and actually returns height+1
+    # instead of depth.  This method has been deprecated in this release and may be removed in the future.
     def test_depth
-      assert_equal(1, @root.depth, "A single node's depth is 1")
+      assert_warn(DeprecatedMethodWarning) do
+        assert_equal(1, @root.depth, "A single node's depth is 1")
+
+        @root << @child1
+        assert_equal(2, @root.depth, "This should be of depth 2")
+
+        @root << @child2
+        assert_equal(2, @root.depth, "This should be of depth 2")
+
+        @child2 << @child3
+        assert_equal(3, @root.depth, "This should be of depth 3")
+        assert_equal(2, @child2.depth, "This should be of depth 2")
+
+        @child3 << @child4
+        assert_equal(4, @root.depth, "This should be of depth 4")
+      end
+    end
+
+    # Test the height computation algorithm
+    def test_nodeHeight
+      assert_equal(0, @root.nodeHeight, "A single node's height is 0")
 
       @root << @child1
-      assert_equal(2, @root.depth, "This should be of depth 2")
+      assert_equal(1, @root.nodeHeight, "This should be of height 1")
+      assert_equal(0, @child1.nodeHeight, "This should be of height 0")
 
       @root << @child2
-      assert_equal(2, @root.depth, "This should be of depth 2")
+      assert_equal(1, @root.nodeHeight, "This should be of height 1")
+      assert_equal(0, @child2.nodeHeight, "This should be of height 0")
 
       @child2 << @child3
-      assert_equal(3, @root.depth, "This should be of depth 3")
-      assert_equal(2, @child2.depth, "This should be of depth 2")
+      assert_equal(2, @root.nodeHeight, "This should be of height 2")
+      assert_equal(1, @child2.nodeHeight, "This should be of height 1")
+      assert_equal(0, @child3.nodeHeight, "This should be of height 0")
 
       @child3 << @child4
-      assert_equal(4, @root.depth, "This should be of depth 4")
+      assert_equal(3, @root.nodeHeight, "This should be of height 3")
+      assert_equal(2, @child2.nodeHeight, "This should be of height 2")
+      assert_equal(1, @child3.nodeHeight, "This should be of height 1")
+      assert_equal(0, @child4.nodeHeight, "This should be of height 0")
+    end
+
+    # Test the depth computation algorithm.  Note that this is the correct depth computation.  The original
+    # Tree::TreeNode#depth was incorrectly computing the height of the node - instead of its depth.
+    def test_nodeDepth
+      assert_equal(0, @root.nodeDepth, "A root node's depth is 0")
+
+      loadChildren
+      for child in [@child1, @child2, @child3]
+        assert_equal(1, child.nodeDepth, "Node #{child.name} should have depth 1")
+      end
+
+      assert_equal(2, @child4.nodeDepth, "Child 4 should have depth 2")
     end
 
     # Test the breadth computation algorithm

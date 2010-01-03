@@ -3,8 +3,8 @@
 * TODO Create the basic UML diagrams and upload to the Site
   DEADLINE: <2010-01-04 Mon>
 
-* TODO Fix bug # [[http://rubyforge.org/tracker/index.php%3Ffunc%3Ddetail&aid%3D22535&group_id%3D1215&atid%3D4793][22535]]: The method Tree::TreeNode#depth is a misnomer.  The current definition actually provides the height function.
-  DEADLINE: <2010-01-09 Sat>
+* DONE Fix bug # [[http://rubyforge.org/tracker/index.php%3Ffunc%3Ddetail&aid%3D22535&group_id%3D1215&atid%3D4793][22535]]: The method Tree::TreeNode#depth is a misnomer.  The current definition actually provides the height function.
+  DEADLINE: <2010-01-09 Sat> CLOSED: [2010-01-03 Sun 22:15]
 
 * TODO Add a YAML export method to the TreeNode class.
 
