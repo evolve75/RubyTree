@@ -57,7 +57,8 @@ As an example, the following code-snippet implements this tree structure:
 == REQUIREMENTS:
 
 * Ruby 1.8+  (http://www.ruby-lang.org)
-* Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html)
+* Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem
+* structured_warnings (http://github.com/schmidt/structured_warnings) Rubygem
 
 == INSTALL:
 
