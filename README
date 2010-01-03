@@ -11,7 +11,7 @@
 
 == DESCRIPTION:
 
-Rubytree is a Ruby implementation of the generic Tree data structure.  It provides a generic tree data-structure with
+RubyTree is a Ruby implementation of the generic Tree data structure.  It provides a generic tree data-structure with
 ability to store keyed node-elements in the tree.  This implementation is node-centric, where the individual nodes on
 the tree are the primary objects and form the leafs of the structure.  The implementation mixes in the Enumerable
 module.
@@ -62,11 +62,11 @@ As an example, the following code-snippet implements this tree structure:
 
 == INSTALL:
 
-Rubytree is an open source project and is hosted at:
+RubyTree is an open source project and is hosted at:
 
 http://rubytree.rubyforge.org
 
-Rubytree can be downloaded as a Rubygem or as a tar/zip file from:
+RubyTree can be downloaded as a Rubygem or as a tar/zip file from:
 
 http://rubyforge.org/frs/?group_id=1215&release_id=8817
 
@@ -78,7 +78,7 @@ The file-name is one of:
 
 Download the appropriate file-type for your system.
 
-It is recommended to install Rubytree as a Ruby Gem, as this is an easy way to keep the version updated, and keep
+It is recommended to install RubyTree as a Ruby Gem, as this is an easy way to keep the version updated, and keep
 multiple versions of the library available on your system.
 
 === Installing the Gem
@@ -87,7 +87,7 @@ To Install the Gem, from a Terminal/CLI command prompt, issue the command:
 
   $ gem install rubytree
 
-This should install the gem file for Rubytree. Note that you may need to be a super-user (root) to successfully install
+This should install the gem file for RubyTree. Note that you may need to be a super-user (root) to successfully install
 the gem.
 
 === Installing from the tgz/zip file
@@ -123,7 +123,7 @@ tasks.
 
 == LICENSE:
 
-Rubytree is licensed under the BSD[http://www.opensource.org/licenses/bsd-license.php] license.
+RubyTree is licensed under the BSD[http://www.opensource.org/licenses/bsd-license.php] license.
 
 Copyright (c) 2006, 2007 Anupam Sengupta
 All rights reserved.
