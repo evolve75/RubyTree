@@ -50,7 +50,6 @@ begin
     self.extra_rdoc_files           = ['README', 'COPYING', 'ChangeLog']
     self.url                        =  "http://rubytree.rubyforge.org"
     self.readme_file                = 'README'
-    self.extra_deps                 << ['structured_warnings', '>= 0.1.3']
     # Set the RDoc Options.
     self.spec_extras[:rdoc_options] = ['--main', 'README', '--line-numbers']
     self.spec_extras[:has_rdoc]     = true

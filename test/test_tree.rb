@@ -36,7 +36,6 @@
 
 require 'test/unit'
 require 'tree'
-require 'structured_warnings'
 
 module TestTree
   # Test class for the Tree node.
@@ -511,22 +510,31 @@ module TestTree
     # Test the depth computation algorithm.  Note that this is an incorrect computation and actually returns height+1
     # instead of depth.  This method has been deprecated in this release and may be removed in the future.
     def test_depth
-      assert_warn(DeprecatedMethodWarning) do
-        assert_equal(1, @root.depth, "A single node's depth is 1")
-
-        @root << @child1
-        assert_equal(2, @root.depth, "This should be of depth 2")
-
-        @root << @child2
-        assert_equal(2, @root.depth, "This should be of depth 2")
-
-        @child2 << @child3
-        assert_equal(3, @root.depth, "This should be of depth 3")
-        assert_equal(2, @child2.depth, "This should be of depth 2")
-
-        @child3 << @child4
-        assert_equal(4, @root.depth, "This should be of depth 4")
+      begin
+        require 'structured_warnings'
+        assert_warn(DeprecatedMethodWarning) { do_deprecated_depth }
+      rescue LoadError
+        # Since the structued_warnings package is not present, we revert to good old Kernel#warn behavior.
+        do_deprecated_depth
       end
+    end
+
+    # Run the assertions for the deprecated depth method.
+    def do_deprecated_depth
+      assert_equal(1, @root.depth, "A single node's depth is 1")
+
+      @root << @child1
+      assert_equal(2, @root.depth, "This should be of depth 2")
+
+      @root << @child2
+      assert_equal(2, @root.depth, "This should be of depth 2")
+
+      @child2 << @child3
+      assert_equal(3, @root.depth, "This should be of depth 3")
+      assert_equal(2, @child2.depth, "This should be of depth 2")
+
+      @child3 << @child4
+      assert_equal(4, @root.depth, "This should be of depth 4")
     end
 
     # Test the height computation algorithm

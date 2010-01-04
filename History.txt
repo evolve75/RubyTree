@@ -1,3 +1,10 @@
+=== 0.6.1 / 2010-01-04
+
+* Changed the hard-dependency on the 'structured_warnings' RubyGem to a soft-dependency - which lets Rubytree still
+  work if this RubyGem is not available.  The rationale for this is that we should not require the user to install a
+  separate library just for one single edge-case function (in this case, to indicate a deprecated method).  However, if
+  the library _is_ available on the user's system, then it will get used.
+
 === 0.6.0 / 2010-01-03
 
 * Fixed the bug#22535[http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793] where the

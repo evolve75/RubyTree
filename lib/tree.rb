@@ -41,15 +41,13 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'structured_warnings'   # To enable the deprecation of the depth method.
-
 # This module provides a TreeNode class which is the primary class for all
 # nodes represented in the Tree.
 # This module mixes in the Enumerable module.
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.6.0'
+  VERSION = '0.6.1'
 
   # == TreeNode Class Description
   #
@@ -492,7 +490,15 @@ module Tree
     # For correct and conventional behavior, please use Tree::TreeNode#nodeDepth and Tree::TreeNode#nodeHeight methods
     # instead.
     def depth
-      warn DeprecatedMethodWarning, 'This method is deprecated.  Please use nodeDepth or nodeHeight instead (bug # 22535)'
+      begin
+        require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
+        warn DeprecatedMethodWarning, 'This method is deprecated.  Please use nodeDepth() or nodeHeight() instead (bug # 22535)'
+      rescue LoadError
+        # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
+        warn 'Tree::TreeNode#depth() method is deprecated.  Please use nodeDepth() or nodeHeight() instead (bug # 22535)'
+      end
+
+
       return 1 if isLeaf?
       1 + @children.collect { |child| child.depth }.max
     end

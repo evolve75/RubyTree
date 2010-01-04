@@ -1,3 +1,19 @@
+2010-01-05  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* README: Updated the requirements section.
+
+	* Rakefile: Removed the hard run-time dependency on
+	'structured_warnings' gem.  The library will still be used if
+	available on the user's system.
+
+	* test/test_tree.rb: Changed the tests to sync with the
+	soft-dependency on 'structured_warnings'.
+
+	* lib/tree.rb (Tree::TreeNode#depth): Removed the hard
+	dependency on 'structured_warnings' RubyGem.  Changed to a soft
+	dependency that degrades well to a standard warning mechanism if
+	the Gem is not available.
+
 2010-01-03  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* lib/tree.rb (Tree::TreeNode#nodeDepth): Added the nodeDepth and
