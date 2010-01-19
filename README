@@ -11,10 +11,11 @@
 
 == DESCRIPTION:
 
-RubyTree is a Ruby implementation of the generic Tree data structure.  It provides a generic tree data-structure with
-ability to store keyed node-elements in the tree.  This implementation is node-centric, where the individual nodes on
-the tree are the primary objects and form the leafs of the structure.  The implementation mixes in the Enumerable
-module.
+RubyTree is a Ruby implementation of the generic tree data structure.  It provides a node-based class model to store
+keyed node-elements in the tree and simple APIs to access, modify and traverse the structure.  RubyTree is node-centric,
+where individual nodes on the tree are the primary compositional and structural elements.
+
+This implementation also mixes in the Enumerable module to allow standard access to the tree as a collection.
 
 == SYNOPSIS:
 
