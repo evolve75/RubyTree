@@ -61,6 +61,20 @@ begin
     self.need_tar                   = true
     self.need_zip                   = true
 
+    # Post installation message
+    self.post_install_message       = <<MSGEND
+========================================================================
+
+ Thank you for installing #{PKG_NAME.capitalize}.
+
+ Please note that a few APIs have been deprecated since Version 0.6.1
+
+ Specifically, the 'Tree::TreeNode#depth' method is now deprecated, and
+ a new nodeDepth() method has been introduced.
+
+========================================================================
+MSGEND
+
     # Code Metrics ...
     self.flay_threshold             = timebomb 1200, 100 # Default is 1200, 100
     self.flog_threshold             = timebomb 1200, 100 # Default is 1200, 100
