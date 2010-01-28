@@ -109,7 +109,7 @@ module Tree
     # Name of this node.  Expected to be unique within the tree.
     attr_reader   :name
 
-    # Content of this node.  Can be +nil+
+    # Content of this node.  Can be +nil+.
     attr_accessor :content
 
     # Parent of this node.  Will be +nil+ for root nodes.
@@ -166,7 +166,7 @@ module Tree
     # This method should *NOT* be invoked by client code.
     #
     # Returns the parent.
-    def parent=(parent)
+    def parent=(parent)         # :nodoc:
       @parent = parent
     end
 
@@ -175,7 +175,7 @@ module Tree
     # This method allows an easy method to add node hierarchies to the tree
     # on a given path via chaining the method calls to successive child nodes.
     #
-    # E.g. root << child << grand_child
+    # Example: <tt>root << child << grand_child</tt>
     #
     # Returns the added child node.
     def <<(child)
@@ -190,7 +190,7 @@ module Tree
     #
     # Returns the added child node.
     #
-    # if the another child node with the same node exists, then raises an exception.
+    # An exception is raised if another child node with the same name exists.g
     def add(child)
       raise "Child already added" if @childrenHash.has_key?(child.name)
 
@@ -239,7 +239,7 @@ module Tree
     # Protected method which sets the receiver node as a root node.
     #
     # Returns +nil+.
-    def setAsRoot!
+    def setAsRoot!              # :nodoc:
       @parent = nil
     end
 
@@ -289,14 +289,14 @@ module Tree
     # by yielding the node to the specified block.
     #
     # The traversal is depth-first and from left to right in pre-ordered sequence.
-    def each &block
+    def each &block             # :yields: node
       yield self
       children { |child| child.each(&block) }
     end
 
     # Traverses the tree in a pre-ordered sequence.  This is equivalent to
     # TreeNode#each
-    def preordered_each &block
+    def preordered_each &block  # :yields: node
       each(&block)
     end
 
@@ -371,9 +371,12 @@ module Tree
       children { |child| child.printTree(level + 1)}
     end
 
-    # Returns the root for the (sub)tree to which the receiver node belongs.
+    # Returns root node for the (sub)tree to which the receiver node belongs.
     #
     # Note that a root node's root is itself (*beware* of any loop construct that may become infinite!)
+    #--
+    # TODO: We should perhaps return nil as root's root.
+    #++
     def root
       root = self
       root = root.parent while !root.isRoot?
@@ -482,7 +485,7 @@ module Tree
     end
 
     # Creates a dump representation of the reciever node and returns the same as a hash.
-    def createDumpRep
+    def createDumpRep           # :nodoc:
       { :name => @name, :parent => (isRoot? ? nil : @parent.name),  :content => Marshal.dump(@content)}
     end
 
@@ -528,7 +531,7 @@ module Tree
     # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
     #
     # *Note* that the deprecated method Tree::TreeNode#depth was incorrectly computing this value.
-    # Please replace all calls to the old method by this one.
+    # Please replace all calls to the old method with Tree::TreeNode#nodeDepth instead.
     def nodeDepth
       return 0 if isRoot?
       1 + parent.nodeDepth
