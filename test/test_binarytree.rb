@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# test_binarytree.rb
+# test_binarytree.rb - This file is part of the RubyTree package.
 #
 # $Revision$ by $Author$ on $Date$
 #
@@ -38,7 +38,7 @@ require 'test/unit'
 require 'tree/binarytree'
 
 module TestTree
-  # Test class for the Tree node.
+  # Test class for the binary tree node.
   class TestBinaryTreeNode < Test::Unit::TestCase
 
     def setup
