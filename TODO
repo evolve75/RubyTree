@@ -1,5 +1,7 @@
 # -*- mode: org; coding: utf-8-unix; -*-
 
+* TODO Fix the marshal_load method.  This probably needs to be a class method.
+* TODO Fix the semantic inconsistency between the TreeNode#first|lastSibling method and the siblings method w.r.t. the root
 * TODO Create the basic UML diagrams and upload to the Site
   DEADLINE: <2010-01-04 Mon>
 

@@ -1,3 +1,19 @@
+2010-01-28  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* Rakefile: Minor documentation change.
+
+	* README (DOCUMENTATION): Added comments to the example code.
+
+	* test/test_tree.rb: Documentation clean up.
+
+	* test/test_binarytree.rb: Documentation clean up.
+
+	* lib/tree.rb (Tree): Cleaned up documentation.  Also some minor
+	code refactoring done.
+
+	* lib/tree/binarytree.rb (Tree): Cleaned up documentation.  Minor
+	readability improvement in the isLeftChild? and isRightChild? methods.
+
 2010-01-05  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* README: Updated the requirements section.

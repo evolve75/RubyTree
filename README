@@ -11,9 +11,9 @@
 
 == DESCRIPTION:
 
-RubyTree is a Ruby implementation of the generic tree data structure.  It provides a node-based class model to store
-keyed node-elements in the tree and simple APIs to access, modify and traverse the structure.  RubyTree is node-centric,
-where individual nodes on the tree are the primary compositional and structural elements.
+RubyTree is a Ruby implementation of the generic tree data structure.  It provides a node-based model to store keyed
+node-elements in the tree and simple APIs to access, modify and traverse the structure.  RubyTree is node-centric, where
+individual nodes on the tree are the primary compositional and structural elements.
 
 This implementation also mixes in the Enumerable module to allow standard access to the tree as a collection.
 
@@ -35,24 +35,34 @@ As an example, the following code-snippet implements this tree structure:
  | GRANDCHILD 1  |
  +---------------+
 
- # Example
- require 'tree'
+ # ..... Example starts.
+ require 'tree'                 # Load the library
 
+ # ..... Create the root node first.  Note that every node has a name and an optional content payload.
  myTreeRoot = Tree::TreeNode.new("ROOT", "Root Content")
+
+ # ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
  myTreeRoot << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
  myTreeRoot << Tree::TreeNode.new("CHILD2", "Child2 Content")
 
+ # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
  myTreeRoot.printTree
 
+ # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
  child1 = myTreeRoot["CHILD1"]
  grandChild1 = myTreeRoot["CHILD1"]["GRANDCHILD1"]
 
+ # ..... Now lets retrieve siblings of the current node as an array.
  siblingsOfChild1Array = child1.siblings
+
+ # ..... Lets retrieve immediate children of the root node as an array.
  immediateChildrenArray = myTreeRoot.children
 
- # Process all nodes
+ # ..... This is a depth-first and L-to-R pre-ordered traversal.
  myTreeRoot.each { |node| node.content.reverse }
- myTreeRoot.remove!(child1) # Remove the child
+
+ # ..... Lets remove a child node from the root node.
+ myTreeRoot.remove!(child1)
 
 
 == REQUIREMENTS:

@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-# testtree.rb
+# testtree.rb - This file is part of the RubyTree package.
 #
 # $Revision$ by $Author$ on $Date$
 #
@@ -41,7 +41,7 @@ module TestTree
   # Test class for the Tree node.
   class TestTreeNode < Test::Unit::TestCase
 
-    Person = Struct::new(:First, :last)
+    Person = Struct::new(:First, :last) # A simple structure to use as the content for the nodes.
 
     def setup
       @root = Tree::TreeNode.new("ROOT", "Root Node")
@@ -83,16 +83,16 @@ module TestTree
 
     # This test is for the root alone - without any children being linked
     def test_root_setup
-      assert_not_nil(@root, "Root cannot be nil")
-      assert_nil(@root.parent, "Parent of root node should be nil")
-      assert_not_nil(@root.name, "Name should not be nil")
-      assert_equal("ROOT", @root.name, "Name should be 'ROOT'")
-      assert_equal("Root Node", @root.content, "Content should be 'Root Node'")
-      assert(@root.isRoot?, "Should identify as root")
-      assert(!@root.hasChildren?, "Cannot have any children")
-      assert(@root.hasContent?, "This root should have content")
-      assert_equal(1, @root.size, "Number of nodes should be one")
-      assert_nil(@root.siblings, "This root does not have any children")
+      assert_not_nil(@root       , "Root cannot be nil")
+      assert_nil(@root.parent    , "Parent of root node should be nil")
+      assert_not_nil(@root.name  , "Name should not be nil")
+      assert_equal("ROOT"        , @root.name, "Name should be 'ROOT'")
+      assert_equal("Root Node"   , @root.content, "Content should be 'Root Node'")
+      assert(@root.isRoot?       , "Should identify as root")
+      assert(!@root.hasChildren? , "Cannot have any children")
+      assert(@root.hasContent?   , "This root should have content")
+      assert_equal(1             , @root.size, "Number of nodes should be one")
+      assert_nil(@root.siblings  , "This root does not have any children")
 
       assert_equal(0, @root.nodeHeight, "Root's height before adding any children is 0")
       assert_raise(RuntimeError) { Tree::TreeNode.new(nil) }
@@ -102,16 +102,16 @@ module TestTree
     def test_root
       loadChildren
 
-      assert_same(@root, @root.root, "Root's root is self")
-      assert_same(@root, @child1.root, "Root should be ROOT")
-      assert_same(@root, @child4.root, "Root should be ROOT")
-      assert_equal(2, @root.nodeHeight, "Root's height after adding the children should be 2")
+      assert_same(@root , @root.root, "Root's root is self")
+      assert_same(@root , @child1.root, "Root should be ROOT")
+      assert_same(@root , @child4.root, "Root should be ROOT")
+      assert_equal(2    , @root.nodeHeight, "Root's height after adding the children should be 2")
     end
 
     def test_hasContent_eh
       aNode = Tree::TreeNode.new("A Node")
-      assert_nil(aNode.content, "The node should not have content")
-      assert(!aNode.hasContent?, "The node should not have content")
+      assert_nil(aNode.content  , "The node should not have content")
+      assert(!aNode.hasContent? , "The node should not have content")
 
       aNode.content = "Something"
       assert_not_nil(aNode.content, "The node should now have content")

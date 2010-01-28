@@ -1,6 +1,6 @@
 # -*- mode: ruby; -*-
 #
-# Rakefile
+# Rakefile - This file is part of the RubyTree package.
 #
 # $Revision$ by $Author$ on $Date$
 #
