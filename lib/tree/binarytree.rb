@@ -46,6 +46,8 @@ module Tree
 
   # Provides a Binary tree implementation. This node allows only two child nodes (left and right child).  It also
   # provides direct access to the left or right child, including assignment to the same.
+  #
+  # This inherits from the Tree::TreeNode class.
   class BinaryTreeNode < TreeNode
 
     # Adds the specified child node to the receiver node.  The child node's parent is set to be the receiver.
