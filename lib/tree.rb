@@ -92,29 +92,34 @@ module Tree
   #    | GRANDCHILD 1  |
   #    +---------------+
   #
-  # require 'tree'
+  # # ..... Example starts.
+  # require 'tree'                 # Load the library
   #
+  # # ..... Create the root node first.  Note that every node has a name and an optional content payload.
   # root_node = Tree::TreeNode.new("ROOT", "Root Content")
   #
+  # # ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
   # root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
-  #
   # root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
   #
+  # # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
   # root_node.printTree
   #
-  # child1       = root_node["CHILD1"]
-  #
+  # # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
+  # child1 = root_node["CHILD1"]
   # grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
   #
-  # siblings_of_child1 = child1.siblings # Will return an array
+  # # ..... Now lets retrieve siblings of the current node as an array.
+  # siblings_of_child1 = child1.siblings
   #
-  # children_of_root   = root_node.children # Will return an array
+  # # ..... Lets retrieve immediate children of the root node as an array.
+  # children_of_root = root_node.children
   #
-  # # Process all nodes
-  #
+  # # ..... This is a depth-first and L-to-R pre-ordered traversal.
   # root_node.each { |node| node.content.reverse }
   #
-  # root_node.remove!(child1) # Remove the child
+  # # ..... Lets remove a child node from the root node.
+  # root_node.remove!(child1)
   #
   class TreeNode
     include Enumerable
