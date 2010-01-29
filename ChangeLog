@@ -1,3 +1,11 @@
+2010-01-30  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree.rb (Tree): Update the example code to use Ruby
+	conventions for the variable names.
+
+	* README: Updated the example to use Ruby conventions for the
+	variable names.
+
 2010-01-28  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* Rakefile: Minor documentation change.

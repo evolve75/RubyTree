@@ -81,27 +81,27 @@ module Tree
   #
   # require 'tree'
   #
-  # myTreeRoot = Tree::TreeNode.new("ROOT", "Root Content")
+  # root_node = Tree::TreeNode.new("ROOT", "Root Content")
   #
-  # myTreeRoot << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
+  # root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
   #
-  # myTreeRoot << Tree::TreeNode.new("CHILD2", "Child2 Content")
+  # root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
   #
-  # myTreeRoot.printTree
+  # root_node.printTree
   #
-  # child1 = myTreeRoot["CHILD1"]
+  # child1       = root_node["CHILD1"]
   #
-  # grandChild1 = myTreeRoot["CHILD1"]["GRANDCHILD1"]
+  # grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
   #
-  # siblingsOfChild1Array = child1.siblings
+  # siblings_of_child1_array = child1.siblings
   #
-  # immediateChildrenArray = myTreeRoot.children
+  # children_of_root_array   = root_node.children
   #
   # # Process all nodes
   #
-  # myTreeRoot.each { |node| node.content.reverse }
+  # root_node.each { |node| node.content.reverse }
   #
-  # myTreeRoot.remove!(child1) # Remove the child
+  # root_node.remove!(child1) # Remove the child
   #
   class TreeNode
     include Enumerable

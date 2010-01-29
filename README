@@ -39,30 +39,30 @@ As an example, the following code-snippet implements this tree structure:
  require 'tree'                 # Load the library
 
  # ..... Create the root node first.  Note that every node has a name and an optional content payload.
- myTreeRoot = Tree::TreeNode.new("ROOT", "Root Content")
+ root_node = Tree::TreeNode.new("ROOT", "Root Content")
 
  # ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
- myTreeRoot << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
- myTreeRoot << Tree::TreeNode.new("CHILD2", "Child2 Content")
+ root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
+ root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
 
  # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
- myTreeRoot.printTree
+ root_node.printTree
 
  # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
- child1 = myTreeRoot["CHILD1"]
- grandChild1 = myTreeRoot["CHILD1"]["GRANDCHILD1"]
+ child1 = root_node["CHILD1"]
+ grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
 
  # ..... Now lets retrieve siblings of the current node as an array.
- siblingsOfChild1Array = child1.siblings
+ siblings_of_child1_array = child1.siblings
 
  # ..... Lets retrieve immediate children of the root node as an array.
- immediateChildrenArray = myTreeRoot.children
+ children_of_root_array = root_node.children
 
  # ..... This is a depth-first and L-to-R pre-ordered traversal.
- myTreeRoot.each { |node| node.content.reverse }
+ root_node.each { |node| node.content.reverse }
 
  # ..... Lets remove a child node from the root node.
- myTreeRoot.remove!(child1)
+ root_node.remove!(child1)
 
 
 == REQUIREMENTS:
