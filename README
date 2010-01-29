@@ -53,10 +53,10 @@ As an example, the following code-snippet implements this tree structure:
  grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
 
  # ..... Now lets retrieve siblings of the current node as an array.
- siblings_of_child1_array = child1.siblings
+ siblings_of_child1 = child1.siblings
 
  # ..... Lets retrieve immediate children of the root node as an array.
- children_of_root_array = root_node.children
+ children_of_root = root_node.children
 
  # ..... This is a depth-first and L-to-R pre-ordered traversal.
  root_node.each { |node| node.content.reverse }
