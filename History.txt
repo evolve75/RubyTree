@@ -1,3 +1,7 @@
+=== 0.6.3 / 2010-01-30
+
+* Added new methods to report the degree statistics of a node.
+
 === 0.6.2 / 2010-01-30
 
 * Updated the documentation.

@@ -1,22 +1,30 @@
 # -*- mode: org; coding: utf-8-unix; -*-
 
-* TODO Convert all method names to the canonical /^[_a-z<>=\[|+-\/\*`]+[_a-z0-9_<>=~@\[\]]*[=!\?]?$/ pattern
-  See Roodi report at http://getcaliper.com/caliper/tool?tool=roodi&repo=git://github.com/evolve75/RubyTree.git
-* TODO Fix the TreeNode#root method to return nil for root's root.
-* TODO Fix the marshal_load method.  This probably needs to be a class method.
-* TODO Fix the semantic inconsistency between the TreeNode#first|lastSibling method and the siblings method w.r.t. the root
-* TODO Create the basic UML diagrams and upload to the Site
-  DEADLINE: <2010-01-04 Mon>
 
-* DONE Fix bug # [[http://rubyforge.org/tracker/index.php%3Ffunc%3Ddetail&aid%3D22535&group_id%3D1215&atid%3D4793][22535]]: The method Tree::TreeNode#depth is a misnomer.  The current definition actually provides the height function.
-  DEADLINE: <2010-01-09 Sat> CLOSED: [2010-01-03 Sun 22:15]
+* R0.7.0
+*** TODO Add new methods to return the degree counts of the receiver node (in-degree and out-degree)
 
-* TODO Add a YAML export method to the TreeNode class.
+* R0.8.0
+*** TODO Convert all method names to the canonical /^[_a-z<>=\[|+-\/\*`]+[_a-z0-9_<>=~@\[\]]*[=!\?]?$/ pattern
+    See Roodi report at http://getcaliper.com/caliper/tool?tool=roodi&repo=git://github.com/evolve75/RubyTree.git
 
-* DONE Get the version control moved from CVS to Subversion (request submitted to RubyForge)
-  CLOSED: [2010-01-02 Sat 17:58]
 
-* DONE Add logic in Rakefile to read the file list from Manifest.txt file.
+* Unplanned / Not assigned to any release
+*** TODO Fix the TreeNode#root method to return nil for root's root.
+*** TODO Fix the marshal_load method.  This probably needs to be a class method.
+*** TODO Fix the semantic inconsistency between the TreeNode#first|lastSibling method and the siblings method w.r.t. the root
+*** TODO Create the basic UML diagrams and upload to the Site
+    DEADLINE: <2010-01-04 Mon>
+
+*** DONE Fix bug # [[http://rubyforge.org/tracker/index.php%3Ffunc%3Ddetail&aid%3D22535&group_id%3D1215&atid%3D4793][22535]]: The method Tree::TreeNode#depth is a misnomer.  The current definition actually provides the height function.
+    DEADLINE: <2010-01-09 Sat> CLOSED: [2010-01-03 Sun 22:15]
+
+*** TODO Add a YAML export method to the TreeNode class.
+
+*** DONE Get the version control moved from CVS to Subversion (request submitted to RubyForge)
+    CLOSED: [2010-01-02 Sat 17:58]
+
+*** DONE Add logic in Rakefile to read the file list from Manifest.txt file.
   CLOSED: [2009-12-31 Thu 23:37]
 
 

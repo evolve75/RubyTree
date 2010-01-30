@@ -49,7 +49,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.6.2'
+  VERSION = '0.7.0'
 
   # == TreeNode Class Description
   #
@@ -376,6 +376,10 @@ module Tree
     end
 
     # Convenience synonym for Tree#size
+    #--
+    # TODO: The semantic of length is probably unclear.  Should return the node_depth instead
+    #       to reflect the path length.
+    #++
     def length
       size()
     end
@@ -593,6 +597,25 @@ module Tree
     # Breadth:: Number of sibling nodes to this node + 1 (this node itself), i.e., the number of children the parent of this node has.
     def breadth
       isRoot? ? 1 : parent.children.size
+    end
+
+    # Returns the in-degree for the receiver node.
+    #
+    # - In-degree = 0 for a root or orphaned node
+    # - In-degree = 1 for a node which has a parent
+    #
+    # In-degree is defined as:
+    # In-degree:: The number of edges arriving at the node (0 for root, 1 for all other nodes)
+    def in_degree
+      isRoot? ? 0 : 1
+    end
+
+    # Returns the out-degree for the receiver node.
+    #
+    # Out-degree is defined as:
+    # Out-degree:: The number of edges leaving the node (zero for leafs)
+    def out_degree
+      isLeaf? ? 0 : children.size
     end
 
     protected :parent=, :setAsRoot!, :createDumpRep
