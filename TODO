@@ -2,7 +2,8 @@
 
 
 * R0.7.0
-*** TODO Add a API-CHANGES file to document the various API changes made till date
+*** DONE Add a API-CHANGES file to document the various API changes made till date
+    CLOSED: [2010-01-31 Sun 00:52]
 *** DONE Add new methods to return the degree counts of the receiver node (in-degree and out-degree)
     CLOSED: [2010-01-30 Sat 23:56]
 

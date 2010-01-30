@@ -47,7 +47,7 @@ begin
     # The GemSpec settings
     self.rubyforge_name = PKG_NAME
     developer "Anupam Sengupta", "anupamsg@gmail.com"
-    self.extra_rdoc_files           = ['README', 'COPYING', 'ChangeLog']
+    self.extra_rdoc_files           = ['README', 'COPYING', 'ChangeLog', 'API-CHANGES']
     self.url                        =  "http://rubytree.rubyforge.org"
     self.readme_file                = 'README'
     # Set the RDoc Options.
@@ -65,12 +65,14 @@ begin
     self.post_install_message       = <<MSGEND
 ========================================================================
 
- Thank you for installing #{PKG_NAME.capitalize}.
+ Thank you for installing #{PKG_NAME}.
 
- Please note that a few APIs have been deprecated since Version 0.6.1
+ Please note that a few APIs have been deprecated since Version 0.6.1.
 
  Specifically, the 'Tree::TreeNode#depth' method is now deprecated, and
  a new nodeDepth() method has been introduced.
+
+ Details of the API changes are documented in the API-CHANGES file.
 
 ========================================================================
 MSGEND
