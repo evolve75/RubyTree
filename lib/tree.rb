@@ -445,7 +445,7 @@ module Tree
       isRoot? ? self : parent.children.last
     end
 
-    # Returns true if the receivere node is the last sibling.
+    # Returns true if the receiver node is the last sibling.
     def isLastSibling?
       lastSibling == self
     end

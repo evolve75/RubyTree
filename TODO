@@ -2,11 +2,16 @@
 
 
 * R0.7.0
-*** TODO Add new methods to return the degree counts of the receiver node (in-degree and out-degree)
+*** TODO Add a API-CHANGES file to document the various API changes made till date
+*** DONE Add new methods to return the degree counts of the receiver node (in-degree and out-degree)
+    CLOSED: [2010-01-30 Sat 23:56]
 
 * R0.8.0
 *** TODO Convert all method names to the canonical /^[_a-z<>=\[|+-\/\*`]+[_a-z0-9_<>=~@\[\]]*[=!\?]?$/ pattern
     See Roodi report at http://getcaliper.com/caliper/tool?tool=roodi&repo=git://github.com/evolve75/RubyTree.git
+*** TODO Fix the inconsistency of returning root as its first sibling, and returning a
+*** TODO We should perhaps return nil as root's root.
+*** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
 
 
 * Unplanned / Not assigned to any release
@@ -26,7 +31,10 @@
 
 *** DONE Add logic in Rakefile to read the file list from Manifest.txt file.
   CLOSED: [2009-12-31 Thu 23:37]
-
-
+*** TODO Fix the inconsistency of returning root as its last sibling, and returning a nil array for siblings of the node
+*** TODO marshal_load method probably should be a class method.  It currently clobbers self.
+*** TODO Fix the inconsistency of returning root as its first/last sibling, and returning a nil array for siblings of the node
 
 $Id$
+
+
