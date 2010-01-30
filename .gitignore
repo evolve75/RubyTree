@@ -1,0 +1,8 @@
+TAGS
+coverage.info
+doc/
+pkg/
+coverage/
+tmp/
+.yardoc/
+.DS_Store
