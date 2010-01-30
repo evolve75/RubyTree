@@ -496,8 +496,11 @@ module TestTree
       @root.content = "ABC"
       assert_equal("ABC", @root.content, "Content should be 'ABC'")
       @root.freezeTree!
-      assert_raise(TypeError) {@root.content = "123"}
-      assert_raise(TypeError) {@root[0].content = "123"}
+      # Note: The error raised here depends on the Ruby version.
+      # For Ruby > 1.9, RuntimeError is raised
+      # For Ruby ~ 1.8, TypeError is raised
+      assert_raise(RuntimeError, TypeError) {@root.content = "123"}
+      assert_raise(RuntimeError, TypeError) {@root[0].content = "123"}
     end
 
     # Test whether the content is accesible

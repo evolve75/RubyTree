@@ -436,7 +436,7 @@ module Tree
         end
       else
         siblings = []
-        parent.children {|sibling| siblings << sibling if sibling != self}
+        parent.children {|my_sibling| siblings << my_sibling if my_sibling != self}
         siblings
       end
     end
@@ -511,7 +511,7 @@ module Tree
           initialize(name, content)
 
           nodes[name] = self    # Add self to the list of nodes
-         end
+        end
       end
     end
 
