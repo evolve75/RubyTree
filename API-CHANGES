@@ -1,4 +1,4 @@
-# -*- mode: text; coding: utf-8-unix; -*-
+= API Changes in RubyTree
 
 This file documents various API level changes that have been made to the RubyTree package.  Note that new API additions
 are not specifically documented unless they are related to incompatibilities from the previous release.
@@ -25,3 +25,8 @@ be provided to ensure relatively smooth transition to the new APIs.
   method (TreeNode#node_depth) which returns the correct result.
 
 $id$
+
+# Local Variables:
+# mode: text
+# coding: utf-8-unix
+# End:

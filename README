@@ -68,10 +68,14 @@ As an example, the following code-snippet implements this tree structure:
 == REQUIREMENTS:
 
 * Ruby 1.8+  (http://www.ruby-lang.org)
-* Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem
 
 * Optional but recommended:
   * structured_warnings (http://github.com/schmidt/structured_warnings) Rubygem
+
+* Development dependencies (not required for installing the gem):
+  * Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem
+  * gemcutter (http://gemcutter.org/gems/gemcutter) Rubygem
+  * Rubyforge (http://codeforpeople.rubyforge.org/rubyforge/) Rubygem
 
 == INSTALL:
 
@@ -119,11 +123,47 @@ From a command line/terminal prompt, you can issue the following command to view
 
     ri Tree::TreeNode
 
-Documentation on the web is available at:
+Documentation for the latest released version is available at:
 
 http://rubytree.rubyforge.org/rdoc
 
+Documentation for the latest git HEAD is available at:
+
+http://rdoc.info/projects/evolve75/RubyTree
+
 == DEVELOPERS:
+
+You can download the latest released source code using the tar or zip version as mentioned above in the installation
+section.
+
+Alternatively, you can checkout the latest commit/revision from the version control system.  Note that RubyTree's
+primary SCM[http://en.wikipedia.org/wiki/Source_Code_Management] is on Subversion[http://subversion.tigris.org/] and is
+also mirrored on github[http://www.github.com].
+
+=== Using the Subversion repository
+
+For checking out from Subversion, use one of the following commands:
+
+  $ svn checkout http://rubytree.rubyforge.org/svn/
+
+or
+
+  $ svn checkout svn://rubyforge.org/var/svn/rubytree
+
+The SVN repository is available on the web at: http://fisheye2.atlassian.com/browse/rubytree
+
+=== Using the Git repository
+
+For cloning the git repository, use one of the following commands:
+
+  $ git clone git://github.com/evolve75/RubyTree.git
+
+or
+  $ git clone http://github.com/evolve75/RubyTree.git
+
+The git repository is available on the web at: http://github.com/evolve75/RubyTree
+
+=== Setting up the development environment
 
 After checking out the source, run:
 
@@ -132,7 +172,8 @@ After checking out the source, run:
 This task will install any missing dependencies, run the tests/specs, and generate the RDoc.
 
 Note that you need to have the Rubygem 'Hoe' (http://seattlerb.rubyforge.org/hoe/Hoe.html) to successfully run the rake
-tasks.
+tasks.  Installing Hoe may also install additional pre-requisite gems.  See the dependencies section in this document for
+details.
 
 == LICENSE:
 
@@ -163,3 +204,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 (Document Revision: $Revision$ by $Author$)
+
+# Local Variables:
+# mode: text
+# coding: utf-8-unix
+# End:
