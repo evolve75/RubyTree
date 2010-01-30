@@ -93,9 +93,9 @@ module Tree
   #
   # grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
   #
-  # siblings_of_child1 = child1.siblings
+  # siblings_of_child1_array = child1.siblings
   #
-  # children_of_root   = root_node.children
+  # children_of_root_array   = root_node.children
   #
   # # Process all nodes
   #
