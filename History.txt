@@ -1,3 +1,7 @@
+=== 0.6.2 / 2010-01-30
+
+* Updated the documentation.
+
 === 0.6.1 / 2010-01-04
 
 * Changed the hard-dependency on the 'structured_warnings' RubyGem to a soft-dependency - which lets Rubytree still

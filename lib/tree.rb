@@ -41,9 +41,11 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# This module provides a TreeNode class which is the primary class for all
-# nodes represented in the Tree.
-# This module mixes in the Enumerable module.
+# This module provides a TreeNode class which is the primary class for representing
+# nodes in the tree.
+#
+# This module mixes in the Enumerable module, and also acts as the namespace for all
+# classes in RubyTree.
 module Tree
 
   # Rubytree Package Version
@@ -51,14 +53,25 @@ module Tree
 
   # == TreeNode Class Description
   #
-  # The node class for the tree representation. the nodes are +named+ and have a
-  # place-holder for the node data (i.e., the `content' of the node). The node
-  # names are required to be unique.  In addition, the node provides navigation
-  # methods to traverse the tree.
+  # This class models the nodes for an N-ary tree data structue. The nodes are +named+
+  # and have a place-holder for the node data (i.e., `content' of the node). The node
+  # names are required to be *unique* within the tree.
   #
-  # A node can have any number of child nodes attached to it.  Note that while
-  # this implementation does not support directed graphs, the class itself makes
-  # no restrictions on associating a node's CONTENT with multiple parent nodes.
+  # The node content is not required to be unique across different nodes in the tree, and
+  # can be +nil+ as well.
+  #
+  # The class provides various traversal methods to navigate the tree,
+  # methods to modify contents of the node or to change position of the node in the tree
+  # and methods to change structure of the tree.
+  #
+  # A node can have any number of child nodes attached to it and hence can be used to create N-ary trees.
+  # Access to the child nodes can be made in order (with the conventional left to right access), or
+  # randomly.
+  #
+  # The node also provides direct access to its parent and other superior parents in the path to
+  # root of the tree.  In addition, a node can also access its sibling nodes, if present.
+  # Note that while this implementation does not explicitly support directed graphs, the class itself makes
+  # no restrictions on associating a node's +CONTENT+ with multiple nodes in the tree.
   #
   #
   # == Example
@@ -184,13 +197,16 @@ module Tree
 
     # Adds the specified child node to the receiver node.
     #
+    # This method can also be used for *grafting* a subtree into the receiver node's tree, if the specified child node
+    # is the root of a subtree (i.e., has child nodes under it).
+    #
     # The receiver node becomes parent of the node passed in as the argument, and
     # the child is added as the last child ("right most") in the current set of
     # children of the receiver node.
     #
     # Returns the added child node.
     #
-    # An exception is raised if another child node with the same name exists.g
+    # An exception is raised if another child node with the same name exists.
     def add(child)
       raise "Child already added" if @childrenHash.has_key?(child.name)
 
@@ -198,12 +214,15 @@ module Tree
       @children << child
       child.parent = self
       return child
-
     end
 
     # Removes the specified child node from the receiver node.
     #
-    # The removed child node is orphaned but available if an alternate reference exists.
+    # This method can also be used for *pruning* a subtree, in cases where the removed child node is
+    # the root of the subtree to be pruned.
+    #
+    # The removed child node is orphaned but accessible if an alternate reference exists.  If accesible via
+    # an alternate reference, the removed child will report itself as a root node for its subtree.
     #
     # Returns the child node.
     def remove!(child)
@@ -213,8 +232,11 @@ module Tree
       return child
     end
 
-    # Removes the receiver node from its parent.  If this is the root node, then does
-    # nothing.
+    # Removes the receiver node from its parent.  The reciever node becomes the new root for its subtree.
+    #
+    # If this is the root node, then does nothing.
+    #
+    # Returns self (the removed receiver node) if the operation is successful, and +nil+ otherwise.
     def removeFromParent!
       @parent.remove!(self) unless isRoot?
     end
