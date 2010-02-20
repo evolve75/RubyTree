@@ -95,7 +95,7 @@ module TestTree
       assert_nil(@root.siblings  , "This root does not have any children")
       assert_equal(0, @root.in_degree, "Root should have an in-degree of 0")
       assert_equal(0, @root.nodeHeight, "Root's height before adding any children is 0")
-      assert_raise(RuntimeError) { Tree::TreeNode.new(nil) }
+      assert_raise(ArgumentError) { Tree::TreeNode.new(nil) }
     end
 
     # This test is for the state after the children are linked to the root
@@ -253,7 +253,7 @@ module TestTree
       assert_equal(5, @root.size, "Should have five nodes")
       assert_equal(2, @child3.size, "Should have two nodes")
 
-      assert_raise(RuntimeError) { @root.add(Tree::TreeNode.new(@child1.name)) }
+      assert_raise(ArgumentError) { @root.add(Tree::TreeNode.new(@child1.name)) }
 
     end
 
@@ -426,7 +426,7 @@ module TestTree
       assert_equal(@child1, @root[0], "Should be the first child")
       assert_equal(@child4, @root[2][0], "Should be the grandchild")
       assert_nil(@root["TEST"], "Should be nil")
-      assert_raise(RuntimeError) { @root[nil] }
+      assert_raise(ArgumentError) { @root[nil] }
     end
 
     def test_printTree
@@ -577,6 +577,21 @@ module TestTree
       assert_equal(2, @child4.nodeDepth, "Child 4 should have depth 2")
     end
 
+    # Test the level method.  Since this is an alias of nodeDepth, we just test for equivalence
+    def test_level
+      assert_equal(0, @root.level, "A root node's level is 0")
+
+      assert_equal(@root.nodeDepth, @root.level, "Level and depth should be the same")
+
+      load_child_nodes
+      for child in [@child1, @child2, @child3]
+        assert_equal(1, child.level, "Node #{child.name} should have level 1")
+        assert_equal(@root.nodeDepth, @root.level, "Level and depth should be the same")
+      end
+
+      assert_equal(2, @child4.level, "Child 4 should have level 2")
+    end
+
     # Test the breadth computation algorithm
     def test_breadth
       assert_equal(1, @root.breadth, "A single node's breadth is 1")
@@ -724,7 +739,7 @@ module TestTree
     end
 
     def test_index              #  Test the [] method
-      assert_raise(RuntimeError) {@root[nil]}
+      assert_raise(ArgumentError) {@root[nil]}
 
       @root << @child1
       @root << @child2

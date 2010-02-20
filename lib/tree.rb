@@ -121,6 +121,7 @@ module Tree
   # # ..... Lets remove a child node from the root node.
   # root_node.remove!(child1)
   #
+  # @author Anupam Sengupta
   class TreeNode
     include Enumerable
 
@@ -138,23 +139,29 @@ module Tree
     # Name of the node is expected to be unique across the tree.
     #
     # The content can be of any type, defaults to +nil+.
+    #
+    # @param [Object] name of the node.  Usual usage is to pass a String.
+    # @param [Object] content of the node.
     def initialize(name, content = nil)
-      raise "Node name HAS to be provided" if name == nil
-      @name = name
-      @content = content
-      self.setAsRoot!
+      raise ArgumentError, "Node name HAS to be provided!" if name == nil
+      @name, @content = name, content
 
+      self.setAsRoot!
       @childrenHash = Hash.new
       @children = []
     end
 
     # Returns a copy of the receiver node, with its parent and children links removed.
     # The original node remains attached to its tree.
+    #
+    # @return [Tree::TreeNode] a copy of the receiver node.
     def detached_copy
       Tree::TreeNode.new(@name, @content ? @content.clone : nil)
     end
 
-    # Print the string representation of this node.  This is primary for debugging purposes.
+    # Print the string representation of the receiver node.  This is primary for debugging purposes.
+    #
+    # @return [String] a string representation of the node.
     def to_s
       "Node Name: #{@name}" +
         " Content: " + (@content || "<Empty>") +
@@ -167,6 +174,8 @@ module Tree
     # (the first element is the immediate parent of the receiver).
     #
     # Returns +nil+ if the receiver is a root node.
+    #
+    # @return [Array, nil] array of ancestors of the receiver node.
     def parentage
       return nil if isRoot?
 
@@ -188,7 +197,7 @@ module Tree
       @parent = parent
     end
 
-    # Convenience synonym for TreeNode#add method.
+    # Convenience synonym for Tree::TreeNode#add method.
     #
     # This method allows an easy method to add node hierarchies to the tree
     # on a given path via chaining the method calls to successive child nodes.
@@ -211,9 +220,9 @@ module Tree
     #
     # Returns the added child node.
     #
-    # An exception is raised if another child node with the same name exists.
+    # An ArgumentError exception is raised if another child node with the same name exists.
     def add(child)
-      raise "Child already added" if @childrenHash.has_key?(child.name)
+      raise ArgumentError, "Child #{child.name} already added!" if @childrenHash.has_key?(child.name)
 
       @childrenHash[child.name]  = child
       @children << child
@@ -316,20 +325,20 @@ module Tree
     # by yielding the node to the specified block.
     #
     # The traversal is depth-first and from left to right in pre-ordered sequence.
-    def each &block             # :yields: node
+    def each(&block)             # :yields: node
       yield self
       children { |child| child.each(&block) }
     end
 
     # Traverses the tree in a pre-ordered sequence.  This is equivalent to
     # TreeNode#each
-    def preordered_each &block  # :yields: node
+    def preordered_each(&block)  # :yields: node
       each(&block)
     end
 
     # Performs breadth first traversal of the tree starting at the receiver node. The
     # traversal at a given level is from left to right.
-    def breadth_each &block
+    def breadth_each(&block)
       node_queue = [self]       # Create a queue with self as the initial entry
 
       # Use a queue to do breadth traversal
@@ -355,9 +364,9 @@ module Tree
     # accessed (see Tree#children).  If the argument is *NOT* _numeric_, then it
     # is assumed to be *name* of the child node to be returned.
     #
-    # Raises an exception is the requested child node is not found.
+    # An Argument exception is raised if niether name nor an index is provided.
     def [](name_or_index)
-      raise "Name_or_index needs to be provided" if name_or_index == nil
+      raise ArgumentError, "Name_or_index needs to be provided!" if name_or_index == nil
 
       if name_or_index.kind_of?(Integer)
         @children[name_or_index]
@@ -377,7 +386,7 @@ module Tree
 
     # Convenience synonym for Tree#size
     #--
-    # TODO: The semantic of length is probably unclear.  Should return the node_depth instead
+    # TODO: The semantic of length is probably unclear.  Should return the node depth instead
     #       to reflect the path length.
     #++
     def length
@@ -561,12 +570,16 @@ module Tree
     #
     # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
     #
+    # 'level' is an alias for this method.
+    #
     # *Note* that the deprecated method Tree::TreeNode#depth was incorrectly computing this value.
     # Please replace all calls to the old method with Tree::TreeNode#nodeDepth instead.
     def nodeDepth
       return 0 if isRoot?
       1 + parent.nodeDepth
     end
+
+    alias level nodeDepth       # Aliased level() method to the nodeDepth().
 
     # Returns depth of the tree from the receiver node. A single leaf node has a depth of 1.
     #
@@ -577,6 +590,11 @@ module Tree
     #
     # For correct and conventional behavior, please use Tree::TreeNode#nodeDepth and
     # Tree::TreeNode#nodeHeight methods instead.
+    #
+    # @return [Number] depth of the node.
+    # @deprecated This method returns an incorrect value.  Use TreeNode#nodeDepth instead.
+    #
+    # @see Tree::Treenode#nodeDepth
     def depth
       begin
         require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
@@ -590,7 +608,7 @@ module Tree
       1 + @children.collect { |child| child.depth }.max
     end
 
-    # Returns breadth of the tree at the receiver node's  level.
+    # Returns breadth of the tree at the receiver node's level.
     # A single node without siblings has a breadth of 1.
     #
     # Breadth is defined to be:

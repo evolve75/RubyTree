@@ -102,9 +102,7 @@ module Tree
 
     # Swaps the left and right child nodes of the receiver node with each other.
     def swap_children
-      tempChild       = leftChild
-      self.leftChild  = rightChild
-      self.rightChild = tempChild
+      self.leftChild, self.rightChild = self.rightChild, self.leftChild
     end
   end
 

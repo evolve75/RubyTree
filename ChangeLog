@@ -1,3 +1,28 @@
+2010-02-23  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_tree.rb (TestTree::TestTreeNode#test_level): Added a
+	new test method to test the Tree::TreeNode#level method.
+
+	* lib/tree.rb (Tree::TreeNode): Added parenthesis to the methods
+	accepting a &block argument (each, preordered_each, each_leaf).
+
+2010-02-21  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_tree.rb (TestTree::TestTreeNode#test_nodeHeight):
+	Added a equivalence test for node level and node depth.
+
+2010-02-08  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode#swap_children):
+	Simplified the swap using parallel assignment.
+
+	* test/test_tree.rb (TestTree::TestTreeNode): Made equivalent test
+	assertion changes to check for ArgumentError.
+
+	* lib/tree.rb (Tree::TreeNode): Changed the exceptions thrown in
+	various methods to be an ArgumentError.
+	(Tree::TreeNode#nodeDepth): Aliased 'level' to 'nodeDepth' method.
+
 2010-01-30  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/test_tree.rb (TestTree::TestTreeNode): Renamed the

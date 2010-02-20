@@ -1,4 +1,4 @@
-= rubytree
+= RubyTree
    __       _           _
    /__\_   _| |__  _   _| |_ _ __ ___  ___
   / \// | | | '_ \| | | | __| '__/ _ \/ _ \
@@ -6,8 +6,9 @@
  \/ \_/\__,_|_.__/ \__, |\__|_|  \___|\___|
                   |___/
 
-  Copyright (c) 2006, 2007, 2008, 2009, 2010 Anupam Sengupta (anupamsg at gmail dot com)
-  http://rubytree.rubyforge.org
+Copyright (c) 2006, 2007, 2008, 2009, 2010 Anupam Sengupta (anupamsg at gmail dot com)
+
+http://rubytree.rubyforge.org
 
 == DESCRIPTION:
 

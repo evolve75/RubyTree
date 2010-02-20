@@ -21,8 +21,8 @@ be provided to ensure relatively smooth transition to the new APIs.
 
 == Release 0.6.1 Changes
 
-- Deprecated the TreeNode#depth() method as it was returning an incorrect depth value.  Have introduced a new replacement
-  method (TreeNode#node_depth) which returns the correct result.
+- Deprecated the Tree::TreeNode#depth method as it was returning an incorrect depth value.  Have introduced a new replacement
+  method (Tree::TreeNode#nodeDepth) which returns the correct result.
 
 $id$
 

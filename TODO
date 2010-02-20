@@ -2,6 +2,9 @@
 
 
 * R0.7.0
+*** TODO Start using signed tags from R0.7.0
+*** DONE Add a convenience 'level' method to the TreeNode class (will be an alias to nodeDepth)
+    CLOSED: [2010-02-21 Sun 01:02]
 *** DONE Add a API-CHANGES file to document the various API changes made till date
     CLOSED: [2010-01-31 Sun 00:52]
 *** DONE Add new methods to return the degree counts of the receiver node (in-degree and out-degree)
