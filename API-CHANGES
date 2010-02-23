@@ -19,6 +19,10 @@ be provided to ensure relatively smooth transition to the new APIs.
 
 - Added new methods Tree::TreeNode#in_degree and Tree::TreeNode#out_degree to report the node's degree stats
 
+- Tree::TreeNode#isOnlyChild? now returns +true+ for a root node.
+
+- Tree::TreeNode#nextSibling and Tree::TreeNode#previousSibling now return +nil+ for a root node.
+
 == Release 0.6.1 Changes
 
 - Deprecated the Tree::TreeNode#depth method as it was returning an incorrect depth value.  Have introduced a new replacement

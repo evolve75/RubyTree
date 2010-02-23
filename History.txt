@@ -10,6 +10,8 @@
 
 * Added a separate API-CHANGES documentation file.
 
+* Added fixes for root related edge conditions to 'isOnlyChild?', 'nextSibling', 'previousSibling' and 'remove' methods.
+
 * Other minor code cleanup.
 
 === 0.6.2 / 2010-01-30

@@ -2,9 +2,16 @@
 
 	* test/test_tree.rb (TestTree::TestTreeNode#test_level): Added a
 	new test method to test the Tree::TreeNode#level method.
+	(TestTree::TestTreeNode#test_remove): Added a negative test for
+	the remove! method.
 
 	* lib/tree.rb (Tree::TreeNode): Added parenthesis to the methods
 	accepting a &block argument (each, preordered_each, each_leaf).
+	(Tree::TreeNode#isOnlyChild): Now returns 'true' for a root node.
+	(Tree::TreeNode#nextSibling): Now returns nil for a root node.
+	(Tree::TreeNode#previousSibling): Now returns nil for a root node.
+	(Tree::TreeNode#remove): Fixed a defect where check was not done
+	for a nil argument.
 
 2010-02-21  Anupam Sengupta  <anupamsg@gmail.com>
 

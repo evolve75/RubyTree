@@ -232,18 +232,20 @@ module Tree
 
     # Removes the specified child node from the receiver node.
     #
-    # This method can also be used for *pruning* a subtree, in cases where the removed child node is
-    # the root of the subtree to be pruned.
+    # This method can also be used for *pruning* a sub-tree, in cases where the removed child node is
+    # the root of the sub-tree to be pruned.
     #
-    # The removed child node is orphaned but accessible if an alternate reference exists.  If accesible via
-    # an alternate reference, the removed child will report itself as a root node for its subtree.
+    # The removed child node is orphaned but accessible if an alternate reference exists.  If accessible via
+    # an alternate reference, the removed child will report itself as a root node for its sub-tree.
     #
     # Returns the child node.
     def remove!(child)
+      return nil unless child
+
       @childrenHash.delete(child.name)
       @children.delete(child)
-      child.setAsRoot! unless child == nil
-      return child
+      child.setAsRoot!
+      child
     end
 
     # Removes the receiver node from its parent.  The reciever node becomes the new root for its subtree.
@@ -466,6 +468,8 @@ module Tree
     #--
     # TODO: Fix the inconsistency of returning root as its first/last sibling, and returning a
     #       a nil array for siblings for the node.
+    # TODO: Also fix the inconsistency of returning nil for the root, and an empty array for nodes
+    #       which have no siblings.
     #++
     def siblings
       return nil if isRoot?
@@ -481,16 +485,19 @@ module Tree
       end
     end
 
-    # Returns true if the receiver node is the only child of its parent.
+    # Returns +true+ if the receiver node is the only child of its parent.
+    #
+    # As a special case, a root node will always return +true+.
     def isOnlyChild?
-      parent.children.size == 1
+      isRoot? ? true : parent.children.size == 1
     end
 
     # Returns the next sibling for the receiver node.
     # The 'next' node is defined as the node to right of the receiver node.
     #
-    # Will return +nil+ if no subsequent node is present.
+    # Will return +nil+ if no subsequent node is present, or the receiver is a root node.
     def nextSibling
+      return nil if isRoot?
       if myidx = parent.children.index(self)
         parent.children.at(myidx + 1)
       end
@@ -499,8 +506,9 @@ module Tree
     # Returns the previous sibling for the receiver node.
     # The 'previous' node is defined as the node to left of the receiver node.
     #
-    # Will return nil if no predecessor node is present.
+    # Will return +nil+ if no predecessor node is present, or if the receiver is a root node.
     def previousSibling
+      return nil if isRoot?
       if myidx = parent.children.index(self)
         parent.children.at(myidx - 1) if myidx > 0
       end
