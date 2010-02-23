@@ -1,3 +1,16 @@
+2010-02-27  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_binarytree.rb (TestTree::TestBinaryTreeNode#test_add):
+	Added the test case to check for the ArgumentError in the add method.
+
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode#add): Replaced the
+	RuntimeError with Argument Error in the add method.
+
+2010-02-24  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_tree.rb (TestTree::TestTreeNode): Reverted the method
+	name changes to support the ZenTest conventions (_eh and _bang).
+
 2010-02-23  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/test_tree.rb (TestTree::TestTreeNode#test_level): Added a
@@ -12,6 +25,8 @@
 	(Tree::TreeNode#previousSibling): Now returns nil for a root node.
 	(Tree::TreeNode#remove): Fixed a defect where check was not done
 	for a nil argument.
+	(Tree::TreeNode#add): ArgumentError will be thrown if a nil is
+	passed as an argument for the add method.
 
 2010-02-21  Anupam Sengupta  <anupamsg@gmail.com>
 

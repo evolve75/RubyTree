@@ -57,14 +57,18 @@ module Tree
     #
     # If only one child is present, then this will be the left child.
     #
-    # An exception is raised if two children are already present.
+    # @param [Tree::BinaryTreeNode] child The child to add.
+    #
+    # @raise [ArgumentError] This exception is raised if two children are already present.
     def add(child)
-      raise "Already has two child nodes" if @children.size == 2
+      raise ArgumentError, "Already has two child nodes" if @children.size == 2
 
       super(child)
     end
 
     # Returns the left child of the receiver node. Note that left Child == first Child.
+    #
+    # @return [Tree::BinaryTreeNode] The left most (or first) child.
     def leftChild
       children.first
     end

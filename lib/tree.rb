@@ -220,9 +220,16 @@ module Tree
     #
     # Returns the added child node.
     #
-    # An ArgumentError exception is raised if another child node with the same name exists.
+    # @return [Tree::TreeNode] The added child node.
+    #
+    # @raise [RuntimeError] This exception is raised if another child node with the same
+    # name exists.
+    # @raise [ArgumentError] This exception is raised if a +nil+ node is passed as the argument.
+    #
+    # @see #<<
     def add(child)
-      raise ArgumentError, "Child #{child.name} already added!" if @childrenHash.has_key?(child.name)
+      raise ArgumentError, "Attempting to add a nil node" unless child
+      raise "Child #{child.name} already added!" if @childrenHash.has_key?(child.name)
 
       @childrenHash[child.name]  = child
       @children << child

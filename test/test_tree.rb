@@ -286,8 +286,10 @@ module TestTree
       assert_equal(2, @child3.size, "Should have two nodes")
 
       # Test the addition of a duplicate node (duplicate being defined as a node with the same name).
-      assert_raise(ArgumentError) { @root.add(Tree::TreeNode.new(@child1.name)) }
+      assert_raise(RuntimeError) { @root.add(Tree::TreeNode.new(@child1.name)) }
 
+      # Test the addition of a nil node.
+      assert_raise(ArgumentError) { @root.add(nil) }
     end
 
     # Test the remove! and removeAll! methods.

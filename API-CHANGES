@@ -14,6 +14,7 @@ be provided to ensure relatively smooth transition to the new APIs.
   - Tree::TreeNode#new
   - Tree::TreeNode#add
   - Tree::TreeNode#[]
+  - Tree::BinaryTree#add
 
 - Added Tree::TreeNode#level as a new alias for Tree::TreeNode#nodeDepth
 
@@ -22,6 +23,8 @@ be provided to ensure relatively smooth transition to the new APIs.
 - Tree::TreeNode#isOnlyChild? now returns +true+ for a root node.
 
 - Tree::TreeNode#nextSibling and Tree::TreeNode#previousSibling now return +nil+ for a root node.
+
+- Tree::TreeNode#add and Tree::TreeNode#<< now throw an ArgumentError exception if a nil node is passed as an argument.
 
 == Release 0.6.1 Changes
 

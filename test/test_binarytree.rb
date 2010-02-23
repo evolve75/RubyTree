@@ -68,11 +68,11 @@ module TestTree
       assert_same(@right_child1, @root.rightChild, "The right node should be right_child1")
       assert_same(@right_child1, @root.lastChild, "The first node should be right_child1")
 
-      assert_raise RuntimeError do
+      assert_raise ArgumentError do
         @root.add Tree::BinaryTreeNode.new("The third child!")
       end
 
-      assert_raise RuntimeError do
+      assert_raise ArgumentError do
         @root << Tree::BinaryTreeNode.new("The third child!")
       end
     end

@@ -3,6 +3,8 @@
 
 * R0.7.0
 *** TODO Start using signed tags from R0.7.0
+*** DONE Add a check in the Tree::TreeNode.add method to prevent addition of nil child nodes
+    CLOSED: [2010-02-23 Tue 23:07]
 *** DONE Fix the edge condition for Tree::TreeNode.isOnlyChild? when the root node is the receiver.
     CLOSED: [2010-02-23 Tue 22:03]
     There really is no good default to this situation.  We will return 'true' simply because there is no other sibling
