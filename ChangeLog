@@ -2,7 +2,7 @@
 
 	* lib/tree.rb (Tree): Update the example code to use Ruby
 	conventions for the variable names.
-	(Tree): Updated the documentation.
+	(Tree): updated the documentation.
 
 	* README: Updated the example to use Ruby conventions for the
 	variable names.
