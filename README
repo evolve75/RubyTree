@@ -52,7 +52,7 @@ As an example, the following code-snippet implements this tree structure:
  child1 = root_node["CHILD1"]
  grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
 
- # ..... Now lets retrieve siblings of the current node as an array.
+ # ..... Lets retrieve siblings of the current node as an array.
  siblings_of_child1 = child1.siblings
 
  # ..... Lets retrieve immediate children of the root node as an array.
