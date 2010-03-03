@@ -1,3 +1,15 @@
+2010-03-04  Anupam Sengupta  <anupamsg@gmail.com>
+
+	* test/test_binarytree.rb (TestTree::TestBinaryTreeNode): Updated documentation.
+
+	* test/test_tree.rb (TestTree::TestTreeNode): Updated documentation.
+
+	* lib/tree/binarytree.rb (Tree::BinaryTreeNode): Updated the
+	documentation to Yardoc format.
+
+	* lib/tree.rb (Tree::TreeNode): Updated the documentation to
+	Yardoc format.
+
 2010-02-27  Anupam Sengupta  <anupamsg@gmail.com>
 
 	* test/test_binarytree.rb (TestTree::TestBinaryTreeNode#test_add):

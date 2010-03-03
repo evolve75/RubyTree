@@ -72,6 +72,7 @@ As an example, the following code-snippet implements this tree structure:
 
 * Optional but recommended:
   * structured_warnings (http://github.com/schmidt/structured_warnings) Rubygem
+  * Yard (http://yardoc.org/) Rubygem for the documentation
 
 * Development dependencies (not required for installing the gem):
   * Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem
@@ -132,6 +133,8 @@ Documentation for the latest git HEAD is available at:
 
 http://rdoc.info/projects/evolve75/RubyTree
 
+Note that the documentation is formatted for Yard (http://yardoc.org/).
+
 == DEVELOPERS:
 
 You can download the latest released source code using the tar or zip version as mentioned above in the installation
@@ -173,8 +176,10 @@ After checking out the source, run:
 This task will install any missing dependencies, run the tests/specs, and generate the RDoc.
 
 Note that you need to have the Rubygem 'Hoe' (http://seattlerb.rubyforge.org/hoe/Hoe.html) to successfully run the rake
-tasks.  Installing Hoe may also install additional pre-requisite gems.  See the dependencies section in this document for
+tasks.  Installing Hoe may also install additional pre-requisite gems.  See the REQUIREMENTS section in this document for
 details.
+
+For generating the documentation, it is strongly suggested that the 'Yard' (http://yardoc.org/) gem be installed.
 
 == LICENSE:
 
