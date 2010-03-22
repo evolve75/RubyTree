@@ -12,6 +12,8 @@
 
 * Added fixes for root related edge conditions to 'isOnlyChild?', 'nextSibling', 'previousSibling' and 'remove' methods.
 
+* Removed the 'ChangeLog' file as this can now be generated from the git logs.
+
 * Other minor code cleanup.
 
 === 0.6.2 / 2010-01-30

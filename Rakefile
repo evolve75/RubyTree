@@ -54,7 +54,7 @@ begin
     self.readme_file                = 'README'
 
     # Set the Yard Options
-    extra_docs                      = ["COPYING", "API-CHANGES", "ChangeLog"]
+    extra_docs                      = ["COPYING", "API-CHANGES"]
     extra_docs.each { |file| self.yard_files << file }
     self.yard_options = ["--files", extra_docs.join(",") ]
 
