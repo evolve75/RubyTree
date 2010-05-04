@@ -1,4 +1,4 @@
-=== 0.7.0 / 2010-01-31
+=== 0.7.0 / 2010-05-03
 
 * Added new methods to report the degree statistics of a node.
 
@@ -7,6 +7,9 @@
 * Converted the exceptions thrown on invalid arguments to 'ArgumentError' instead of 'RuntimeError'.
 
 * Converted the documentation to Yard format.
+
+* Added new methods for converting from/to JSON formats.  Thanks to Dirk Breuer[http://github.com/railsbros-dirk] for
+  this fork[http://github.com/galaxycats/].
 
 * Added a separate API-CHANGES documentation file.
 

@@ -703,6 +703,65 @@ module Tree
       end
     end
 
+    # Creates a JSON representation of this node including all it's children.   This requires the JSON gem to be
+    # available, or else the operation fails with a warning message.
+    #
+    # @author Dirk Breuer (http://github.com/railsbros-dirk)
+    # @since 0.7.0
+    #
+    # @return The JSON representation of this subtree.
+    #
+    # @see Tree::TreeNode.json_create
+    # @see http://flori.github.com/json
+    def to_json(*a)
+      begin
+        require 'json'
+
+        json_hash = {
+          "name"         => name,
+          "content"      => content,
+          JSON.create_id => self.class.name
+        }
+
+        if hasChildren?
+          json_hash["children"] = children
+        end
+
+        return json_hash.to_json
+
+      rescue LoadError => e
+        warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation"
+      end
+    end
+
+    # Creates a Tree::TreeNode object instance from a given JSON Hash representation.  This requires the JSON gem to be
+    # available, or else the operation fails with a warning message.
+    #
+    # @author Dirk Breuer (http://github.com/railsbros-dirk)
+    # @since 0.7.0
+    #
+    # @param [Hash] json_hash The JSON hash to convert from.
+    #
+    # @return [Tree::TreeNode] The created tree.
+    #
+    # @see #to_json
+    # @see http://flori.github.com/json
+    def self.json_create(json_hash)
+      begin
+        require 'json'
+
+        node = new(json_hash["name"], json_hash["content"])
+
+        json_hash["children"].each do |child|
+          node << child
+        end if json_hash["children"]
+
+        return node
+      rescue LoadError => e
+        warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation."
+      end
+    end
+
     # Returns height of the (sub)tree from the receiver node.  Height of a node is defined as:
     #
     # Height:: Length of the longest downward path to a leaf from the node.

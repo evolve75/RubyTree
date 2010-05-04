@@ -25,6 +25,9 @@ be provided to ensure relatively smooth transition to the new APIs.
 
 - {Tree::TreeNode#add} and {Tree::TreeNode#<<} now throw an ArgumentError exception if a +nil+ node is passed as an argument.
 
+- Added new methods {Tree::TreeNode#to_json} and {Tree::TreeNode::json_create} to convert to/from the JSON format.
+  Thanks to Dirk[http://github.com/railsbros-dirk] for this change.
+
 == Release 0.6.1 Changes
 
 - Deprecated the {Tree::TreeNode#depth} method as it was returning an incorrect depth value.  Have introduced a new replacement

@@ -35,6 +35,8 @@
 #
 
 require 'test/unit'
+require 'rubygems'
+require 'json'
 require 'tree'
 
 module TestTree
@@ -836,6 +838,58 @@ module TestTree
       assert_equal(0, @child4.out_degree, "Child 4's out-degree should be 0")
     end
 
+    # Test the new JSON serialization method.
+    def test_json_serialization
+      setup_test_tree
+
+      expected_json = {
+        "name"         => "ROOT",
+        "content"      => "Root Node",
+        JSON.create_id => "Tree::TreeNode",
+        "children" => [
+          {"name" => "Child1", "content" => "Child Node 1", JSON.create_id => "Tree::TreeNode"},
+          {"name" => "Child2", "content" => "Child Node 2", JSON.create_id => "Tree::TreeNode"},
+          {
+            "name"         => "Child3",
+            "content"      => "Child Node 3",
+            JSON.create_id => "Tree::TreeNode",
+            "children" => [
+              {"name" => "Child31", "content" => "Grand Child 1", JSON.create_id => "Tree::TreeNode"}
+            ]
+          }
+        ]
+      }.to_json
+
+      assert_equal(expected_json, @root.to_json)
+    end
+
+    def test_json_deserialization
+      tree_as_json = {
+        "name"         => "ROOT",
+        "content"      => "Root Node",
+        JSON.create_id => "Tree::TreeNode",
+        "children" => [
+          {"name" => "Child1", "content" => "Child Node 1", JSON.create_id => "Tree::TreeNode"},
+          {"name" => "Child2", "content" => "Child Node 2", JSON.create_id => "Tree::TreeNode"},
+          {
+            "name"         => "Child3",
+            "content"      => "Child Node 3",
+            JSON.create_id => "Tree::TreeNode",
+            "children" => [
+              {"name" => "Child31", "content" => "Grand Child 1", JSON.create_id => "Tree::TreeNode"}
+            ]
+          }
+        ]
+      }.to_json
+
+      tree = JSON.parse(tree_as_json)
+
+      assert_equal(@root.name, tree.root.name, "Root should be returned")
+      assert_equal(@child1.name, tree[0].name, "Child 1 should be returned")
+      assert_equal(@child2.name, tree[1].name, "Child 2 should be returned")
+      assert_equal(@child3.name, tree[2].name, "Child 3 should be returned")
+      assert_equal(@child4.name, tree[2][0].name, "Grand Child 1 should be returned")
+    end
   end
 end
 

@@ -72,12 +72,13 @@ As an example, the following code-snippet implements this tree structure:
 
 * Optional but recommended:
   * structured_warnings (http://github.com/schmidt/structured_warnings) Rubygem
-  * Yard (http://yardoc.org/) Rubygem for the documentation
+  * Yard (http://yardoc.org) Rubygem for the documentation
+  * JSON (http://flori.github.com/json) Rubygem for converting to/from the JSON format
 
 * Development dependencies (not required for installing the gem):
   * Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem
   * gemcutter (http://gemcutter.org/gems/gemcutter) Rubygem
-  * Rubyforge (http://codeforpeople.rubyforge.org/rubyforge/) Rubygem
+  * Rubyforge (http://codeforpeople.rubyforge.org/rubyforge) Rubygem
 
 == INSTALL:
 
@@ -133,7 +134,7 @@ Documentation for the latest git HEAD is available at:
 
 http://rdoc.info/projects/evolve75/RubyTree
 
-Note that the documentation is formatted for Yard (http://yardoc.org/).
+Note that the documentation is formatted for Yard (http://yardoc.org).
 
 == DEVELOPERS:
 
@@ -141,22 +142,18 @@ You can download the latest released source code using the tar or zip version as
 section.
 
 Alternatively, you can checkout the latest commit/revision from the version control system.  Note that RubyTree's
-primary SCM[http://en.wikipedia.org/wiki/Source_Code_Management] is on Subversion[http://subversion.tigris.org/] and is
+primary SCM[http://en.wikipedia.org/wiki/Source_Code_Management] is on git[http://git-scm.com] and is
 also mirrored on github[http://www.github.com].
 
-=== Using the Subversion repository
-
-For checking out from Subversion, use one of the following commands:
-
-  $ svn checkout http://rubytree.rubyforge.org/svn/
-
-or
-
-  $ svn checkout svn://rubyforge.org/var/svn/rubytree
-
-The SVN repository is available on the web at: http://fisheye2.atlassian.com/browse/rubytree
-
 === Using the Git repository
+
+For checking out from the primary Git repository, use the following command:
+
+  $ git clone git://rubyforge.org/rubytree.git
+
+The Git repository is available for browsing on the web at: http://fisheye2.atlassian.com/browse/rubytree
+
+=== Using the Git repository on http://github.com
 
 For cloning the git repository, use one of the following commands:
 
@@ -175,11 +172,17 @@ After checking out the source, run:
 
 This task will install any missing dependencies, run the tests/specs, and generate the RDoc.
 
-Note that you need to have the Rubygem 'Hoe' (http://seattlerb.rubyforge.org/hoe/Hoe.html) to successfully run the rake
+Note that you need to have the Rubygem Hoe[http://seattlerb.rubyforge.org/hoe/Hoe.html] to successfully run the rake
 tasks.  Installing Hoe may also install additional pre-requisite gems.  See the REQUIREMENTS section in this document for
 details.
 
-For generating the documentation, it is strongly suggested that the 'Yard' (http://yardoc.org/) gem be installed.
+For generating the documentation, it is strongly suggested that the Yard[http://yardoc.org] gem be installed.
+
+== ACKNOWLEDGMENTS:
+
+I would like to acknowledge the following contributors for helping improve RubyTree:
+
+1. Dirk Breuer (http://github.com/railsbros-dirk) for contributing the JSON conversion code.
 
 == LICENSE:
 
