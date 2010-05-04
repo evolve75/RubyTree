@@ -73,8 +73,8 @@ module Tree
     #
     # @return [Tree::BinaryTreeNode] The left most (or first) child.
     #
-    # @see #rightChild
-    def leftChild
+    # @see #right_child
+    def left_child
       children.first
     end
 
@@ -84,8 +84,8 @@ module Tree
     #
     # @return [Tree::BinaryTreeNode] The right child, or +nil+ if the right side child does not exist.
     #
-    # @see #leftChild
-    def rightChild
+    # @see #left_child
+    def right_child
       children[1]
     end
 
@@ -95,11 +95,11 @@ module Tree
     #
     # @return [Tree::BinaryTreeNode] The assigned child node.
     #
-    # @see #leftChild
-    # @see #rightChild=
-    def leftChild=(child)
+    # @see #left_child
+    # @see #right_child=
+    def left_child=(child)
       @children[0] = child
-      @childrenHash[child.name] = child if child # Assign the name mapping
+      @children_hash[child.name] = child if child # Assign the name mapping
     end
 
     # Sets the right child of the receiver node. If a previous child existed, it is replaced.
@@ -108,36 +108,36 @@ module Tree
     #
     # @return [Tree::BinaryTreeNode] The assigned child node.
     #
-    # @see #rightChild
-    # @see #leftChild=
-    def rightChild=(child)
+    # @see #right_child
+    # @see #left_child=
+    def right_child=(child)
       @children[1] = child
-      @childrenHash[child.name] = child if child # Assign the name mapping
+      @children_hash[child.name] = child if child # Assign the name mapping
     end
 
     # Returns +true+ if the receiver node is the left child of its parent.
     # Always returns +false+ if it is a root node.
     #
     # @return [Boolean] +true+ if this is the left child of its parent.
-    def isLeftChild?
-      return false if isRoot?
-      self == parent.leftChild
+    def is_left_child?
+      return false if is_root?
+      self == parent.left_child
     end
 
     # Returns +true+ if the receiver node is the right child of its parent.
     # Always returns +false+ if it is a root node.
     #
     # @return [Boolean] +true+ if this is the right child of its parent.
-    def isRightChild?
-      return false if isRoot?
-      self == parent.rightChild
+    def is_right_child?
+      return false if is_root?
+      self == parent.right_child
     end
 
     # Swaps the left and right child nodes of the receiver node with each other.
     #
     # @todo Define the return value.
     def swap_children
-      self.leftChild, self.rightChild = self.rightChild, self.leftChild
+      self.left_child, self.right_child = self.right_child, self.left_child
     end
   end
 
