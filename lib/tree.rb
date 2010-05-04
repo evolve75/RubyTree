@@ -97,13 +97,14 @@ module Tree
   #
   #    # ..... Create the root node first.  Note that every node has a name and an optional content payload.
   #    root_node = Tree::TreeNode.new("ROOT", "Root Content")
+  #    root_node.print_tree
   #
   #    # ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
   #    root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
   #    root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
   #
   #    # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
-  #    root_node.printTree
+  #    root_node.print_tree
   #
   #    # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
   #    child1       = root_node["CHILD1"]
@@ -148,8 +149,8 @@ module Tree
       raise ArgumentError, "Node name HAS to be provided!" if name == nil
       @name, @content = name, content
 
-      self.setAsRoot!
-      @childrenHash = Hash.new
+      self.set_as_root!
+      @children_hash = Hash.new
       @children = []
     end
 
@@ -168,7 +169,7 @@ module Tree
     def to_s
       "Node Name: #{@name}" +
         " Content: " + (@content || "<Empty>") +
-        " Parent: " + (isRoot?()  ? "<None>" : @parent.name) +
+        " Parent: " + (is_root?()  ? "<None>" : @parent.name) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
     end
@@ -180,16 +181,16 @@ module Tree
     #
     # @return [Array, nil] An array of ancestors of the receiver node, or +nil+ if this is a root node.
     def parentage
-      return nil if isRoot?
+      return nil if is_root?
 
-      parentageArray = []
-      prevParent = self.parent
-      while (prevParent)
-        parentageArray << prevParent
-        prevParent = prevParent.parent
+      parentage_array = []
+      prev_parent = self.parent
+      while (prev_parent)
+        parentage_array << prev_parent
+        prev_parent = prev_parent.parent
       end
 
-      parentageArray
+      parentage_array
     end
 
     # Protected method to set the parent node for the receiver node.
@@ -239,9 +240,9 @@ module Tree
     # @see #<<
     def add(child)
       raise ArgumentError, "Attempting to add a nil node" unless child
-      raise "Child #{child.name} already added!" if @childrenHash.has_key?(child.name)
+      raise "Child #{child.name} already added!" if @children_hash.has_key?(child.name)
 
-      @childrenHash[child.name]  = child
+      @children_hash[child.name]  = child
       @children << child
       child.parent = self
       return child
@@ -259,14 +260,14 @@ module Tree
     #
     # @return [Tree::TreeNode] The removed child node, or +nil+ if a +nil+ was passed in as argument.
     #
-    # @see #removeFromParent!
-    # @see #removeAll!
+    # @see #remove_from_parent!
+    # @see #remove_all!
     def remove!(child)
       return nil unless child
 
-      @childrenHash.delete(child.name)
+      @children_hash.delete(child.name)
       @children.delete(child)
-      child.setAsRoot!
+      child.set_as_root!
       child
     end
 
@@ -276,9 +277,9 @@ module Tree
     #
     # @return [Tree:TreeNode] +self+ (the removed receiver node) if the operation is successful, +nil+ otherwise.
     #
-    # @see #removeAll!
-    def removeFromParent!
-      @parent.remove!(self) unless isRoot?
+    # @see #remove_all!
+    def remove_from_parent!
+      @parent.remove!(self) unless is_root?
     end
 
     # Removes all children from the receiver node.  If an indepedent reference exists to the child
@@ -287,12 +288,12 @@ module Tree
     # @return [Tree::TreeNode] The receiver node (+self+)
     #
     # @see #remove!
-    # @see #removeFromParent!
-    def removeAll!
+    # @see #remove_from_parent!
+    def remove_all!
       for child in @children
-        child.setAsRoot!
+        child.set_as_root!
       end
-      @childrenHash.clear
+      @children_hash.clear
       @children.clear
       self
     end
@@ -300,14 +301,14 @@ module Tree
     # Returns +true+ if the receiver node has content.
     #
     # @return [Boolean] +true+ if the node has content.
-    def hasContent?
+    def has_content?
       @content != nil
     end
 
     # Protected method which sets the receiver node as a root node.
     #
     # @return +nil+.
-    def setAsRoot!              # :nodoc:
+    def set_as_root!              # :nodoc:
       @parent = nil
     end
 
@@ -315,7 +316,7 @@ module Tree
     # orphaned children will also be reported as root nodes.
     #
     # @return [Boolean] +true+ if this is a root node.
-    def isRoot?
+    def is_root?
       @parent == nil
     end
 
@@ -323,8 +324,8 @@ module Tree
     #
     # @return [Boolean] +true+ if child nodes exist.
     #
-    # @see #isLeaf?
-    def hasChildren?
+    # @see #is_leaf?
+    def has_children?
       @children.length != 0
     end
 
@@ -333,9 +334,9 @@ module Tree
     #
     # @return [Boolean] +true+ if this is a leaf node.
     #
-    # @see #hasChildren?
-    def isLeaf?
-      !hasChildren?
+    # @see #has_children?
+    def is_leaf?
+      !has_children?
     end
 
     # Returns an array of all the immediate children of the receiver node.  The child nodes are ordered
@@ -360,7 +361,7 @@ module Tree
     # Will return +nil+ if no children are present.
     #
     # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
-    def firstChild
+    def first_child
       children.first
     end
 
@@ -369,7 +370,7 @@ module Tree
     # Will return +nil+ if no children are present.
     #
     # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
-    def lastChild
+    def last_child
       children.last
     end
 
@@ -432,7 +433,7 @@ module Tree
     # @see #each
     # @see #breadth_each
     def each_leaf &block
-      self.each { |node| yield(node) if node.isLeaf? }
+      self.each { |node| yield(node) if node.is_leaf? }
     end
 
     # Returns the requested node from the set of immediate children.
@@ -458,7 +459,7 @@ module Tree
       if name_or_index.kind_of?(Integer)
         @children[name_or_index]
       else
-        @childrenHash[name_or_index]
+        @children_hash[name_or_index]
       end
     end
 
@@ -489,21 +490,20 @@ module Tree
     # Pretty prints the (sub)tree rooted at the receiver node.
     #
     # @param [Number] level The indentation level (4 spaces) to start with.
-    def printTree(level = 0)
-
-      if isRoot?
+    def print_tree(level = 0)
+      if is_root?
         print "*"
       else
-        print "|" unless parent.isLastSibling?
+        print "|" unless parent.is_last_sibling?
         print(' ' * (level - 1) * 4)
-        print(isLastSibling? ? "+" : "|")
+        print(is_last_sibling? ? "+" : "|")
         print "---"
-        print(hasChildren? ? "+" : ">")
+        print(has_children? ? "+" : ">")
       end
 
       puts " #{name}"
 
-      children { |child| child.printTree(level + 1)}
+      children { |child| child.print_tree(level + 1)}
     end
 
     # Returns root node for the (sub)tree to which the receiver node belongs.
@@ -515,7 +515,7 @@ module Tree
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
       root = self
-      root = root.parent while !root.isRoot?
+      root = root.parent while !root.is_root?
       root
     end
 
@@ -530,20 +530,20 @@ module Tree
     #
     # @return [Tree::TreeNode] The first sibling node.
     #
-    # @see #isFirstSibling?
-    # @see #lastSibling
-    def firstSibling
-      isRoot? ? self : parent.children.first
+    # @see #is_first_sibling?
+    # @see #last_sibling
+    def first_sibling
+      is_root? ? self : parent.children.first
     end
 
     # Returns +true+ if the receiver node is the first sibling at its level.
     #
     # @return [Boolean] +true+ if this is the first sibling.
     #
-    # @see #isLastSibling?
-    # @see #firstSibling
-    def isFirstSibling?
-      firstSibling == self
+    # @see #is_last_sibling?
+    # @see #first_sibling
+    def is_first_sibling?
+      first_sibling == self
     end
 
     # Returns the last sibling of the receiver node.  If this is the root node, then returns
@@ -557,20 +557,20 @@ module Tree
     #
     # @return [Tree::TreeNode] The last sibling node.
     #
-    # @see #isLastSibling?
-    # @see #firstSibling
-    def lastSibling
-      isRoot? ? self : parent.children.last
+    # @see #is_last_sibling?
+    # @see #first_sibling
+    def last_sibling
+      is_root? ? self : parent.children.last
     end
 
     # Returns +true+ if the receiver node is the last sibling at its level.
     #
     # @return [Boolean] +true+ if this is the last sibling.
     #
-    # @see #isFirstSibling?
-    # @see #lastSibling
-    def isLastSibling?
-      lastSibling == self
+    # @see #is_first_sibling?
+    # @see #last_sibling
+    def is_last_sibling?
+      last_sibling == self
     end
 
     # Returns an array of siblings for the receiver node.  The receiver node is excluded.
@@ -588,10 +588,10 @@ module Tree
     #
     # @return [Array<Tree::TreeNode>] Array of siblings of this node.
     #
-    # @see #firstSibling
-    # @see #lastSibling
+    # @see #first_sibling
+    # @see #last_sibling
     def siblings
-      return nil if isRoot?
+      return nil if is_root?
 
       if block_given?
         for sibling in parent.children
@@ -611,8 +611,8 @@ module Tree
     # @return [Boolean] +true+ if this is the only child of its parent.
     #
     # @see #siblings
-    def isOnlyChild?
-      isRoot? ? true : parent.children.size == 1
+    def is_only_child?
+      is_root? ? true : parent.children.size == 1
     end
 
     # Returns the next sibling for the receiver node.
@@ -622,10 +622,10 @@ module Tree
     #
     # @return [Tree::treeNode] the next sibling node, if present.
     #
-    # @see #previousSibling
+    # @see #previous_sibling
     # @see #siblings
-    def nextSibling
-      return nil if isRoot?
+    def next_sibling
+      return nil if is_root?
       if myidx = parent.children.index(self)
         parent.children.at(myidx + 1)
       end
@@ -638,10 +638,11 @@ module Tree
     #
     # @return [Tree::treeNode] the previous sibling node, if present.
     #
-    # @see #nextSibling
+    # @see #next_sibling
     # @see #siblings
-    def previousSibling
-      return nil if isRoot?
+    def previous_sibling
+      return nil if is_root?
+
       if myidx = parent.children.index(self)
         parent.children.at(myidx - 1) if myidx > 0
       end
@@ -663,18 +664,18 @@ module Tree
     #
     # The nodes become immutable after this operation.  In effect, the entire tree's
     # structure and contents become _read-only_ and cannot be changed.
-    def freezeTree!
+    def freeze_tree!
       each {|node| node.freeze}
     end
 
     # Returns a marshal-dump represention of the (sub)tree rooted at the receiver node.
     def marshal_dump
-      self.collect { |node| node.createDumpRep }
+      self.collect { |node| node.create_dump_rep }
     end
 
     # Creates a dump representation of the reciever node and returns the same as a hash.
-    def createDumpRep           # :nodoc:
-      { :name => @name, :parent => (isRoot? ? nil : @parent.name),  :content => Marshal.dump(@content)}
+    def create_dump_rep           # :nodoc:
+      { :name => @name, :parent => (is_root? ? nil : @parent.name),  :content => Marshal.dump(@content)}
     end
 
     # Loads a marshalled dump of a tree and returns the root node of the
@@ -723,7 +724,7 @@ module Tree
           JSON.create_id => self.class.name
         }
 
-        if hasChildren?
+        if has_children?
           json_hash["children"] = children
         end
 
@@ -770,24 +771,27 @@ module Tree
     # - The height of a leaf node is zero.
     #
     # @return [Number] Height of the node.
-    def nodeHeight
-      return 0 if isLeaf?
-      1 + @children.collect { |child| child.nodeHeight }.max
+    def node_height
+      return 0 if is_leaf?
+      1 + @children.collect { |child| child.node_height }.max
     end
 
     # Returns depth of the receiver node in its tree.  Depth of a node is defined as:
     #
     # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
     #
+    # *Note* that the deprecated method Tree::TreeNode#depth was incorrectly computing this value.
+    # Please replace all calls to the old method with Tree::TreeNode#node_depth instead.
+    #
     # 'level' is an alias for this method.
     #
     # @return [Number] Depth of this node.
-    def nodeDepth
-      return 0 if isRoot?
-      1 + parent.nodeDepth
+    def node_depth
+      return 0 if is_root?
+      1 + parent.node_depth
     end
 
-    alias level nodeDepth       # Aliased level() method to the nodeDepth().
+    alias level node_depth       # Aliased level() method to the node_depth().
 
     # Returns depth of the tree from the receiver node. A single leaf node has a depth of 1.
     #
@@ -796,23 +800,23 @@ module Tree
     #
     # _height_ + 1 of the node, *NOT* the _depth_.
     #
-    # For correct and conventional behavior, please use {Tree::TreeNode#nodeDepth} and
-    # {Tree::TreeNode#nodeHeight} methods instead.
+    # For correct and conventional behavior, please use {Tree::TreeNode#node_depth} and
+    # {Tree::TreeNode#node_height} methods instead.
     #
     # @return [Number] depth of the node.
-    # @deprecated This method returns an incorrect value.  Use the 'nodeDepth' method instead.
+    # @deprecated This method returns an incorrect value.  Use the 'node_depth' method instead.
     #
-    # @see #nodeDepth
+    # @see #node_depth
     def depth
       begin
         require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
-        warn DeprecatedMethodWarning, 'This method is deprecated.  Please use nodeDepth() or nodeHeight() instead (bug # 22535)'
+        warn DeprecatedMethodWarning, 'This method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
       rescue LoadError
         # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
-        warn 'Tree::TreeNode#depth() method is deprecated.  Please use nodeDepth() or nodeHeight() instead (bug # 22535)'
+        warn 'Tree::TreeNode#depth() method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
       end
 
-      return 1 if isLeaf?
+      return 1 if is_leaf?
       1 + @children.collect { |child| child.depth }.max
     end
 
@@ -825,7 +829,7 @@ module Tree
     #
     # @return [Number] breadth of the node's level.
     def breadth
-      isRoot? ? 1 : parent.children.size
+      is_root? ? 1 : parent.children.size
     end
 
     # Returns the incoming edge-count of the receiver node.
@@ -838,7 +842,7 @@ module Tree
     #
     # @return [Number] The in-degree of this node.
     def in_degree
-      isRoot? ? 0 : 1
+      is_root? ? 0 : 1
     end
 
     # Returns the outgoing edge-count of the receiver node.
@@ -848,10 +852,10 @@ module Tree
     #
     # @return [Number] The out-degree of this node.
     def out_degree
-      isLeaf? ? 0 : children.size
+      is_leaf? ? 0 : children.size
     end
 
-    protected :parent=, :setAsRoot!, :createDumpRep
+    protected :parent=, :set_as_root!, :create_dump_rep
 
   end
 end
