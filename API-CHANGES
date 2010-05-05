@@ -5,6 +5,11 @@ This file documents various API level changes that have been made to the RubyTre
 Note: API level changes are expected to reduce dramatically after the 1.x release.  In most cases, an alternative will
 be provided to ensure relatively smooth transition to the new APIs.
 
+== Release 0.8.0 Changes
+
+- Added the ability to specify an optional insertion position in the {Tree::TreeNode#add} method.  Idea and original
+  code contributed by Dirk.
+
 == Release 0.7.0 Changes
 
 - Converted all exceptions thrown on invalid method arguments to from 'RuntimeError' to 'ArgumentError'.  This impacts the

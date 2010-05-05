@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.7.0'
+  VERSION = '0.8.0'
 
   # == TreeNode Class Description
   #
@@ -234,12 +234,19 @@ module Tree
     # just appended. This feature is provided to make implementation of node
     # movement within the tree very simple.
     #
+    # If an insertion position is provided, it needs to be within the valid range of:
+    #
+    #    -children.size..children.size
+    #
+    # This is to prevent +nil+ nodes being created as children if a non-existant position is used.
+    #
     # @param [Tree::TreeNode] child The child node to add.
+    # @param [optional, Number] at_index The optional position where the node is to be inserted.
     #
     # @return [Tree::TreeNode] The added child node.
     #
     # @raise [RuntimeError] This exception is raised if another child node with the same
-    # name exists.
+    # name exists, or if an invalid insertion position is specified.
     # @raise [ArgumentError] This exception is raised if a +nil+ node is passed as the argument.
     #
     # @see #<<
@@ -247,11 +254,18 @@ module Tree
       raise ArgumentError, "Attempting to add a nil node" unless child
       raise "Child #{child.name} already added!" if @children_hash.has_key?(child.name)
 
+      if insertion_range.include?(at_index)
+        @children.insert(at_index, child)
+      else
+        raise "Attempting to insert a child at a non-existent location (#{at_index}) when only positions from #{insertion_range.min} to #{insertion_range.max} exist."
+      end
+
       @children_hash[child.name]  = child
-      @children.insert(at_index, child)
       child.parent = self
       return child
     end
+
+
 
     # Removes the specified child node from the receiver node.
     #
@@ -900,6 +914,13 @@ module Tree
       word.tr!("-", "_")
       word.downcase!
       word
+    end
+
+    # Return a range of valid insertion positions.  Used in the #add method.
+    def insertion_range
+      max = @children.size
+      min = -(max+1)
+      min..max
     end
 
   end

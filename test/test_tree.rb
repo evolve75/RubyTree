@@ -71,7 +71,8 @@ module TestTree
       @child1 = Tree::TreeNode.new("Child1", "Child Node 1")
       @child2 = Tree::TreeNode.new("Child2", "Child Node 2")
       @child3 = Tree::TreeNode.new("Child3", "Child Node 3")
-      @child4 = Tree::TreeNode.new("Child31", "Grand Child 1")
+      @child4 = Tree::TreeNode.new("Child4", "Grand Child 1")
+      @child5 = Tree::TreeNode.new("Child5", "Child Node 4")
 
     end
 
@@ -295,22 +296,68 @@ module TestTree
       assert_raise(ArgumentError) { @root.add(nil) }
     end
 
+    # Test Addition at a specific position
     def test_add_at_specific_position
       assert(!@root.has_children?, "Should not have any children")
 
       assert_equal(1, @root.size, "Should have 1 node (the root)")
-      @root.add(@child1)
+      @root.add(@child1)        # First Child added at position 0
+      # Validate that children = [@child1]
+      assert_equal(@child1, @root[0])
 
-      @root << @child2
+      @root << @child2          # Second child appended at position 1.
+      # Validate that children = [@child1, @child2]
+      assert_equal(@child1, @root[0])
+      assert_equal(@child2, @root[1])
+      assert_equal(2, @root.children.size, "Should have two child nodes")
 
-      assert(@root.has_children?, "Should have children")
-      assert_equal(3, @root.size, "Should have three nodes")
+      @root.add(@child3, 1)     # Third child inserted at position 1 (before @child2)
+      # Validate that children = [@child1, @child3, @child2]
+      assert_equal(@child1, @root[0])
+      assert_equal(@child3, @root[1])
+      assert_equal(@child2, @root[2])
+      assert_equal(3, @root.children.size, "Should have three child nodes")
 
-      @root.add(@child3, 1)
+      @root.add(@child4, @root.children.size)     # Fourth child inserted at the end (equivalent to plain #add(child4)
+      # Validate that children = [@child1, @child3, @child2, @child4]
+      assert_equal(@child1, @root[0])
+      assert_equal(@child3, @root[1])
+      assert_equal(@child2, @root[2])
+      assert_equal(@child4, @root[3])
+      assert_equal(4, @root.children.size, "Should have four child nodes")
 
-      assert_equal @child1, @root[0]
-      assert_equal @child3, @root[1]
-      assert_equal @child2, @root[2]
+      # Now, a negative test.  We are preventing addition to a position that does not exist.
+      assert_raise(RuntimeError) {
+        @root.add(@child5, @root.children.size + 1)     # Fifth child inserted beyond the last position that is valid (at 5th pos).
+      }
+      # Validate that we still have children = [@child1, @child3, @child2, @child4]
+      assert_equal(@child1, @root[0])
+      assert_equal(@child3, @root[1])
+      assert_equal(@child2, @root[2])
+      assert_equal(@child4, @root[3])
+      assert_nil(@root[4])
+      assert_equal(4, @root.children.size, "Should have four child nodes")
+
+      # Another negative test.  Lets attempt to add from the end at a position that is not available
+      assert_raise(RuntimeError) {
+        @root.add(@child5, -(@root.children.size+2))     # Fifth child inserted beyond the first position that is valid; i.e. at -6
+      }
+      assert_nil(@root[-5])
+      assert_equal(@child1, @root[-4])
+      assert_equal(@child3, @root[-3])
+      assert_equal(@child2, @root[-2])
+      assert_equal(@child4, @root[-1])
+      assert_equal(4, @root.children.size, "Should have four child nodes")
+
+      # Lets correctly add the fifth child from the end to effectively prepend the node.
+      @root.add(@child5, -(@root.children.size+1))     # Fifth child inserted beyond the first position; i.e. at -5
+      assert_nil(@root[-6])
+      assert_equal(@child5, @root[-5])
+      assert_equal(@child1, @root[-4])
+      assert_equal(@child3, @root[-3])
+      assert_equal(@child2, @root[-2])
+      assert_equal(@child4, @root[-1])
+      assert_equal(5, @root.children.size, "Should have five child nodes")
     end
 
     # Test the remove! and remove_all! methods.
@@ -432,7 +479,7 @@ module TestTree
       found_node = @root.find { |node| node == @child4}
       assert_same(@child4, found_node, "The node should be Child 4")
 
-      found_node = @root.find { |node| node.name == "Child31" }
+      found_node = @root.find { |node| node.name == "Child4" }
       assert_same(@child4, found_node, "The node should be Child 4")
       found_node = @root.find { |node| node.name == "NOT PRESENT" }
       assert_nil(found_node, "The node should not be found")
@@ -820,7 +867,7 @@ module TestTree
       assert_not_nil(@root['Child1'], "Child 1 should have been added to Root")
       assert_not_nil(@root['Child2'], "Child 2 should have been added to Root")
       assert_not_nil(@root['Child3'], "Child 3 should have been added to Root")
-      assert_not_nil(@child3['Child31'], "Child 31 should have been added to Child3")
+      assert_not_nil(@child3['Child4'], "Child 4 should have been added to Child3")
     end
 
     # Test the [] method.
@@ -831,11 +878,17 @@ module TestTree
       @root << @child2
       assert_equal(@child1.name, @root['Child1'].name, "Child 1 should be returned")
       assert_equal(@child1.name, @root[0].name, "Child 1 should be returned")
+      assert_equal(@child1.name, @root[-2].name, "Child 1 should be returned") # Negative access also works
+      assert_equal(@child1.name, @root[-(@root.children.size)].name, "Child 1 should be returned") # Negative access also works
+
       assert_equal(@child2.name, @root['Child2'].name, "Child 2 should be returned")
       assert_equal(@child2.name, @root[1].name, "Child 2 should be returned")
+      assert_equal(@child2.name, @root[-1].name, "Child 2 should be returned") # Negative access also works
 
       assert_nil(@root['Some Random Name'], "Should return nil")
       assert_nil(@root[99], "Should return nil")
+      assert_nil(@root[-(@root.children.size+1)], "Should return nil")
+      assert_nil(@root[-3], "Should return nil")
     end
 
     # Test the in_degree method.
@@ -876,7 +929,7 @@ module TestTree
             "content"      => "Child Node 3",
             JSON.create_id => "Tree::TreeNode",
             "children" => [
-              {"name" => "Child31", "content" => "Grand Child 1", JSON.create_id => "Tree::TreeNode"}
+              {"name" => "Child4", "content" => "Grand Child 1", JSON.create_id => "Tree::TreeNode"}
             ]
           }
         ]
@@ -898,7 +951,7 @@ module TestTree
             "content"      => "Child Node 3",
             JSON.create_id => "Tree::TreeNode",
             "children" => [
-              {"name" => "Child31", "content" => "Grand Child 1", JSON.create_id => "Tree::TreeNode"}
+              {"name" => "Child4", "content" => "Grand Child 1", JSON.create_id => "Tree::TreeNode"}
             ]
           }
         ]
