@@ -229,6 +229,11 @@ module Tree
     # the child is added as the last child ("right most") in the current set of
     # children of the receiver node.
     #
+    # Additionally you can specify a insert position. The new node will be inserted
+    # BEFORE that position. If you don't specify any position the node will be
+    # just appended. This feature is provided to make implementation of node
+    # movement within the tree very simple.
+    #
     # @param [Tree::TreeNode] child The child node to add.
     #
     # @return [Tree::TreeNode] The added child node.
@@ -238,12 +243,12 @@ module Tree
     # @raise [ArgumentError] This exception is raised if a +nil+ node is passed as the argument.
     #
     # @see #<<
-    def add(child)
+    def add(child, at_index = -1)
       raise ArgumentError, "Attempting to add a nil node" unless child
       raise "Child #{child.name} already added!" if @children_hash.has_key?(child.name)
 
       @children_hash[child.name]  = child
-      @children << child
+      @children.insert(at_index, child)
       child.parent = self
       return child
     end
@@ -819,18 +824,22 @@ module Tree
       return 1 if is_leaf?
       1 + @children.collect { |child| child.depth }.max
     end
-    
+
+    # Allow the deprecated CamelCase method names.  Display a warning.
     def method_missing(meth, *args, &blk)
       if self.respond_to?(new_method_name = underscore(meth))
         begin
-          require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
+          require 'structured_warnings'   # To enable a nice way of deprecating of the invoked CamelCase method.
           warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
+
         rescue LoadError
           # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
           warn "Tree::TreeNode##{meth}() method is deprecated. Please use #{new_method_name} instead."
-        ensure
+
+        ensure                  # Invoke the method now.
           send(new_method_name, *args, &blk)
         end
+
       else
         super
       end
@@ -872,20 +881,22 @@ module Tree
     end
 
     protected :parent=, :set_as_root!, :create_dump_rep
-    
+
     private
 
-      # Just copied from ActiveSupport::Inflector because it is only needed
-      # aliasing deprecated methods
-      def underscore(camel_cased_word)
-        word = camel_cased_word.to_s.dup
-        word.gsub!(/::/, '/')
-        word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-        word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-        word.tr!("-", "_")
-        word.downcase!
-        word
-      end
+    # Convert a CamelCasedWord to a underscore separated camel_cased_word.
+    #
+    # Just copied from ActiveSupport::Inflector because it is only needed
+    # aliasing deprecated methods
+    def underscore(camel_cased_word)
+      word = camel_cased_word.to_s.dup
+      word.gsub!(/::/, '/')
+      word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+      word.tr!("-", "_")
+      word.downcase!
+      word
+    end
 
   end
 end
