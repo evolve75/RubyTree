@@ -735,8 +735,12 @@ module Tree
       end
     end
 
-    # Creates a Tree::TreeNode object instance from a given JSON Hash representation.  This requires the JSON gem to be
-    # available, or else the operation fails with a warning message.
+    # Helper method to create a Tree::TreeNode instance from the JSON hash representation.  Note that this method should
+    # *NOT* be called directly.  Instead, to convert the JSON hash back to a tree, do:
+    #
+    # tree = JSON.parse (the_json_hash)
+    #
+    # This operation requires the JSON gem to be available, or else the operation fails with a warning message.
     #
     # @author Dirk Breuer (http://github.com/railsbros-dirk)
     # @since 0.7.0
@@ -819,6 +823,22 @@ module Tree
       return 1 if is_leaf?
       1 + @children.collect { |child| child.depth }.max
     end
+    
+    def method_missing(meth, *args, &blk)
+      if self.respond_to?(new_method_name = underscore(meth))
+        begin
+          require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
+          warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
+        rescue LoadError
+          # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
+          warn "Tree::TreeNode##{meth}() method is deprecated. Please use #{new_method_name} instead."
+        ensure
+          send(new_method_name, *args, &blk)
+        end
+      else
+        super
+      end
+    end
 
     # Returns breadth of the tree at the receiver node's level.
     # A single node without siblings has a breadth of 1.
@@ -856,6 +876,20 @@ module Tree
     end
 
     protected :parent=, :set_as_root!, :create_dump_rep
+    
+    private
+
+      # Just copied from ActiveSupport::Inflector because it is only needed
+      # aliasing deprecated methods
+      def underscore(camel_cased_word)
+        word = camel_cased_word.to_s.dup
+        word.gsub!(/::/, '/')
+        word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+        word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+        word.tr!("-", "_")
+        word.downcase!
+        word
+      end
 
   end
 end

@@ -894,6 +894,22 @@ module TestTree
       assert_equal(@child3.name, tree[2].name, "Child 3 should be returned")
       assert_equal(@child4.name, tree[2][0].name, "Grand Child 1 should be returned")
     end
+
+    def test_json_roundtrip
+      root_node = Tree::TreeNode.new("RTROOT", "Root Content")
+      root_node << Tree::TreeNode.new("RTCHILD1", "Child1 Content") << Tree::TreeNode.new("RTGRANDCHILD1", "GrandChild1 Content")
+      root_node << Tree::TreeNode.new("RTCHILD2", "Child2 Content")
+
+      j = root_node.to_json
+
+      k = JSON.parse(j)
+
+      assert_equal(k.name, root_node.name, "Root should be returned")
+      assert_equal(k[0].name, root_node[0].name, "Child 1 should be returned")
+      assert_equal(k[0][0].name, root_node[0][0].name, "Grand Child 1 should be returned")
+      assert_equal(k[1].name, root_node[1].name, "Child 2 should be returned")
+    end
+
   end
 end
 
