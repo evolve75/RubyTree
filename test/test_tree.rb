@@ -894,6 +894,37 @@ module TestTree
       assert_equal(@child3.name, tree[2].name, "Child 3 should be returned")
       assert_equal(@child4.name, tree[2][0].name, "Grand Child 1 should be returned")
     end
+    
+    def test_old_camelCase_method_names
+      load_children
+      
+      @root.printTree
+
+      @root.isRoot?
+      @child4.isLeaf?
+      @child4.hasContent?
+      @root.hasChildren?
+      @root.setAsRoot!
+      @root.firstChild
+      @root.lastChild
+      @child1.firstSibling
+      @child1.isFirstSibling?
+      @child3.lastSibling
+      @child3.isLastSibling?
+      @child4.isOnlyChild?
+      @child2.nextSibling
+      @child2.previousSibling
+      @root.nodeHeight
+      @root.nodeDepth
+
+      @root.createDumpRep
+
+      @child4.removeFromParent!
+      @root.removeAll!
+      
+      @root.freezeTree!
+    end
+    
   end
 end
 

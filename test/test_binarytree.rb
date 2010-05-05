@@ -47,7 +47,6 @@ module TestTree
 
       @left_child1  = Tree::BinaryTreeNode.new("A Child at Left", "Child Node @ left")
       @right_child1 = Tree::BinaryTreeNode.new("B Child at Right", "Child Node @ right")
-
     end
 
     # Tear down the test data scaffolding.
@@ -178,5 +177,19 @@ module TestTree
       assert_equal(@right_child1, @root[0], "right_child1 should now be the first child")
       assert_equal(@left_child1, @root[1], "left_child1 should now be the last child")
     end
+    
+    def test_old_camelCase_method_names
+      @left_child2  = Tree::BinaryTreeNode.new("A Child at Left", "Child Node @ left")
+      @right_child2 = Tree::BinaryTreeNode.new("B Child at Right", "Child Node @ right")
+      
+      @root.leftChild
+      @root.leftChild = @left_child2
+      @root.isLeftChild?
+      @root.rightChild
+      @root.rightChild = @right_child2
+      @root.isRightChild?
+      @root.swapChildren
+    end
+    
   end
 end
