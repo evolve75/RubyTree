@@ -295,6 +295,24 @@ module TestTree
       assert_raise(ArgumentError) { @root.add(nil) }
     end
 
+    def test_add_at_specific_position
+      assert(!@root.has_children?, "Should not have any children")
+
+      assert_equal(1, @root.size, "Should have 1 node (the root)")
+      @root.add(@child1)
+
+      @root << @child2
+
+      assert(@root.has_children?, "Should have children")
+      assert_equal(3, @root.size, "Should have three nodes")
+
+      @root.add(@child3, 1)
+
+      assert_equal @child1, @root[0]
+      assert_equal @child3, @root[1]
+      assert_equal @child2, @root[2]
+    end
+
     # Test the remove! and remove_all! methods.
     def test_remove_bang
       @root << @child1
@@ -908,6 +926,23 @@ module TestTree
       assert_equal(k[0].name, root_node[0].name, "Child 1 should be returned")
       assert_equal(k[0][0].name, root_node[0][0].name, "Grand Child 1 should be returned")
       assert_equal(k[1].name, root_node[1].name, "Child 2 should be returned")
+    end
+
+    # Test the old CamelCase method names
+    def test_old_camelCase_method_names
+      setup_test_tree
+
+      meth_names_to_test = %w{printTree isRoot? isLeaf? hasContent?
+                              hasChildren? setAsRoot! firstChild lastChild
+                              firstSibling isFirstSibling? lastSibling isLastSibling?
+                              isOnlyChild? nextSibling previousSibling nodeHeight nodeDepth
+                              createDumpRep removeFromParent! removeAll! freezeTree! }
+
+      require 'structured_warnings'
+
+      meth_names_to_test.each do |meth_name|
+        assert_warn(DeprecatedMethodWarning) {@root.send(meth_name)}
+      end
     end
 
   end

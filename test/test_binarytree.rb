@@ -177,19 +177,24 @@ module TestTree
       assert_equal(@right_child1, @root[0], "right_child1 should now be the first child")
       assert_equal(@left_child1, @root[1], "left_child1 should now be the last child")
     end
-    
+
+    # Test the old CamelCase method names
     def test_old_camelCase_method_names
       @left_child2  = Tree::BinaryTreeNode.new("A Child at Left", "Child Node @ left")
       @right_child2 = Tree::BinaryTreeNode.new("B Child at Right", "Child Node @ right")
-      
-      @root.leftChild
-      @root.leftChild = @left_child2
-      @root.isLeftChild?
-      @root.rightChild
-      @root.rightChild = @right_child2
-      @root.isRightChild?
-      @root.swapChildren
+
+      require 'structured_warnings'
+
+      meth_names_for_test = %w{leftChild isLeftChild? rightChild isRightChild?}
+
+      meth_names_for_test.each do |meth_name|
+        assert_warn(DeprecatedMethodWarning) {@root.send(meth_name)}
+      end
+
+      assert_warn(DeprecatedMethodWarning) {@root.leftChild = @left_child2}
+      assert_warn(DeprecatedMethodWarning) {@root.rightChild = @right_child2}
+
     end
-    
+
   end
 end
