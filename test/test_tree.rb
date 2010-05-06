@@ -985,7 +985,7 @@ module TestTree
     def test_old_camelCase_method_names
       setup_test_tree
 
-      meth_names_to_test = %w{printTree isRoot? isLeaf? hasContent?
+      meth_names_to_test = %w{isRoot? isLeaf? hasContent?
                               hasChildren? setAsRoot! firstChild lastChild
                               firstSibling isFirstSibling? lastSibling isLastSibling?
                               isOnlyChild? nextSibling previousSibling nodeHeight nodeDepth
@@ -993,9 +993,23 @@ module TestTree
 
       require 'structured_warnings'
 
+      DeprecatedMethodWarning.disable do
+        assert(@root.isRoot?)   # Test if the original method is really called
+      end
+
       meth_names_to_test.each do |meth_name|
         assert_warn(DeprecatedMethodWarning) {@root.send(meth_name)}
       end
+
+        # Special Case for printTree to avoid putting stuff on the STDOUT during the unit test.
+      begin
+        require 'stringio'
+        $stdout = StringIO.new
+        assert_warn(DeprecatedMethodWarning) { @root.send('printTree') }
+      ensure
+        $stdout = STDOUT
+      end
+
     end
 
   end

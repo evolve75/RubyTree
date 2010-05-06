@@ -855,7 +855,7 @@ module Tree
           warn "Tree::TreeNode##{meth}() method is deprecated. Please use #{new_method_name} instead."
 
         ensure                  # Invoke the method now.
-          send(new_method_name, *args, &blk)
+          return send(new_method_name, *args, &blk)
         end
 
       else
