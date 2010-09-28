@@ -71,10 +71,15 @@ begin
 
  Thank you for installing #{PKG_NAME}.
 
- Please note that a few APIs have been deprecated since Version 0.6.1.
+              WARNING: SIGNIFICANT API CHANGE in 0.8.0 !
+              ------------------------------------------
 
- Specifically, the 'Tree::TreeNode#depth' method is now deprecated, and
- a new nodeDepth() method has been introduced.
+ Please note that as of 0.8.0 the CamelCase method names are DEPRECATED.
+
+ The new method names follow the ruby_convention (separated by '_').
+
+ The old CamelCase methods still work (a warning will be displayed),
+ but may go away in the future.
 
  Details of the API changes are documented in the API-CHANGES file.
 

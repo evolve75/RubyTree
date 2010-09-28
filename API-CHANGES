@@ -11,6 +11,8 @@ be provided to ensure relatively smooth transition to the new APIs.
   code contributed by Dirk.
 - Added a new method {Tree::TreeNode#detached_subtree_copy} to allow cloning the entire tree.  This method is also
   aliased to {Tree::TreeNode#dup}.  Idea and original code contributed by Vincenzo Farruga.
+- Converted all CamelCase method names to the canonical ruby_method_names (underscore separated).  The CamelCase methods
+  can still be invoked, but will throw a Deprecated warning.
 
 == Release 0.7.0 Changes
 

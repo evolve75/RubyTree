@@ -4,6 +4,10 @@
 
 * Added a new method 'detached_subtree_copy' to allow cloning the entire tree (this method is also aliased as 'dup').
 
+* Converted all CamelCase method names to the canonical ruby_method_names (underscore separated).  The CamelCase methods
+  can still be invoked, but will throw a Deprecated warning.  The support for old CamelCase methods will go away some
+  time in the future, so the user is advised to convert all current method invocations to the new names.
+
 === 0.7.0 / 2010-05-03
 
 * Added new methods to report the degree statistics of a node.
