@@ -47,7 +47,7 @@ As an example, the following code-snippet implements this tree structure:
  root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
 
  # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
- root_node.printTree
+ root_node.print_tree
 
  # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
  child1 = root_node["CHILD1"]
