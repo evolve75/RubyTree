@@ -9,6 +9,8 @@ be provided to ensure relatively smooth transition to the new APIs.
 
 - Added the ability to specify an optional insertion position in the {Tree::TreeNode#add} method.  Idea and original
   code contributed by Dirk.
+- Added a new method {Tree::TreeNode#detached_subtree_copy} to allow cloning the entire tree.  This method is also
+  aliased to {Tree::TreeNode#dup}.  Idea and original code contributed by Vincenzo Farruga.
 
 == Release 0.7.0 Changes
 

@@ -135,7 +135,6 @@ module Tree
     # Parent of this node.  Will be +nil+ for a root node.
     attr_reader   :parent
 
-
     # Creates a new node with a name and optional content.
     # The node name is expected to be unique within the tree.
     #
@@ -161,6 +160,23 @@ module Tree
     def detached_copy
       Tree::TreeNode.new(@name, @content ? @content.clone : nil)
     end
+
+    # Returns a copy of entire (sub-)tree from receiver node.
+    #
+    # @author Vincenzo Farrugia
+    # @since 0.8.0
+    #
+    # @return [Tree::TreeNode] A copy of (sub-)tree from receiver node.
+    def detached_subtree_copy
+      new_node = detached_copy
+      children { |child| new_node << child.detached_subtree_copy }
+      new_node
+    end
+
+    # Alias for {Tree::TreeNode#detached_subtree_copy}
+    #
+    # @see Tree::TreeNode#detached_subtree_copy
+    alias :dup :detached_subtree_copy
 
     # Returns string representation of the receiver node.
     # This method is primarily meant for debugging purposes.

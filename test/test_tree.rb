@@ -823,6 +823,40 @@ module TestTree
       assert(!copy_of_child3.has_children?, "Child 3's copy does not have children")
     end
 
+    # Test the detached_subtree_copy method.
+    def test_detached_subtree_copy
+      setup_test_tree
+
+      assert(@root.has_children?, "The root should have children.")
+      tree_copy = @root.detached_subtree_copy
+
+      assert_equal(@root.name, tree_copy.name, "The names should be equal.")
+      assert_not_equal(@root.object_id, tree_copy.object_id, "Object_ids should differ.")
+      assert(tree_copy.is_root?, "Copied root should be a root node.")
+      assert(tree_copy.has_children?, "Copied tree should have children.")
+      assert_equal(tree_copy.children.count, @root.children.count, "Copied tree and the original tree should have same number of children.")
+
+      assert_equal(tree_copy[0].name, @child1.name, "The names of Child1 (original and copy) should be same.")
+      assert_not_equal(tree_copy[0].object_id, @child1.object_id, "Child1 Object_ids (original and copy) should differ.")
+      assert(!tree_copy[0].is_root?, "Child1 copied should not be root.")
+      assert(!tree_copy[0].has_children?, "Child1 copied should not have children.")
+
+      assert_equal(tree_copy[1].name, @child2.name, "The names of Child2 (original and copy) should be same.")
+      assert_not_equal(tree_copy[1].object_id, @child2.object_id, "Child2 Object_ids (original and copy) should differ.")
+      assert(!tree_copy[1].is_root?, "Child2 copied should not be root.")
+      assert(!tree_copy[1].has_children?, "Child2 copied should not have children.")
+
+      assert_equal(tree_copy[2].name, @child3.name, "The names of Child3 (original and copy) should be same.")
+      assert_not_equal(tree_copy[2].object_id, @child3.object_id, "Child3 Object_ids (original and copy) should differ.")
+      assert(!tree_copy[2].is_root?, "Child3 copied should not be root.")
+      assert(tree_copy[2].has_children?, "Child3 copied should have children.")
+
+      assert_equal(tree_copy[2][0].name, @child4.name, "The names of Child4 (original and copy) should be same.")
+      assert_not_equal(tree_copy[2][0].object_id, @child4.object_id, "Child4 Object_ids (original and copy) should differ.")
+      assert(!tree_copy[2][0].is_root?, "Child4 copied should not be root.")
+      assert(!tree_copy[2][0].has_children?, "Child4 copied should not have children.")
+    end
+
     # Test the has_children? method.
     def test_has_children_eh
       setup_test_tree

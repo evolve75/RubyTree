@@ -2,6 +2,8 @@
 
 * Updated the 'add' method to allow the optional specification of an insertion position in the child array.
 
+* Added a new method 'detached_subtree_copy' to allow cloning the entire tree (this method is also aliased as 'dup').
+
 === 0.7.0 / 2010-05-03
 
 * Added new methods to report the degree statistics of a node.

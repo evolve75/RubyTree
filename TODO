@@ -24,6 +24,7 @@
 *** TODO We should perhaps return nil as root's root.
 *** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
     The current equivalence of length to size should also be removed.
+*** DONE Integrate the subtree cloning patch submitted by Vincenzo Farrugia.
 
 
 * Unplanned / Not assigned to any release
