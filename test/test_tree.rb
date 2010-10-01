@@ -212,7 +212,7 @@ module TestTree
       assert_same(@child3, @child2.last_sibling, "Child2's last sibling should be child3")
       assert_same(@child3, @child3.last_sibling, "Child3's last sibling should be itself")
       assert_not_same(@child3, @child4.last_sibling, "Child4's last sibling is itself")
-     end
+    end
 
     # Test the siblings method, which is essentially an iterator.
     def test_siblings
@@ -874,7 +874,7 @@ module TestTree
     def test_is_root_eh
       setup_test_tree
       assert(@root.is_root?, "The ROOT node must respond as the root node")
-     end
+    end
 
     # Test the content= method.
     def test_content_equals
