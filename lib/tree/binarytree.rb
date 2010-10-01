@@ -89,6 +89,24 @@ module Tree
       children[1]
     end
 
+    # A protected method to allow insertion of child nodes at the specified location.
+    # Note that this method allows insertion of +nil+ nodes.
+    #
+    # @param [Tree::BinaryTreeNode] child The child to add at the specified location.
+    # @param [Integer] at_index The location to add the entry at (0 or 1).
+    #
+    # @return [Tree::BinaryTreeNode] The added child.
+    #
+    # @raise [ArgumentError] If the index is out of limits.
+    def set_child_at(child, at_index)
+      raise ArgumentError "A binary tree cannot have more than two children." unless (0..1).include? at_index
+
+      @children[at_index]        = child
+      @children_hash[child.name] = child if child # Assign the name mapping
+      child.parent               = self if child
+      child
+    end
+
     # Sets the left child of the receiver node. If a previous child existed, it is replaced.
     #
     # @param [Tree::BinaryTreeNode] child The child to add as the left-side node.
@@ -98,8 +116,7 @@ module Tree
     # @see #left_child
     # @see #right_child=
     def left_child=(child)
-      @children[0] = child
-      @children_hash[child.name] = child if child # Assign the name mapping
+      set_child_at child, 0
     end
 
     # Sets the right child of the receiver node. If a previous child existed, it is replaced.
@@ -111,8 +128,7 @@ module Tree
     # @see #right_child
     # @see #left_child=
     def right_child=(child)
-      @children[1] = child
-      @children_hash[child.name] = child if child # Assign the name mapping
+      set_child_at child, 1
     end
 
     # Returns +true+ if the receiver node is the left child of its parent.
@@ -139,6 +155,9 @@ module Tree
     def swap_children
       self.left_child, self.right_child = self.right_child, self.left_child
     end
+
+    protected :set_child_at
+
   end
 
 end

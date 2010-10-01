@@ -59,15 +59,22 @@ module TestTree
     # Test initialization of the binary tree.
     def test_initialize
       assert_not_nil(@root, "Binary tree's Root should have been created")
+      assert_nil(@root.left_child, "The initial left child of root should be nil")
+      assert_nil(@root.right_child, "The initial right child of root should be nil")
+      assert_equal(@root.children.size, 0, "Initially no children should be present")
     end
 
     # Test the add method.
     def test_add
-      @root.add  @left_child1
+      @root.add @left_child1
+      assert(!@left_child1.is_root?, "Left child1 cannot be a root after addition to the ROOT node")
+
       assert_same(@left_child1, @root.left_child, "The left node should be left_child1")
       assert_same(@left_child1, @root.first_child, "The first node should be left_child1")
 
       @root.add @right_child1
+      assert(!@right_child1.is_root?, "Right child1 cannot be a root after addition to the ROOT node")
+
       assert_same(@right_child1, @root.right_child, "The right node should be right_child1")
       assert_same(@right_child1, @root.last_child, "The first node should be right_child1")
 
@@ -101,8 +108,10 @@ module TestTree
       @root << @left_child1
       @root << @right_child1
       assert_same(@left_child1, @root.left_child, "The left child should be 'left_child1")
+      assert(!@left_child1.is_root?, "The left child now cannot be a root.")
 
       @root.left_child = Tree::BinaryTreeNode.new("New Left Child")
+      assert(!@root.left_child.is_root?, "The left child now cannot be a root.")
       assert_equal("New Left Child", @root.left_child.name, "The left child should now be the new child")
       assert_equal("B Child at Right", @root.last_child.name, "The last child should now be the right child")
 
@@ -118,8 +127,10 @@ module TestTree
       @root << @left_child1
       @root << @right_child1
       assert_same(@right_child1, @root.right_child, "The right child should be 'right_child1")
+      assert(!@right_child1.is_root?, "The right child now cannot be a root.")
 
       @root.right_child = Tree::BinaryTreeNode.new("New Right Child")
+      assert(!@root.right_child.is_root?, "The right child now cannot be a root.")
       assert_equal("New Right Child", @root.right_child.name, "The right child should now be the new child")
       assert_equal("A Child at Left", @root.first_child.name, "The first child should now be the left child")
       assert_equal("New Right Child", @root.last_child.name, "The last child should now be the right child")
