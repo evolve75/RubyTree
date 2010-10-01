@@ -6,3 +6,8 @@ coverage/
 tmp/
 .yardoc/
 .DS_Store
+.loadpath
+.project
+.settings/com.aptana.rdt.prefs
+.settings/org.radrails.rails.core.prefs
+.settings/org.rubypeople.rdt.core.prefs
