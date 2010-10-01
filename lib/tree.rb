@@ -325,9 +325,8 @@ module Tree
     # @see #remove!
     # @see #remove_from_parent!
     def remove_all!
-      for child in @children
-        child.set_as_root!
-      end
+      @children.each { |child| child.set_as_root! }
+
       @children_hash.clear
       @children.clear
       self
@@ -629,9 +628,7 @@ module Tree
       return nil if is_root?
 
       if block_given?
-        for sibling in parent.children
-          yield sibling if sibling != self
-        end
+        parent.children.each { |sibling| yield sibling if sibling != self }
       else
         siblings = []
         parent.children {|my_sibling| siblings << my_sibling if my_sibling != self}
@@ -722,7 +719,7 @@ module Tree
     #
     def marshal_load(dumped_tree_array)
       nodes = { }
-      for node_hash in dumped_tree_array do
+      dumped_tree_array.each do |node_hash|
         name        = node_hash[:name]
         parent_name = node_hash[:parent]
         content     = Marshal.load(node_hash[:content])
