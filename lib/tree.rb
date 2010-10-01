@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.8.0'
+  VERSION = '0.8.1'
 
   # == TreeNode Class Description
   #
