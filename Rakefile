@@ -127,3 +127,21 @@ rescue LoadError
 
   END
 end
+
+begin
+  require 'reek/rake/task'
+  Reek::Rake::Task.new do |t|
+    t.verbose = false
+    t.source_files = 'lib/**/*.rb'
+  end
+rescue LoadError
+  $stderr.puts <<-END
+  ERROR!!! You need to have reek (http://github.com/kevinrutherford/reek) for detecing the code smell.
+
+  You can install the reek gem by running the following command as root (or sudo):
+
+    $ gem install reek
+
+  END
+
+end
