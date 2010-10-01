@@ -658,9 +658,9 @@ module Tree
     # @see #siblings
     def next_sibling
       return nil if is_root?
-      if myidx = parent.children.index(self)
-        parent.children.at(myidx + 1)
-      end
+
+      myidx = parent.children.index(self)
+      parent.children.at(myidx + 1) if myidx
     end
 
     # Returns the previous sibling of the receiver node.
@@ -675,9 +675,8 @@ module Tree
     def previous_sibling
       return nil if is_root?
 
-      if myidx = parent.children.index(self)
-        parent.children.at(myidx - 1) if myidx > 0
-      end
+      myidx = parent.children.index(self)
+      parent.children.at(myidx - 1) if myidx && myidx > 0
     end
 
     # Provides a comparision operation for the nodes.
@@ -762,7 +761,7 @@ module Tree
 
         return json_hash.to_json
 
-      rescue LoadError => e
+      rescue LoadError
         warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation"
       end
     end
