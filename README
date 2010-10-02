@@ -183,7 +183,7 @@ For generating the documentation, it is strongly suggested that the Yard[http://
 I would like to acknowledge the following contributors for helping improve RubyTree:
 
 1. Dirk Breuer (http://github.com/railsbros-dirk) for contributing the JSON conversion code.
-2. Vincenzo Farrugia for contributing the (sub)tree cloning code.
+2. Vincenzo Farruggia for contributing the (sub)tree cloning code.
 
 == LICENSE:
 

@@ -163,7 +163,7 @@ module Tree
 
     # Returns a copy of entire (sub-)tree from receiver node.
     #
-    # @author Vincenzo Farrugia
+    # @author Vincenzo Farruggia
     # @since 0.8.0
     #
     # @return [Tree::TreeNode] A copy of (sub-)tree from receiver node.
