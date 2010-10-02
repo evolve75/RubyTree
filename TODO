@@ -1,6 +1,5 @@
 # -*- mode: org; coding: utf-8-unix; -*-
 
-
 * R0.7.0
 *** DONE Start using signed tags from R0.7.0
 *** DONE Add a check in the Tree::TreeNode.add method to prevent addition of nil child nodes
@@ -16,10 +15,17 @@
 *** DONE Add new methods to return the degree counts of the receiver node (in-degree and out-degree)
     CLOSED: [2010-01-30 Sat 23:56]
 
+
+
 * R0.8.0
 *** DONE Convert all method names to the canonical /^[_a-z<>=\[|+-\/\*`]+[_a-z0-9_<>=~@\[\]]*[=!\?]?$/ pattern
     See Roodi report at http://getcaliper.com/caliper/tool?tool=roodi&repo=git://github.com/evolve75/RubyTree.git
 *** DONE Integrate the subtree cloning patch submitted by Vincenzo Farrugia.
+
+
+* R0.8.1
+*** DONE Fix [[http://rubyforge.org/tracker/index.php?func%3Ddetail&aid%3D28613&group_id%3D1215&atid%3D4793][bug #28613]] which was affecting the `leftChild=' and `rightChild=' methods for binary trees.
+
 
 * R0.9.0
 *** TODO Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling.
@@ -27,6 +33,7 @@
 *** TODO We should perhaps return nil as root's root.
 *** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
     The current equivalence of length to size should also be removed.
+
 
 * Unplanned / Not assigned to any release
 *** TODO Fix the TreeNode#root method to return nil for root's root.
@@ -48,7 +55,3 @@
 *** TODO Fix the inconsistency of returning root as its last sibling, and returning a nil array for siblings of the node
 *** TODO marshal_load method probably should be a class method.  It currently clobbers self.
 *** TODO Fix the inconsistency of returning root as its first/last sibling, and returning a nil array for siblings of the node
-
-$Id$
-
-

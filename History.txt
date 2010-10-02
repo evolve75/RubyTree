@@ -1,3 +1,30 @@
+=== 0.8.1 / 2010-10-02
+
+* This is the public release of R0.8.0, with additional bug-fixes.
+  Note that R0.8.0 will not be released separately as a publicly
+  available Rubygem. All changes as listed for R0.8.0 are available in
+  this release.
+
+* The main change in R0.8.0/R0.8.1 is conversion of all CamelCase
+  method names to snake_case.  The old CamelCase method names will
+  still work (to ensure backwards compatibility), but will also
+  display a warning.
+
+* The TreeNode#add method now accepts an optional child insertion
+  point.
+
+* The subtree from the current node can now be cloned in its entirety
+  using the `TreeNode#detached_subtree_copy' method.
+
+* A major bug-fix for bug #28613 which impacted the Binarytree
+  implementation.  See
+  http://rubyforge.org/tracker/index.php?func=detail&aid=28613&group_id=1215&atid=4793
+  for details.
+
+* Minor code re-factoring driven by the code-smell checks using reek.
+
+* Inclusion of the `reek' code-smell detection tool in the Rakefile.
+
 === 0.8.0 / 2010-05-04
 
 * Updated the 'add' method to allow the optional specification of an insertion position in the child array.
