@@ -229,5 +229,46 @@ module TestTree
 
     end
 
+    def test_inordered_each
+      a = Tree::BSTNode.new("a")
+      b = Tree::BSTNode.new("b")
+      c = Tree::BSTNode.new("c")
+      d = Tree::BSTNode.new("d")
+      e = Tree::BSTNode.new("e")
+      f = Tree::BSTNode.new("f")
+      g = Tree::BSTNode.new("g")
+      h = Tree::BSTNode.new("i")
+      i = Tree::BSTNode.new("i")
+
+
+      h = Tree::BSTNode.new("h")
+      z = Tree::BSTNode.new("z")
+
+      # The expected order of response
+      expected_array = [a, b, c, d, e, f, g, h, i]
+
+      # Create the following Tree
+      #        f         <-- level 0 (Root)
+      #      /   \
+      #     b      g     <-- level 1
+      #   /   \      \
+      #  a     d      i  <-- level 2
+      #      /  \    /
+      #     c    e  h    <-- level 3
+      f << b << a
+      b << d << c
+      d << e
+      f << g
+      g<< i << h
+
+      result_array = []
+      f.inordered_each { |node| result_array << node.detached_copy}
+
+      expected_array.each_index do |i|
+        # Match only the names.
+        assert_equal(expected_array[i].name, result_array[i].name)
+      end
+    end
+
   end
 end

@@ -160,6 +160,20 @@ module Tree
       self == parent.right_child
     end
 
+    # Traverses the (sub)tree rooted at the receiver node in in-ordered sequence.
+    #
+    # @yield [child] Each child is passed to the block.
+    #
+    # @yieldparam [Tree::TreeNode] node Each node.
+    #
+    # @see #preordered_each
+    # @see #postordered_each
+    def inordered_each &block
+      left_child.inordered_each &block if left_child
+      yield self
+      right_child.inordered_each &block if right_child
+    end
+
     # Swaps the left and right child nodes of the receiver node with each other.
     #
     # @todo Define the return value.
