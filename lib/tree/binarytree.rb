@@ -75,7 +75,7 @@ module Tree
     #
     # @see #right_child
     def left_child
-      children.first
+      children[0]
     end
 
     # Returns the right child of the receiver node. Note that right child == last child unless there is only one child.
