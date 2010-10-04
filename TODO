@@ -51,7 +51,21 @@
     CLOSED: [2010-01-02 Sat 17:58]
 
 *** DONE Add logic in Rakefile to read the file list from Manifest.txt file.
-  CLOSED: [2009-12-31 Thu 23:37]
+    CLOSED: [2009-12-31 Thu 23:37]
 *** TODO Fix the inconsistency of returning root as its last sibling, and returning a nil array for siblings of the node
 *** TODO marshal_load method probably should be a class method.  It currently clobbers self.
 *** TODO Fix the inconsistency of returning root as its first/last sibling, and returning a nil array for siblings of the node
+
+
+*** Wishlist
+
+***** TODO Add a Binary Search Tree Implementation
+
+***** TODO Implement a builder like approach to creation of the tree
+      See feature request # [[http://rubyforge.org/tracker/index.php?func%3Ddetail&aid%3D21742&group_id%3D1215&atid%3D4796][21742]].
+
+***** TODO Implement a rotate method for the parent and child nodes on binary trees
+
+***** TODO Implement a `self-delete and hoist children' method for binary trees (perhaps only for BST)
+
+***** TODO Add RSpec based test cases.
