@@ -169,9 +169,9 @@ module Tree
     # @see #preordered_each
     # @see #postordered_each
     def inordered_each &block
-      left_child.inordered_each &block if left_child
+      left_child.inordered_each(&block) if left_child
       yield self
-      right_child.inordered_each &block if right_child
+      right_child.inordered_each(&block) if right_child
     end
 
     # Swaps the left and right child nodes of the receiver node with each other.
