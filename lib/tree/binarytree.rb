@@ -109,7 +109,13 @@ module Tree
 
     # Sets the left child of the receiver node. If a previous child existed, it is replaced.
     #
-    # @param [Tree::BinaryTreeNode] child The child to add as the left-side node.
+    # Note that #children.size will return 2 if either #left_child= or
+    # #right_child= methods are invoked.  This allows +nil+ to be
+    # assigned to any of the children while retaining the correct
+    # count of the children.
+    #
+    # @param [Tree::BinaryTreeNode]
+    # child The child to add as the left-side node.
     #
     # @return [Tree::BinaryTreeNode] The assigned child node.
     #
@@ -120,6 +126,11 @@ module Tree
     end
 
     # Sets the right child of the receiver node. If a previous child existed, it is replaced.
+    #
+    # Note that #children.size will return 2 if either #left_child= or
+    # #right_child= methods are invoked.  This allows +nil+ to be
+    # assigned to any of the children while retaining the correct
+    # count of the children.
     #
     # @param [Tree::BinaryTreeNode] child The child to add as the right-side node.
     #

@@ -90,7 +90,13 @@ module TestTree
     # Test the left_child method.
     def test_left_child
       @root << @left_child1
+      assert_same(@root.first_child, @root.left_child, "The left child is the first child")
+      assert_same(@root.last_child, @root.left_child, "The left child is the last child")
+
       @root << @right_child1
+      assert_same(@root.last_child, @root.right_child, "The right child is the last child")
+      assert_not_same(@root.first_child, @root.right_child, "The right child is not the first child")
+
       assert_same(@left_child1, @root.left_child, "The left child should be 'left_child1")
       assert_not_same(@right_child1, @root.left_child, "The right_child1 is not the left child")
     end
@@ -98,7 +104,12 @@ module TestTree
     # Test the right_child method.
     def test_right_child
       @root << @left_child1
+      assert_same(@root.last_child, @root.left_child, "The left child is the last child")
+
       @root << @right_child1
+      assert_same(@root.last_child, @root.right_child, "The right child is the last child")
+      assert_not_same(@root.first_child, @root.right_child, "The right child is not the first child")
+
       assert_same(@right_child1, @root.right_child, "The right child should be 'right_child1")
       assert_not_same(@left_child1, @root.right_child, "The left_child1 is not the left child")
     end
@@ -106,17 +117,24 @@ module TestTree
     # Test left_child= method.
     def test_left_child_equals
       @root << @left_child1
+      assert_equal(@root.children.size, 1, "There should be only one child node")
+
       @root << @right_child1
-      assert_same(@left_child1, @root.left_child, "The left child should be 'left_child1")
+      assert_equal(@root.children.size, 2, "There should be two child nodes")
+      assert_same(@left_child1, @root.left_child, "The left child should be left_child1")
       assert(!@left_child1.is_root?, "The left child now cannot be a root.")
 
       @root.left_child = Tree::BinaryTreeNode.new("New Left Child")
+      assert_equal(@root.children.size, 2, "There should be two child nodes")
+      assert_equal(@root.size, 3, "There should be three nodes including root")
       assert(!@root.left_child.is_root?, "The left child now cannot be a root.")
       assert_equal("New Left Child", @root.left_child.name, "The left child should now be the new child")
       assert_equal("B Child at Right", @root.last_child.name, "The last child should now be the right child")
 
       # Now set the left child as nil, and retest
       @root.left_child = nil
+      assert_equal(@root.children.size, 2, "Now there still should be two child nodes (including the nil left node)")
+      assert_equal(@root.size, 2, "There should be only two nodes including root")
       assert_nil(@root.left_child, "The left child should now be nil")
       assert_nil(@root.first_child, "The first child is now nil")
       assert_equal("B Child at Right", @root.last_child.name, "The last child should now be the right child")
@@ -126,10 +144,12 @@ module TestTree
     def test_right_child_equals
       @root << @left_child1
       @root << @right_child1
-      assert_same(@right_child1, @root.right_child, "The right child should be 'right_child1")
+      assert_same(@right_child1, @root.right_child, "The right child should be right_child1")
       assert(!@right_child1.is_root?, "The right child now cannot be a root.")
 
       @root.right_child = Tree::BinaryTreeNode.new("New Right Child")
+      assert_equal(@root.children.size, 2, "There should be two child nodes")
+      assert_equal(@root.size, 3, "There should be three nodes including root")
       assert(!@root.right_child.is_root?, "The right child now cannot be a root.")
       assert_equal("New Right Child", @root.right_child.name, "The right child should now be the new child")
       assert_equal("A Child at Left", @root.first_child.name, "The first child should now be the left child")
@@ -137,6 +157,8 @@ module TestTree
 
       # Now set the right child as nil, and retest
       @root.right_child = nil
+      assert_equal(@root.children.size, 2, "There should still be two child nodes (including the nil right node)")
+      assert_equal(@root.size, 2, "There should be only two nodes including root")
       assert_nil(@root.right_child, "The right child should now be nil")
       assert_equal("A Child at Left", @root.first_child.name, "The first child should now be the left child")
       assert_nil(@root.last_child, "The first child is now nil")

@@ -505,7 +505,7 @@ module Tree
     #
     # @return [Number] Total number of nodes in this (sub)tree.
     def size
-      @children.inject(1) {|sum, node| sum + node.size}
+      @children.inject(1) {|sum, node| node ? sum + node.size : sum }
     end
 
     # Convenience synonym for {Tree::TreeNode#size}.
