@@ -384,7 +384,7 @@ module Tree
     # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
     def children
       if block_given?
-        @children.each {|child| yield child}
+        @children.each {|child| yield child }
       else
         @children
       end
@@ -420,7 +420,7 @@ module Tree
     # @see #breadth_each
     def each(&block)             # :yields: node
       yield self
-      children { |child| child.each(&block) }
+      children { |child| child.each(&block) if child }
     end
 
     # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
@@ -430,9 +430,22 @@ module Tree
     # @yieldparam [Tree::TreeNode] node Each node.
     #
     # @see #each
+    # @see #postordered_each
     # @see #breadth_each
     def preordered_each(&block)  # :yields: node
       each(&block)
+    end
+
+    # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
+    #
+    # @yield [child] Each child is passed to the block.
+    # @yieldparam [Tree::TreeNode] node Each node.
+    #
+    # @see #preordered_each
+    # @see #breadth_each
+    def postordered_each(&block)
+      children { |child| child.postordered_each(&block) if child }
+      yield self
     end
 
     # Performs breadth-first traversal of the (sub)tree rooted at the receiver node. The
@@ -452,7 +465,7 @@ module Tree
         node_to_traverse = node_queue.shift
         yield node_to_traverse
         # Enqueue the children from left to right.
-        node_to_traverse.children { |child| node_queue.push child }
+        node_to_traverse.children { |child| node_queue.push child if child }
       end
     end
 
@@ -467,7 +480,7 @@ module Tree
     # @see #each
     # @see #breadth_each
     def each_leaf &block
-      self.each { |node| yield(node) if node.is_leaf? }
+      self.each { |node| yield(node) if node and node.is_leaf? }
     end
 
     # Returns the requested node from the set of immediate children.
