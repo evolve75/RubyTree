@@ -4,7 +4,7 @@
 #
 # $Revision$ by $Author$ on $Date$
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -868,7 +868,7 @@ module TestTree
       assert_not_equal(@root.object_id, tree_copy.object_id, "Object_ids should differ.")
       assert(tree_copy.is_root?, "Copied root should be a root node.")
       assert(tree_copy.has_children?, "Copied tree should have children.")
-      assert_equal(tree_copy.children.count, @root.children.count, "Copied tree and the original tree should have same number of children.")
+      assert_equal(tree_copy.children.size, @root.children.size, "Copied tree and the original tree should have same number of children.")
 
       assert_equal(tree_copy[0].name, @child1.name, "The names of Child1 (original and copy) should be same.")
       assert_not_equal(tree_copy[0].object_id, @child1.object_id, "Child1 Object_ids (original and copy) should differ.")
