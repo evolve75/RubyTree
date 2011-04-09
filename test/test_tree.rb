@@ -164,6 +164,16 @@ module TestTree
       expected_string = "Node Name: A Node Content: Some Content Parent: <None> Children: 0 Total Nodes: 1"
 
       assert_equal(expected_string, a_node.to_s, "The string representation should be same")
+
+      # Lets test a nil content.
+      a_node = Tree::TreeNode.new("Root", nil)
+
+      assert_equal("Node Name: Root Content: <Empty> Parent: <None> Children: 0 Total Nodes: 1", a_node.to_s)
+
+      # Now test with an empty hash as the content.
+      a_node = Tree::TreeNode.new("Root", {})
+
+      assert_equal("Node Name: Root Content:  Parent: <None> Children: 0 Total Nodes: 1", a_node.to_s)
     end
 
     # Test the first_sibling method.

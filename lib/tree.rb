@@ -11,7 +11,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -184,7 +184,7 @@ module Tree
     # @return [String] A string representation of the node.
     def to_s
       "Node Name: #{@name}" +
-        " Content: " + (@content || "<Empty>") +
+        " Content: " + (@content? @content.to_s : "<Empty>") +
         " Parent: " + (is_root?()  ? "<None>" : @parent.name) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
