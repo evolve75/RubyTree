@@ -1,3 +1,5 @@
+.dired
+.dir-locals.el
 TAGS
 coverage.info
 doc/
