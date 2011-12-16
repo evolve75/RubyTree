@@ -1,10 +1,10 @@
-COPYING
+COPYING.rdoc
 History.txt
 Manifest.txt
-README
-API-CHANGES
+README.rdoc
+API-CHANGES.rdoc
 Rakefile
-TODO
+TODO.org
 lib/tree.rb
 lib/tree/binarytree.rb
 lib/tree/bst.rb
