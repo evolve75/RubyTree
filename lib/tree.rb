@@ -11,7 +11,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.8.1'
+  VERSION = '0.8.2'
 
   # == TreeNode Class Description
   #
@@ -184,8 +184,8 @@ module Tree
     # @return [String] A string representation of the node.
     def to_s
       "Node Name: #{@name}" +
-        " Content: " + (@content || "<Empty>") +
-        " Parent: " + (is_root?()  ? "<None>" : @parent.name) +
+        " Content: " + (@content.to_s || "<Empty>") +
+        " Parent: " + (is_root?()  ? "<None>" : @parent.name.to_s) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
     end
