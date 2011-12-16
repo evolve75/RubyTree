@@ -1,3 +1,8 @@
+=== 0.8.2 / 2011-12-15
+
+* Minor bug-fix release to address bug #1215 (Tree::TreeNode#to_s
+  breaks if @content or @parent.name is not a string).
+
 === 0.8.1 / 2010-10-02
 
 * This is the public release of R0.8.0, with additional bug-fixes.

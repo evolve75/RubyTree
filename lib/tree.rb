@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.8.1'
+  VERSION = '0.8.2'
 
   # == TreeNode Class Description
   #
@@ -185,7 +185,7 @@ module Tree
     def to_s
       "Node Name: #{@name}" +
         " Content: " + (@content? @content.to_s : "<Empty>") +
-        " Parent: " + (is_root?()  ? "<None>" : @parent.name) +
+        " Parent: " + (is_root?()  ? "<None>" : @parent.name.to_s) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
     end

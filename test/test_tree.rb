@@ -174,6 +174,30 @@ module TestTree
       a_node = Tree::TreeNode.new("Root", {})
 
       assert_equal("Node Name: Root Content:  Parent: <None> Children: 0 Total Nodes: 1", a_node.to_s)
+
+      # Now test with a symbol as a key.
+      a_node = Tree::TreeNode.new(:Node_Name, "Some Content")
+      expected_string = "Node Name: Node_Name Content: Some Content Parent: <None> Children: 0 Total Nodes: 1"
+      assert_equal(expected_string, a_node.to_s, "The string representation should be same")
+
+      # Now test with a symbol as a key and another symbol as the content.
+      a_node = Tree::TreeNode.new(:Node_Name, :Content)
+      expected_string = "Node Name: Node_Name Content: Content Parent: <None> Children: 0 Total Nodes: 1"
+      assert_equal(expected_string, a_node.to_s, "The string representation should be same")
+
+      # Now test with a symbol as a key, and a hash as the content.
+      a_hash = {:a_key => "Some Value"}
+      a_node = Tree::TreeNode.new(:Node_Name, a_hash)
+      expected_string = "Node Name: Node_Name Content: #{a_hash} Parent: <None> Children: 0 Total Nodes: 1"
+      assert_equal(expected_string, a_node.to_s, "The string representation should be same")
+
+      # Lets now add a child to the previous node, and test the to_s for the child
+      child_node = Tree::TreeNode.new(:Child_node, "Child Node")
+      a_node << child_node
+
+      expected_string = "Node Name: Child_node Content: Child Node Parent: Node_Name Children: 0 Total Nodes: 1"
+      assert_equal(expected_string, child_node.to_s, "The string representation should be same")
+
     end
 
     # Test the first_sibling method.
