@@ -4,7 +4,7 @@
 #
 # $Revision$ by $Author$ on $Date$
 #
-# Copyright (c) 2006, 2007, 2009, 2010  Anupam Sengupta
+# Copyright (c) 2006, 2007, 2009, 2010, 2011  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -45,13 +45,14 @@ begin
   require 'hoe'
   Hoe.plugin :yard
 
+
   Hoe.spec PKG_NAME do
     # The GemSpec settings
     self.rubyforge_name = PKG_NAME
     developer "Anupam Sengupta", "anupamsg@gmail.com"
 
     self.url                        =  "http://rubytree.rubyforge.org"
-    self.readme_file                = 'README'
+    self.readme_file                = 'README.rdoc'
 
     # Set the Yard Options
     extra_docs                      = ["COPYING", "API-CHANGES"]
