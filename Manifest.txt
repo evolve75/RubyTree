@@ -8,6 +8,7 @@ TODO.org
 lib/tree.rb
 lib/tree/binarytree.rb
 lib/tree/bst.rb
+lib/util/cameltosnakecase.rb
 setup.rb
 test/test_binarytree.rb
 test/test_bst.rb

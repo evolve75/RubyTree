@@ -1,3 +1,8 @@
+=== 0.9.0 / 2012-03-01
+
+* Code cleanup on tree.rb to reduce the file size, and have
+  modularization.
+
 === 0.8.2 / 2011-12-15
 
 * Minor bug-fix release to address bug #1215 (Tree::TreeNode#to_s

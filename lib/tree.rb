@@ -1,7 +1,5 @@
 # tree.rb - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
-#
 # = tree.rb - Generic implementation of an N-ary tree data structure.
 #
 # Provides a generic tree data structure with ability to
@@ -11,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -40,6 +38,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+
+require 'util/cameltosnakecase'
 
 # This module provides a TreeNode class which is the primary class for representing
 # nodes in the tree.
@@ -125,6 +125,7 @@ module Tree
   # @author Anupam Sengupta
   class TreeNode
     include Enumerable
+    include CamelToSnakeCase
 
     # Name of this node.  Expected to be unique within the tree.
     attr_reader   :name
@@ -273,15 +274,14 @@ module Tree
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)
       else
-        raise "Attempting to insert a child at a non-existent location (#{at_index}) when only positions from #{insertion_range.min} to #{insertion_range.max} exist."
+        raise "Attempting to insert a child at a non-existent location (#{at_index})" +
+              "when only positions from #{insertion_range.min} to #{insertion_range.max} exist."
       end
 
       @children_hash[child.name]  = child
       child.parent = self
       return child
     end
-
-
 
     # Removes the specified child node from the receiver node.
     #
@@ -868,26 +868,6 @@ module Tree
       1 + @children.collect { |child| child.depth }.max
     end
 
-    # Allow the deprecated CamelCase method names.  Display a warning.
-    def method_missing(meth, *args, &blk)
-      if self.respond_to?(new_method_name = underscore(meth))
-        begin
-          require 'structured_warnings'   # To enable a nice way of deprecating of the invoked CamelCase method.
-          warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
-
-        rescue LoadError
-          # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
-          warn "Tree::TreeNode##{meth}() method is deprecated. Please use #{new_method_name} instead."
-
-        ensure                  # Invoke the method now.
-          return send(new_method_name, *args, &blk)
-        end
-
-      else
-        super
-      end
-    end
-
     # Returns breadth of the tree at the receiver node's level.
     # A single node without siblings has a breadth of 1.
     #
@@ -922,24 +902,9 @@ module Tree
     def out_degree
       is_leaf? ? 0 : children.size
     end
-
     protected :parent=, :set_as_root!, :create_dump_rep
 
     private
-
-    # Convert a CamelCasedWord to a underscore separated camel_cased_word.
-    #
-    # Just copied from ActiveSupport::Inflector because it is only needed
-    # aliasing deprecated methods
-    def underscore(camel_cased_word)
-      word = camel_cased_word.to_s.dup
-      word.gsub!(/::/, '/')
-      word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-      word.tr!("-", "_")
-      word.downcase!
-      word
-    end
 
     # Return a range of valid insertion positions.  Used in the #add method.
     def insertion_range

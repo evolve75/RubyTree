@@ -31,6 +31,8 @@
 
 
 * R0.9.0
+*** DONE Simplify the structure of tree.rb, as the code length is too long.
+    CLOSED: [2012-02-08 Wed 21:52]
 *** TODO Fix the inconsistency of returning root as its first sibling, and return a =nil= instead.  Ditto for last sibling.
 *** TODO fix the inconsistency of returning =nil= for the root, and an empty array for nodes which have no siblings.
 *** TODO We should perhaps return =nil= as root's root.
