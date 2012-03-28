@@ -11,7 +11,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -48,7 +48,7 @@
 module Tree
 
   # Rubytree Package Version
-  VERSION = '0.8.2'
+  VERSION = '0.8.3'
 
   # == TreeNode Class Description
   #
@@ -280,8 +280,6 @@ module Tree
       child.parent = self
       return child
     end
-
-
 
     # Removes the specified child node from the receiver node.
     #
@@ -737,8 +735,15 @@ module Tree
 
     # Creates a JSON ready Hash for the to_json method.
     #
+    # @author Eric Cline (https://github.com/escline)
+    # @since 0.8.3
+    #
+    # @return A hash based representation of the JSON
+    #
     # Rails uses JSON in ActiveSupport, and all Rails JSON encoding goes through as_json
-    # see http://stackoverflow.com/a/6880638/273808
+    #
+    # @see Tree::TreeNode.to_json
+    # @see http://stackoverflow.com/a/6880638/273808
     def as_json(options = {})
 
         json_hash = {
@@ -750,7 +755,7 @@ module Tree
         if has_children?
           json_hash["children"] = children
         end
-        
+
         return json_hash
 
     end
@@ -765,13 +770,14 @@ module Tree
     # @return The JSON representation of this subtree.
     #
     # @see Tree::TreeNode.json_create
+    # @see Tree::TreeNode.as_json
     # @see http://flori.github.com/json
     def to_json(*a)
       begin
         require 'json'
-        
+
         as_json.to_json(*a)
-        
+
       rescue LoadError
         warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation"
       end

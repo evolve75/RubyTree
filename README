@@ -6,7 +6,7 @@
  \/ \_/\__,_|_.__/ \__, |\__|_|  \___|\___|
                   |___/
 
-Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta (anupamsg at gmail dot com)
+Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta (anupamsg at gmail dot com)
 
 http://rubytree.rubyforge.org
 
@@ -184,6 +184,7 @@ I would like to acknowledge the following contributors for helping improve RubyT
 
 1. Dirk Breuer (http://github.com/railsbros-dirk) for contributing the JSON conversion code.
 2. Vincenzo Farruggia for contributing the (sub)tree cloning code.
+3. Eric Cline (https://github.com/escline) for the Rails JSON encoding fix.
 
 == LICENSE:
 
