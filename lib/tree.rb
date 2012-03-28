@@ -748,8 +748,29 @@ module Tree
       end
     end
 
+    # Creates a JSON ready Hash for the to_json method.
+    #
+    # Rails uses JSON in ActiveSupport, and all Rails JSON encoding goes through as_json
+    # see http://stackoverflow.com/a/6880638/273808
+    def as_json(options = {})
+
+        json_hash = {
+          "name"         => name,
+          "content"      => content,
+          JSON.create_id => self.class.name
+        }
+
+        if has_children?
+          json_hash["children"] = children
+        end
+        
+        return json_hash
+
+    end
+
     # Creates a JSON representation of this node including all it's children.   This requires the JSON gem to be
     # available, or else the operation fails with a warning message.
+    # Uses the Hash output of as_json method, defined above.
     #
     # @author Dirk Breuer (http://github.com/railsbros-dirk)
     # @since 0.7.0
@@ -761,19 +782,9 @@ module Tree
     def to_json(*a)
       begin
         require 'json'
-
-        json_hash = {
-          "name"         => name,
-          "content"      => content,
-          JSON.create_id => self.class.name
-        }
-
-        if has_children?
-          json_hash["children"] = children
-        end
-
-        return json_hash.to_json
-
+        
+        as_json.to_json(*a)
+        
       rescue LoadError
         warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation"
       end
