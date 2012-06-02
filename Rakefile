@@ -50,7 +50,7 @@ begin
     self.rubyforge_name = PKG_NAME
     developer "Anupam Sengupta", "anupamsg@gmail.com"
 
-    self.url                        =  "http://rubytree.rubyforge.org"
+    self.urls                       =  ["http://rubytree.rubyforge.org"]
     self.readme_file                = 'README'
 
     # Set the Yard Options
