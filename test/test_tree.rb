@@ -1119,6 +1119,17 @@ module TestTree
       puts root
     end
 
+    # Test whether the tree_leaf method works correctly
+    def test_single_node_becomes_leaf
+      setup_test_tree
+
+      leafs = @root.each_leaf
+      parents = leafs.collect {|leaf| leaf.parent }
+      leafs.each {|leaf| leaf.remove_from_parent!}
+      parents.each {|parent| assert(parent.is_leaf?) if not parent.has_children?}
+
+    end
+
   end
 end
 

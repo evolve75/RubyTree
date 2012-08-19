@@ -38,7 +38,8 @@
     Update documentation for :name attribute in tree.rb.  There is no
     specific code fix needed.
 
-*** TODO Allow integers to be used as node names (and clarify the scenario)
+*** DONE Allow integers to be used as node names (and clarify the scenario). Fixed issue #6.
+    CLOSED: [2012-08-19 Sun 15:17]
     Issue https://github.com/evolve75/RubyTree/issues/6
     We will need to warn the user when an Integer is used as a name
     for the node (but still allow the usage),
@@ -87,6 +88,7 @@
 
 *** TODO Clarify (or fix) the scenario whether a root node without children is a leaf
     Issue http://rubyforge.org/tracker/index.php?func=detail&aid=29549&group_id=1215&atid=4793
+
 
 * R0.9.0
 *** TODO Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling.
