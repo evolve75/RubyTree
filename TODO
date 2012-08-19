@@ -1,4 +1,5 @@
-# -*- mode: org; coding: utf-8-unix; -*-
+# -*- mode: org; coding: utf-8-unix; fill-column: 120; -*-
+#+OPTIONS: ^:{}
 
 * R0.7.0                                                                                  :ARCHIVE:
 *** DONE Start using signed tags from R0.7.0                                              :ARCHIVE:
@@ -84,10 +85,49 @@
        restructure the internals to make better use of memory.
 
 
-
-
-*** TODO Clarify (or fix) the scenario whether a root node without children is a leaf
+*** DONE Clarify (or fix) the scenario whether a root node without children is a leaf
+    CLOSED: [2012-08-19 Sun 15:09]
     Issue http://rubyforge.org/tracker/index.php?func=detail&aid=29549&group_id=1215&atid=4793
+
+#+begin_src ruby -n :eval no
+  tree.each_leaf do |tree_leaf|
+    tree_leaf_parent = tree_leaf.parent
+    tree_leaf.remove_from_parent!
+    puts tree_leaf_parent.is_leaf?
+  end
+#+end_src
+
+    will return ~false~, while technically ~tree_leaf_parent~ becomes leaf itself when ~tree_leaf~ is removed.
+
+    The problem here is that the code above is trying to concurrently modify the collection over which the ~each_leaf~
+    iterator is looping, which has unpredicable results.  As an example, try this with an array:
+
+#+begin_src ruby -n
+    a = Array(1..5)
+    a.each do |e|
+      a.delete(e)
+    end
+    a
+#+end_src
+
+#+RESULTS:
+| 2 | 4 |
+
+    The result is surprising, as not all elements are being deleted.  A good explanation is available in [[https://groups.google.com/forum/?fromgroups#!topic/ruby-talk-google/iEDF8qhojss%255B1-25%255D][this thread]] on
+    Ruby-Talk @ Google.
+
+    The correct way to handle the original need is:
+
+#+begin_src ruby -n :eval no
+  leafs = @root.each_leaf
+  parents = leafs.collect {|leaf| leaf.parent }
+  leafs.each {|leaf| leaf.remove_from_parent!}
+  parents.each {|parent| assert(parent.is_leaf?) if not parent.has_children?}
+#+end_src
+
+    Basically, the parent removal is done in a separate block, and *then* the check for the parents becoming leafs is done.
+
+
 
 * R0.9.0
 *** TODO Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling.
