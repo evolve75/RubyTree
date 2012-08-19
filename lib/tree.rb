@@ -127,6 +127,9 @@ module Tree
     include Enumerable
 
     # Name of this node.  Expected to be unique within the tree.
+    #
+    # @todo Additional documentation to be more explicit about the
+    #   requirement for unique names
     attr_reader   :name
 
     # Content of this node.  Can be +nil+.
@@ -140,13 +143,31 @@ module Tree
     #
     # The content can be of any type, and defaults to +nil+.
     #
-    # @param [Object] name Name of the node.  Usual usage is to pass a String.
+    # @param [Object] name Name of the node.  Conventional usage is to pass a String
+    #   (Integer names may cause *surprises*)
     # @param [Object] content Content of the node.
     #
     # @raise [ArgumentError] Raised if the node name is empty.
+    #
+    # @note If the name is an +Integer+, then the semantics of +TreeNode[]+ can
+    #   be surprising, as an +Integer+ parameter to that method normally acts
+    #   as an index to the <em>children array</em>, and follows the
+    #   <em>zero-based</em> indexing convention.
+    #
+    # @see #[]
     def initialize(name, content = nil)
       raise ArgumentError, "Node name HAS to be provided!" if name == nil
       @name, @content = name, content
+
+      if name.kind_of?(Integer)
+        begin
+          require 'structured_warnings'
+          warn StandardWarning,
+          "Using integer as node name. Semantics of TreeNode[] may not be what you expect! #{name} #{content}"
+        rescue LoadError
+          warn "Using integer as node name. Semantics of TreeNode[] may not be what you expect!"
+        end
+      end
 
       self.set_as_root!
       @children_hash = Hash.new
@@ -267,7 +288,8 @@ module Tree
     #
     # @see #<<
     def add(child, at_index = -1)
-      raise ArgumentError, "Attempting to add a nil node" unless child
+      raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
+      raise ArgumentError, "Attempting add node to itself" if self == child
       raise "Child #{child.name} already added!" if @children_hash.has_key?(child.name)
 
       if insertion_range.include?(at_index)
@@ -470,27 +492,51 @@ module Tree
 
     # Returns the requested node from the set of immediate children.
     #
-    # If the argument is _numeric_, then the in-sequence array of children is accessed using
-    # the argument as the *index* (zero-based).
+    # - If the +name+ argument is an _Integer_, then the in-sequence
+    #   array of children is accessed using the argument as the
+    #   *index* (zero-based).  However, if the second _optional_
+    #   +num_as_name+ argument is +true+, then the +name+ is used
+    #   literally as a name, and *NOT* as an *index*
     #
-    # If the argument is *NOT* _numeric_, then it is taken to be the *name* of the child node to be returned.
+    # - If the +name+ argument is *NOT* an _Integer_, then it is taken to
+    #   be the *name* of the child node to be returned.
     #
-    # An ArgumentError exception is raised if neither name nor an index is provided.
+    # If a non-+Integer+ +name+ is passed, and the +num_as_name+
+    # parameter is also +true+, then a warning is thrown (as this is a
+    # redundant use of the +num_as_name+ flag.)
     #
-    # @param [String|Number] name_or_index Name of the child, or its positional index in the array of child nodes.
+    # @param [String|Number] name_or_index Name of the child, or its
+    #   positional index in the array of child nodes.
     #
-    # @return [Tree::TreeNode] the requested child node.  If the index in not in range, or the name is not
-    #        present, then a +nil+ is returned.
+    # @param [Boolean] num_as_name Whether to treat the +Integer+
+    #   +name+ argument as an actual name, and *NOT* as an _index_ to
+    #   the children array.
     #
-    # @raise [ArgumentError] Raised if neither name nor index is provided.
+    # @return [Tree::TreeNode] the requested child node.  If the index
+    #   in not in range, or the name is not present, then a +nil+
+    #   is returned.
+    #
+    # @note The use of +Integer+ names is allowed by using the optional +num_as_name+ flag.
+    #
+    # @raise [ArgumentError] Raised if the +name_or_index+ argument is +nil+.
     #
     # @see #add
-    def [](name_or_index)
+    # @see #initialize
+    def [](name_or_index, num_as_name=false)
       raise ArgumentError, "Name_or_index needs to be provided!" if name_or_index == nil
 
-      if name_or_index.kind_of?(Integer)
+      if name_or_index.kind_of?(Integer) and not num_as_name
         @children[name_or_index]
       else
+        if num_as_name and not name_or_index.kind_of?(Integer)
+          begin
+            require 'structured_warnings'
+            warn StandardWarning, "Redundant use of the `num_as_name` flag for non-integer node name"
+          rescue LoadError
+            # We will use the vanilla warning here
+            warn "Redundant use of the `num_as_name` flag for non-integer node name"
+          end
+        end
         @children_hash[name_or_index]
       end
     end

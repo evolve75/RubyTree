@@ -4,7 +4,7 @@
 #
 # $Revision$ by $Author$ on $Date$
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -137,6 +137,9 @@ module TestTree
 
     # Test the <=> operator.
     def test_spaceship
+      require 'structured_warnings'
+      StandardWarning.disable   # Disable the warnings for using integers as node names
+
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
 
@@ -155,6 +158,8 @@ module TestTree
 
       second_node = Tree::TreeNode.new("ABC")
       assert_equal(first_node <=> second_node, 0)
+
+      StandardWarning.enable
     end
 
     # Test the to_s method.  This is probably a little fragile right now.
@@ -1068,6 +1073,50 @@ module TestTree
         $stdout = STDOUT
       end
 
+    end
+
+    # Test usage of integers as node names
+    def test_integer_node_names
+
+      require 'structured_warnings'
+      assert_warn(StandardWarning) do
+        @n_root = Tree::TreeNode.new(0, "Root Node")
+        @n_child1 = Tree::TreeNode.new(1, "Child Node 1")
+        @n_child2 = Tree::TreeNode.new(2, "Child Node 2")
+        @n_child3 = Tree::TreeNode.new("three", "Child Node 3")
+      end
+
+      @n_root << @n_child1
+      @n_root << @n_child2
+      @n_root << @n_child3
+
+      # Node[n] is really accessing the nth child with a zero-base
+      assert_not_equal(@n_root[1].name, 1) # This is really the second child
+      assert_equal(@n_root[0].name, 1)     # This will work, as it is the first child
+      assert_equal(@n_root[1, true].name, 1)     # This will work, as the flag is now enabled
+
+      # Sanity check for the "normal" string name cases. Both cases should work.
+      assert_equal(@n_root["three", false].name, "three")
+
+      StandardWarning.disable
+      assert_equal(@n_root["three", true].name, "three")
+
+      # Also ensure that the warning is actually being thrown
+      StandardWarning.enable
+      assert_warn(StandardWarning) {assert_equal(@n_root["three", true].name, "three") }
+    end
+
+    # Test the addition of a node to itself as a child
+    def test_add_node_to_self_as_child
+      root =  Tree::TreeNode.new("root")
+
+      # Lets check the direct parentage scenario
+      assert_raise(ArgumentError) {root << root}
+
+      # And now a scenario where the node addition is done down the hierarchy
+      child =  Tree::TreeNode.new("child")
+      root << child << root
+      puts root
     end
 
   end
