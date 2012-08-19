@@ -1114,9 +1114,10 @@ module TestTree
       assert_raise(ArgumentError) {root << root}
 
       # And now a scenario where the node addition is done down the hierarchy
+      # @todo This scenario is not yet fixed.
       child =  Tree::TreeNode.new("child")
       root << child << root
-      puts root
+      # puts root                 # This will throw a stack trace
     end
 
     # Test whether the tree_leaf method works correctly

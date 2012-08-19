@@ -487,7 +487,11 @@ module Tree
     # @see #each
     # @see #breadth_each
     def each_leaf &block
-      self.each { |node| yield(node) if node.is_leaf? }
+      if block_given?
+        self.each { |node| yield(node) if node.is_leaf? }
+      else
+        self.select { |node| node.is_leaf?}
+      end
     end
 
     # Returns the requested node from the set of immediate children.
