@@ -71,6 +71,9 @@ begin
 
  Thank you for installing #{PKG_NAME}.
 
+ Note that the TreeNode#siblings method has changed in 0.8.3.
+ it now returns an empty array for the root node.
+
               WARNING: SIGNIFICANT API CHANGE in 0.8.0 !
               ------------------------------------------
 
