@@ -1,10 +1,11 @@
 COPYING
 History.txt
 Manifest.txt
-README
+README.rdoc
 API-CHANGES
 Rakefile
 TODO
+.dir-locals.el
 lib/tree.rb
 lib/tree/binarytree.rb
 setup.rb

@@ -51,7 +51,7 @@ begin
     developer "Anupam Sengupta", "anupamsg@gmail.com"
 
     self.urls                       =  ["http://rubytree.rubyforge.org"]
-    self.readme_file                = 'README'
+    self.readme_file                = 'README.rdoc'
 
     # Set the Yard Options
     extra_docs                      = ["COPYING", "API-CHANGES"]
