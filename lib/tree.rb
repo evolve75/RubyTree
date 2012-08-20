@@ -41,6 +41,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require 'tree/tree_deps'
+
 # This module provides a TreeNode class which is the primary class for representing
 # nodes in the tree.
 #
@@ -185,13 +187,8 @@ module Tree
       @name, @content = name, content
 
       if name.kind_of?(Integer)
-        begin
-          require 'structured_warnings'
-          warn StandardWarning,
-          "Using integer as node name. Semantics of TreeNode[] may not be what you expect! #{name} #{content}"
-        rescue LoadError
-          warn "Using integer as node name. Semantics of TreeNode[] may not be what you expect!"
-        end
+        warn StandardWarning,
+             "Using integer as node name. Semantics of TreeNode[] may not be what you expect! #{name} #{content}"
       end
 
       self.set_as_root!
@@ -570,13 +567,7 @@ module Tree
         @children[name_or_index]
       else
         if num_as_name and not name_or_index.kind_of?(Integer)
-          begin
-            require 'structured_warnings'
-            warn StandardWarning, "Redundant use of the `num_as_name` flag for non-integer node name"
-          rescue LoadError
-            # We will use the vanilla warning here
-            warn "Redundant use of the `num_as_name` flag for non-integer node name"
-          end
+          warn StandardWarning, "Redundant use of the `num_as_name` flag for non-integer node name"
         end
         @children_hash[name_or_index]
       end
@@ -853,8 +844,6 @@ module Tree
     # @see http://flori.github.com/json
     def to_json(*a)
       begin
-        require 'json'
-
         as_json.to_json(*a)
 
       rescue LoadError
@@ -880,8 +869,6 @@ module Tree
     # @see http://flori.github.com/json
     def self.json_create(json_hash)
       begin
-        require 'json'
-
         node = new(json_hash["name"], json_hash["content"])
 
         json_hash["children"].each do |child|
@@ -941,13 +928,7 @@ module Tree
     #
     # @see #node_depth
     def depth
-      begin
-        require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
-        warn DeprecatedMethodWarning, 'This method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
-      rescue LoadError
-        # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
-        warn 'Tree::TreeNode#depth() method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
-      end
+      warn DeprecatedMethodWarning, 'This method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
 
       return 1 if is_leaf?
       1 + @children.collect { |child| child.depth }.max
@@ -957,18 +938,8 @@ module Tree
     # :nodoc:
     def method_missing(meth, *args, &blk)
       if self.respond_to?(new_method_name = underscore(meth))
-        begin
-          require 'structured_warnings'   # To enable a nice way of deprecating of the invoked CamelCase method.
-          warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
-
-        rescue LoadError
-          # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
-          warn "Tree::TreeNode##{meth}() method is deprecated. Please use #{new_method_name} instead."
-
-        ensure                  # Invoke the method now.
-          return send(new_method_name, *args, &blk)
-        end
-
+        warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
+        return send(new_method_name, *args, &blk)
       else
         super
       end
