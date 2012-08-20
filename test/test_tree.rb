@@ -1129,6 +1129,7 @@ module TestTree
       parents.each {|parent| assert(parent.is_leaf?) if not parent.has_children?}
 
     end
+
   end
 end
 
