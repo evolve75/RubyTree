@@ -99,7 +99,7 @@ module TestTree
       assert(!@root.has_children? , "Cannot have any children")
       assert(@root.has_content?   , "This root should have content")
       assert_equal(1              , @root.size, "Number of nodes should be one")
-      assert_nil(@root.siblings   , "This root does not have any children")
+      assert_equal(0, @root.siblings.length, "This root does not have any children")
       assert_equal(0, @root.in_degree, "Root should have an in-degree of 0")
       assert_equal(0, @root.node_height, "Root's height before adding any children is 0")
       assert_raise(ArgumentError) { Tree::TreeNode.new(nil) }
@@ -204,6 +204,7 @@ module TestTree
       assert_same(@child1, @child1.first_sibling, "Child1's first sibling is itself")
       assert_same(@child1, @child2.first_sibling, "Child2's first sibling should be child1")
       assert_same(@child1, @child3.first_sibling, "Child3's first sibling should be child1")
+      assert_same(@child4, @child4.first_sibling, "Child4's first sibling should be itself")
       assert_not_same(@child1, @child4.first_sibling, "Child4's first sibling is itself")
     end
 
@@ -211,7 +212,6 @@ module TestTree
     def test_is_first_sibling_eh
       setup_test_tree
 
-      # TODO: Need to fix the first_sibling method to return nil for nodes with no siblings.
       assert(@root.is_first_sibling?, "Root's first sibling is itself")
       assert( @child1.is_first_sibling?, "Child1's first sibling is itself")
       assert(!@child2.is_first_sibling?, "Child2 is not the first sibling")
@@ -223,7 +223,6 @@ module TestTree
     def test_is_last_sibling_eh
       setup_test_tree
 
-      # TODO: Need to fix the last_sibling method to return nil for nodes with no siblings.
       assert(@root.is_last_sibling?, "Root's last sibling is itself")
       assert(!@child1.is_last_sibling?, "Child1 is not the last sibling")
       assert(!@child2.is_last_sibling?, "Child2 is not the last sibling")
@@ -235,11 +234,11 @@ module TestTree
     def test_last_sibling
       setup_test_tree
 
-      # TODO: Need to fix the last_sibling method to return nil for nodes with no siblings.
       assert_same(@root, @root.last_sibling, "Root's last sibling is itself")
       assert_same(@child3, @child1.last_sibling, "Child1's last sibling should be child3")
       assert_same(@child3, @child2.last_sibling, "Child2's last sibling should be child3")
       assert_same(@child3, @child3.last_sibling, "Child3's last sibling should be itself")
+      assert_same(@child4, @child4.last_sibling, "Child4's last sibling should be itself")
       assert_not_same(@child3, @child4.last_sibling, "Child4's last sibling is itself")
     end
 
@@ -265,7 +264,7 @@ module TestTree
 
       siblings.clear
       siblings = @root.siblings
-      assert_nil(siblings, "Root should not have any siblings")
+      assert_equal(0, siblings.length, "Root should not have any siblings")
     end
 
     # Test the is_only_child? method.

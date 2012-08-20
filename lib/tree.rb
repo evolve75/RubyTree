@@ -558,9 +558,6 @@ module Tree
 
     # Convenience synonym for {Tree::TreeNode#size}.
     #
-    # @todo The semantic of length is probably unclear.  Should return the node depth instead
-    #       to reflect the path length.
-    #
     # @deprecated This method name is ambiguous and may be removed.  Use TreeNode#size instead.
     #
     # @return [Number] The total number of nodes in this (sub)tree.
@@ -607,9 +604,6 @@ module Tree
     # 'First' sibling is defined as follows:
     # First sibling:: The left-most child of the receiver's parent, which may be the receiver itself
     #
-    # @todo Fix the inconsistency of returning root as its first sibling, and returning
-    #       a +nil+ array for siblings of the node.
-    #
     # @return [Tree::TreeNode] The first sibling node.
     #
     # @see #is_first_sibling?
@@ -634,9 +628,6 @@ module Tree
     # 'Last' sibling is defined as follows:
     # Last sibling:: The right-most child of the receiver's parent, which may be the receiver itself
     #
-    # @todo Fix the inconsistency of returning root as its last sibling, and returning
-    #       a +nil+ array for siblings of the node.
-    #
     # @return [Tree::TreeNode] The last sibling node.
     #
     # @see #is_last_sibling?
@@ -660,11 +651,6 @@ module Tree
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
     #
-    # @todo Fix the inconsistency of returning root as its own first/last sibling, and returning
-    #       a +nil+ array for siblings of the same root node.
-    # @todo Also fix the inconsistency of returning +nil+ for a root node, and an empty array for nodes
-    #       which have no siblings.
-    #
     # @yield [sibling] Each sibling is passed to the block.
     # @yieldparam [Tree::TreeNode] sibling Each sibling node.
     #
@@ -673,7 +659,7 @@ module Tree
     # @see #first_sibling
     # @see #last_sibling
     def siblings
-      return nil if is_root?
+      return [] if is_root?
 
       if block_given?
         parent.children.each { |sibling| yield sibling if sibling != self }
