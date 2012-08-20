@@ -10,7 +10,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2007, 2008, 2009, 2010 Anupam Sengupta
+# Copyright (c) 2007, 2008, 2009, 2010, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -69,7 +69,8 @@ module Tree
       super(child)
     end
 
-    # Returns the left child of the receiver node. Note that left Child == first Child.
+    # @!attribute [rw] left_child
+    # Left child of the receiver node. Note that left Child == first Child.
     #
     # @return [Tree::BinaryTreeNode] The left most (or first) child.
     #
@@ -78,7 +79,8 @@ module Tree
       children.first
     end
 
-    # Returns the right child of the receiver node. Note that right child == last child unless there is only one child.
+    # @!attribute [rw] right_child
+    # Right child of the receiver node. Note that right child == last child unless there is only one child.
     #
     # Returns +nil+ if the right child does not exist.
     #
@@ -150,8 +152,6 @@ module Tree
     end
 
     # Swaps the left and right child nodes of the receiver node with each other.
-    #
-    # @todo Define the return value.
     def swap_children
       self.left_child, self.right_child = self.right_child, self.left_child
     end
