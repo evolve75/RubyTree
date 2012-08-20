@@ -61,6 +61,10 @@ begin
     # Now the publishing settings
     self.remote_rdoc_dir            = 'rdoc'
 
+    # Mention the dependencies
+    self.dependency('yard', '>= 0.8.2.1')
+    self.dependency('structured_warnings', '>= 0.1.3')
+
     # Support additional package formats
     self.need_tar                   = true
     self.need_zip                   = true
