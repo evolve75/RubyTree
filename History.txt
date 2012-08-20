@@ -1,7 +1,26 @@
-=== 0.8.3 / 2012-03/31
+# @markup rdoc
 
-* Implemented the as_json method to support the Rails JSON encoding,
+=== 0.8.3 / 2012-08-31
+
+This is a bug-fix release.
+
+* Implemented the +as_json+ method to support Rails' JSON encoding,
   by pulling in the changes by Eric Cline (https://github.com/escline).
+
+* Partial fix for {Github Bug
+  #5}[https://github.com/evolve75/RubyTree/issues/5].  This is to
+  prevent infinite looping is an existing node is added again
+  elsewhere in the tree.
+
+* Fixed the issue with using +integers+ as node names, and its
+  interaction with the +TreeNode#[]+ access method {Github Bug
+  #6}[https://github.com/evolve75/RubyTree/issues/6].
+
+* Clarified the need to have unique node names {Github Bug
+  #7}[https://github.com/evolve75/RubyTree/issues/7] (documentation).
+
+* Fixed +siblings+ method to return an empty array for the root node as
+  well (it returned +nil+ earlier).
 
 === 0.8.2 / 2011-12-15
 
@@ -112,4 +131,6 @@
 
 * Minor code refactoring. Changes in the Rakefile.
 
-$Id$
+;; Local Variables:
+;; mode: rdoc
+;; End:

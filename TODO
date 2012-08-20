@@ -32,28 +32,13 @@
 
 
 * R0.8.3
+
   This is a bugfix release.
-
-*** DONE Update documentation to be more explicit about duplicate node names
-    CLOSED: [2012-08-19 Sun 21:46]
-    Issue https://github.com/evolve75/RubyTree/issues/7
-    Update documentation for :name attribute in tree.rb.  There is no
-    specific code fix needed.
-
-*** DONE Allow integers to be used as node names (and clarify the scenario). Fixed issue #6. :ARCHIVE:
-    CLOSED: [2012-08-19 Sun 15:17]
-    Issue https://github.com/evolve75/RubyTree/issues/6
-    We will need to warn the user when an Integer is used as a name
-    for the node (but still allow the usage),
-    and
-    also add an optional flag to the TreeNode#[] method to allow the
-    user to explicitly indicate use of the Integer parameter as a
-    literal name, and not as an /index/ to the children array.
 
 *** TODO Resolve the _tree.rb_ file conflict with the [[http://netaddr.rubyforge.org/][netaddr gem]]
     Issue https://github.com/evolve75/RubyTree/issues/8
 
-*** TODO [#A] Resolve the infinite loop bug if a node is added to itself as a child
+*** TODO [#A] Resolve the infinite loop bug if a node is added to itself as a child       :Partial:
     Issue https://github.com/evolve75/RubyTree/issues/5
 
     This is a subtle problem to resolve.  The specific case of a node
@@ -84,6 +69,22 @@
        duplicates).  This needs to be a hash (to allow O(1) access),
        and will sacrifice memory.  There might be a need to
        restructure the internals to make better use of memory.
+
+*** DONE Update documentation to be more explicit about duplicate node names              :ARCHIVE:
+    CLOSED: [2012-08-19 Sun 21:46]
+    Issue https://github.com/evolve75/RubyTree/issues/7
+    Update documentation for :name attribute in tree.rb.  There is no
+    specific code fix needed.
+
+*** DONE Allow integers to be used as node names (clarify the scenario). Fixed issue #6.  :ARCHIVE:
+    CLOSED: [2012-08-19 Sun 15:17]
+    Issue https://github.com/evolve75/RubyTree/issues/6
+    We will need to warn the user when an Integer is used as a name
+    for the node (but still allow the usage),
+    and
+    also add an optional flag to the TreeNode#[] method to allow the
+    user to explicitly indicate use of the Integer parameter as a
+    literal name, and not as an /index/ to the children array.
 
 *** DONE Clarify (or fix) the scenario whether a root node without children is a leaf     :ARCHIVE:
     CLOSED: [2012-08-19 Sun 15:09]
@@ -127,12 +128,12 @@
 
     Basically, the parent removal is done in a separate block, and *then* the check for the parents becoming leafs is done.
 
-*** DONE Fix the ~first_sibling~ and ~last_sibling~ for the root
+*** DONE Fix the ~first_sibling~ and ~last_sibling~ for the root                              :ARCHIVE:
     CLOSED: [2012-08-19 Sun 21:01]
     The current behavior is correct, and has been left as is.
-*** DONE Fix the ~siblings~ method to return an empty array for root
+*** DONE Fix the ~siblings~ method to return an empty array for root                        :ARCHIVE:
     CLOSED: [2012-08-19 Sun 21:03]
-*** DONE Fix the TreeNode#root method to return nil for root's root.
+*** DONE Fix the TreeNode#root method to return nil for root's root.                      :ARCHIVE:
     CLOSED: [2012-08-19 Sun 21:13]
 
     Left the code as-is, since we need some way to un-ambiguously find the root, regardless of the node given.
@@ -147,18 +148,17 @@
 
 
 * Unplanned / Not assigned to any release
-*** TODO Fix the marshal_load method.  This probably needs to be a class method.
 *** TODO Create the basic UML diagrams and upload to the Site
     DEADLINE: <2010-01-04 Mon>
 
+*** TODO Add a YAML export method to the TreeNode class.
+
+*** TODO marshal_load method probably should be a class method.  It currently clobbers self.
 *** DONE Fix bug # [[http://rubyforge.org/tracker/index.php%3Ffunc%3Ddetail&aid%3D22535&group_id%3D1215&atid%3D4793][22535]]: The method Tree::TreeNode#depth is a misnomer.  The current definition actually provides the height function. :ARCHIVE:
     DEADLINE: <2010-01-09 Sat> CLOSED: [2010-01-03 Sun 22:15]
-
-*** TODO Add a YAML export method to the TreeNode class.
 
 *** DONE Get the version control moved from CVS to Subversion (request submitted to RubyForge) :ARCHIVE:
     CLOSED: [2010-01-02 Sat 17:58]
 
 *** DONE Add logic in Rakefile to read the file list from Manifest.txt file.              :ARCHIVE:
   CLOSED: [2009-12-31 Thu 23:37]
-*** TODO marshal_load method probably should be a class method.  It currently clobbers self.
