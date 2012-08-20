@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
-# testtree.rb - This file is part of the RubyTree package.
-#
-# $Revision$ by $Author$ on $Date$
+# test_tree.rb - This file is part of the RubyTree package.
 #
 # Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
 #
