@@ -138,8 +138,6 @@
 
     Left the code as-is, since we need some way to un-ambiguously find the root, regardless of the node given.
 
-
-
 * R0.9.0
 *** TODO Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling.
 *** TODO fix the inconsistency of returning nil for the root, and an empty array for nodes which have no siblings.
