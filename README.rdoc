@@ -70,10 +70,10 @@ As an example, the following code-snippet implements this tree structure:
 
 * Ruby 1.8+  (http://www.ruby-lang.org)
 
-* Optional but recommended:
-  * structured_warnings (http://github.com/schmidt/structured_warnings) Rubygem
+* Run-time Dependencies:
+  * structured_warnings (http://github.com/schmidt/structured_warnings) rubygem
   * Yard (http://yardoc.org) Rubygem for the documentation
-  * JSON (http://flori.github.com/json) Rubygem for converting to/from the JSON format
+  * JSON (http://flori.github.com/json) rubygem for converting to/from the JSON format
 
 * Development dependencies (not required for installing the gem):
   * Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem

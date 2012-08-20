@@ -4,7 +4,7 @@
 #
 # $Revision$ by $Author$ on $Date$
 #
-# Copyright (c) 2006, 2007, 2009, 2010  Anupam Sengupta
+# Copyright (c) 2006, 2007, 2009, 2010, 2012  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -64,6 +64,7 @@ begin
     # Mention the dependencies
     self.dependency('yard', '>= 0.8.2.1')
     self.dependency('structured_warnings', '>= 0.1.3')
+    self.dependency('json', '>= 1.7.5')
 
     # Support additional package formats
     self.need_tar                   = true
