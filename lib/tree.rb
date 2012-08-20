@@ -161,6 +161,8 @@ module Tree
     # Parent of this node.  Will be +nil+ for a root node.
     attr_reader   :parent
 
+    # @!group Node Creation
+
     # Creates a new node with a name and optional content.
     # The node name is expected to be unique within the tree.
     #
@@ -222,6 +224,8 @@ module Tree
     # @see Tree::TreeNode#detached_subtree_copy
     alias :dup :detached_subtree_copy
 
+    # @!endgroup
+
     # Returns string representation of the receiver node.
     # This method is primarily meant for debugging purposes.
     #
@@ -263,6 +267,8 @@ module Tree
     def parent=(parent)         # :nodoc:
       @parent = parent
     end
+
+    # @!group Structure Modification
 
     # Convenience synonym for {Tree::TreeNode#add} method.
     #
@@ -390,6 +396,8 @@ module Tree
       @parent = nil
     end
 
+    # @!endgroup
+
     # Returns +true+ if the receiver is a root node.  Note that
     # orphaned children will also be reported as root nodes.
     #
@@ -417,11 +425,13 @@ module Tree
       !has_children?
     end
 
-    # Returns an array of all the immediate children of the receiver
+    # @!attribute [rw] children
+    # An array of all the immediate children of the receiver
     # node.  The child nodes are ordered "left-to-right" in the
     # returned array.
     #
-    # If a block is given, yields each child node to the block traversing from left to right.
+    # If a block is given, yields each child node to the block
+    # traversing from left to right.
     #
     # @yield [child] Each child is passed to the block, if given
     # @yieldparam [Tree::TreeNode] child Each child node.
@@ -452,6 +462,8 @@ module Tree
     def last_child
       children.last
     end
+
+    # @!group Tree Traversal
 
     # Traverses each node (including the receiver node) of the (sub)tree rooted at this node
     # by yielding the nodes to the specified block.
@@ -570,6 +582,8 @@ module Tree
       end
     end
 
+    # @!endgroup
+
     # @!attribute [r] size
     # Total number of nodes in this (sub)tree, including the receiver node.
     #
@@ -672,7 +686,8 @@ module Tree
       last_sibling == self
     end
 
-    # Returns an array of siblings for the receiver node.  The receiver node is excluded.
+    # @!attribute [rw] siblings
+    # An array of siblings for the receiver node.  The receiver node is excluded.
     #
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
@@ -797,7 +812,7 @@ module Tree
       end
     end
 
-    # Creates a JSON ready Hash for the to_json method.
+    # Creates a JSON ready Hash for the #to_json method.
     #
     # @author Eric Cline (https://github.com/escline)
     # @since 0.8.3
@@ -939,6 +954,7 @@ module Tree
     end
 
     # Allow the deprecated CamelCase method names.  Display a warning.
+    # :nodoc:
     def method_missing(meth, *args, &blk)
       if self.respond_to?(new_method_name = underscore(meth))
         begin
