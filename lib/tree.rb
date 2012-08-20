@@ -52,26 +52,33 @@ module Tree
 
   # == TreeNode Class Description
   #
-  # This class models the nodes for an *N-ary* tree data structue. The nodes are *named*
-  # and have a place-holder for the node data (i.e., _content_ of the node). The node
-  # names are required to be *unique* within the tree.
+  # This class models the nodes for an *N-ary* tree data structue. The
+  # nodes are *named* and have a place-holder for the node data (i.e.,
+  # _content_ of the node). The node names are required to be *unique*
+  # within the tree (as the name is implicitly used as an _ID_ within
+  # the data structure).
   #
-  # The node's _content_ is *not* required to be unique across different nodes in the tree, and
-  # can be +nil+ as well.
+  # The node's _content_ is *not* required to be unique across
+  # different nodes in the tree, and can be +nil+ as well.
   #
-  # The class provides various methods to navigate the tree, traverse the structure,
-  # modify contents of the node, change position of the node in the tree,
-  # and to make structural changes to the tree.
+  # The class provides various methods to navigate the tree, traverse
+  # the structure, modify contents of the node, change position of the
+  # node in the tree, and to make structural changes to the tree.
   #
-  # A node can have any number of *child* nodes attached to it and hence can be used to create N-ary trees.
-  # Access to the child nodes can be made in order (with the conventional left to right access), or
-  # randomly.
+  # A node can have any number of *child* nodes attached to it and
+  # hence can be used to create N-ary trees.  Access to the child
+  # nodes can be made in order (with the conventional left to right
+  # access), or randomly.
   #
-  # The node also provides direct access to its *parent* node as well as other superior parents in the path to
-  # root of the tree.  In addition, a node can also access its *sibling* nodes, if present.
+  # The node also provides direct access to its *parent* node as well
+  # as other superior parents in the path to root of the tree.  In
+  # addition, a node can also access its *sibling* nodes, if present.
   #
-  # Note that while this implementation does not _explicitly_ support directed graphs, the class itself makes
-  # no restrictions on associating a node's *content* with multiple nodes in the tree.
+  # Note that while this implementation does not _explicitly_ support
+  # directed graphs, the class itself makes no restrictions on
+  # associating a node's *content* with multiple nodes in the tree.
+  # However, having duplicate nodes within the structure is likely to
+  # cause unpredictable behavior.
   #
   #
   # == Example
@@ -126,15 +133,31 @@ module Tree
   class TreeNode
     include Enumerable
 
+    # @!attribute [r] name
+    #
     # Name of this node.  Expected to be unique within the tree.
     #
-    # @todo Additional documentation to be more explicit about the
-    #   requirement for unique names
+    # Note that the name attribute really functions as an *ID* within
+    # the tree structure, and hence the uniqueness constraint is
+    # required.
+    #
+    # This may be changed in the future, but for now it is best to
+    # retain unique names within the tree structure, and use the
+    # +content+ attribute for any non-unique node requirements.
+    #
+    # @see content
     attr_reader   :name
 
-    # Content of this node.  Can be +nil+.
+    # @!attribute [rw] content
+    #
+    # Content of this node.  Can be +nil+.  Note that there is no
+    # uniqueness constraint related to this attribute.
+    #
+    # @see name
     attr_accessor :content
 
+    # @!attribute [r] parent
+    #
     # Parent of this node.  Will be +nil+ for a root node.
     attr_reader   :parent
 
@@ -211,7 +234,8 @@ module Tree
         " Total Nodes: #{size()}"
     end
 
-    # Returns an array of ancestors of the receiver node in reversed order
+    # @!attribute [r] parentage
+    # An array of ancestors of the receiver node in reversed order
     # (the first element is the immediate parent of the receiver).
     #
     # Returns +nil+ if the receiver is a root node.
@@ -393,8 +417,9 @@ module Tree
       !has_children?
     end
 
-    # Returns an array of all the immediate children of the receiver node.  The child nodes are ordered
-    # "left-to-right" in the returned array.
+    # Returns an array of all the immediate children of the receiver
+    # node.  The child nodes are ordered "left-to-right" in the
+    # returned array.
     #
     # If a block is given, yields each child node to the block traversing from left to right.
     #
@@ -410,18 +435,18 @@ module Tree
       end
     end
 
-    # Returns the first child of the receiver node.
-    #
-    # Will return +nil+ if no children are present.
+    # @!attribute [rw] first_child
+    # First child of the receiver node.
+    # Will be +nil+ if no children are present.
     #
     # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
     def first_child
       children.first
     end
 
-    # Returns the last child of the receiver node.
-    #
-    # Will return +nil+ if no children are present.
+    # @!attribute [rw] last_child
+    # Last child of the receiver node.
+    # Will be +nil+ if no children are present.
     #
     # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
     def last_child
@@ -545,13 +570,14 @@ module Tree
       end
     end
 
-    # Returns the total number of nodes in this (sub)tree, including the receiver node.
+    # @!attribute [r] size
+    # Total number of nodes in this (sub)tree, including the receiver node.
     #
     # Size of the tree is defined as:
     #
     # Size:: Total number nodes in the subtree including the receiver node.
     #
-    # @return [Number] Total number of nodes in this (sub)tree.
+    # @return [Integer] Total number of nodes in this (sub)tree.
     def size
       @children.inject(1) {|sum, node| sum + node.size}
     end
@@ -560,7 +586,7 @@ module Tree
     #
     # @deprecated This method name is ambiguous and may be removed.  Use TreeNode#size instead.
     #
-    # @return [Number] The total number of nodes in this (sub)tree.
+    # @return [Integer] The total number of nodes in this (sub)tree.
     # @see #size
     def length
       size()
@@ -568,7 +594,7 @@ module Tree
 
     # Pretty prints the (sub)tree rooted at the receiver node.
     #
-    # @param [Number] level The indentation level (4 spaces) to start with.
+    # @param [Integer] level The indentation level (4 spaces) to start with.
     def print_tree(level = 0)
       if is_root?
         print "*"
@@ -585,11 +611,9 @@ module Tree
       children { |child| child.print_tree(level + 1)}
     end
 
-    # Returns root node for the (sub)tree to which the receiver node belongs.
-    #
-    # Note that a root node's root is itself (*beware* of any loop construct that may become infinite!)
-    #
-    # @todo We should perhaps return nil as root's root.
+    # @!attribute [rw] root
+    # root node for the (sub)tree to which the receiver node belongs.
+    # A root node's root is itself.
     #
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
@@ -598,7 +622,8 @@ module Tree
       root
     end
 
-    # Returns the first sibling of the receiver node. If this is the root node, then returns
+    # @!attribute [rw] first_sibling
+    # First sibling of the receiver node. If this is the root node, then returns
     # itself.
     #
     # 'First' sibling is defined as follows:
@@ -622,7 +647,8 @@ module Tree
       first_sibling == self
     end
 
-    # Returns the last sibling of the receiver node.  If this is the root node, then returns
+    # @!attribute [rw] last_sibling
+    # Last sibling of the receiver node.  If this is the root node, then returns
     # itself.
     #
     # 'Last' sibling is defined as follows:
@@ -681,7 +707,8 @@ module Tree
       is_root? ? true : parent.children.size == 1
     end
 
-    # Returns the next sibling for the receiver node.
+    # @!attribute [rw] next_sibling
+    # Next sibling for the receiver node.
     # The 'next' node is defined as the node to right of the receiver node.
     #
     # Will return +nil+ if no subsequent node is present, or if the receiver is a root node.
@@ -697,7 +724,8 @@ module Tree
       parent.children.at(myidx + 1) if myidx
     end
 
-    # Returns the previous sibling of the receiver node.
+    # @!attribute [rw] previous_sibling
+    # Previous sibling of the receiver node.
     # 'Previous' node is defined to be the node to left of the receiver node.
     #
     # Will return +nil+ if no predecessor node is present, or if the receiver is a root node.
@@ -719,7 +747,7 @@ module Tree
     #
     # @param [Tree::TreeNode] other The other node to compare against.
     #
-    # @return [Number] +1 if this node is a 'successor', 0 if equal and -1 if this node is a 'predecessor'.
+    # @return [Integer] +1 if this node is a 'successor', 0 if equal and -1 if this node is a 'predecessor'.
     def <=>(other)
       return +1 if other == nil
       self.name <=> other.name
@@ -851,20 +879,22 @@ module Tree
       end
     end
 
-    # Returns height of the (sub)tree from the receiver node.  Height of a node is defined as:
+    # @!attribute [r] node_height
+    # Height of the (sub)tree from the receiver node.  Height of a node is defined as:
     #
     # Height:: Length of the longest downward path to a leaf from the node.
     #
     # - Height from a root node is height of the entire tree.
     # - The height of a leaf node is zero.
     #
-    # @return [Number] Height of the node.
+    # @return [Integer] Height of the node.
     def node_height
       return 0 if is_leaf?
       1 + @children.collect { |child| child.node_height }.max
     end
 
-    # Returns depth of the receiver node in its tree.  Depth of a node is defined as:
+    # @!attribute [r] node_depth
+    # Depth of the receiver node in its tree.  Depth of a node is defined as:
     #
     # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
     #
@@ -873,7 +903,7 @@ module Tree
     #
     # 'level' is an alias for this method.
     #
-    # @return [Number] Depth of this node.
+    # @return [Integer] Depth of this node.
     def node_depth
       return 0 if is_root?
       1 + parent.node_depth
@@ -891,7 +921,7 @@ module Tree
     # For correct and conventional behavior, please use {Tree::TreeNode#node_depth} and
     # {Tree::TreeNode#node_height} methods instead.
     #
-    # @return [Number] depth of the node.
+    # @return [Integer] depth of the node.
     # @deprecated This method returns an incorrect value.  Use the 'node_depth' method instead.
     #
     # @see #node_depth
@@ -928,37 +958,40 @@ module Tree
       end
     end
 
-    # Returns breadth of the tree at the receiver node's level.
+    # @!attribute [r] breadth
+    # Breadth of the tree at the receiver node's level.
     # A single node without siblings has a breadth of 1.
     #
     # Breadth is defined to be:
     # Breadth:: Number of sibling nodes to this node + 1 (this node itself),
     # i.e., the number of children the parent of this node has.
     #
-    # @return [Number] breadth of the node's level.
+    # @return [Integer] breadth of the node's level.
     def breadth
       is_root? ? 1 : parent.children.size
     end
 
-    # Returns the incoming edge-count of the receiver node.
+    # @!attribute [r] in_degree
+    # The incoming edge-count of the receiver node.
     #
     # In-degree is defined as:
-    # In-degree:: The number of edges arriving at the node (0 for root, 1 for all other nodes)
+    # In-degree:: Number of edges arriving at the node (0 for root, 1 for all other nodes)
     #
     # - In-degree = 0 for a root or orphaned node
     # - In-degree = 1 for a node which has a parent
     #
-    # @return [Number] The in-degree of this node.
+    # @return [Integer] The in-degree of this node.
     def in_degree
       is_root? ? 0 : 1
     end
 
-    # Returns the outgoing edge-count of the receiver node.
+    # @!attribute [r] out_degree
+    # The outgoing edge-count of the receiver node.
     #
     # Out-degree is defined as:
-    # Out-degree:: The number of edges leaving the node (zero for leafs)
+    # Out-degree:: Number of edges leaving the node (zero for leafs)
     #
-    # @return [Number] The out-degree of this node.
+    # @return [Integer] The out-degree of this node.
     def out_degree
       is_leaf? ? 0 : children.size
     end

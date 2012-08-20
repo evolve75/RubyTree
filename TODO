@@ -34,7 +34,8 @@
 * R0.8.3
   This is a bugfix release.
 
-*** TODO Update documentation to be more explicit about duplicate node names
+*** DONE Update documentation to be more explicit about duplicate node names
+    CLOSED: [2012-08-19 Sun 21:46]
     Issue https://github.com/evolve75/RubyTree/issues/7
     Update documentation for :name attribute in tree.rb.  There is no
     specific code fix needed.
@@ -131,6 +132,10 @@
     The current behavior is correct, and has been left as is.
 *** DONE Fix the ~siblings~ method to return an empty array for root
     CLOSED: [2012-08-19 Sun 21:03]
+*** DONE Fix the TreeNode#root method to return nil for root's root.
+    CLOSED: [2012-08-19 Sun 21:13]
+
+    Left the code as-is, since we need some way to un-ambiguously find the root, regardless of the node given.
 
 * R0.9.0
 *** TODO Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling.
@@ -141,7 +146,6 @@
 
 
 * Unplanned / Not assigned to any release
-*** TODO Fix the TreeNode#root method to return nil for root's root.
 *** TODO Fix the marshal_load method.  This probably needs to be a class method.
 *** TODO Create the basic UML diagrams and upload to the Site
     DEADLINE: <2010-01-04 Mon>
