@@ -86,6 +86,11 @@ module TestTree
       @root = nil
     end
 
+    # Test for presence of the VERSION constant
+    def test_has_version_number
+      assert_not_nil(Tree::VERSION)
+    end
+
     # This test is for the root alone - without any children being linked
     def test_root_setup
       assert_not_nil(@root        , "Root cannot be nil")
