@@ -49,7 +49,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'structured_warnings' , '>= 0.1.3'
   s.add_runtime_dependency 'json'                , '>= 1.7.5'
 
-  s.add_development_dependency 'rake'      , '~> 3.0'
+  s.add_development_dependency 'rake'      , '>= 0.9.2.2'
   s.add_development_dependency 'yard'      , '>= 0.8.2.1'
   s.add_development_dependency 'rtagstask' , '>= 0.0.4'
   s.add_development_dependency 'rcov'      , '>= 1.0.0'

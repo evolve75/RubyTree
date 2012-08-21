@@ -10,6 +10,8 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 * Included support for {gem-testers}[http://test.rubygems.org/].
 
+* Included support for {Bundler}[http://gembundler.com/].
+
 * Implemented the +as_json+ method to support Rails' JSON encoding,
   by pulling in the changes by Eric Cline (https://github.com/escline).
 
