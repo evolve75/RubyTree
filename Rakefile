@@ -2,9 +2,7 @@
 #
 # Rakefile - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
-#
-# Copyright (c) 2006, 2007, 2009, 2010, 2012  Anupam Sengupta
+# Copyright (c) 2006, 2007, 2009, 2010, 2011, 2012  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -34,122 +32,92 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-PKG_NAME        = "rubytree"
+require 'rubygems'
+GEM_SPEC = eval(File.read("rubytree.gemspec")) # Load the gemspec.
 
-# Default is to create a rubygem.
-desc "Default Task (create the gem)"
-task :default => :gem
+PKG_NAME = GEM_SPEC.name
+PKG_VER  = GEM_SPEC.version
+GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
 
-# Use Hoe to define the rake tasks.
-begin
-  require 'hoe'
-  Hoe.plugin :yard
+desc "Default Task (Run the tests)"
+task :default => 'test:rcov'
 
-  Hoe.spec PKG_NAME do
-    # The GemSpec settings
-    self.rubyforge_name = PKG_NAME
-    developer "Anupam Sengupta", "anupamsg@gmail.com"
-
-    self.urls                       =  ["http://rubytree.rubyforge.org"]
-    self.readme_file                = 'README.rdoc'
-
-    # Set the Yard Options
-    extra_docs                      = ["COPYING.rdoc", "API-CHANGES.rdoc"]
-    extra_docs.each { |file| self.yard_files << file }
-    self.yard_options = ["--files", extra_docs.join(",") ]
-
-    # Now the publishing settings
-    self.remote_rdoc_dir            = 'rdoc'
-
-    # Mention the dependencies
-    self.dependency('yard', '>= 0.8.2.1')
-    self.dependency('structured_warnings', '>= 0.1.3')
-    self.dependency('json', '>= 1.7.5')
-
-    # Support additional package formats
-    self.need_tar                   = true
-    self.need_zip                   = true
-
-    # Post installation message
-    self.post_install_message       = <<MSGEND
-========================================================================
-
- Thank you for installing #{PKG_NAME}.
-
- Note that the TreeNode#siblings method has changed in 0.8.3.
- it now returns an empty array for the root node.
-
-              WARNING: SIGNIFICANT API CHANGE in 0.8.0 !
-              ------------------------------------------
-
- Please note that as of 0.8.0 the CamelCase method names are DEPRECATED.
-
- The new method names follow the ruby_convention (separated by '_').
-
- The old CamelCase methods still work (a warning will be displayed),
- but may go away in the future.
-
- Details of the API changes are documented in the API-CHANGES file.
-
-========================================================================
-MSGEND
-
-    # Code Metrics ...
-    self.flay_threshold             = timebomb 1200, 100 # Default is 1200, 100
-    self.flog_threshold             = timebomb 1200, 100 # Default is 1200, 100
-  end
-
-rescue LoadError                # If Hoe is not found ...
-  $stderr.puts <<-END
-  ERROR!!! You do not seem to have Hoe installed!
-
-  The Hoe gem is required for running the rake tasks for building the rubytree gem.
-
-  You can download Hoe as a Rubygem by running as root (or sudo):
-
-    $ gem install hoe
-
-  More details can be found at http://seattlerb.rubyforge.org/hoe/Hoe.html
-
-  END
+desc "Display the current gem version"
+task :version do
+  puts "Current Version: #{GEM_NAME}"
 end
 
+require 'rake/clean'
+task :clean => 'gem:clobber_package'
+CLEAN.include('coverage')
+task :clobber => [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard', 'tag:clobber_tags']
 
-# The following tasks are loaded independently of Hoe
-# ===================================================
+desc "Open an irb session preloaded with this library"
+task :console do
+  sh "irb -rubygems -r ./lib/tree.rb"
+end
 
-# Optional TAGS Task.
-# Needs http://rubyforge.org/projects/rtagstask/
-begin
+namespace :doc do               # ................................ Documentation
+
+  require 'rdoc/task'
+  Rake::RDocTask.new do |rdoc|
+    rdoc.rdoc_dir = 'rdoc'
+    rdoc.title    = "#{PKG_NAME}-#{PKG_VER}"
+    rdoc.main     = 'README.rdoc'
+    rdoc.rdoc_files.include(GEM_SPEC.extra_rdoc_files)
+    rdoc.rdoc_files.include('lib/**/*.rb')
+  end
+
+  require 'yard'
+  YARD::Rake::YardocTask.new do |t|
+    t.files   = ['lib/**/*.rb', '-', GEM_SPEC.extra_rdoc_files]
+    t.options = ['--no-private', '--embed-mixins']
+  end
+
+  desc "Remove YARD Documentation"
+  task :clobber_yard do
+    rm_rf 'doc'
+  end
+end
+
+desc "Run the test cases"
+task :test => 'test:unit'
+
+namespace :test do              # ................................ Test related
+
+  require 'rake/testtask'
+  Rake::TestTask.new(:unit) do |test|
+    test.libs << 'lib' << 'test'
+    test.pattern = 'test/**/test_*.rb'
+    test.verbose = false
+  end
+
+  require 'rcov/rcovtask'
+  Rcov::RcovTask.new(:rcov) do |t|
+    t.libs << "test"
+    t.test_files = FileList['test/**/test_*.rb']
+    t.verbose = true
+    t.rcov_opts << '--exclude /gems/,/Library/,/usr/,spec,lib/tasks'
+  end
+
+end
+
+namespace :tag do               # ................................ Emacs Tags
   require 'rtagstask'
-  RTagsTask.new do |rd|
+  RTagsTask.new(:tags) do |rd|
     rd.vi = false
   end
-rescue LoadError
-  $stderr.puts <<-END
-  ERROR!!! You need to have the rtagstask (https://rubyforge.org/projects/rtagstask/) for generating the TAGS file.
-
-  You can install the rtags gem by running the following command as root (or sudo):
-
-    $ gem install rtagstask
-
-  END
 end
 
-begin
-  require 'reek/rake/task'
-  Reek::Rake::Task.new do |t|
-    t.verbose = false
-    t.source_files = 'lib/**/*.rb'
+namespace :gem do               # ................................ Gem related
+  require 'rubygems/package_task'
+  Gem::PackageTask.new(GEM_SPEC) do |pkg|
+    pkg.need_zip = true
+    pkg.need_tar = true
   end
-rescue LoadError
-  $stderr.puts <<-END
-  ERROR!!! You need to have reek (http://github.com/kevinrutherford/reek) for detecing the code smell.
 
-  You can install the reek gem by running the following command as root (or sudo):
-
-    $ gem install reek
-
-  END
-
+  desc "Push the gem into the Rubygems repository"
+  task :push => :gem do
+    sh "gem push pkg/#{GEM_NAME}"
+  end
 end

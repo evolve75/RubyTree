@@ -1,10 +1,7 @@
-# rubytree.rb - This file is part of the RubyTree package.
+#--
+# version.rb - This file is part of the RubyTree package.
 #
-
-# = rubytree.rb - Generic implementation of an N-ary tree data structure.
-#
-# This file provides an alternative mechanism to require 'tree.rb', in case
-# there is a conflict with another gem or Ruby package.
+# This file provides the version number for Rubytree.
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
@@ -38,4 +35,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require "tree.rb"
+module Tree
+  # Rubytree Package Version
+  VERSION = '0.8.3'
+end

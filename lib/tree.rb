@@ -1,7 +1,5 @@
 # tree.rb - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
-#
 # = tree.rb - Generic implementation of an N-ary tree data structure.
 #
 # Provides a generic tree data structure with ability to
@@ -42,15 +40,13 @@
 #
 
 require 'tree/tree_deps'
+require 'tree/version'
 
 # This module provides a TreeNode class which is the primary class for representing
 # nodes in the tree.
 #
 # This module also acts as the namespace for all classes in the RubyTree package.
 module Tree
-
-  # Rubytree Package Version
-  VERSION = '0.8.3'
 
   # == TreeNode Class Description
   #
