@@ -7,8 +7,7 @@
 # Copyright (c) 2012 Anupam Sengupta
 # All rights reserved.
 
-$:.push File.expand_path("../lib", __FILE__)
-require 'tree/version'
+require File.expand_path('../lib/tree/version', __FILE__)
 
 Gem::Specification.new do |s|
   s.name              = 'rubytree'
