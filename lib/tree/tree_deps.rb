@@ -37,7 +37,5 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'rubygems'
-
-gem 'structured_warnings', '>= 0.1.3'
-gem 'json', '>= 1.7.5'
+require 'structured_warnings'
+require 'json'
