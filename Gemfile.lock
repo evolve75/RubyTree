@@ -11,7 +11,7 @@ GEM
     json (1.7.5)
     rake (0.9.2.2)
     rcov (0.9.11)
-    rtags (0.97)
+    rtags (0.98)
     rtagstask (0.0.4)
       rtags (> 0.0.0)
     structured_warnings (0.1.3)
