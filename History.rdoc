@@ -4,7 +4,11 @@
 
 === 0.8.3 / 2012-08-31
 
-This is a bug-fix release.
+This is a primarily a bug-fix release, with some packaging changes.
+
+* Have removed the dependency on Hoe.  The build is now vanilla gemspec based.
+
+* Included support for {gem-testers}[http://test.rubygems.org/].
 
 * Implemented the +as_json+ method to support Rails' JSON encoding,
   by pulling in the changes by Eric Cline (https://github.com/escline).

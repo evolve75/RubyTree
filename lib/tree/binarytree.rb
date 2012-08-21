@@ -1,7 +1,5 @@
 # binarytree.rb - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
-#
 # = binarytree.rb - An implementation of the binary tree data structure.
 #
 # Provides a binary tree data structure with ability to

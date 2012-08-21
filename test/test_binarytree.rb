@@ -2,9 +2,8 @@
 
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
