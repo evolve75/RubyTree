@@ -26,23 +26,23 @@ be provided to ensure relatively smooth transition to the new APIs.
   - {Tree::TreeNode#[]}
   - {Tree::BinaryTreeNode#add}
 
-- Added {Tree::TreeNode#level} as an alias for {Tree::TreeNode#nodeDepth}
+- Added {Tree::TreeNode#level} as an alias for {Tree::TreeNode#node_depth}
 
 - Added new methods {Tree::TreeNode#in_degree} and {Tree::TreeNode#out_degree} to report the node's degree stats
 
-- {Tree::TreeNode#isOnlyChild?} now returns +true+ for a root node.
+- {Tree::TreeNode#is_only_child?} now returns +true+ for a root node.
 
-- {Tree::TreeNode#nextSibling} and {Tree::TreeNode#previousSibling} now return +nil+ for a root node.
+- {Tree::TreeNode#next_sibling} and {Tree::TreeNode#previous_sibling} now return +nil+ for a root node.
 
 - {Tree::TreeNode#add} and {Tree::TreeNode#<<} now throw an ArgumentError exception if a +nil+ node is passed as an argument.
 
-- Added new methods {Tree::TreeNode#to_json} and {Tree::TreeNode::json_create} to convert to/from the JSON format.
+- Added new methods {Tree::TreeNode#to_json} and Tree::TreeNode::json_create to convert to/from the JSON format.
   Thanks to Dirk[http://github.com/railsbros-dirk] for this change.
 
 == Release 0.6.1 Changes
 
 - Deprecated the {Tree::TreeNode#depth} method as it was returning an incorrect depth value.  Have introduced a new replacement
-  method {Tree::TreeNode#nodeDepth} which returns the correct result.
+  method {Tree::TreeNode#node_depth} which returns the correct result.
 
 # Local Variables:
 # mode: rdoc
