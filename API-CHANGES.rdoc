@@ -1,3 +1,5 @@
+# @markup rdoc
+
 = API Changes in RubyTree
 
 This file documents various API level changes that have been made to the RubyTree package.
@@ -42,10 +44,7 @@ be provided to ensure relatively smooth transition to the new APIs.
 - Deprecated the {Tree::TreeNode#depth} method as it was returning an incorrect depth value.  Have introduced a new replacement
   method {Tree::TreeNode#nodeDepth} which returns the correct result.
 
-
-
-
 # Local Variables:
-# mode: text
+# mode: rdoc
 # coding: utf-8-unix
 # End:
