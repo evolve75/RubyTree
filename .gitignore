@@ -1,6 +1,7 @@
 TAGS
 coverage.info
 doc/
+rdoc/
 pkg/
 coverage/
 tmp/
