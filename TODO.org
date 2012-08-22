@@ -67,6 +67,15 @@
        and will sacrifice memory.  There might be a need to
        restructure the internals to make better use of memory.
 
+
+*** DONE Make Rubytree compatible with Bundler                                            :ARCHIVE:
+    CLOSED: [2012-08-21 Tue 21:04]
+
+*** DONE Make Rubytree compatible wth gem-testers                                         :ARCHIVE:
+    CLOSED: [2012-08-21 Tue 21:04]
+
+*** DONE Remove the dependency on Hoe                                                     :ARCHIVE:
+    CLOSED: [2012-08-21 Tue 21:05]
 *** DONE Resolve the _tree.rb_ file conflict with the [[http://netaddr.rubyforge.org/][netaddr gem]]                           :ARCHIVE:
     CLOSED: [2012-08-20 Mon 01:03]
     Issue https://github.com/evolve75/RubyTree/issues/8
