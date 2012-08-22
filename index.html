@@ -1,182 +1,208 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="google-site-verification" content="9_hyzBqtpwcotlwCuLbrAQGBvq1zTmLN7GXIkY0omK0" />
-    <meta name="msvalidate.01" content="11986F133D6038AE71995E5774370234" />
-    <meta name="y_key" content="ab132b61717b3d36" />
-
-    <title>RubyTree @ GitHub</title>
-
-    <style type="text/css">
-      body {
-      margin-top: 1.0em;
-      background-color: #d8dadf;
-      font-family: "Helvetica,Arial,FreeSans";
-      color: #000000;
-      }
-      #container {
-      margin: 0 auto;
-      width: 700px;
-      }
-      h1 { font-size: 3.8em; color: #272520; margin-bottom: 3px; }
-      h1 .small { font-size: 0.4em; }
-      h1 a { text-decoration: none }
-      h2 { font-size: 1.5em; color: #272520; }
-      h3 { text-align: center; color: #272520; }
-      a { color: #272520; }
-      .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-      .download { float: right; }
-      pre { background: #000; color: #fff; padding: 15px;}
-      hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-      .footer { text-align:center; padding-top:30px; font-style: italic; }
-    </style>
-
-    <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-326849-6']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-      })();
-    </script>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>RubyTree by evolve75</title>
   </head>
 
   <body>
-    <a href="http://github.com/evolve75/RubyTree">
-      <img style="position: absolute; top: 0; right: 0; border: 0;"
-           src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
-           alt="Fork me on GitHub" />
-    </a>
-
     <div id="container">
+      <div class="inner">
 
-      <div class="download">
-        <a href="http://github.com/evolve75/RubyTree/zipball/master">
-          <img border="0" width="90" src="http://github.com/images/modules/download/zip.png" alt="Zip Icon" />
-        </a>
-        <a href="http://github.com/evolve75/RubyTree/tarball/master">
-          <img border="0" width="90" src="http://github.com/images/modules/download/tar.png" alt="Tar Icon" />
-        </a>
+        <header>
+          <h1>RubyTree</h1>
+          <h2>A General Purpose Tree Data Structure for Ruby</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/evolve75/RubyTree/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/evolve75/RubyTree/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/evolve75/RubyTree" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>RubyTree</h1>
+
+<h3>Description</h3>
+
+<p>RubyTree is a Ruby implementation of the generic tree data structure.  It
+provides a node-based model to store keyed node-elements in the tree and simple
+APIs to access, modify and traverse the structure.  RubyTree is node-centric,
+where individual nodes on the tree are the primary compositional and structural
+elements.</p>
+
+<p>This implementation also mixes in the Enumerable module to allow standard access
+to the tree as a collection.</p>
+
+<h3>Synopsis</h3>
+
+<p>As an example, the following code-snippet implements this tree structure:</p>
+
+<pre><code>                +------------+
+                |    ROOT    |
+                +-----+------+
+        +-------------+------------+
+        |                          |
++-------+-------+          +-------+-------+
+|  CHILD 1      |          |  CHILD 2      |
++-------+-------+          +---------------+
+        |
+        |
++-------+-------+
+| GRANDCHILD 1  |
++---------------+
+</code></pre>
+
+<div class="highlight"><pre> <span class="c1"># ..... Example starts.</span>
+ <span class="nb">require</span> <span class="s1">'tree'</span>                 <span class="c1"># Load the library</span>
+
+ <span class="c1"># ..... Create the root node first.  Note that every node has a name and an optional content payload.</span>
+ <span class="n">root_node</span> <span class="o">=</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"ROOT"</span><span class="p">,</span> <span class="s2">"Root Content"</span><span class="p">)</span>
+
+ <span class="c1"># ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.</span>
+ <span class="n">root_node</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"CHILD1"</span><span class="p">,</span> <span class="s2">"Child1 Content"</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"GRANDCHILD1"</span><span class="p">,</span> <span class="s2">"GrandChild1 Content"</span><span class="p">)</span>
+ <span class="n">root_node</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"CHILD2"</span><span class="p">,</span> <span class="s2">"Child2 Content"</span><span class="p">)</span>
+
+ <span class="c1"># ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.</span>
+ <span class="n">root_node</span><span class="o">.</span><span class="n">print_tree</span>
+
+ <span class="c1"># ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.</span>
+ <span class="n">child1</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">[</span><span class="s2">"CHILD1"</span><span class="o">]</span>
+ <span class="n">grand_child1</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">[</span><span class="s2">"CHILD1"</span><span class="o">][</span><span class="s2">"GRANDCHILD1"</span><span class="o">]</span>
+
+ <span class="c1"># ..... Lets retrieve siblings of the current node as an array.</span>
+ <span class="n">siblings_of_child1</span> <span class="o">=</span> <span class="n">child1</span><span class="o">.</span><span class="n">siblings</span>
+
+ <span class="c1"># ..... Lets retrieve immediate children of the root node as an array.</span>
+ <span class="n">children_of_root</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">.</span><span class="n">children</span>
+
+ <span class="c1"># ..... This is a depth-first and L-to-R pre-ordered traversal.</span>
+ <span class="n">root_node</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span> <span class="n">node</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">reverse</span> <span class="p">}</span>
+
+ <span class="c1"># ..... Lets remove a child node from the root node.</span>
+ <span class="n">root_node</span><span class="o">.</span><span class="n">remove!</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
+</pre></div>
+
+<h3>Requirements</h3>
+
+<ul>
+<li><p>Ruby 1.8+  (<a href="http://www.ruby-lang.org">http://www.ruby-lang.org</a>)</p></li>
+<li>
+<p>Run-time Dependencies:</p>
+
+<ul>
+<li><a href="http://github.com/schmidt/structured_warnings">structured_warnings</a></li>
+<li>
+<a href="http://yardoc.org">Yard</a> for the documentation</li>
+<li>
+<a href="http://flori.github.com/json">JSON</a> for converting to/from the JSON format</li>
+</ul>
+</li>
+<li>
+<p>Development dependencies (not required for installing the gem):</p>
+
+<ul>
+<li><a href="http://seattlerb.rubyforge.org/hoe/Hoe.html">Hoe</a></li>
+<li><a href="http://gemcutter.org/gems/gemcutter">gemcutter</a></li>
+<li><a href="http://codeforpeople.rubyforge.org/rubyforge">Rubyforge</a></li>
+</ul>
+</li>
+</ul><h3>Installation</h3>
+
+<p>Installing RubyTree is simple. Just do:</p>
+
+<pre><code>$ gem install rubytree
+</code></pre>
+
+<h3>Documentation</h3>
+
+<p>The main class for is Tree::TreeNode. See the class documentation for an usage
+example.</p>
+
+<p>From a command line/terminal prompt, you can issue the following command to view
+the text mode ri documentation:</p>
+
+<pre><code>$ ri Tree::TreeNode
+</code></pre>
+
+<p>Documentation for the latest released version is always available at:</p>
+
+<p><a href="http://rubytree.rubyforge.org/rdoc">http://rubytree.rubyforge.org/rdoc</a></p>
+
+<p>Documentation for the latest git HEAD is available at:</p>
+
+<p><a href="http://rdoc.info/projects/evolve75/RubyTree">http://rdoc.info/projects/evolve75/RubyTree</a></p>
+
+<p>Note that the documentation is formatted for <a href="http://yardoc.org">Yard</a>.</p>
+
+<p>== Acknowledgments</p>
+
+<p>I would like to acknowledge the following contributors for helping improve RubyTree:</p>
+
+<ol>
+<li>
+<a href="http://github.com/railsbros-dirk">Dirk Breuer</a> for contributing the JSON conversion code.</li>
+<li>Vincenzo Farruggia for contributing the (sub)tree cloning code.</li>
+<li>
+<a href="https://github.com/escline">Eric Cline</a> for the Rails JSON encoding fix.</li>
+</ol><h3>License</h3>
+
+<p>RubyTree is licensed under the <a href="http://www.opensource.org/licenses/bsd-license.php">BSD</a> license.</p>
+
+<p>Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
+All rights reserved.</p>
+
+<p>Redistribution and use in source and binary forms, with or without modification,
+are permitted provided that the following conditions are met:</p>
+
+<ul>
+<li><p>Redistributions of source code must retain the above copyright notice, this
+list of conditions and the following disclaimer.</p></li>
+<li><p>Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or
+other materials provided with the distribution.</p></li>
+<li><p>Neither the name of the organization nor the names of its contributors may be
+used to endorse or promote products derived from this software without
+specific prior written permission.</p></li>
+</ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+        </section>
+
+        <footer>
+          RubyTree is maintained by <a href="https://github.com/evolve75">evolve75</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-326849-6");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
       </div>
-
-      <h1><a href="http://github.com/evolve75/RubyTree">RubyTree</a>
-
-      <span class="small">by <a href="http://github.com/evolve75">evolve75 / anupamsg</a></span></h1>
-
-      <div class="description">
-        A General Purpose Tree Data Structure for Ruby.
-      </div>
-
-      <p> RubyTree is a simple and general purpose implementation of the  Tree data structure for the Ruby language.</p>
-
-      <p>RubyTree aims to provide a simple to use API model for the conceptual tree, and the ability to extend the model into specialized cases in user-generated code.</p>
-
-      <p>The current version provides implementations of:</p>
-      <ul>
-        <li>A general purpose tree structure, and</li>
-        <li>A binary tree</li>
-      </ul>
-
-
-      <p>Future versions may include other tree implementations such as the Red-Black tree.</p>
-
-
-      <p>RubyTree is available as a RubyGem and is released under the BSD License. </p>
-
-      <p>RubyTree is hosted at <a href="http://rubytree.rubyforge.org/">http://rubytree.rubyforge.org</a></p>
-
-      <h2>Documentation</h2>
-
-      <p>Documentation is available for the current released RubyGem at:
-      <br/>
-      <a href="http://rubytree.rubyforge.org/rdoc/">http://rubytree.rubyforge.org/rdoc/</a>
-
-      <br/>
-      Documentation for the current Git HEAD version is available at:
-      <br/>
-      <a href="http://rdoc.info/projects/evolve75/RubyTree">http://rdoc.info/projects/evolve75/RubyTree</a></p>
-
-      <h2>Dependencies</h2>
-
-      <ul>
-        <li>Build Dependency on Hoe for generating the Gemspec</li>
-        <li>Soft dependency on the structured_warnings RubyGem (optional)</li>
-      </ul>
-
-      <h2>Install</h2>
-      <code>$ gem install rubytree</code>
-
-      <p>You may need to run this as a super-user on your system (root or sudo).</p>
-
-      <h2>License</h2>
-      <p>RubyTree is licensed under the BSD license.</p>
-
-      <p>
-        Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 2012 Anupam Sengupta
-        All rights reserved.
-
-        <br/>
-        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
-        following conditions are met:
-      </p>
-
-      <ul>
-        <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
-
-        <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
-
-        <li>Neither the name of the organization nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
-      </ul>
-
-      <p>
-        THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-        INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-        DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-        SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-        SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-        WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-      THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
-
-      <h2>Authors</h2>
-
-      <p>Anupam Sengupta (anupamsg at gmail dot com)</p>
-
-      <h2>Contact</h2>
-      <p>Anupam Sengupta (anupamsg at gmail dot com)</p>
-
-      <h2>Download</h2>
-      <p>
-        You can download this project in either
-        <a href="http://github.com/evolve75/RubyTree/zipball/master">zip</a> or
-        <a href="http://github.com/evolve75/RubyTree/tarball/master">tar</a> formats.
-      </p>
-
-      <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <br/>
-      <code>$ git clone git://github.com/evolve75/RubyTree</code>
-      </p>
-
-      <div class="footer">
-        get the source code on GitHub : <a href="http://github.com/evolve75/RubyTree">evolve75/RubyTree</a>
-
-        <br/>
-        <br/>
-
-        <a href="http://validator.w3.org/check?uri=referer" target="_blank"> <img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="20" width="59" /> </a> <a href="http://jigsaw.w3.org/css-validator/check/referer" target="_blank"> <img style="border:0;width:59px;height:20px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!" /></a> &copy; 2011 Anupam Sengupta
-
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/"> <img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /> </a> <a xmlns:dct="http://purl.org/dc/terms/" href="http://rubytree.rubyforge.org/" rel="dct:source">evolve75.github.com/RubyTree</a> by <a xmlns:cc="http://creativecommons.org/ns#" href="http://rubytree.rubyforge.org/" property="cc:attributionName" rel="cc:attributionURL">Anupam Sengupta</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike 3.0 Unported License</a>
-      </div>
-
     </div>
-
-
   </body>
 </html>
