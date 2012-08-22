@@ -839,12 +839,7 @@ module Tree
     # @see Tree::TreeNode.as_json
     # @see http://flori.github.com/json
     def to_json(*a)
-      begin
-        as_json.to_json(*a)
-
-      rescue LoadError
-        warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation"
-      end
+      as_json.to_json(*a)
     end
 
     # Helper method to create a Tree::TreeNode instance from the JSON hash representation.  Note that this method should
@@ -864,17 +859,15 @@ module Tree
     # @see #to_json
     # @see http://flori.github.com/json
     def self.json_create(json_hash)
-      begin
-        node = new(json_hash["name"], json_hash["content"])
 
-        json_hash["children"].each do |child|
-          node << child
-        end if json_hash["children"]
+      node = new(json_hash["name"], json_hash["content"])
 
-        return node
-      rescue LoadError => e
-        warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation."
-      end
+      json_hash["children"].each do |child|
+        node << child
+      end if json_hash["children"]
+
+      return node
+
     end
 
     # @!attribute [r] node_height

@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
 
   s.test_files       = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files = ['README.rdoc', 'COPYING.rdoc', 'API-CHANGES.rdoc', 'History.txt']
+  s.extra_rdoc_files = ['README.rdoc', 'COPYING.rdoc', 'API-CHANGES.rdoc', 'History.rdoc']
   s.rdoc_options     = ["--title", "Rubytree Documentation", "--quiet"]
 
   s.add_runtime_dependency 'structured_warnings' , '>= 0.1.3'
@@ -52,7 +52,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'      , '>= 0.9.2.2'
   s.add_development_dependency 'yard'      , '>= 0.8.2.1'
   s.add_development_dependency 'rtagstask' , '>= 0.0.4'
-  s.add_development_dependency 'rcov'      , '>= 1.0.0'
+  s.add_development_dependency 'rcov'      , '~> 0.9.0'
 
   s.post_install_message = <<-EOF
     ========================================================================
