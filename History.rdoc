@@ -2,11 +2,12 @@
 
 = History of Changes
 
-=== 0.8.3 / 2012-08-31
+=== 0.8.3 / 2012-08-21
 
 This is a primarily a bug-fix release, with some packaging changes.
 
-* Have removed the dependency on Hoe.  The build is now vanilla gemspec based.
+* Have removed the dependency on Hoe[https://github.com/seattlerb/hoe].  The
+  build is now vanilla gemspec based.
 
 * Included support for {gem-testers}[http://test.rubygems.org/].
 

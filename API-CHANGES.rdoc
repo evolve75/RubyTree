@@ -7,7 +7,7 @@ This file documents various API level changes that have been made to the RubyTre
 Note: API level changes are expected to reduce dramatically after the 1.x release.  In most cases, an alternative will
 be provided to ensure relatively smooth transition to the new APIs.
 
-== Release 8.8.3 Changes
+== Release 0.8.3 Changes
 
 - {Tree::TreeNode#siblings} will now return an empty array for the root node.
 
