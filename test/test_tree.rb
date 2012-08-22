@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 
-# testtree.rb - This file is part of the RubyTree package.
+# test_tree.rb - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
-#
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -35,7 +33,6 @@
 #
 
 require 'test/unit'
-require 'rubygems'
 require 'json'
 require 'tree'
 
@@ -88,6 +85,11 @@ module TestTree
       @root = nil
     end
 
+    # Test for presence of the VERSION constant
+    def test_has_version_number
+      assert_not_nil(Tree::VERSION)
+    end
+
     # This test is for the root alone - without any children being linked
     def test_root_setup
       assert_not_nil(@root        , "Root cannot be nil")
@@ -99,7 +101,7 @@ module TestTree
       assert(!@root.has_children? , "Cannot have any children")
       assert(@root.has_content?   , "This root should have content")
       assert_equal(1              , @root.size, "Number of nodes should be one")
-      assert_nil(@root.siblings   , "This root does not have any children")
+      assert_equal(0, @root.siblings.length, "This root does not have any children")
       assert_equal(0, @root.in_degree, "Root should have an in-degree of 0")
       assert_equal(0, @root.node_height, "Root's height before adding any children is 0")
       assert_raise(ArgumentError) { Tree::TreeNode.new(nil) }
@@ -137,6 +139,9 @@ module TestTree
 
     # Test the <=> operator.
     def test_spaceship
+      require 'structured_warnings'
+      StandardWarning.disable   # Disable the warnings for using integers as node names
+
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
 
@@ -155,6 +160,8 @@ module TestTree
 
       second_node = Tree::TreeNode.new("ABC")
       assert_equal(first_node <=> second_node, 0)
+
+      StandardWarning.enable
     end
 
     # Test the to_s method.  This is probably a little fragile right now.
@@ -164,16 +171,6 @@ module TestTree
       expected_string = "Node Name: A Node Content: Some Content Parent: <None> Children: 0 Total Nodes: 1"
 
       assert_equal(expected_string, a_node.to_s, "The string representation should be same")
-
-      # Lets test a nil content.
-      a_node = Tree::TreeNode.new("Root", nil)
-
-      assert_equal("Node Name: Root Content: <Empty> Parent: <None> Children: 0 Total Nodes: 1", a_node.to_s)
-
-      # Now test with an empty hash as the content.
-      a_node = Tree::TreeNode.new("Root", {})
-
-      assert_equal("Node Name: Root Content:  Parent: <None> Children: 0 Total Nodes: 1", a_node.to_s)
 
       # Now test with a symbol as a key.
       a_node = Tree::TreeNode.new(:Node_Name, "Some Content")
@@ -209,6 +206,7 @@ module TestTree
       assert_same(@child1, @child1.first_sibling, "Child1's first sibling is itself")
       assert_same(@child1, @child2.first_sibling, "Child2's first sibling should be child1")
       assert_same(@child1, @child3.first_sibling, "Child3's first sibling should be child1")
+      assert_same(@child4, @child4.first_sibling, "Child4's first sibling should be itself")
       assert_not_same(@child1, @child4.first_sibling, "Child4's first sibling is itself")
     end
 
@@ -216,7 +214,6 @@ module TestTree
     def test_is_first_sibling_eh
       setup_test_tree
 
-      # TODO: Need to fix the first_sibling method to return nil for nodes with no siblings.
       assert(@root.is_first_sibling?, "Root's first sibling is itself")
       assert( @child1.is_first_sibling?, "Child1's first sibling is itself")
       assert(!@child2.is_first_sibling?, "Child2 is not the first sibling")
@@ -228,7 +225,6 @@ module TestTree
     def test_is_last_sibling_eh
       setup_test_tree
 
-      # TODO: Need to fix the last_sibling method to return nil for nodes with no siblings.
       assert(@root.is_last_sibling?, "Root's last sibling is itself")
       assert(!@child1.is_last_sibling?, "Child1 is not the last sibling")
       assert(!@child2.is_last_sibling?, "Child2 is not the last sibling")
@@ -240,11 +236,11 @@ module TestTree
     def test_last_sibling
       setup_test_tree
 
-      # TODO: Need to fix the last_sibling method to return nil for nodes with no siblings.
       assert_same(@root, @root.last_sibling, "Root's last sibling is itself")
       assert_same(@child3, @child1.last_sibling, "Child1's last sibling should be child3")
       assert_same(@child3, @child2.last_sibling, "Child2's last sibling should be child3")
       assert_same(@child3, @child3.last_sibling, "Child3's last sibling should be itself")
+      assert_same(@child4, @child4.last_sibling, "Child4's last sibling should be itself")
       assert_not_same(@child3, @child4.last_sibling, "Child4's last sibling is itself")
     end
 
@@ -270,7 +266,7 @@ module TestTree
 
       siblings.clear
       siblings = @root.siblings
-      assert_nil(siblings, "Root should not have any siblings")
+      assert_equal(0, siblings.length, "Root should not have any siblings")
     end
 
     # Test the is_only_child? method.
@@ -840,40 +836,6 @@ module TestTree
       end
     end
 
-    # Test the postordered_each method.
-    def test_postordered_each
-      j = Tree::TreeNode.new("j")
-      f = Tree::TreeNode.new("f")
-      k = Tree::TreeNode.new("k")
-      a = Tree::TreeNode.new("a")
-      d = Tree::TreeNode.new("d")
-      h = Tree::TreeNode.new("h")
-      z = Tree::TreeNode.new("z")
-
-      # The expected order of response
-      expected_array = [d, a, h, f, z, k, j]
-
-      # Create the following Tree
-      #        j         <-- level 0 (Root)
-      #      /   \
-      #     f      k     <-- level 1
-      #   /   \      \
-      #  a     h      z  <-- level 2
-      #   \
-      #    d             <-- level 3
-      j << f << a << d
-      f << h
-      j << k << z
-
-      result_array = []
-      j.postordered_each { |node| result_array << node.detached_copy}
-
-      expected_array.each_index do |i|
-        # Match only the names.
-        assert_equal(expected_array[i].name, result_array[i].name)
-      end
-    end
-
     # test the detached_copy method.
     def test_detached_copy
       setup_test_tree
@@ -902,7 +864,7 @@ module TestTree
       assert_not_equal(@root.object_id, tree_copy.object_id, "Object_ids should differ.")
       assert(tree_copy.is_root?, "Copied root should be a root node.")
       assert(tree_copy.has_children?, "Copied tree should have children.")
-      assert_equal(tree_copy.children.size, @root.children.size, "Copied tree and the original tree should have same number of children.")
+      assert_equal(tree_copy.children.count, @root.children.count, "Copied tree and the original tree should have same number of children.")
 
       assert_equal(tree_copy[0].name, @child1.name, "The names of Child1 (original and copy) should be same.")
       assert_not_equal(tree_copy[0].object_id, @child1.object_id, "Child1 Object_ids (original and copy) should differ.")
@@ -1111,6 +1073,62 @@ module TestTree
       ensure
         $stdout = STDOUT
       end
+
+    end
+
+    # Test usage of integers as node names
+    def test_integer_node_names
+
+      require 'structured_warnings'
+      assert_warn(StandardWarning) do
+        @n_root = Tree::TreeNode.new(0, "Root Node")
+        @n_child1 = Tree::TreeNode.new(1, "Child Node 1")
+        @n_child2 = Tree::TreeNode.new(2, "Child Node 2")
+        @n_child3 = Tree::TreeNode.new("three", "Child Node 3")
+      end
+
+      @n_root << @n_child1
+      @n_root << @n_child2
+      @n_root << @n_child3
+
+      # Node[n] is really accessing the nth child with a zero-base
+      assert_not_equal(@n_root[1].name, 1) # This is really the second child
+      assert_equal(@n_root[0].name, 1)     # This will work, as it is the first child
+      assert_equal(@n_root[1, true].name, 1)     # This will work, as the flag is now enabled
+
+      # Sanity check for the "normal" string name cases. Both cases should work.
+      assert_equal(@n_root["three", false].name, "three")
+
+      StandardWarning.disable
+      assert_equal(@n_root["three", true].name, "three")
+
+      # Also ensure that the warning is actually being thrown
+      StandardWarning.enable
+      assert_warn(StandardWarning) {assert_equal(@n_root["three", true].name, "three") }
+    end
+
+    # Test the addition of a node to itself as a child
+    def test_add_node_to_self_as_child
+      root =  Tree::TreeNode.new("root")
+
+      # Lets check the direct parentage scenario
+      assert_raise(ArgumentError) {root << root}
+
+      # And now a scenario where the node addition is done down the hierarchy
+      # @todo This scenario is not yet fixed.
+      child =  Tree::TreeNode.new("child")
+      root << child << root
+      # puts root                 # This will throw a stack trace
+    end
+
+    # Test whether the tree_leaf method works correctly
+    def test_single_node_becomes_leaf
+      setup_test_tree
+
+      leafs = @root.each_leaf
+      parents = leafs.collect {|leaf| leaf.parent }
+      leafs.each {|leaf| leaf.remove_from_parent!}
+      parents.each {|parent| assert(parent.is_leaf?) if not parent.has_children?}
 
     end
 

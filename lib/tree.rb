@@ -39,7 +39,8 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'util/cameltosnakecase'
+require 'tree/tree_deps'
+require 'tree/version'
 
 # This module provides a TreeNode class which is the primary class for representing
 # nodes in the tree.
@@ -47,31 +48,35 @@ require 'util/cameltosnakecase'
 # This module also acts as the namespace for all classes in the RubyTree package.
 module Tree
 
-  # Rubytree Package Version
-  VERSION = '0.9.0'
-
   # == TreeNode Class Description
   #
-  # This class models the nodes for an *N-ary* tree data structue. The nodes are *named*
-  # and have a place-holder for the node data (i.e., _content_ of the node). The node
-  # names are required to be *unique* within the tree.
+  # This class models the nodes for an *N-ary* tree data structue. The
+  # nodes are *named* and have a place-holder for the node data (i.e.,
+  # _content_ of the node). The node names are required to be *unique*
+  # within the tree (as the name is implicitly used as an _ID_ within
+  # the data structure).
   #
-  # The node's _content_ is *not* required to be unique across different nodes in the tree, and
-  # can be +nil+ as well.
+  # The node's _content_ is *not* required to be unique across
+  # different nodes in the tree, and can be +nil+ as well.
   #
-  # The class provides various methods to navigate the tree, traverse the structure,
-  # modify contents of the node, change position of the node in the tree,
-  # and to make structural changes to the tree.
+  # The class provides various methods to navigate the tree, traverse
+  # the structure, modify contents of the node, change position of the
+  # node in the tree, and to make structural changes to the tree.
   #
-  # A node can have any number of *child* nodes attached to it and hence can be used to create N-ary trees.
-  # Access to the child nodes can be made in order (with the conventional left to right access), or
-  # randomly.
+  # A node can have any number of *child* nodes attached to it and
+  # hence can be used to create N-ary trees.  Access to the child
+  # nodes can be made in order (with the conventional left to right
+  # access), or randomly.
   #
-  # The node also provides direct access to its *parent* node as well as other superior parents in the path to
-  # root of the tree.  In addition, a node can also access its *sibling* nodes, if present.
+  # The node also provides direct access to its *parent* node as well
+  # as other superior parents in the path to root of the tree.  In
+  # addition, a node can also access its *sibling* nodes, if present.
   #
-  # Note that while this implementation does not _explicitly_ support directed graphs, the class itself makes
-  # no restrictions on associating a node's *content* with multiple nodes in the tree.
+  # Note that while this implementation does not _explicitly_ support
+  # directed graphs, the class itself makes no restrictions on
+  # associating a node's *content* with multiple nodes in the tree.
+  # However, having duplicate nodes within the structure is likely to
+  # cause unpredictable behavior.
   #
   #
   # == Example
@@ -125,29 +130,62 @@ module Tree
   # @author Anupam Sengupta
   class TreeNode
     include Enumerable
-    include CamelToSnakeCase
 
+    # @!attribute [r] name
+    #
     # Name of this node.  Expected to be unique within the tree.
+    #
+    # Note that the name attribute really functions as an *ID* within
+    # the tree structure, and hence the uniqueness constraint is
+    # required.
+    #
+    # This may be changed in the future, but for now it is best to
+    # retain unique names within the tree structure, and use the
+    # +content+ attribute for any non-unique node requirements.
+    #
+    # @see content
     attr_reader   :name
 
-    # Content of this node.  Can be +nil+.
+    # @!attribute [rw] content
+    #
+    # Content of this node.  Can be +nil+.  Note that there is no
+    # uniqueness constraint related to this attribute.
+    #
+    # @see name
     attr_accessor :content
 
+    # @!attribute [r] parent
+    #
     # Parent of this node.  Will be +nil+ for a root node.
     attr_reader   :parent
+
+    # @!group Node Creation
 
     # Creates a new node with a name and optional content.
     # The node name is expected to be unique within the tree.
     #
     # The content can be of any type, and defaults to +nil+.
     #
-    # @param [Object] name Name of the node.  Usual usage is to pass a String.
+    # @param [Object] name Name of the node.  Conventional usage is to pass a String
+    #   (Integer names may cause *surprises*)
     # @param [Object] content Content of the node.
     #
     # @raise [ArgumentError] Raised if the node name is empty.
+    #
+    # @note If the name is an +Integer+, then the semantics of +TreeNode[]+ can
+    #   be surprising, as an +Integer+ parameter to that method normally acts
+    #   as an index to the <em>children array</em>, and follows the
+    #   <em>zero-based</em> indexing convention.
+    #
+    # @see #[]
     def initialize(name, content = nil)
       raise ArgumentError, "Node name HAS to be provided!" if name == nil
       @name, @content = name, content
+
+      if name.kind_of?(Integer)
+        warn StandardWarning,
+             "Using integer as node name. Semantics of TreeNode[] may not be what you expect! #{name} #{content}"
+      end
 
       self.set_as_root!
       @children_hash = Hash.new
@@ -179,19 +217,22 @@ module Tree
     # @see Tree::TreeNode#detached_subtree_copy
     alias :dup :detached_subtree_copy
 
+    # @!endgroup
+
     # Returns string representation of the receiver node.
     # This method is primarily meant for debugging purposes.
     #
     # @return [String] A string representation of the node.
     def to_s
       "Node Name: #{@name}" +
-        " Content: " + (@content? @content.to_s : "<Empty>") +
+        " Content: " + (@content.to_s || "<Empty>") +
         " Parent: " + (is_root?()  ? "<None>" : @parent.name.to_s) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
     end
 
-    # Returns an array of ancestors of the receiver node in reversed order
+    # @!attribute [r] parentage
+    # An array of ancestors of the receiver node in reversed order
     # (the first element is the immediate parent of the receiver).
     #
     # Returns +nil+ if the receiver is a root node.
@@ -219,6 +260,8 @@ module Tree
     def parent=(parent)         # :nodoc:
       @parent = parent
     end
+
+    # @!group Structure Modification
 
     # Convenience synonym for {Tree::TreeNode#add} method.
     #
@@ -268,14 +311,14 @@ module Tree
     #
     # @see #<<
     def add(child, at_index = -1)
-      raise ArgumentError, "Attempting to add a nil node" unless child
+      raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
+      raise ArgumentError, "Attempting add node to itself" if self == child
       raise "Child #{child.name} already added!" if @children_hash.has_key?(child.name)
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)
       else
-        raise "Attempting to insert a child at a non-existent location (#{at_index})" +
-              "when only positions from #{insertion_range.min} to #{insertion_range.max} exist."
+        raise "Attempting to insert a child at a non-existent location (#{at_index}) when only positions from #{insertion_range.min} to #{insertion_range.max} exist."
       end
 
       @children_hash[child.name]  = child
@@ -346,6 +389,8 @@ module Tree
       @parent = nil
     end
 
+    # @!endgroup
+
     # Returns +true+ if the receiver is a root node.  Note that
     # orphaned children will also be reported as root nodes.
     #
@@ -373,10 +418,13 @@ module Tree
       !has_children?
     end
 
-    # Returns an array of all the immediate children of the receiver node.  The child nodes are ordered
-    # "left-to-right" in the returned array.
+    # @!attribute [rw] children
+    # An array of all the immediate children of the receiver
+    # node.  The child nodes are ordered "left-to-right" in the
+    # returned array.
     #
-    # If a block is given, yields each child node to the block traversing from left to right.
+    # If a block is given, yields each child node to the block
+    # traversing from left to right.
     #
     # @yield [child] Each child is passed to the block, if given
     # @yieldparam [Tree::TreeNode] child Each child node.
@@ -384,29 +432,31 @@ module Tree
     # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
     def children
       if block_given?
-        @children.each {|child| yield child }
+        @children.each {|child| yield child}
       else
         @children
       end
     end
 
-    # Returns the first child of the receiver node.
-    #
-    # Will return +nil+ if no children are present.
+    # @!attribute [rw] first_child
+    # First child of the receiver node.
+    # Will be +nil+ if no children are present.
     #
     # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
     def first_child
       children.first
     end
 
-    # Returns the last child of the receiver node.
-    #
-    # Will return +nil+ if no children are present.
+    # @!attribute [rw] last_child
+    # Last child of the receiver node.
+    # Will be +nil+ if no children are present.
     #
     # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
     def last_child
       children.last
     end
+
+    # @!group Tree Traversal
 
     # Traverses each node (including the receiver node) of the (sub)tree rooted at this node
     # by yielding the nodes to the specified block.
@@ -420,7 +470,7 @@ module Tree
     # @see #breadth_each
     def each(&block)             # :yields: node
       yield self
-      children { |child| child.each(&block) if child }
+      children { |child| child.each(&block) }
     end
 
     # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
@@ -430,22 +480,9 @@ module Tree
     # @yieldparam [Tree::TreeNode] node Each node.
     #
     # @see #each
-    # @see #postordered_each
     # @see #breadth_each
     def preordered_each(&block)  # :yields: node
       each(&block)
-    end
-
-    # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
-    #
-    # @yield [child] Each child is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
-    #
-    # @see #preordered_each
-    # @see #breadth_each
-    def postordered_each(&block)
-      children { |child| child.postordered_each(&block) if child }
-      yield self
     end
 
     # Performs breadth-first traversal of the (sub)tree rooted at the receiver node. The
@@ -465,7 +502,7 @@ module Tree
         node_to_traverse = node_queue.shift
         yield node_to_traverse
         # Enqueue the children from left to right.
-        node_to_traverse.children { |child| node_queue.push child if child }
+        node_to_traverse.children { |child| node_queue.push child }
       end
     end
 
@@ -480,55 +517,77 @@ module Tree
     # @see #each
     # @see #breadth_each
     def each_leaf &block
-      self.each { |node| yield(node) if node and node.is_leaf? }
+      if block_given?
+        self.each { |node| yield(node) if node.is_leaf? }
+      else
+        self.select { |node| node.is_leaf?}
+      end
     end
 
     # Returns the requested node from the set of immediate children.
     #
-    # If the argument is _numeric_, then the in-sequence array of children is accessed using
-    # the argument as the *index* (zero-based).
+    # - If the +name+ argument is an _Integer_, then the in-sequence
+    #   array of children is accessed using the argument as the
+    #   *index* (zero-based).  However, if the second _optional_
+    #   +num_as_name+ argument is +true+, then the +name+ is used
+    #   literally as a name, and *NOT* as an *index*
     #
-    # If the argument is *NOT* _numeric_, then it is taken to be the *name* of the child node to be returned.
+    # - If the +name+ argument is *NOT* an _Integer_, then it is taken to
+    #   be the *name* of the child node to be returned.
     #
-    # An ArgumentError exception is raised if neither name nor an index is provided.
+    # If a non-+Integer+ +name+ is passed, and the +num_as_name+
+    # parameter is also +true+, then a warning is thrown (as this is a
+    # redundant use of the +num_as_name+ flag.)
     #
-    # @param [String|Number] name_or_index Name of the child, or its positional index in the array of child nodes.
+    # @param [String|Number] name_or_index Name of the child, or its
+    #   positional index in the array of child nodes.
     #
-    # @return [Tree::TreeNode] the requested child node.  If the index in not in range, or the name is not
-    #        present, then a +nil+ is returned.
+    # @param [Boolean] num_as_name Whether to treat the +Integer+
+    #   +name+ argument as an actual name, and *NOT* as an _index_ to
+    #   the children array.
     #
-    # @raise [ArgumentError] Raised if neither name nor index is provided.
+    # @return [Tree::TreeNode] the requested child node.  If the index
+    #   in not in range, or the name is not present, then a +nil+
+    #   is returned.
+    #
+    # @note The use of +Integer+ names is allowed by using the optional +num_as_name+ flag.
+    #
+    # @raise [ArgumentError] Raised if the +name_or_index+ argument is +nil+.
     #
     # @see #add
-    def [](name_or_index)
+    # @see #initialize
+    def [](name_or_index, num_as_name=false)
       raise ArgumentError, "Name_or_index needs to be provided!" if name_or_index == nil
 
-      if name_or_index.kind_of?(Integer)
+      if name_or_index.kind_of?(Integer) and not num_as_name
         @children[name_or_index]
       else
+        if num_as_name and not name_or_index.kind_of?(Integer)
+          warn StandardWarning, "Redundant use of the `num_as_name` flag for non-integer node name"
+        end
         @children_hash[name_or_index]
       end
     end
 
-    # Returns the total number of nodes in this (sub)tree, including the receiver node.
+    # @!endgroup
+
+    # @!attribute [r] size
+    # Total number of nodes in this (sub)tree, including the receiver node.
     #
     # Size of the tree is defined as:
     #
     # Size:: Total number nodes in the subtree including the receiver node.
     #
-    # @return [Number] Total number of nodes in this (sub)tree.
+    # @return [Integer] Total number of nodes in this (sub)tree.
     def size
-      @children.inject(1) {|sum, node| node ? sum + node.size : sum }
+      @children.inject(1) {|sum, node| sum + node.size}
     end
 
     # Convenience synonym for {Tree::TreeNode#size}.
     #
-    # @todo The semantic of length is probably unclear.  Should return the node depth instead
-    #       to reflect the path length.
-    #
     # @deprecated This method name is ambiguous and may be removed.  Use TreeNode#size instead.
     #
-    # @return [Number] The total number of nodes in this (sub)tree.
+    # @return [Integer] The total number of nodes in this (sub)tree.
     # @see #size
     def length
       size()
@@ -536,7 +595,7 @@ module Tree
 
     # Pretty prints the (sub)tree rooted at the receiver node.
     #
-    # @param [Number] level The indentation level (4 spaces) to start with.
+    # @param [Integer] level The indentation level (4 spaces) to start with.
     def print_tree(level = 0)
       if is_root?
         print "*"
@@ -553,11 +612,9 @@ module Tree
       children { |child| child.print_tree(level + 1)}
     end
 
-    # Returns root node for the (sub)tree to which the receiver node belongs.
-    #
-    # Note that a root node's root is itself (*beware* of any loop construct that may become infinite!)
-    #
-    # @todo We should perhaps return nil as root's root.
+    # @!attribute [rw] root
+    # root node for the (sub)tree to which the receiver node belongs.
+    # A root node's root is itself.
     #
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
@@ -566,14 +623,12 @@ module Tree
       root
     end
 
-    # Returns the first sibling of the receiver node. If this is the root node, then returns
+    # @!attribute [rw] first_sibling
+    # First sibling of the receiver node. If this is the root node, then returns
     # itself.
     #
     # 'First' sibling is defined as follows:
     # First sibling:: The left-most child of the receiver's parent, which may be the receiver itself
-    #
-    # @todo Fix the inconsistency of returning root as its first sibling, and returning
-    #       a +nil+ array for siblings of the node.
     #
     # @return [Tree::TreeNode] The first sibling node.
     #
@@ -593,14 +648,12 @@ module Tree
       first_sibling == self
     end
 
-    # Returns the last sibling of the receiver node.  If this is the root node, then returns
+    # @!attribute [rw] last_sibling
+    # Last sibling of the receiver node.  If this is the root node, then returns
     # itself.
     #
     # 'Last' sibling is defined as follows:
     # Last sibling:: The right-most child of the receiver's parent, which may be the receiver itself
-    #
-    # @todo Fix the inconsistency of returning root as its last sibling, and returning
-    #       a +nil+ array for siblings of the node.
     #
     # @return [Tree::TreeNode] The last sibling node.
     #
@@ -620,15 +673,11 @@ module Tree
       last_sibling == self
     end
 
-    # Returns an array of siblings for the receiver node.  The receiver node is excluded.
+    # @!attribute [rw] siblings
+    # An array of siblings for the receiver node.  The receiver node is excluded.
     #
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
-    #
-    # @todo Fix the inconsistency of returning root as its own first/last sibling, and returning
-    #       a +nil+ array for siblings of the same root node.
-    # @todo Also fix the inconsistency of returning +nil+ for a root node, and an empty array for nodes
-    #       which have no siblings.
     #
     # @yield [sibling] Each sibling is passed to the block.
     # @yieldparam [Tree::TreeNode] sibling Each sibling node.
@@ -638,7 +687,7 @@ module Tree
     # @see #first_sibling
     # @see #last_sibling
     def siblings
-      return nil if is_root?
+      return [] if is_root?
 
       if block_given?
         parent.children.each { |sibling| yield sibling if sibling != self }
@@ -660,7 +709,8 @@ module Tree
       is_root? ? true : parent.children.size == 1
     end
 
-    # Returns the next sibling for the receiver node.
+    # @!attribute [rw] next_sibling
+    # Next sibling for the receiver node.
     # The 'next' node is defined as the node to right of the receiver node.
     #
     # Will return +nil+ if no subsequent node is present, or if the receiver is a root node.
@@ -676,7 +726,8 @@ module Tree
       parent.children.at(myidx + 1) if myidx
     end
 
-    # Returns the previous sibling of the receiver node.
+    # @!attribute [rw] previous_sibling
+    # Previous sibling of the receiver node.
     # 'Previous' node is defined to be the node to left of the receiver node.
     #
     # Will return +nil+ if no predecessor node is present, or if the receiver is a root node.
@@ -698,7 +749,7 @@ module Tree
     #
     # @param [Tree::TreeNode] other The other node to compare against.
     #
-    # @return [Number] +1 if this node is a 'successor', 0 if equal and -1 if this node is a 'predecessor'.
+    # @return [Integer] +1 if this node is a 'successor', 0 if equal and -1 if this node is a 'predecessor'.
     def <=>(other)
       return +1 if other == nil
       self.name <=> other.name
@@ -748,10 +799,17 @@ module Tree
       end
     end
 
-    # Creates a JSON ready Hash for the to_json method.
+    # Creates a JSON ready Hash for the #to_json method.
+    #
+    # @author Eric Cline (https://github.com/escline)
+    # @since 0.8.3
+    #
+    # @return A hash based representation of the JSON
     #
     # Rails uses JSON in ActiveSupport, and all Rails JSON encoding goes through as_json
-    # see http://stackoverflow.com/a/6880638/273808
+    #
+    # @see Tree::TreeNode.to_json
+    # @see http://stackoverflow.com/a/6880638/273808
     def as_json(options = {})
 
         json_hash = {
@@ -763,7 +821,7 @@ module Tree
         if has_children?
           json_hash["children"] = children
         end
-        
+
         return json_hash
 
     end
@@ -778,16 +836,10 @@ module Tree
     # @return The JSON representation of this subtree.
     #
     # @see Tree::TreeNode.json_create
+    # @see Tree::TreeNode.as_json
     # @see http://flori.github.com/json
     def to_json(*a)
-      begin
-        require 'json'
-        
-        as_json.to_json(*a)
-        
-      rescue LoadError
-        warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation"
-      end
+      as_json.to_json(*a)
     end
 
     # Helper method to create a Tree::TreeNode instance from the JSON hash representation.  Note that this method should
@@ -807,35 +859,33 @@ module Tree
     # @see #to_json
     # @see http://flori.github.com/json
     def self.json_create(json_hash)
-      begin
-        require 'json'
 
-        node = new(json_hash["name"], json_hash["content"])
+      node = new(json_hash["name"], json_hash["content"])
 
-        json_hash["children"].each do |child|
-          node << child
-        end if json_hash["children"]
+      json_hash["children"].each do |child|
+        node << child
+      end if json_hash["children"]
 
-        return node
-      rescue LoadError => e
-        warn "The JSON gem couldn't be loaded. Due to this we cannot serialize the tree to a JSON representation."
-      end
+      return node
+
     end
 
-    # Returns height of the (sub)tree from the receiver node.  Height of a node is defined as:
+    # @!attribute [r] node_height
+    # Height of the (sub)tree from the receiver node.  Height of a node is defined as:
     #
     # Height:: Length of the longest downward path to a leaf from the node.
     #
     # - Height from a root node is height of the entire tree.
     # - The height of a leaf node is zero.
     #
-    # @return [Number] Height of the node.
+    # @return [Integer] Height of the node.
     def node_height
       return 0 if is_leaf?
       1 + @children.collect { |child| child.node_height }.max
     end
 
-    # Returns depth of the receiver node in its tree.  Depth of a node is defined as:
+    # @!attribute [r] node_depth
+    # Depth of the receiver node in its tree.  Depth of a node is defined as:
     #
     # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
     #
@@ -844,7 +894,7 @@ module Tree
     #
     # 'level' is an alias for this method.
     #
-    # @return [Number] Depth of this node.
+    # @return [Integer] Depth of this node.
     def node_depth
       return 0 if is_root?
       1 + parent.node_depth
@@ -862,60 +912,83 @@ module Tree
     # For correct and conventional behavior, please use {Tree::TreeNode#node_depth} and
     # {Tree::TreeNode#node_height} methods instead.
     #
-    # @return [Number] depth of the node.
+    # @return [Integer] depth of the node.
     # @deprecated This method returns an incorrect value.  Use the 'node_depth' method instead.
     #
     # @see #node_depth
     def depth
-      begin
-        require 'structured_warnings'   # To enable a nice way of deprecating of the depth method.
-        warn DeprecatedMethodWarning, 'This method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
-      rescue LoadError
-        # Oh well. Will use the standard Kernel#warn.  Behavior will be identical.
-        warn 'Tree::TreeNode#depth() method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
-      end
+      warn DeprecatedMethodWarning, 'This method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
 
       return 1 if is_leaf?
       1 + @children.collect { |child| child.depth }.max
     end
 
-    # Returns breadth of the tree at the receiver node's level.
+    # Allow the deprecated CamelCase method names.  Display a warning.
+    # :nodoc:
+    def method_missing(meth, *args, &blk)
+      if self.respond_to?(new_method_name = underscore(meth))
+        warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
+        return send(new_method_name, *args, &blk)
+      else
+        super
+      end
+    end
+
+    # @!attribute [r] breadth
+    # Breadth of the tree at the receiver node's level.
     # A single node without siblings has a breadth of 1.
     #
     # Breadth is defined to be:
     # Breadth:: Number of sibling nodes to this node + 1 (this node itself),
     # i.e., the number of children the parent of this node has.
     #
-    # @return [Number] breadth of the node's level.
+    # @return [Integer] breadth of the node's level.
     def breadth
       is_root? ? 1 : parent.children.size
     end
 
-    # Returns the incoming edge-count of the receiver node.
+    # @!attribute [r] in_degree
+    # The incoming edge-count of the receiver node.
     #
     # In-degree is defined as:
-    # In-degree:: The number of edges arriving at the node (0 for root, 1 for all other nodes)
+    # In-degree:: Number of edges arriving at the node (0 for root, 1 for all other nodes)
     #
     # - In-degree = 0 for a root or orphaned node
     # - In-degree = 1 for a node which has a parent
     #
-    # @return [Number] The in-degree of this node.
+    # @return [Integer] The in-degree of this node.
     def in_degree
       is_root? ? 0 : 1
     end
 
-    # Returns the outgoing edge-count of the receiver node.
+    # @!attribute [r] out_degree
+    # The outgoing edge-count of the receiver node.
     #
     # Out-degree is defined as:
-    # Out-degree:: The number of edges leaving the node (zero for leafs)
+    # Out-degree:: Number of edges leaving the node (zero for leafs)
     #
-    # @return [Number] The out-degree of this node.
+    # @return [Integer] The out-degree of this node.
     def out_degree
       is_leaf? ? 0 : children.size
     end
+
     protected :parent=, :set_as_root!, :create_dump_rep
 
     private
+
+    # Convert a CamelCasedWord to a underscore separated camel_cased_word.
+    #
+    # Just copied from ActiveSupport::Inflector because it is only needed
+    # aliasing deprecated methods
+    def underscore(camel_cased_word)
+      word = camel_cased_word.to_s.dup
+      word.gsub!(/::/, '/')
+      word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
+      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+      word.tr!("-", "_")
+      word.downcase!
+      word
+    end
 
     # Return a range of valid insertion positions.  Used in the #add method.
     def insertion_range

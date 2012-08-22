@@ -70,10 +70,10 @@ As an example, the following code-snippet implements this tree structure:
 
 * Ruby 1.8+  (http://www.ruby-lang.org)
 
-* Optional but recommended:
-  * structured_warnings (http://github.com/schmidt/structured_warnings) Rubygem
+* Run-time Dependencies:
+  * structured_warnings (http://github.com/schmidt/structured_warnings) rubygem
   * Yard (http://yardoc.org) Rubygem for the documentation
-  * JSON (http://flori.github.com/json) Rubygem for converting to/from the JSON format
+  * JSON (http://flori.github.com/json) rubygem for converting to/from the JSON format
 
 * Development dependencies (not required for installing the gem):
   * Hoe (http://seattlerb.rubyforge.org/hoe/Hoe.html) Rubygem
@@ -184,6 +184,7 @@ I would like to acknowledge the following contributors for helping improve RubyT
 
 1. Dirk Breuer (http://github.com/railsbros-dirk) for contributing the JSON conversion code.
 2. Vincenzo Farruggia for contributing the (sub)tree cloning code.
+3. Eric Cline (https://github.com/escline) for the Rails JSON encoding fix.
 
 == LICENSE:
 
@@ -212,10 +213,7 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSE
 WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
-(Document Revision: $Revision$ by $Author$)
-
 # Local Variables:
-# mode: text
+# mode: rdoc
 # coding: utf-8-unix
 # End:

@@ -1,7 +1,5 @@
 # binarytree.rb - This file is part of the RubyTree package.
 #
-# $Revision$ by $Author$ on $Date$
-#
 # = binarytree.rb - An implementation of the binary tree data structure.
 #
 # Provides a binary tree data structure with ability to
@@ -10,7 +8,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2007, 2008, 2009, 2010 Anupam Sengupta
+# Copyright (c) 2007, 2008, 2009, 2010, 2012 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -69,16 +67,18 @@ module Tree
       super(child)
     end
 
-    # Returns the left child of the receiver node. Note that left Child == first Child.
+    # @!attribute [rw] left_child
+    # Left child of the receiver node. Note that left Child == first Child.
     #
     # @return [Tree::BinaryTreeNode] The left most (or first) child.
     #
     # @see #right_child
     def left_child
-      children[0]
+      children.first
     end
 
-    # Returns the right child of the receiver node. Note that right child == last child unless there is only one child.
+    # @!attribute [rw] right_child
+    # Right child of the receiver node. Note that right child == last child unless there is only one child.
     #
     # Returns +nil+ if the right child does not exist.
     #
@@ -109,13 +109,7 @@ module Tree
 
     # Sets the left child of the receiver node. If a previous child existed, it is replaced.
     #
-    # Note that #children.size will return 2 if either #left_child= or
-    # #right_child= methods are invoked.  This allows +nil+ to be
-    # assigned to any of the children while retaining the correct
-    # count of the children.
-    #
-    # @param [Tree::BinaryTreeNode]
-    # child The child to add as the left-side node.
+    # @param [Tree::BinaryTreeNode] child The child to add as the left-side node.
     #
     # @return [Tree::BinaryTreeNode] The assigned child node.
     #
@@ -126,11 +120,6 @@ module Tree
     end
 
     # Sets the right child of the receiver node. If a previous child existed, it is replaced.
-    #
-    # Note that #children.size will return 2 if either #left_child= or
-    # #right_child= methods are invoked.  This allows +nil+ to be
-    # assigned to any of the children while retaining the correct
-    # count of the children.
     #
     # @param [Tree::BinaryTreeNode] child The child to add as the right-side node.
     #
@@ -160,23 +149,7 @@ module Tree
       self == parent.right_child
     end
 
-    # Traverses the (sub)tree rooted at the receiver node in in-ordered sequence.
-    #
-    # @yield [child] Each child is passed to the block.
-    #
-    # @yieldparam [Tree::TreeNode] node Each node.
-    #
-    # @see #preordered_each
-    # @see #postordered_each
-    def inordered_each &block
-      left_child.inordered_each(&block) if left_child
-      yield self
-      right_child.inordered_each(&block) if right_child
-    end
-
     # Swaps the left and right child nodes of the receiver node with each other.
-    #
-    # @todo Define the return value.
     def swap_children
       self.left_child, self.right_child = self.right_child, self.left_child
     end

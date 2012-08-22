@@ -1,8 +1,7 @@
-.dired
-.dir-locals.el
 TAGS
 coverage.info
 doc/
+rdoc/
 pkg/
 coverage/
 tmp/
@@ -13,3 +12,4 @@ tmp/
 .settings/com.aptana.rdt.prefs
 .settings/org.radrails.rails.core.prefs
 .settings/org.rubypeople.rdt.core.prefs
+/.rvmrc
