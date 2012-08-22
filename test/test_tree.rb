@@ -33,7 +33,6 @@
 #
 
 require 'test/unit'
-require 'rubygems'
 require 'json'
 require 'tree'
 
