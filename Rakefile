@@ -50,7 +50,7 @@ end
 require 'rake/clean'
 task :clean => 'gem:clobber_package'
 CLEAN.include('coverage')
-task :clobber => [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard', 'tag:clobber_tags']
+task :clobber => [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard']
 
 desc "Open an irb session preloaded with this library"
 task :console do
@@ -102,12 +102,12 @@ namespace :test do              # ................................ Test related
 
 end
 
-namespace :tag do               # ................................ Emacs Tags
-  require 'rtagstask'
-  RTagsTask.new(:tags) do |rd|
-    rd.vi = false
-  end
-end
+# namespace :tag do               # ................................ Emacs Tags
+#   require 'rtagstask'
+#   RTagsTask.new(:tags) do |rd|
+#     rd.vi = false
+#   end
+# end
 
 namespace :gem do               # ................................ Gem related
   require 'rubygems/package_task'
