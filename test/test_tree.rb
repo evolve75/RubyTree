@@ -1115,10 +1115,8 @@ module TestTree
       assert_raise(ArgumentError) {root << root}
 
       # And now a scenario where the node addition is done down the hierarchy
-      # @todo This scenario is not yet fixed.
       child =  Tree::TreeNode.new("child")
-      root << child << root
-      # puts root                 # This will throw a stack trace
+      assert_raise(RuntimeError) { root << child << root }
     end
 
     # Test whether the tree_leaf method works correctly
@@ -1130,6 +1128,14 @@ module TestTree
       leafs.each {|leaf| leaf.remove_from_parent!}
       parents.each {|parent| assert(parent.is_leaf?) if not parent.has_children?}
 
+    end
+
+    # Test if node names are really unique in the whole tree
+    def test_unique_node_names
+      setup_test_tree
+
+      assert_raise(RuntimeError) { @root << @child1 }
+      assert_raise(RuntimeError) { @root.first_child << @child2 }
     end
 
   end
