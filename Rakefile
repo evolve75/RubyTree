@@ -40,7 +40,7 @@ PKG_VER  = GEM_SPEC.version
 GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
 
 desc "Default Task (Run the tests)"
-task :default => 'test:rcov'
+task :default => 'test:unit'
 
 desc "Display the current gem version"
 task :version do
