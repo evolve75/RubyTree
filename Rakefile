@@ -58,14 +58,17 @@ task :console do
 end
 
 namespace :doc do               # ................................ Documentation
-
-  require 'rdoc/task'
-  Rake::RDocTask.new do |rdoc|
-    rdoc.rdoc_dir = 'rdoc'
-    rdoc.title    = "#{PKG_NAME}-#{PKG_VER}"
-    rdoc.main     = 'README.rdoc'
-    rdoc.rdoc_files.include(GEM_SPEC.extra_rdoc_files)
-    rdoc.rdoc_files.include('lib/**/*.rb')
+  begin
+    require 'rdoc/task'
+    Rake::RDocTask.new do |rdoc|
+      rdoc.rdoc_dir = 'rdoc'
+      rdoc.title    = "#{PKG_NAME}-#{PKG_VER}"
+      rdoc.main     = 'README.rdoc'
+      rdoc.rdoc_files.include(GEM_SPEC.extra_rdoc_files)
+      rdoc.rdoc_files.include('lib/**/*.rb')
+    end
+  rescue LoadError
+    # Oh well.
   end
 
   begin
