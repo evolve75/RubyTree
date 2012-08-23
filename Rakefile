@@ -68,10 +68,14 @@ namespace :doc do               # ................................ Documentation
     rdoc.rdoc_files.include('lib/**/*.rb')
   end
 
-  require 'yard'
-  YARD::Rake::YardocTask.new do |t|
-    t.files   = ['lib/**/*.rb', '-', GEM_SPEC.extra_rdoc_files]
-    t.options = ['--no-private', '--embed-mixins']
+  begin
+    require 'yard'
+    YARD::Rake::YardocTask.new do |t|
+      t.files   = ['lib/**/*.rb', '-', GEM_SPEC.extra_rdoc_files]
+      t.options = ['--no-private', '--embed-mixins']
+    end
+  rescue LoadError
+    # Oh well.
   end
 
   desc "Remove YARD Documentation"
