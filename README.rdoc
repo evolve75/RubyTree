@@ -1,5 +1,12 @@
 = RubyTree
 
+{<img src="https://codeclimate.com/badge.png"
+/>}[https://codeclimate.com/github/evolve75/RubyTree]
+
+{<img
+src="https://secure.travis-ci.org/evolve75/RubyTree.png"
+/>}[http://travis-ci.org/evolve75/RubyTree]
+
 == DESCRIPTION:
 
 RubyTree is a Ruby implementation of the generic tree data structure.  It
