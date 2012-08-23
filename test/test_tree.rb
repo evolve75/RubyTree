@@ -1138,6 +1138,89 @@ module TestTree
       assert_raise(RuntimeError) { @root.first_child << @child2 }
     end
 
+    # Setup function to build some extra trees to play with.
+    def setup_other_test_tree
+      # Build up another tree
+      #
+      # ROOT
+      #  |
+      #  |-- Child1
+      #  |    |
+      #  |    |-- Child1a
+      #  |    |-- Child1b
+      #  |
+      #  |-- Child3
+      #       |
+      #       |-- Child3a -- Child3a1
+      #
+      @other_tree = @root.detached_copy
+      @other_tree << @child1.detached_copy
+      @other_tree["Child1"] << Tree::TreeNode.new("Child1a", "GrandChild Node 1a")
+      @other_tree["Child1"] << Tree::TreeNode.new("Child1b", "GrandChild Node 1b")
+      @other_tree << @child3.detached_copy
+      @other_tree["Child3"] << Tree::TreeNode.new("Child3a", "GrandChild Node 3a")
+      @other_tree["Child3"]["Child3a"] << Tree::TreeNode.new("Child3a1", "GreatGrandChild Node 3a1")
+
+      # And another (different) one so we can test exceptions...
+      @other_tree2 = Tree::TreeNode.new("ROOTIE", "A different root")
+      @other_tree2 << Tree::TreeNode.new("new_child1", "New Child 1")
+    end
+
+    # Test tree merging.
+    def test_merge
+      setup_test_tree
+      setup_other_test_tree
+
+      merged_tree = @root.merge(@other_tree)
+
+      # puts "\n\ntest_merge:\n\n"
+      # @root.print_tree
+      # puts "\n"
+      # @other_tree.print_tree
+      # puts "\n"
+      # merged_tree.print_tree
+
+      assert( @root["Child1"]["Child1a"].nil?, ".merge() has altered self." )
+      assert( @root["Child1"]["Child1b"].nil?, ".merge() has altered self." )
+      assert( @root["Child3"]["Child3a"].nil?, ".merge() has altered self." )
+      assert( merged_tree.is_a?(Tree::TreeNode) )
+      assert( !merged_tree["Child1"]["Child1a"].nil?, ".merge() has not included ['Child1']['Child1a'] from other_tree." )
+      assert( !merged_tree["Child1"]["Child1b"].nil?, ".merge() has not included ['Child1']['Child1b'] from other_tree." )
+      assert( !merged_tree["Child3"]["Child3a"].nil?, ".merge() has not included ['Child3']['Child3a'] from other_tree." )
+      assert( !merged_tree["Child2"].nil?, ".merge() has not included ['Child2'] from self." )
+      assert( !merged_tree["Child3"]["Child3a"]["Child3a1"].nil?, ".merge() has not included ['Child3']['Child3a']['Child3a1'] from other_tree." )
+      assert( !merged_tree["Child3"]["Child4"].nil?, ".merge() has not included ['Child3']['Child4'] from self." )
+
+      assert_raise(ArgumentError) { @root.merge(@other_tree2) }
+      assert_raise(TypeError) { @root.merge('ROOT') }
+    end
+
+    # Test tree merging.
+    def test_merge_bang
+      setup_test_tree
+      setup_other_test_tree
+
+      # puts "\n\ntest_merge_bang:\n\n"
+      # @root.print_tree
+      # puts "\n"
+      # @other_tree.print_tree
+
+      @root.merge!(@other_tree)
+
+      # puts "\n"
+      # @root.print_tree
+
+      assert( !@root["Child1"]["Child1a"].nil?, ".merge() has not included ['Child1']['Child1a'] from other_tree." )
+      assert( !@root["Child1"]["Child1b"].nil?, ".merge() has not included ['Child1']['Child1b'] from other_tree." )
+      assert( !@root["Child3"]["Child3a"].nil?, ".merge() has not included ['Child3']['Child3a'] from other_tree." )
+      assert( !@root["Child2"].nil?, ".merge() has not included ['Child2'] from self." )
+      assert( !@root["Child3"]["Child3a"]["Child3a1"].nil?, ".merge() has not included ['Child3']['Child3a']['Child3a1'] from other_tree." )
+      assert( !@root["Child3"]["Child4"].nil?, ".merge() has not included ['Child3']['Child4'] from self." )
+
+      assert_raise(ArgumentError) { @root.merge!(@other_tree2) }
+      assert_raise(TypeError) { @root.merge!('ROOT') }
+    end
+
   end
 end
 
