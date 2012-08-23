@@ -92,22 +92,31 @@ namespace :test do              # ................................ Test related
     test.verbose = false
   end
 
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new(:rcov) do |t|
-    t.libs << "test"
-    t.test_files = FileList['test/**/test_*.rb']
-    t.verbose = true
-    t.rcov_opts << '--exclude /gems/,/Library/,/usr/,spec,lib/tasks'
+  begin
+    require 'rcov/rcovtask'
+    Rcov::RcovTask.new(:rcov) do |t|
+      t.libs << "test"
+      t.test_files = FileList['test/**/test_*.rb']
+      t.verbose = true
+      t.rcov_opts << '--exclude /gems/,/Library/,/usr/,spec,lib/tasks'
+    end
+  rescue LoadError
+    # Oh well. Can't have everything.
   end
 
 end
 
-# namespace :tag do               # ................................ Emacs Tags
-#   require 'rtagstask'
-#   RTagsTask.new(:tags) do |rd|
-#     rd.vi = false
-#   end
-# end
+ namespace :tag do               # ................................ Emacs Tags
+  begin
+    require 'rtagstask'
+    RTagsTask.new(:tags) do |rd|
+      rd.vi = false
+      CLEAN.include('TAGS')
+    end
+  rescue LoadError
+    # Oh well. Can't have everything.
+  end
+ end
 
 namespace :gem do               # ................................ Gem related
   require 'rubygems/package_task'
