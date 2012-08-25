@@ -13,3 +13,4 @@ tmp/
 .settings/org.radrails.rails.core.prefs
 .settings/org.rubypeople.rdt.core.prefs
 /.rvmrc
+.settings/
