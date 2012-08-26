@@ -1,4 +1,3 @@
-#--
 # version.rb - This file is part of the RubyTree package.
 #
 # This file provides the version number for Rubytree.
@@ -35,6 +34,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+#
 module Tree
   # Rubytree Package Version
   VERSION = '0.8.4pre'
