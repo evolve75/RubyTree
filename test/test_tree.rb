@@ -541,6 +541,9 @@ module TestTree
       assert(nodes.include?(@child2), "Should have child 2")
       assert(nodes.include?(@child3), "Should have child 3")
       assert(nodes.include?(@child4), "Should have child 4")
+
+      # @todo Need to check the default case of a bare #each invocation.
+      # enum = @root.each
     end
 
     # Test the each_leaf method.
