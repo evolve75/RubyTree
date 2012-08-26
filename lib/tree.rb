@@ -41,6 +41,7 @@
 
 require 'tree/tree_deps'
 require 'tree/version'
+require 'tree/utils/camel_case_method_handler'
 
 # This module provides a TreeNode class which is the primary class for representing
 # nodes in the tree.
@@ -130,6 +131,7 @@ module Tree
   # @author Anupam Sengupta
   class TreeNode
     include Enumerable
+    include Tree::Utils::CamelCaseMethodHandler
 
     # @!attribute [r] name
     #
@@ -957,17 +959,6 @@ module Tree
       1 + @children.collect { |child| child.depth }.max
     end
 
-    # Allow the deprecated CamelCase method names.  Display a warning.
-    # :nodoc:
-    def method_missing(meth, *args, &blk)
-      if self.respond_to?(new_method_name = underscore(meth))
-        warn DeprecatedMethodWarning, "The camelCased methods are deprecated. Please use #{new_method_name} instead of #{meth}"
-        return send(new_method_name, *args, &blk)
-      else
-        super
-      end
-    end
-
     # @!attribute [r] breadth
     # Breadth of the tree at the receiver node's level.
     # A single node without siblings has a breadth of 1.
@@ -1009,20 +1000,6 @@ module Tree
     protected :parent=, :set_as_root!, :create_dump_rep
 
     private
-
-    # Convert a CamelCasedWord to a underscore separated camel_cased_word.
-    #
-    # Just copied from ActiveSupport::Inflector because it is only needed
-    # aliasing deprecated methods
-    def underscore(camel_cased_word)
-      word = camel_cased_word.to_s.dup
-      word.gsub!(/::/, '/')
-      word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-      word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-      word.tr!("-", "_")
-      word.downcase!
-      word
-    end
 
     # Return a range of valid insertion positions.  Used in the #add method.
     def insertion_range
