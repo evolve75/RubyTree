@@ -160,7 +160,8 @@
 
 *** TODO Extract non-essential methods from Tree::TreeNode into separate files.
 
-*** TODO Rename the [[file:COPYING.rdoc][COPYING.rdoc]] file to LICENSING.rdoc
+*** DONE Rename the [[file:COPYING.rdoc][COPYING.rdoc]] file to LICENSING.rdoc
+    CLOSED: [2012-08-25 Sat 21:19]
 
 
 *** CANCELED Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling. :ARCHIVE:
