@@ -1,6 +1,6 @@
 # -*- mode: org; coding: utf-8-unix; fill-column: 120; -*-
 #+OPTIONS: ^:{}
-#+TODO: TODO(t) | DONE(d) CANCELED(c)
+#+TODO: TODO(t) STARTED(s) | DONE(d) CANCELED(c)
 
 * R0.7.0                                                                                  :ARCHIVE:
 *** DONE Start using signed tags from R0.7.0                                              :ARCHIVE:
@@ -121,7 +121,7 @@
 * R0.9.0
   DEADLINE: <2012-09-30 Sun>
 
-*** TODO [#A] Resolve the infinite loop bug if a node is added to itself as a child       :Partial:
+*** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child    :Partial:
     Issue https://github.com/evolve75/RubyTree/issues/5
 
     This is a subtle problem to resolve.  The specific case of a node
@@ -158,8 +158,9 @@
 *** TODO Pull in the unique node name validation from [[https://github.com/evolve75/RubyTree/pull/9][ysf]]
     Will need to make this configurable.
 
-*** TODO Extract non-essential methods from Tree::TreeNode into separate files.
-
+*** STARTED Extract non-essential methods from Tree::TreeNode into separate files.
+    - [X] Handling of CamelCase methods
+    - [X] Convertion to and from [[http://flori.github.com/json/][JSON]]
 *** DONE Rename the [[file:COPYING.rdoc][COPYING.rdoc]] file to LICENSING.rdoc
     CLOSED: [2012-08-25 Sat 21:19]
 
