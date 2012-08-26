@@ -470,6 +470,8 @@ module Tree
     #
     # @see #preordered_each
     # @see #breadth_each
+    #
+    # @todo Need to return an Enumerator is a block is NOT given.
     def each(&block)             # :yields: node
       yield self
       children { |child| child.each(&block) }
@@ -745,8 +747,8 @@ module Tree
       parent.children.at(myidx - 1) if myidx && myidx > 0
     end
 
-    # Merge two trees that share the same root node. Returns a new tree conating the 
-    # contents of the merge between other_tree and self. Duplicate nodes (coming from 
+    # Merge two trees that share the same root node. Returns a new tree containing the
+    # contents of the merge between other_tree and self. Duplicate nodes (coming from
     # other_tree) will NOT be overwritten in self.
     #
     # @author Darren Oakley (https://github.com/dazoakley)
@@ -761,7 +763,7 @@ module Tree
       new_tree = merge_trees( self.root.dup, other_tree.root )
     end
 
-    # Merge in another tree that shares the same root node. Duplicate nodes (coming from 
+    # Merge in another tree that shares the same root node. Duplicate nodes (coming from
     # other_tree) will NOT be overwritten in self.
     #
     # @author Darren Oakley (https://github.com/dazoakley)
@@ -777,7 +779,7 @@ module Tree
 
     # Provides a comparision operation for the nodes.
     #
-    # Comparision is based on the natural character-set ordering of the node name.
+    # Comparision is based on the natural ordering of the node name objects.
     #
     # @param [Tree::TreeNode] other The other node to compare against.
     #
