@@ -43,7 +43,7 @@ Gem::Specification.new do |s|
 
   s.test_files       = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files = ['README.rdoc', 'COPYING.rdoc', 'API-CHANGES.rdoc', 'History.rdoc']
+  s.extra_rdoc_files = ['README.rdoc', 'LICENSE.rdoc', 'API-CHANGES.rdoc', 'History.rdoc']
   s.rdoc_options     = ["--title", "Rubytree Documentation", "--quiet"]
 
   s.add_runtime_dependency 'structured_warnings' , '>= 0.1.3'
