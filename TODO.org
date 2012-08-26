@@ -1,5 +1,6 @@
 # -*- mode: org; coding: utf-8-unix; fill-column: 120; -*-
 #+OPTIONS: ^:{}
+#+TODO: TODO(t) | DONE(d) CANCELED(c)
 
 * R0.7.0                                                                                  :ARCHIVE:
 *** DONE Start using signed tags from R0.7.0                                              :ARCHIVE:
@@ -31,42 +32,9 @@
 
 
 
-* R0.8.3
+* R0.8.3                                                                                  :ARCHIVE:
 
   This is a bugfix release.
-
-*** TODO [#A] Resolve the infinite loop bug if a node is added to itself as a child       :Partial:
-    Issue https://github.com/evolve75/RubyTree/issues/5
-
-    This is a subtle problem to resolve.  The specific case of a node
-    being added to itself is trivial to resolve, and the fix has been
-    put in for 0.8.3.
-
-    However, the general problem is that in the current code, a node
-    can be added as a child to any portion of the tree down the
-    hierarchy (e.g., as a grandchild), which will need a more thorough
-    detection code in the ~TreeNode#add~ method, if it is to be done at
-    runtime.
-
-    The issue is really to prevent the tree becoming a graph.  Note
-    that the issue is with duplicate nodes, /not/ duplicated content.
-
-    A few options exist:
-    1. Perform a runtime check in the ~TreeNode#add~ method.  This will
-       cause a performance hit as the tree becomes larger.
-    2. Allow the additions to go through, but create a new ~validate~
-       method that checks for such cycles.
-    3. Create separate configuration object which can be attached to
-       the root of the tree, which allows per-tree configuration of
-       the behavior - this does allow for the user to take control,
-       but also introduces complications during tree mergers and
-       spitting subtrees.
-    4. Create a registry (to be maintained at the root?) of all nodes,
-       and use this for validating the node additions (and preventing
-       duplicates).  This needs to be a hash (to allow O(1) access),
-       and will sacrifice memory.  There might be a need to
-       restructure the internals to make better use of memory.
-
 
 *** DONE Make Rubytree compatible with Bundler                                            :ARCHIVE:
     CLOSED: [2012-08-21 Tue 21:04]
@@ -149,19 +117,71 @@
     Left the code as-is, since we need some way to un-ambiguously find the root, regardless of the node given.
 
 
+
 * R0.9.0
-*** TODO Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling.
-*** TODO fix the inconsistency of returning nil for the root, and an empty array for nodes which have no siblings.
-*** DONE We should perhaps return nil as root's root. (Scrapped).                         :ARCHIVE:
+  DEADLINE: <2012-09-30 Sun>
+
+*** TODO [#A] Resolve the infinite loop bug if a node is added to itself as a child       :Partial:
+    Issue https://github.com/evolve75/RubyTree/issues/5
+
+    This is a subtle problem to resolve.  The specific case of a node
+    being added to itself is trivial to resolve, and the fix has been
+    put in for 0.8.3.
+
+    However, the general problem is that in the current code, a node
+    can be added as a child to any portion of the tree down the
+    hierarchy (e.g., as a grandchild), which will need a more thorough
+    detection code in the ~TreeNode#add~ method, if it is to be done at
+    runtime.
+
+    The issue is really to prevent the tree becoming a graph.  Note
+    that the issue is with duplicate nodes, /not/ duplicated content.
+
+    A few options exist:
+    1. Perform a runtime check in the ~TreeNode#add~ method.  This will
+       cause a performance hit as the tree becomes larger.
+    2. Allow the additions to go through, but create a new ~validate~
+       method that checks for such cycles.
+    3. Create separate configuration object which can be attached to
+       the root of the tree, which allows per-tree configuration of
+       the behavior - this does allow for the user to take control,
+       but also introduces complications during tree mergers and
+       spitting subtrees.
+    4. Create a registry (to be maintained at the root?) of all nodes,
+       and use this for validating the node additions (and preventing
+       duplicates).  This needs to be a hash (to allow O(1) access),
+       and will sacrifice memory.  There might be a need to
+       restructure the internals to make better use of memory.
+
+*** TODO Pull in the tree merge feature from [[https://github.com/evolve75/RubyTree/pull/2][Dazoakley]]
+
+*** TODO Pull in the unique node name validation from [[https://github.com/evolve75/RubyTree/pull/9][ysf]]
+    Will need to make this configurable.
+
+*** TODO Extract non-essential methods from Tree::TreeNode into separate files.
+
+*** TODO Rename the [[file:COPYING.rdoc][COPYING.rdoc]] file to LICENSING.rdoc
+
+
+*** CANCELED Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling. :ARCHIVE:
+    CLOSED: [2012-08-25 Sat 20:49]
+    This is actually consistent.
+*** CANCELED fix the inconsistency of returning nil for the root, and an empty array for nodes which have no siblings. :ARCHIVE:
+    CLOSED: [2012-08-25 Sat 20:51]
+    Already fixed in [[R0.8.3]].
+
+*** CANCELED We should perhaps return nil as root's root. (Scrapped).                     :ARCHIVE:
     CLOSED: [2012-08-25 Sat 20:35]
     This proposed change does make sense at one level (since the root node does not have any parent), but returning root
     as root's root (no pun intended) makes accessing the root from anywhere in the tree much easier.
 
-*** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
-    The current equivalence of length to size should also be removed.
 
 
 * Unplanned / Not assigned to any release
+*** TODO Add a FAQ document to the project.
+*** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
+    The current equivalence of length to size should also be removed.
+
 *** TODO Create the basic UML diagrams and upload to the Site
     DEADLINE: <2010-01-04 Mon>
 
