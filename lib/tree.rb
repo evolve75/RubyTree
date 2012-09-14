@@ -572,6 +572,18 @@ module Tree
         @children_hash[name_or_index]
       end
     end
+ 
+    # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
+    #
+    # @yield [child] Each child is passed to the block.
+    # @yieldparam [Tree::TreeNode] node Each node.
+    #
+    # @see #preordered_each
+    # @see #breadth_each
+    def postordered_each(&block)
+      children { |child| child.postordered_each(&block) if child }
+      yield self
+    end
 
     # @!endgroup
 
