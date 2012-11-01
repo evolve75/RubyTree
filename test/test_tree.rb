@@ -839,6 +839,40 @@ module TestTree
       end
     end
 
+    # Test the postordered_each method.
+    def test_postordered_each
+      j = Tree::TreeNode.new("j")
+      f = Tree::TreeNode.new("f")
+      k = Tree::TreeNode.new("k")
+      a = Tree::TreeNode.new("a")
+      d = Tree::TreeNode.new("d")
+      h = Tree::TreeNode.new("h")
+      z = Tree::TreeNode.new("z")
+
+      # The expected order of response
+      expected_array = [d, a, h, f, z, k, j]
+
+      # Create the following Tree
+      #        j         <-- level 0 (Root)
+      #      /   \
+      #     f      k     <-- level 1
+      #   /   \      \
+      #  a     h      z  <-- level 2
+      #   \
+      #    d             <-- level 3
+      j << f << a << d
+      f << h
+      j << k << z
+
+      result_array = []
+      j.postordered_each { |node| result_array << node.detached_copy}
+
+      expected_array.each_index do |i|
+        # Match only the names.
+        assert_equal(expected_array[i].name, result_array[i].name)
+      end
+    end
+
     # test the detached_copy method.
     def test_detached_copy
       setup_test_tree
