@@ -14,3 +14,4 @@ tmp/
 .settings/org.rubypeople.rdt.core.prefs
 /.rvmrc
 .settings/
+.idea/
