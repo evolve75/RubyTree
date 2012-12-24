@@ -477,8 +477,15 @@ module Tree
     #
     # @todo Need to return an Enumerator is a block is NOT given.
     def each(&block)             # :yields: node
-      yield self
-      children { |child| child.each(&block) }
+      node_stack = [self]   # Start with this node
+
+      until node_stack.empty?
+        current = node_stack.shift    # Pop the top-most node
+        yield current                 # and process it
+        # Stack children of the current node at top of the stack
+        node_stack = current.children.clone.concat(node_stack)
+      end
+
     end
 
     # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
@@ -576,7 +583,7 @@ module Tree
         @children_hash[name_or_index]
       end
     end
- 
+
     # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
     #
     # @yield [child] Each child is passed to the block.
@@ -584,8 +591,9 @@ module Tree
     #
     # @see #preordered_each
     # @see #breadth_each
+    # @todo Refactor the code to replace recursion with iteration
     def postordered_each(&block)
-      children { |child| child.postordered_each(&block) if child }
+      children { |child| child.postordered_each(&block) } if has_children?
       yield self
     end
 
@@ -600,7 +608,7 @@ module Tree
     #
     # @return [Integer] Total number of nodes in this (sub)tree.
     def size
-      @children.inject(1) {|sum, node| sum + node.size}
+      inject(0) {|sum, node| sum + 1 }
     end
 
     # Convenience synonym for {Tree::TreeNode#size}.
