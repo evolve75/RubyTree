@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -52,7 +52,7 @@ module Tree
 
   # == TreeNode Class Description
   #
-  # This class models the nodes for an *N-ary* tree data structue. The
+  # This class models the nodes for an *N-ary* tree data structure. The
   # nodes are *named* and have a place-holder for the node data (i.e.,
   # _content_ of the node). The node names are required to be *unique*
   # within the tree (as the name is implicitly used as an _ID_ within
