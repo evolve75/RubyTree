@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubytree (0.8.4pre)
+    rubytree (0.9.0)
       json (>= 1.7.5)
       structured_warnings (>= 0.1.3)
 

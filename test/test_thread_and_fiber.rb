@@ -2,7 +2,7 @@
 
 # test_thread_and_fiber.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2012 Anupam Sengupta
+# Copyright (c) 2012, 2013 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -57,6 +57,7 @@ module TestTree
     # Test the recursive methods with a fiber. The stack usage is causing
     # failure for very large depths on unbalanced nodes.
     def test_fiber_for_recursion
+      return unless defined?(Fiber.class) # Fibers exist only from Ruby 1.9 onwards.
       assert_nothing_thrown do
         Fiber.new do
           depth = 1000             # Use a reasonably large depth, which would trip a recursive stack
