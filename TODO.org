@@ -1,6 +1,8 @@
 # -*- mode: org; coding: utf-8-unix; fill-column: 120; -*-
 #+OPTIONS: ^:{}
 #+TODO: TODO(t) STARTED(s) | DONE(d) CANCELED(c)
+#+LINK: Issue https://github.com/evolve75/RubyTree/issues/%s
+#+LINK: Pull https://github.com/evolve75/RubyTree/pull/%s
 
 * R0.7.0                                                                                  :ARCHIVE:
 *** DONE Start using signed tags from R0.7.0                                              :ARCHIVE:
@@ -18,8 +20,6 @@
     CLOSED: [2010-01-30 Sat 23:56]
 
 
-
-
 * R0.8.0                                                                                  :ARCHIVE:
 *** DONE Convert all method names to the canonical /^[_a-z<>=\[|+-\/\*`]+[_a-z0-9_<>=~@\[\]]*[=!\?]?$/ pattern :ARCHIVE:
     See Roodi report at http://getcaliper.com/caliper/tool?tool=roodi&repo=git://github.com/evolve75/RubyTree.git
@@ -29,7 +29,6 @@
 
 * R0.8.1                                                                                  :ARCHIVE:
 *** DONE Fix [[http://rubyforge.org/tracker/index.php?func%3Ddetail&aid%3D28613&group_id%3D1215&atid%3D4793][bug #28613]] which was affecting the `leftChild=' and `rightChild=' methods for binary trees. :ARCHIVE:
-
 
 
 * R0.8.3                                                                                  :ARCHIVE:
@@ -119,10 +118,26 @@
 
 
 * R0.9.0
-  DEADLINE: <2012-09-30 Sun>
+  DEADLINE: <2013-02-24 Sun>
+
+  This release contains the following features and fixes:
+
+  1. Ability to merge in another tree at a chosen node
+  2. Ability to export the tree to a hash, and create a new tree from
+     another existing hash
+  3. Fix (partial) for preventing cyclic graphs in the tree
+  4. Refactored =each= method to prevent stack errors while navigating
+     deep trees
+  5. Check to ensure that the added node's name is unique to the destination tree
+  6. Structural changes in the code to refactor out the non-core functions into modules
+
+*** STARTED Fix the stack exhaustion issue due to deep recursion on very large unbalanced trees
+    See [[Issue:12][Issue #12.]]  The following methods need fixes:
+    - [X] [[file:lib/tree.rb::def%20each(][each]]
+    - [ ] [[file:lib/tree.rb::def%20postordered_each][postordered_each]]
 
 *** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child    :Partial:
-    Issue https://github.com/evolve75/RubyTree/issues/5
+    [[Issue:5][Issue #5.]]
 
     This is a subtle problem to resolve.  The specific case of a node
     being added to itself is trivial to resolve, and the fix has been
@@ -153,17 +168,23 @@
        and will sacrifice memory.  There might be a need to
        restructure the internals to make better use of memory.
 
-*** TODO Pull in the tree merge feature from [[https://github.com/evolve75/RubyTree/pull/2][Dazoakley]]
-
-*** TODO Pull in the unique node name validation from [[https://github.com/evolve75/RubyTree/pull/9][ysf]]
-    Will need to make this configurable.
-
 *** STARTED Extract non-essential methods from Tree::TreeNode into separate files.
     - [X] Handling of CamelCase methods
     - [X] Convertion to and from [[http://flori.github.com/json/][JSON]]
-*** DONE Rename the [[file:COPYING.rdoc][COPYING.rdoc]] file to LICENSING.rdoc
-    CLOSED: [2012-08-25 Sat 21:19]
+    - [ ] The merge feature
+    - [ ] The metrics measurements
 
+
+*** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
+*** DONE Pull in the unique node name validation from [[Pull:9][ysf]]                                 :ARCHIVE:
+    CLOSED: [2013-02-21 Thu 20:29]
+    Will need to make this configurable.
+
+*** DONE Pull in the tree merge feature from [[Pull:9][Dazoakley]]                                    :ARCHIVE:
+    CLOSED: [2013-02-21 Thu 20:26]
+
+*** DONE Rename the [[file:COPYING.rdoc][COPYING.rdoc]] file to LICENSING.rdoc                                   :ARCHIVE:
+    CLOSED: [2012-08-25 Sat 21:19]
 
 *** CANCELED Fix the inconsistency of returning root as its first sibling, and returning a nil instead.  Ditto for last sibling. :ARCHIVE:
     CLOSED: [2012-08-25 Sat 20:49]
@@ -180,6 +201,8 @@
 
 
 * Unplanned / Not assigned to any release
+*** TODO Create a cycle-detection/validation mechanism to prevent cyclic graphs of nodes.
+*** TODO Create a generic validation method to check for various issues in the created tree.
 *** TODO Add a FAQ document to the project.
 *** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
     The current equivalence of length to size should also be removed.
