@@ -5,4 +5,6 @@
   (projectile-mode . t)
   (fill-column . 80))
  (ruby-mode .
-  ((eval . (highlight-regexp "@todo")))))
+            ((eval . (highlight-regexp "@todo"))))
+ (rdoc-mode .
+            ((eval . (hide-leaves)))))
