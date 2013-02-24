@@ -2,21 +2,16 @@ PATH
   remote: .
   specs:
     rubytree (0.9.0)
-      json (>= 1.7.5)
-      structured_warnings (>= 0.1.3)
+      json (~> 1.7.5)
+      structured_warnings (~> 0.1.3)
 
 GEM
   remote: http://rubygems.org/
   specs:
     json (1.7.5)
-    json (1.7.5-java)
     rake (10.0.3)
-    rcov (0.9.11)
-    rcov (0.9.11-java)
     rdoc (3.12)
       json (~> 1.4)
-    rdoc-data (3.12)
-      rdoc (> 2.5, < 4.0)
     rtags (0.98)
     rtagstask (0.0.4)
       rtags (> 0.0.0)
@@ -24,14 +19,11 @@ GEM
     yard (0.8.3)
 
 PLATFORMS
-  java
   ruby
 
 DEPENDENCIES
   rake (>= 10.0.3)
-  rcov (~> 0.9.0)
-  rdoc (>= 3.12)
-  rdoc-data (>= 3.12)
+  rdoc (~> 3.12)
   rtagstask (>= 0.0.4)
   rubytree!
-  yard (>= 0.8.3)
+  yard (~> 0.8.3)
