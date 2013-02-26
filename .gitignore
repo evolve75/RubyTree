@@ -1,4 +1,6 @@
 TAGS
+.rdebugrc
+.ctags
 coverage.info
 doc/
 rdoc/
