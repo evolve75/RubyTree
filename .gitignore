@@ -11,11 +11,8 @@ tmp/
 .DS_Store
 .loadpath
 .project
-.settings/com.aptana.rdt.prefs
-.settings/org.radrails.rails.core.prefs
-.settings/org.rubypeople.rdt.core.prefs
-/.rvmrc
+.rvmrc
 .settings/
 .idea/
-/.projectile
-/.ackrc
+.projectile
+.ackrc
