@@ -37,7 +37,6 @@ Gem::Specification.new do |s|
   s.files            = Dir['lib/**/*.rb']  # The actual code
   s.files           += Dir['[A-Z]*']       # Various documentation files
   s.files           += Dir['test/**/*.rb'] # Test cases
-  s.files           += ['.dir-locals.el']  # Emacs configurations
   s.files           += ['.gemtest']        # Support for gem-test
 
   s.require_paths    = ['lib']
