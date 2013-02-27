@@ -5,6 +5,7 @@ gemspec
 
 group :test do                  #  Needed to run tests
   gem "rake", ">= 10.0.3"
+  gem "debugger", ">= 1.3"
 end
 # Local Variables:
 # mode: ruby
