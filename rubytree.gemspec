@@ -53,7 +53,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rdoc'      , '~> 3.12'
   s.add_development_dependency 'yard'      , '~> 0.8.3'
   s.add_development_dependency 'rtagstask' , '>= 0.0.4'
-  s.add_development_dependency 'debugger'  , '>= 1.3'
 
   s.post_install_message = <<-EOF
     ========================================================================
