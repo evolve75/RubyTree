@@ -59,7 +59,7 @@ end
 
 namespace :doc do               # ................................ Documentation
   begin
-    gem 'rdoc', ">= 2.4.2"      # To get around a stupid bug in Ruby 1.9.2 Rake
+    gem 'rdoc', ">= 2.4.2"      # To get around a stupid bug in Ruby 1.9.2 Rake.
     require 'rdoc/task'
     Rake::RDocTask.new do |rdoc|
       rdoc.rdoc_dir = 'rdoc'
