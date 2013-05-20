@@ -16,3 +16,5 @@ tmp/
 .idea/
 .projectile
 .ackrc
+.ruby-gemset
+.ruby-version
