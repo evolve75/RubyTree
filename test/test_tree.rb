@@ -2,7 +2,7 @@
 
 # test_tree.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -1058,7 +1058,7 @@ module TestTree
         ]
       }.to_json
 
-      tree = JSON.parse(tree_as_json)
+      tree = JSON.parse(tree_as_json, :create_additions => true)
 
       assert_equal(@root.name, tree.root.name, "Root should be returned")
       assert_equal(@child1.name, tree[0].name, "Child 1 should be returned")
@@ -1074,7 +1074,7 @@ module TestTree
 
       j = root_node.to_json
 
-      k = JSON.parse(j)
+      k = JSON.parse(j, :create_additions => true)
 
       assert_equal(k.name, root_node.name, "Root should be returned")
       assert_equal(k[0].name, root_node[0].name, "Child 1 should be returned")
@@ -1087,10 +1087,10 @@ module TestTree
       setup_test_tree
 
       meth_names_to_test = %w{isRoot? isLeaf? hasContent?
-                              hasChildren? setAsRoot! firstChild lastChild
+                              hasChildren? firstChild lastChild
                               firstSibling isFirstSibling? lastSibling isLastSibling?
                               isOnlyChild? nextSibling previousSibling nodeHeight nodeDepth
-                              createDumpRep removeFromParent! removeAll! freezeTree! }
+                              removeFromParent! removeAll! freezeTree! }
 
       require 'structured_warnings'
 
@@ -1102,7 +1102,7 @@ module TestTree
         assert_warn(DeprecatedMethodWarning) {@root.send(meth_name)}
       end
 
-        # Special Case for printTree to avoid putting stuff on the STDOUT during the unit test.
+      # Special Case for printTree to avoid putting stuff on the STDOUT during the unit test.
       begin
         require 'stringio'
         $stdout = StringIO.new
