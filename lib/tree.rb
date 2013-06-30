@@ -355,7 +355,7 @@ module Tree
       child
     end
 
-    # Removes the receiver node from its parent.  The reciever node becomes the new root for its subtree.
+    # Removes the receiver node from its parent.  The receiver node becomes the new root for its subtree.
     #
     # If this is the root node, then does nothing.
     #
@@ -826,7 +826,7 @@ module Tree
       self.collect { |node| node.create_dump_rep }
     end
 
-    # Creates a dump representation of the reciever node and returns the same as a hash.
+    # Creates a dump representation of the receiver node and returns the same as a hash.
     def create_dump_rep           # :nodoc:
       { :name => @name, :parent => (is_root? ? nil : @parent.name),  :content => Marshal.dump(@content)}
     end
