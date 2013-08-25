@@ -121,8 +121,9 @@ building and installing the gem.
 
 == DOCUMENTATION:
 
-The primary class for this implementation is {Tree::TreeNode}. See the class
-documentation for an example of using the library.
+The primary class for this implementation is 
+{Tree::TreeNode}[http://rubytree.rubyforge.org/rdoc/Tree/TreeNode.html].
+See the class documentation for an example of using the library.
 
 If the *ri* documentation was generated during install, you can use this command
 at the terminal to view the text mode ri documentation:
