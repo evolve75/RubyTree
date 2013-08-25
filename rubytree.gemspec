@@ -25,8 +25,8 @@ Gem::Specification.new do |s|
   s.summary           = %q{A generic tree data structure.}
   s.description       = <<-EOF
     RubyTree is a Ruby implementation of the generic tree data structure.
-    It provides a node-based model to store uniquely identifiable node-elements in
-    the tree and simple APIs to access, modify and traverse the structure.
+    It provides a node-based model to store uniquely identifiable node-elements
+    in the tree and simple APIs to access, modify and traverse the structure.
     RubyTree is node-centric, where individual nodes on the tree are the primary
     compositional and structural elements.
 
@@ -43,7 +43,8 @@ Gem::Specification.new do |s|
 
   s.test_files       = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files = ['README.rdoc', 'LICENSE.rdoc', 'API-CHANGES.rdoc', 'History.rdoc']
+  s.extra_rdoc_files = ['README.rdoc', 'LICENSE.rdoc', 
+                        'API-CHANGES.rdoc', 'History.rdoc']
   s.rdoc_options     = ["--title", "Rubytree Documentation", "--quiet"]
 
   s.add_runtime_dependency 'structured_warnings' , '~> 0.1.3'

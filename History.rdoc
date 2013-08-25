@@ -6,7 +6,7 @@
 
 This is a primarily a bug-fix release, with some packaging changes.
 
-* Have removed the dependency on Hoe[https://github.com/seattlerb/hoe].  The
+* Have removed the dependency on Hoe[https://github.com/seattlerb/hoe]. The
   build is now vanilla gemspec based.
 
 * Included support for {gem-testers}[http://test.rubygems.org/].
@@ -17,7 +17,7 @@ This is a primarily a bug-fix release, with some packaging changes.
   by pulling in the changes by Eric Cline (https://github.com/escline).
 
 * Partial fix for {Github Bug
-  #5}[https://github.com/evolve75/RubyTree/issues/5].  This is to
+  #5}[https://github.com/evolve75/RubyTree/issues/5]. This is to
   prevent infinite looping is an existing node is added again
   elsewhere in the tree.
 
@@ -44,7 +44,7 @@ This is a primarily a bug-fix release, with some packaging changes.
   this release.
 
 * The main change in R0.8.0/R0.8.1 is conversion of all CamelCase
-  method names to snake_case.  The old CamelCase method names will
+  method names to snake_case. The old CamelCase method names will
   still work (to ensure backwards compatibility), but will also
   display a warning.
 
@@ -55,7 +55,7 @@ This is a primarily a bug-fix release, with some packaging changes.
   using the `TreeNode#detached_subtree_copy' method.
 
 * A major bug-fix for bug #28613 which impacted the Binarytree
-  implementation.  See
+  implementation. See
   http://rubyforge.org/tracker/index.php?func=detail&aid=28613&group_id=1215&atid=4793
   for details.
 
@@ -65,13 +65,17 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 === 0.8.0 / 2010-05-04
 
-* Updated the 'add' method to allow the optional specification of an insertion position in the child array.
+* Updated the 'add' method to allow the optional specification of an insertion
+  position in the child array.
 
-* Added a new method 'detached_subtree_copy' to allow cloning the entire tree (this method is also aliased as 'dup').
+* Added a new method 'detached_subtree_copy' to allow cloning the entire tree
+  (this method is also aliased as 'dup').
 
-* Converted all CamelCase method names to the canonical ruby_method_names (underscore separated).  The CamelCase methods
-  can still be invoked, but will throw a Deprecated warning.  The support for old CamelCase methods will go away some
-  time in the future, so the user is advised to convert all current method invocations to the new names.
+* Converted all CamelCase method names to the canonical ruby_method_names
+  (underscore separated). The CamelCase methods can still be invoked, but will
+  throw a Deprecated warning. The support for old CamelCase methods will go away
+  some time in the future, so the user is advised to convert all current method
+  invocations to the new names.
 
 === 0.7.0 / 2010-05-03
 
@@ -79,16 +83,19 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 * Added a convenience method alias 'level' to 'nodeDepth'.
 
-* Converted the exceptions thrown on invalid arguments to 'ArgumentError' instead of 'RuntimeError'.
+* Converted the exceptions thrown on invalid arguments to 'ArgumentError'
+  instead of 'RuntimeError'.
 
 * Converted the documentation to Yard format.
 
-* Added new methods for converting from/to JSON formats.  Thanks to Dirk Breuer[http://github.com/railsbros-dirk] for
-  this fork[http://github.com/galaxycats/].
+* Added new methods for converting from/to JSON formats. Thanks to Dirk
+  Breuer[http://github.com/railsbros-dirk] for this
+  fork[http://github.com/galaxycats/].
 
 * Added a separate API-CHANGES documentation file.
 
-* Added fixes for root related edge conditions to 'isOnlyChild?', 'nextSibling', 'previousSibling' and 'remove' methods.
+* Added fixes for root related edge conditions to 'isOnlyChild?',
+  'nextSibling', 'previousSibling' and 'remove' methods.
 
 * Removed the 'ChangeLog' file as this can now be generated from the git logs.
 
@@ -100,17 +107,21 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 === 0.6.1 / 2010-01-04
 
-* Changed the hard-dependency on the 'structured_warnings' RubyGem to a soft-dependency - which lets Rubytree still
-  work if this RubyGem is not available.  The rationale for this is that we should not require the user to install a
-  separate library just for one single edge-case function (in this case, to indicate a deprecated method).  However, if
-  the library _is_ available on the user's system, then it will get used.
+* Changed the hard-dependency on the 'structured_warnings' RubyGem to a
+  soft-dependency - which lets Rubytree still work if this RubyGem is not
+  available. The rationale for this is that we should not require the user to
+  install a separate library just for one single edge-case function (in this
+  case, to indicate a deprecated method). However, if the library _is_ available
+  on the user's system, then it will get used.
 
 === 0.6.0 / 2010-01-03
 
-* Fixed the bug#22535[http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793] where the
-  depth method was actually returning height+1 (not the depth).
+* Fixed the
+  bug#22535[http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793]
+  where the depth method was actually returning height+1 (not the depth).
 
-* Marked the Tree::TreeNode#depth method as *deprecated* (and introduced the run-time dependency on
+* Marked the Tree::TreeNode#depth method as *deprecated* (and introduced the
+  run-time dependency on
   structured-warnings[http://github.com/schmidt/structured_warnings] gem).
 
 === 0.5.3 / 2009-12-31

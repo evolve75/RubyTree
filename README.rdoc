@@ -9,7 +9,7 @@ src="https://secure.travis-ci.org/evolve75/RubyTree.png"
 
 == DESCRIPTION:
 
-RubyTree is a Ruby implementation of the generic tree data structure.  It
+RubyTree is a Ruby implementation of the generic tree data structure. It
 provides a node-based model to store keyed node-elements in the tree and
 provides simple APIs to access, modify and traverse the structure.
 
@@ -47,36 +47,40 @@ The following example code implements this tree structure:
  # ..... Example starts.
  require 'tree'                 # Load the library
 
- # ..... Create the root node first.  Note that every node has a name and an optional content payload.
+ # ..... First create the root node. Note that every node has a name, and an
+ # ..... optional content payload.
  root_node = Tree::TreeNode.new("ROOT", "Root Content")
 
- # ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
- root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
- root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
+ # ..... Now insert the child nodes. Note that child insertions can be
+ # ..... "chained" for a given path to any depth.
+ root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") <<
+ Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content") root_node <<
+ Tree::TreeNode.new("CHILD2", "Child2 Content")
 
- # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
+ # ..... Print the representation to stdout.
+ # ..... This is primarily used for debugging purposes.
  root_node.print_tree
 
- # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
- child1 = root_node["CHILD1"]
- grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
+ # ..... Directly access children and grandchildren of the root. This can be
+ # ..... "chained" for a given path to any depth.
+ child1 = root_node["CHILD1"] grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
 
- # ..... Lets retrieve siblings of the current node as an array.
+ # ..... Retrieve siblings of the current node as an array.
  siblings_of_child1 = child1.siblings
 
- # ..... Lets retrieve immediate children of the root node as an array.
+ # ..... Retrieve immediate children of the root node as an array.
  children_of_root = root_node.children
 
- # ..... This is a depth-first and L-to-R pre-ordered traversal.
+ # ..... Do a depth-first and L-to-R, pre-ordered traversal.
  root_node.each { |node| node.content.reverse }
 
- # ..... Lets remove a child node from the root node.
+ # ..... Remove a child node from the root.
  root_node.remove!(child1)
 
 
 == REQUIREMENTS:
 
-* {Ruby}[http://www.ruby-lang.org] 1.8.x or 1.9.x
+* {Ruby}[http://www.ruby-lang.org] 1.8.x, 1.9.x or 2.0.x. 
 
 * Run-time Dependencies:
   * {structured_warnings}[http://github.com/schmidt/structured_warnings]
@@ -88,8 +92,8 @@ The following example code implements this tree structure:
 
 == INSTALL:
 
-To install the {gem}[http://rubygems.org/gems/rubytree], run this command from a
-terminal/shell:
+To install the {gem}[http://rubygems.org/gems/rubytree], run this command from
+a terminal/shell:
 
   $ gem install rubytree
 
@@ -110,14 +114,15 @@ The file-name is one of:
 
 Download the appropriate file-type for your system.
 
-Extract the archive file (tgz or zip) and run the following command from the top-level source directory:
+Extract the archive file (tgz or zip) and run the following command from the
+top-level source directory:
 
     $ ruby ./setup.rb
 
 You may need administrator/super-user privileges to complete the setup using
-this method.  Note that the source code contains the Rakefile for building using
-{Rake}[http://rubygems.org/gems/rake], which might an easier mechanism for
-building and installing the gem.
+this method. Note that the source code contains the Rakefile for building
+using {Rake}[http://rubygems.org/gems/rake], which might an easier mechanism
+for building and installing the gem.
 
 == DOCUMENTATION:
 
@@ -125,8 +130,8 @@ The primary class for this implementation is
 {Tree::TreeNode}[http://rubytree.rubyforge.org/rdoc/Tree/TreeNode.html].
 See the class documentation for an example of using the library.
 
-If the *ri* documentation was generated during install, you can use this command
-at the terminal to view the text mode ri documentation:
+If the *ri* documentation was generated during install, you can use this
+command at the terminal to view the text mode ri documentation:
 
     $ ri Tree::TreeNode
 
@@ -145,13 +150,13 @@ Note that the documentation is formatted for {YARD}[http://yardoc.org].
     This section is only for modifying RubyTree itself. It is not required for
     using the library!
 
-You can download the latest released source code using the tar or zip version as
-mentioned above in the installation section.
+You can download the latest released source code as a tar or zip file, 
+as mentioned above in the installation section.
 
-Alternatively, you can checkout the latest commit/revision from the version
-control system.  Note that RubyTree's primary
+Alternatively, you can checkout the latest commit/revision from the Version
+Control System. Note that RubyTree's primary
 SCM[http://en.wikipedia.org/wiki/Source_Code_Management] is
-git[http://git-scm.com] and is available on github[http://www.github.com].
+git[http://git-scm.com] and is hosted on github[http://www.github.com].
 
 === Using the git Repository
 
@@ -163,11 +168,11 @@ or
 
   $ git clone http://github.com/evolve75/RubyTree.git
 
-The git repository is available on the web at: http://github.com/evolve75/RubyTree
+The git repository is available at: http://github.com/evolve75/RubyTree
 
 === Setting up the Development Environment
 
-RubyTree uses Bundler[http://gembundler.com/] to manage its dependencies.  This
+RubyTree uses Bundler[http://gembundler.com/] to manage its dependencies. This
 allows for a simplified dependency management, for both run-time as well as
 during build.
 
@@ -179,8 +184,8 @@ After checking out the source, run:
   $ rake doc:yard
   $ rake gem:package
 
-These steps will install any missing dependencies, run the tests/specs, generate
-the documentation, and finally generate the gem file.
+These steps will install any missing dependencies, run the tests/specs,
+generate the documentation, and finally generate the gem file.
 
 Note that the documentation uses YARD[http://yardoc.org], which will be
 downloaded and installed automatically by Bundler.
@@ -189,40 +194,48 @@ downloaded and installed automatically by Bundler.
 
 A big thanks to the following contributors for helping improve RubyTree:
 
-1. {Dirk Breuer}[http://github.com/railsbros-dirk] for contributing the JSON conversion code.
+1. {Dirk Breuer}[http://github.com/railsbros-dirk] for contributing the JSON
+   conversion code.
 2. Vincenzo Farruggia for contributing the (sub)tree cloning code.
 3. {Eric Cline}[https://github.com/escline] for the Rails JSON encoding fix.
 4. {Darren Oakley}[https://github.com/dazoakley] for the tree merge methods.
 5. {Youssef Rebahi-Gilbert}[https://github.com/ysf] for the code to check
    duplicate node names in the tree (globally unique names).
-6. {Paul de Courcel}[https://github.com/pdecourcel] for adding the +postordered_each+ method.
+6. {Paul de Courcel}[https://github.com/pdecourcel] for adding the
+   +postordered_each+ method.
 
 == LICENSE:
 
-RubyTree is released under the BSD[http://www.opensource.org/licenses/bsd-license.php] license.
+RubyTree is released under the
+BSD[http://www.opensource.org/licenses/bsd-license.php] license.
 
 Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Anupam Sengupta
 All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
-following conditions are met:
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-- Redistributions of source code must retain the above copyright notice, this list of conditions and the following
-  disclaimer.
+- Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
 
-- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following
-  disclaimer in the documentation and/or other materials provided with the distribution.
+- Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
 
-- Neither the name of the organization nor the names of its contributors may be used to endorse or promote products
-  derived from this software without specific prior written permission.
+- Neither the name of the organization nor the names of its contributors may be
+  used to endorse or promote products derived from this software without
+  specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
    __       _           _
    /__\_   _| |__  _   _| |_ _ __ ___  ___
