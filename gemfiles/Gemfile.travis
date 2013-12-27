@@ -9,7 +9,7 @@ end
 
 platforms :rbx do               # Hack to allow rbx to run
   gem 'rubysl', '~> 2.0'
-  gem 'rubysl-test-unit', '~> 2.1'
+  gem 'rubysl-test-unit'
   # gem 'test-unit'
   # gem 'psych'
 end
