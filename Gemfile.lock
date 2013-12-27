@@ -21,7 +21,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rake (>= 10.1.1)
+  rake (~> 10.1)
   rdoc (~> 4.1)
   rtagstask (>= 0.0.4)
   rubytree!
