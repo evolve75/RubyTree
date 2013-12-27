@@ -11,19 +11,20 @@ $:.unshift File.expand_path("../lib", __FILE__)
 require "tree/version"
 
 Gem::Specification.new do |s|
-  s.name              = 'rubytree'
-  s.date              = '2012-08-21'
-  s.version           = Tree::VERSION
-  s.license           = 'BSD'
+  s.name                  = 'rubytree'
+  s.date                  = '2012-08-21'
+  s.version               = Tree::VERSION
+  s.license               = 'BSD'
 
-  s.platform          = Gem::Platform::RUBY
-  s.author            = 'Anupam Sengupta'
-  s.email             = 'anupamsg@gmail.com'
-  s.homepage          = 'http://rubytree.rubyforge.org'
-  s.rubyforge_project = 'rubytree'
+  s.platform              = Gem::Platform::RUBY
+  s.author                = 'Anupam Sengupta'
+  s.email                 = 'anupamsg@gmail.com'
+  s.homepage              = 'http://rubytree.rubyforge.org'
+  s.rubyforge_project     = 'rubytree'
+  s.required_ruby_version = '>=1.8.7'
 
-  s.summary           = %q{A generic tree data structure.}
-  s.description       = <<-EOF
+  s.summary               = %q{A generic tree data structure.}
+  s.description           = <<-EOF
     RubyTree is a Ruby implementation of the generic tree data structure.
     It provides a node-based model to store uniquely identifiable node-elements
     in the tree and simple APIs to access, modify and traverse the structure.
@@ -34,26 +35,26 @@ Gem::Specification.new do |s|
     access to the tree as a collection.
   EOF
 
-  s.files            = Dir['lib/**/*.rb']  # The actual code
-  s.files           += Dir['[A-Z]*']       # Various documentation files
-  s.files           += Dir['test/**/*.rb'] # Test cases
-  s.files           += ['.gemtest']        # Support for gem-test
+  s.files                = Dir['lib/**/*.rb']  # The actual code
+  s.files               += Dir['[A-Z]*']       # Various documentation files
+  s.files               += Dir['test/**/*.rb'] # Test cases
+  s.files               += ['.gemtest']        # Support for gem-test
 
-  s.require_paths    = ['lib']
+  s.require_paths        = ['lib']
 
-  s.test_files       = Dir.glob('test/**/test_*.rb')
+  s.test_files           = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files = ['README.rdoc', 'LICENSE.rdoc',
-                        'API-CHANGES.rdoc', 'History.rdoc']
-  s.rdoc_options     = ["--title", "Rubytree Documentation", "--quiet"]
+  s.extra_rdoc_files     = ['README.rdoc', 'LICENSE.rdoc',
+                            'API-CHANGES.rdoc', 'History.rdoc']
+  s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
 
   s.add_runtime_dependency 'structured_warnings' , '~> 0.1.4'
   s.add_runtime_dependency 'json'                , '~> 1.8'
 
-  s.add_development_dependency 'rake'      , '~> 10.1'
-  s.add_development_dependency 'rdoc'      , '~> 4.1'
-  s.add_development_dependency 'yard'      , '~> 0.8'
-  s.add_development_dependency 'rtagstask' , '>= 0.0.4'
+  s.add_development_dependency 'rake'            , '~> 10.1'
+  s.add_development_dependency 'rdoc'            , '~> 4.1'
+  s.add_development_dependency 'yard'            , '~> 0.8'
+  s.add_development_dependency 'rtagstask'       , '>= 0.0.4'
 
   s.post_install_message = <<-EOF
     ========================================================================
