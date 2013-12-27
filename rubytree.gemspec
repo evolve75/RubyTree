@@ -76,4 +76,8 @@ Gem::Specification.new do |s|
     ========================================================================
   EOF
 
+  s.metadata = { 'documentation_url' => 'http://rubytree.rubyforge.org/rdoc/index.html',
+                 'issue_tracker'     => 'https://github.com/evolve75/RubyTree/issues',
+                 'github_url'        => 'https://github.com/evolve75/RubyTree/'}
+
 end
