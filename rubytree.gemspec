@@ -43,16 +43,16 @@ Gem::Specification.new do |s|
 
   s.test_files       = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files = ['README.rdoc', 'LICENSE.rdoc', 
+  s.extra_rdoc_files = ['README.rdoc', 'LICENSE.rdoc',
                         'API-CHANGES.rdoc', 'History.rdoc']
   s.rdoc_options     = ["--title", "Rubytree Documentation", "--quiet"]
 
-  s.add_runtime_dependency 'structured_warnings' , '~> 0.1.3'
-  s.add_runtime_dependency 'json'                , '~> 1.7.6'
+  s.add_runtime_dependency 'structured_warnings' , '~> 0.1.4'
+  s.add_runtime_dependency 'json'                , '~> 1.8.1'
 
-  s.add_development_dependency 'rake'      , '>= 10.0.3'
-  s.add_development_dependency 'rdoc'      , '~> 3.12'
-  s.add_development_dependency 'yard'      , '~> 0.8.3'
+  s.add_development_dependency 'rake'      , '>= 10.1.0'
+  s.add_development_dependency 'rdoc'      , '~> 4.1.0'
+  s.add_development_dependency 'yard'      , '~> 0.8.7.3'
   s.add_development_dependency 'rtagstask' , '>= 0.0.4'
 
   s.post_install_message = <<-EOF

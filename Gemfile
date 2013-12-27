@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 gemspec
 
 group :test do                  #  Needed to run tests
-  gem "rake", ">= 10.0.3"
+  gem "rake", ">= 10.1.1"
 end
 
 # Local Variables:
