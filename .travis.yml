@@ -1,7 +1,6 @@
 language: ruby
 bundler_args: --without development
 cache: bundler
-gemfile: gemfiles/Gemfile.travis
 rvm:
   - 1.9.2
   - 1.9.3
