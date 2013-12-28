@@ -389,8 +389,7 @@ module Tree
     # If a block is given, yields each child node to the block
     # traversing from left to right.
     #
-    # @yield [child] Each child is passed to the block, if given
-    # @yieldparam [Tree::TreeNode] child Each child node.
+    # @yieldparam child [Tree::TreeNode] Each child node.
     #
     # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
     def children
@@ -426,8 +425,7 @@ module Tree
     #
     # The traversal is *depth-first* and from *left-to-right* in pre-ordered sequence.
     #
-    # @yield [child] Each node is passed to the block.
-    # @yieldparam [Tree::TreeNode] child Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
@@ -450,8 +448,7 @@ module Tree
     # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
     # This is a synonym of {Tree::TreeNode#each}.
     #
-    # @yield [child] Each child is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #each
     # @see #breadth_each
@@ -463,8 +460,7 @@ module Tree
     # traversal at a given level is from *left-to-right*.  The receiver node itself is the first
     # node to be traversed.
     #
-    # @yield [child] Each node is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
@@ -485,8 +481,7 @@ module Tree
     # May yield this node as well if this is a leaf node.
     # Leaf traversal is *depth-first* and *left-to-right*.
     #
-    # @yield [node] Each leaf node is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each leaf node.
+    # @yieldparam node [Tree::TreeNode] Each leaf node.
     #
     # @see #each
     # @see #breadth_each
@@ -545,8 +540,7 @@ module Tree
 
     # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
     #
-    # @yield [child] Each child is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
@@ -659,8 +653,7 @@ module Tree
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
     #
-    # @yield [sibling] Each sibling is passed to the block.
-    # @yieldparam [Tree::TreeNode] sibling Each sibling node.
+    # @yieldparam sibling [Tree::TreeNode] Each sibling node.
     #
     # @return [Array<Tree::TreeNode>] Array of siblings of this node.
     #
