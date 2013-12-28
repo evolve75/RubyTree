@@ -177,6 +177,9 @@
 
 
 *** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
+
+*** DONE Add some example code to the Gem                                                 :ARCHIVE:
+    CLOSED: [2013-12-28 Sat 12:12]
 *** DONE Pull in the unique node name validation from [[Pull:9][ysf]]                                 :ARCHIVE:
     CLOSED: [2013-02-21 Thu 20:29]
     Will need to make this configurable.
