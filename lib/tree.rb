@@ -591,10 +591,25 @@ module Tree
     #
     # @see #preordered_each
     # @see #breadth_each
-    # @todo Refactor the code to replace recursion with iteration
     def postordered_each(&block)
-      children { |child| child.postordered_each(&block) } if has_children?
-      yield self
+      # Using a marked node in order to skip adding the children of nodes that
+      # have already been visited. This allows the stack depth to be controlled,
+      # and also allows stateful backtracking.
+      markednode = Struct.new(:node, :visited)
+      node_stack = [markednode.new(self, false)] # Start with self
+
+      until node_stack.empty?
+        peek_node = node_stack[0]
+        if peek_node.node.has_children? and not peek_node.visited
+          peek_node.visited = true
+          # Add the children to the stack. Use the marking structure.
+          marked_children = peek_node.node.children.map {|node| markednode.new(node, false)}
+          node_stack = marked_children.concat(node_stack)
+          next
+        else
+          yield node_stack.shift.node           # Pop and yield the current node
+        end
+      end
     end
 
     # @!endgroup
