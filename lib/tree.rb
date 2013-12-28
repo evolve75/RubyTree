@@ -438,9 +438,11 @@ module Tree
 
       until node_stack.empty?
         current = node_stack.shift    # Pop the top-most node
-        yield current                 # and process it
-        # Stack children of the current node at top of the stack
-        node_stack = current.children.clone.concat(node_stack)
+        if current                    # The node might be 'nil' (esp. for binary trees)
+          yield current               # and process it
+          # Stack children of the current node at top of the stack
+          node_stack = current.children.clone.concat(node_stack)
+        end
       end
 
     end
@@ -587,7 +589,7 @@ module Tree
 
       puts " #{name}"
 
-      children { |child| child.print_tree(level + 1)}
+      children { |child| child.print_tree(level + 1) if child } # Child might be 'nil'
     end
 
     # @!attribute [rw] root

@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2013-12-28 13:48:05 anupam>
+# Time-stamp: <2013-12-28 16:22:56 anupam>
 #
 # Copyright (C) 2013 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -52,7 +52,7 @@ module Tree::Utils
       #
       # @return [Integer] Total number of nodes in this (sub)tree.
       def size
-        inject(0) {|sum, node| sum + 1 }
+        inject(0) {|sum, node| sum + 1 if node}
       end
 
       # @!attribute [r] length
