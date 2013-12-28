@@ -7,13 +7,14 @@
 This is a primarily a bug-fix release, with some packaging changes.
 
 * Have removed the dependency on Hoe[https://github.com/seattlerb/hoe]. The
-  build is now vanilla gemspec based.
+  build is now vanilla
+  {gemspec}[http://guides.rubygems.org/specification-reference/] based.
 
 * Included support for {gem-testers}[http://test.rubygems.org/].
 
 * Included support for {Bundler}[http://gembundler.com/].
 
-* Implemented the +as_json+ method to support Rails' JSON encoding,
+* Implemented the {Tree::Utils::JSONConverter#as_json} method to support Rails' JSON encoding,
   by pulling in the changes by Eric Cline (https://github.com/escline).
 
 * Partial fix for {Github Bug
@@ -22,58 +23,55 @@ This is a primarily a bug-fix release, with some packaging changes.
   elsewhere in the tree.
 
 * Fixed the issue with using +integers+ as node names, and its
-  interaction with the +TreeNode#[]+ access method {Github Bug
+  interaction with the +Tree::TreeNode#[]+ access method as documented in {Github Bug
   #6}[https://github.com/evolve75/RubyTree/issues/6].
 
 * Clarified the need to have unique node names {Github Bug
   #7}[https://github.com/evolve75/RubyTree/issues/7] (documentation).
 
-* Fixed +siblings+ method to return an empty array for the root node as
+* Fixed {Tree::TreeNode#siblings} method to return an empty array for the root node as
   well (it returned +nil+ earlier).
 
 === 0.8.2 / 2011-12-15
 
-* Minor bug-fix release to address bug #1215 (Tree::TreeNode#to_s
-  breaks if @content or @parent.name is not a string).
+* Minor bug-fix release to address bug #1215 ({Tree::TreeNode#to_s}
+  breaks if +@content+ or +@parent.name+ is not a string).
 
 === 0.8.1 / 2010-10-02
 
-* This is the public release of R0.8.0, with additional bug-fixes.
-  Note that R0.8.0 will not be released separately as a publicly
-  available Rubygem. All changes as listed for R0.8.0 are available in
+* This is the public release of +R0.8.0+, with additional bug-fixes.
+  Note that +R0.8.0+ will not be released separately as a publicly
+  available Rubygem. All changes as listed for +R0.8.0+ are available in
   this release.
 
-* The main change in R0.8.0/R0.8.1 is conversion of all CamelCase
+* The main change in +R0.8.0+/+R0.8.1+ is conversion of all CamelCase
   method names to snake_case. The old CamelCase method names will
   still work (to ensure backwards compatibility), but will also
   display a warning.
 
-* The TreeNode#add method now accepts an optional child insertion
+* The {Tree::TreeNode#add} method now accepts an optional child insertion
   point.
 
 * The subtree from the current node can now be cloned in its entirety
-  using the `TreeNode#detached_subtree_copy' method.
+  using the {Tree::TreeNode#detached_subtree_copy} method.
 
-* A major bug-fix for bug #28613 which impacted the Binarytree
-  implementation. See
-  http://rubyforge.org/tracker/index.php?func=detail&aid=28613&group_id=1215&atid=4793
-  for details.
+* A major bug-fix for {bug #28613}[http://rubyforge.org/tracker/index.php?func=detail&aid=28613&group_id=1215&atid=4793] which impacted the Binarytree implementation.
 
-* Minor code re-factoring driven by the code-smell checks using reek.
+* Minor code re-factoring driven by the code-smell checks using {reek}[https://github.com/troessner/reek].
 
-* Inclusion of the `reek' code-smell detection tool in the Rakefile.
+* Inclusion of the +reek+ code-smell detection tool in the Rakefile.
 
 === 0.8.0 / 2010-05-04
 
-* Updated the 'add' method to allow the optional specification of an insertion
+* Updated the {Tree::TreeNode#add} method to allow the optional specification of an insertion
   position in the child array.
 
-* Added a new method 'detached_subtree_copy' to allow cloning the entire tree
-  (this method is also aliased as 'dup').
+* Added a new method {Tree::TreeNode#detached_subtree_copy} to allow cloning the entire tree
+  (this method is also aliased as +dup+).
 
-* Converted all CamelCase method names to the canonical ruby_method_names
-  (underscore separated). The CamelCase methods can still be invoked, but will
-  throw a Deprecated warning. The support for old CamelCase methods will go away
+* Converted all +CamelCase+ method names to the canonical +ruby_method_names+
+  (underscore separated). The +CamelCase+ methods _can still_ be invoked, but will
+  throw a {http://rug-b.rubyforge.org/structured_warnings/rdoc/ Deprecated warning}. The support for old CamelCase methods will go away
   some time in the future, so the user is advised to convert all current method
   invocations to the new names.
 
@@ -81,21 +79,23 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 * Added new methods to report the degree statistics of a node.
 
-* Added a convenience method alias 'level' to 'nodeDepth'.
+* Added a convenience method alias {Tree::Utils::TreeMetricsHandler#level Tree::TreeNode#level} to +nodeDepth+.
 
-* Converted the exceptions thrown on invalid arguments to 'ArgumentError'
-  instead of 'RuntimeError'.
+* Converted the exceptions thrown on invalid arguments to
+  {http://www.ruby-doc.org/core-2.0.0/ArgumentError.html ArgumentError}
+  instead of {http://www.ruby-doc.org/core-2.0.0/RuntimeError.html RuntimeError}.
 
-* Converted the documentation to Yard format.
+* Converted the documentation to {http://yardoc.org Yard} format.
 
-* Added new methods for converting from/to JSON formats. Thanks to Dirk
+* Added new methods for converting from/to {http://www.json.org JSON} formats. Thanks to Dirk
   Breuer[http://github.com/railsbros-dirk] for this
   fork[http://github.com/galaxycats/].
 
-* Added a separate API-CHANGES documentation file.
+* Added a separate {file:API-CHANGES.rdoc} documentation file.
 
-* Added fixes for root related edge conditions to 'isOnlyChild?',
-  'nextSibling', 'previousSibling' and 'remove' methods.
+* Added fixes for root related edge conditions to {Tree::TreeNode#is_only_child?
+  isOnlyChild?}, {Tree::TreeNode#next_sibling nextSibling},
+  {Tree::TreeNode#previous_sibling previousSibling} and {Tree::TreeNode#remove! remove!} methods.
 
 * Removed the 'ChangeLog' file as this can now be generated from the git logs.
 
@@ -118,9 +118,9 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 * Fixed the
   bug#22535[http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793]
-  where the depth method was actually returning height+1 (not the depth).
+  where the {Tree::Utils::TreeMetricsHandler#depth Tree::TreeNode#depth} method was actually returning height+1 (not the depth).
 
-* Marked the Tree::TreeNode#depth method as *deprecated* (and introduced the
+* Marked the {Tree::Utils::TreeMetricsHandler#depth Tree::TreeNode#depth} method as *deprecated* (and introduced the
   run-time dependency on
   structured-warnings[http://github.com/schmidt/structured_warnings] gem).
 
@@ -132,7 +132,7 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 === 0.5.2 / 2007-12-21
 
-* Added more test cases and enabled ZenTest compatibility for the test case
+* Added more test cases and enabled {https://github.com/seattlerb/zentest ZenTest} compatibility for the test case
   names.
 
 === 0.5.1 / 2007-12-20
@@ -145,7 +145,8 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 === 0.4.3 / 2007-10-09
 
-* Changes to the build mechanism (now uses Hoe).
+* Changes to the build mechanism (now uses
+{http://www.zenspider.com/projects/hoe.html Hoe}).
 
 === 0.4.2 / 2007-10-01
 

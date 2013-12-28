@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2013-12-28 11:16:11 anupam>
+# Time-stamp: <2013-12-28 13:48:05 anupam>
 #
 # Copyright (C) 2013 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -55,9 +55,10 @@ module Tree::Utils
         inject(0) {|sum, node| sum + 1 }
       end
 
-      # Convenience synonym for {Tree::TreeNode#size}.
+      # @!attribute [r] length
+      # Convenience synonym for {#size}.
       #
-      # @deprecated This method name is ambiguous and may be removed.  Use TreeNode#size instead.
+      # @deprecated This method name is ambiguous and may be removed.  Use {#size} instead.
       #
       # @return [Integer] The total number of nodes in this (sub)tree.
       # @see #size
@@ -84,10 +85,10 @@ module Tree::Utils
       #
       # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
       #
-      # *Note* that the deprecated method Tree::TreeNode#depth was incorrectly computing this value.
-      # Please replace all calls to the old method with Tree::TreeNode#node_depth instead.
+      # *Note* that the deprecated method {#depth} was incorrectly computing this value.
+      # Please replace all calls to the old method with {#node_depth} instead.
       #
-      # 'level' is an alias for this method.
+      # {#level} is an alias for this method.
       #
       # @return [Integer] Depth of this node.
       def node_depth
@@ -95,20 +96,27 @@ module Tree::Utils
         1 + parent.node_depth
       end
 
-      alias level node_depth       # Aliased level() method to the node_depth().
+      # @!attribute [r] level
+      # Alias for {#node_depth}
+      #
+      # @see #node_depth
+      def level
+        node_depth
+      end
 
-      # Returns depth of the tree from the receiver node. A single leaf node has a depth of 1.
+      # @!attribute [r] depth
+      # Depth of the tree from the receiver node. A single leaf node has a depth of 1.
       #
       # This method is *DEPRECATED* and may be removed in the subsequent releases.
       # Note that the value returned by this method is actually the:
       #
       # _height_ + 1 of the node, *NOT* the _depth_.
       #
-      # For correct and conventional behavior, please use {Tree::TreeNode#node_depth} and
-      # {Tree::TreeNode#node_height} methods instead.
+      # For correct and conventional behavior, please use {#node_depth} and
+      # {#node_height} methods instead.
       #
       # @return [Integer] depth of the node.
-      # @deprecated This method returns an incorrect value.  Use the 'node_depth' method instead.
+      # @deprecated This method returns an incorrect value.  Use the {#node_depth} method instead.
       #
       # @see #node_depth
       def depth
@@ -155,8 +163,6 @@ module Tree::Utils
       def out_degree
         is_leaf? ? 0 : children.size
       end
-
-
 
     end # self.included
   end
