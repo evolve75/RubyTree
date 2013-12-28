@@ -173,7 +173,7 @@
     - [X] Handling of CamelCase methods
     - [X] Convertion to and from [[http://flori.github.com/json/][JSON]]
     - [ ] The merge feature
-    - [ ] The metrics measurements
+    - [X] The metrics measurements
 
 
 *** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
