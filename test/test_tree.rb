@@ -250,14 +250,16 @@ module TestTree
 
       # Lets first collect the siblings in an array.
       siblings = []
-      @child1.siblings { |sibling| siblings << sibling}
+      result = @child1.siblings { |sibling| siblings << sibling}
 
+      assert_equal(@child1, result)
       assert_equal(2, siblings.length, "Should have two siblings")
       assert(siblings.include?(@child2), "Should have 2nd child as sibling")
       assert(siblings.include?(@child3), "Should have 3rd child as sibling")
 
       siblings.clear
       siblings = @child1.siblings
+      assert_equal(Array, siblings.class)
       assert_equal(2, siblings.length, "Should have two siblings")
 
       siblings.clear
@@ -267,6 +269,7 @@ module TestTree
       siblings.clear
       siblings = @root.siblings
       assert_equal(0, siblings.length, "Root should not have any siblings")
+
     end
 
     # Test the is_only_child? method.
@@ -465,21 +468,26 @@ module TestTree
         assert_equal(0, child.node_height, "The subtree at #{child.name} should have a height of 0")
       end
 
-      children = []
-      for child in @root.children
-        children << child
-      end
+      result_array = @root.children
 
-      assert_equal(3, children.length, "Should have three direct children")
-      assert(!children.include?(@root), "Should not have root")
-      assert(children.include?(@child1), "Should have child 1")
-      assert(children.include?(@child2), "Should have child 2")
-      assert(children.include?(@child3), "Should have child 3")
-      assert(!children.include?(@child4), "Should not have child 4")
+      assert_equal(3, result_array.length, "Should have three direct children")
+      assert(!result_array.include?(@root), "Should not have root")
+      assert_equal(result_array[0], @child1, "Should have child 1")
+      assert_equal(result_array[1], @child2, "Should have child 2")
+      assert_equal(result_array[2], @child3, "Should have child 3")
+      assert(!result_array.include?(@child4), "Should not have child 4")
 
-      children.clear
-      children = @root.children
-      assert_equal(3, children.length, "Should have three children")
+      # Lets try the block version of the method.
+      result_array.clear
+      result = @root.children {|child| result_array << child}
+      assert_equal(@root, result)
+      result_array.length
+      assert_equal(3, result_array.length, "Should have three children")
+      assert_equal(result_array[0], @child1, "Should have child 1")
+      assert_equal(result_array[1], @child2, "Should have child 2")
+      assert_equal(result_array[2], @child3, "Should have child 3")
+      assert(!result_array.include?(@child4), "Should not have child 4")
+
     end
 
     # Test the first_child method.
@@ -541,24 +549,33 @@ module TestTree
       assert(nodes.include?(@child2), "Should have child 2")
       assert(nodes.include?(@child3), "Should have child 3")
       assert(nodes.include?(@child4), "Should have child 4")
-
-      # @todo Need to check the default case of a bare #each invocation.
-      # enum = @root.each
     end
 
     # Test the each_leaf method.
     def test_each_leaf
       setup_test_tree
 
-      nodes = []
-      @root.each_leaf { |node| nodes << node }
+      result_array = []
+      result = @root.each_leaf { |node| result_array << node }
+      assert_equal(@root, result)
+      assert_equal(3, result_array.length, "Should have THREE LEAF NODES")
+      assert(!result_array.include?(@root), "Should not have root")
+      assert(result_array.include?(@child1), "Should have child 1")
+      assert(result_array.include?(@child2), "Should have child 2")
+      assert(!result_array.include?(@child3), "Should not have child 3")
+      assert(result_array.include?(@child4), "Should have child 4")
 
-      assert_equal(3, nodes.length, "Should have THREE LEAF NODES")
-      assert(!nodes.include?(@root), "Should not have root")
-      assert(nodes.include?(@child1), "Should have child 1")
-      assert(nodes.include?(@child2), "Should have child 2")
-      assert(!nodes.include?(@child3), "Should not have child 3")
-      assert(nodes.include?(@child4), "Should have child 4")
+      # Now lets try without the block
+      result_array.clear
+      result_array = @root.each_leaf
+      assert_equal(Array, result_array.class)
+      assert_equal(3, result_array.length, "Should have THREE LEAF NODES")
+      assert(!result_array.include?(@root), "Should not have root")
+      assert(result_array.include?(@child1), "Should have child 1")
+      assert(result_array.include?(@child2), "Should have child 2")
+      assert(!result_array.include?(@child3), "Should not have child 3")
+      assert(result_array.include?(@child4), "Should have child 4")
+
     end
 
     # Test the parent method.
@@ -798,11 +815,14 @@ module TestTree
 
       # Create the response
       result_array = Array.new
-      j.breadth_each { |node| result_array << node.detached_copy }
+      result = j.breadth_each { |node| result_array << node.detached_copy }
 
+      assert_equal(j, result)
       expected_array.each_index do |i|
         assert_equal(expected_array[i].name, result_array[i].name)      # Match only the names.
       end
+
+      assert_equal(Enumerator, j.breadth_each.class) # Without a block
     end
 
     # Test the preordered_each method.
@@ -831,12 +851,16 @@ module TestTree
       j << k << z
 
       result_array = []
-      j.preordered_each { |node| result_array << node.detached_copy}
+      result = j.preordered_each { |node| result_array << node.detached_copy}
+
+      assert_equal(j, result)   # Each returns the invocation target
 
       expected_array.each_index do |i|
         # Match only the names.
         assert_equal(expected_array[i].name, result_array[i].name)
       end
+
+      assert_equal(Enumerator, j.preordered_each.class)
     end
 
     # Test the postordered_each method.
@@ -865,12 +889,16 @@ module TestTree
       j << k << z
 
       result_array = []
-      j.postordered_each { |node| result_array << node.detached_copy}
+      result = j.postordered_each { |node| result_array << node.detached_copy}
+
+      assert_equal(j, result)   # Each returns the invocation target
 
       expected_array.each_index do |i|
         # Match only the names.
         assert_equal(expected_array[i].name, result_array[i].name)
       end
+
+      assert_equal(Enumerator, j.postordered_each.class) # Without a block
     end
 
     # test the detached_copy method.

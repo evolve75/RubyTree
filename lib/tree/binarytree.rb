@@ -71,10 +71,16 @@ module Tree
     #
     # @yieldparam node [Tree::BinaryTreeNode]  Each node (in-order).
     #
+    # @return [Tree::BinaryTreeNode] This node, if a block is given
+    # @return [Enumerator] An enumerator on this tree, if a block is *not* given
+    #
     # @see #each
     # @see #preordered_each
     # @see #postordered_each
     def inordered_each(&block)
+
+      return self.to_enum unless block_given?
+
       node_stack = []
       current_node = self
 
@@ -89,7 +95,8 @@ module Tree
         end
       end
 
-      return self
+      return self if block_given?
+
     end
 
     # @!attribute [rw] left_child

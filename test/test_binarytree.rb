@@ -119,12 +119,14 @@ module TestTree
       result_array = []
       result = f.inordered_each { |node| result_array << node.detached_copy}
 
-      assert_equal(result, f)
+      assert_equal(result, f)   # each should return the original object
+
       expected_array.each_index do |i|
         # Match only the names.
         assert_equal(expected_array[i].name, result_array[i].name)
       end
 
+      assert_equal(Enumerator, f.inordered_each.class) # Without a block, each return the enum
     end
 
     # Test the left_child method.

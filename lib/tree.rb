@@ -391,12 +391,14 @@ module Tree
     #
     # @yieldparam child [Tree::TreeNode] Each child node.
     #
+    # @return [Tree::TreeNode] This node, if a block is given
     # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
     def children
       if block_given?
         @children.each {|child| yield child}
+        return self
       else
-        @children
+        return @children.clone
       end
     end
 
@@ -430,8 +432,12 @@ module Tree
     # @see #preordered_each
     # @see #breadth_each
     #
-    # @todo Need to return an Enumerator is a block is NOT given.
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def each(&block)             # :yields: node
+
+     return self.to_enum unless block_given?
+
       node_stack = [self]   # Start with this node
 
       until node_stack.empty?
@@ -443,6 +449,7 @@ module Tree
         end
       end
 
+      return self if block_given?
     end
 
     # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
@@ -452,6 +459,9 @@ module Tree
     #
     # @see #each
     # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def preordered_each(&block)  # :yields: node
       each(&block)
     end
@@ -464,7 +474,12 @@ module Tree
     #
     # @see #preordered_each
     # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def breadth_each(&block)
+      return self.to_enum unless block_given?
+
       node_queue = [self]       # Create a queue with self as the initial entry
 
       # Use a queue to do breadth traversal
@@ -474,6 +489,8 @@ module Tree
         # Enqueue the children from left to right.
         node_to_traverse.children { |child| node_queue.push child }
       end
+
+      return self if block_given?
     end
 
     # Yields every leaf node of the (sub)tree rooted at the receiver node to the specified block.
@@ -485,9 +502,13 @@ module Tree
     #
     # @see #each
     # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Array<Tree::TreeNode>] An array of the leaf nodes
     def each_leaf &block
       if block_given?
         self.each { |node| yield(node) if node.is_leaf? }
+        return self
       else
         self.select { |node| node.is_leaf?}
       end
@@ -544,7 +565,11 @@ module Tree
     #
     # @see #preordered_each
     # @see #breadth_each
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def postordered_each(&block)
+      return self.to_enum unless block_given?
+
       # Using a marked node in order to skip adding the children of nodes that
       # have already been visited. This allows the stack depth to be controlled,
       # and also allows stateful backtracking.
@@ -563,6 +588,8 @@ module Tree
           yield node_stack.shift.node           # Pop and yield the current node
         end
       end
+
+      return self if block_given?
     end
 
     # @!endgroup
@@ -655,16 +682,17 @@ module Tree
     #
     # @yieldparam sibling [Tree::TreeNode] Each sibling node.
     #
-    # @return [Array<Tree::TreeNode>] Array of siblings of this node.
+    # @return [Array<Tree::TreeNode>] Array of siblings of this node. Will return an empty array for *root*
+    # @return [Tree::TreeNode] This node, if no block is given
     #
     # @see #first_sibling
     # @see #last_sibling
     def siblings
-      return [] if is_root?
-
       if block_given?
         parent.children.each { |sibling| yield sibling if sibling != self }
+        return self
       else
+        return [] if is_root?
         siblings = []
         parent.children {|my_sibling| siblings << my_sibling if my_sibling != self}
         siblings
