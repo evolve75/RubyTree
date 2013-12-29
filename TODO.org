@@ -178,6 +178,8 @@
 
 *** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
 
+*** DONE Implement an `inordered_each` method for the [[file:lib/tree/b][BinaryTree]]                          :ARCHIVE:
+    CLOSED: [2013-12-28 Sat 16:32] DEADLINE: <2013-12-28 Sat>
 *** DONE Add some example code to the Gem                                                 :ARCHIVE:
     CLOSED: [2013-12-28 Sat 12:12]
 *** DONE Pull in the unique node name validation from [[Pull:9][ysf]]                                 :ARCHIVE:
