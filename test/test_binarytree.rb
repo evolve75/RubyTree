@@ -127,7 +127,7 @@ module TestTree
       end
 
       assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerator.class )# Without a block
-      assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
+      assert_equal(Enumerable::Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
     end
 
     # Test the left_child method.
