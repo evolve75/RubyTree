@@ -36,9 +36,11 @@ smooth transition to the new APIs.
   - {Tree::TreeNode#[]}
   - {Tree::BinaryTreeNode#add}
 
-- Added {Tree::TreeNode#level} as an alias for {Tree::TreeNode#node_depth}
+- Added {Tree::Utils::TreeMetricsHandler#level Tree::TreeNode#level} as an alias for
+  {Tree::Utils::TreeMetricsHandler#node_depth Tree::TreeNode#node_depth}
 
-- Added new methods {Tree::TreeNode#in_degree} and {Tree::TreeNode#out_degree}
+- Added new methods {Tree::Utils::TreeMetricsHandler#in_degree
+  Tree::TreeNode#in_degree} and {Tree::Utils::TreeMetricsHandler#out_degree Tree::TreeNode#out_degree}
   to report the node's degree stats
 
 - {Tree::TreeNode#is_only_child?} now returns +true+ for a root node.
@@ -49,15 +51,16 @@ smooth transition to the new APIs.
 - {Tree::TreeNode#add} and {Tree::TreeNode#<<} now throw an ArgumentError
   exception if a +nil+ node is passed as an argument.
 
-- Added new methods Tree::TreeNode#to_json and Tree::TreeNode::json_create to
+- Added new methods {Tree::Utils::JSONConverter#to_json Tree::TreeNode#to_json} and
+  {Tree::Utils::JSONConverter::ClassMethods#json_create Tree::TreeNode#json_create} to
   convert to/from the JSON format. Thanks to
   Dirk[http://github.com/railsbros-dirk] for this change.
 
 == Release 0.6.1 Changes
 
-- Deprecated the {Tree::TreeNode#depth} method as it was returning an incorrect
+- Deprecated the {Tree::Utils::TreeMetricsHandler#depth} method as it was returning an incorrect
   depth value. Have introduced a new replacement method
-  {Tree::TreeNode#node_depth} which returns the correct result.
+  {Tree::Utils::TreeMetricsHandler#node_depth} which returns the correct result.
 
 # Local Variables:
 # mode: rdoc

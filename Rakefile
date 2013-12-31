@@ -100,6 +100,14 @@ namespace :test do              # ................................ Test related
     test.verbose = false
   end
 
+  desc "Run the examples"
+  Rake::TestTask.new(:examples) do |example|
+    example.libs << 'lib' << 'examples'
+    example.pattern = 'examples/**/example_*.rb'
+    example.verbose = true
+    example.warning = false
+  end
+
   begin
     require 'rcov/rcovtask'
     Rcov::RcovTask.new(:rcov) do |t|

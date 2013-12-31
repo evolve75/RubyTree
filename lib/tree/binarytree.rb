@@ -8,7 +8,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2007, 2008, 2009, 2010, 2012 Anupam Sengupta
+# Copyright (c) 2007, 2008, 2009, 2010, 2012, 2013 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -65,6 +65,40 @@ module Tree
       raise ArgumentError, "Already has two child nodes" if @children.size == 2
 
       super(child)
+    end
+
+    # Performs inorder traversal (including this node).
+    #
+    # @yieldparam node [Tree::BinaryTreeNode]  Each node (in-order).
+    #
+    # @return [Tree::BinaryTreeNode] This node, if a block is given
+    # @return [Enumerator] An enumerator on this tree, if a block is *not* given
+    #
+    # @since 0.9.0
+    #
+    # @see #each
+    # @see #preordered_each
+    # @see #postordered_each
+    def inordered_each(&block)
+
+      return self.to_enum unless block_given?
+
+      node_stack = []
+      current_node = self
+
+      until node_stack.empty? and current_node == nil
+        if current_node
+          node_stack.push(current_node)
+          current_node = current_node.left_child
+        else
+          current_node = node_stack.pop()
+          yield current_node
+          current_node = current_node.right_child
+        end
+      end
+
+      return self if block_given?
+
     end
 
     # @!attribute [rw] left_child

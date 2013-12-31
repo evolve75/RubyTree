@@ -41,6 +41,7 @@
 
 require 'tree/tree_deps'
 require 'tree/version'
+require 'tree/utils/metrics_methods'
 require 'tree/utils/camel_case_method_handler'
 require 'tree/utils/json_converter'
 
@@ -80,58 +81,14 @@ module Tree
   # However, having duplicate nodes within the structure is likely to
   # cause unpredictable behavior.
   #
-  #
   # == Example
   #
-  # The following example implements this tree structure:
-  #
-  #                    +------------+
-  #                    |    ROOT    |
-  #                    +-----+------+
-  #            +-------------+------------+
-  #            |                          |
-  #    +-------+-------+          +-------+-------+
-  #    |  CHILD 1      |          |  CHILD 2      |
-  #    +-------+-------+          +---------------+
-  #            |
-  #            |
-  #    +-------+-------+
-  #    | GRANDCHILD 1  |
-  #    +---------------+
-  #
-  #    # ..... Example starts.
-  #    require 'tree'                 # Load the library
-  #
-  #    # ..... Create the root node first.  Note that every node has a name and an optional content payload.
-  #    root_node = Tree::TreeNode.new("ROOT", "Root Content")
-  #    root_node.print_tree
-  #
-  #    # ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
-  #    root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
-  #    root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
-  #
-  #    # ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
-  #    root_node.print_tree
-  #
-  #    # ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
-  #    child1       = root_node["CHILD1"]
-  #    grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
-  #
-  #    # ..... Now lets retrieve siblings of the current node as an array.
-  #    siblings_of_child1 = child1.siblings
-  #
-  #    # ..... Lets retrieve immediate children of the root node as an array.
-  #    children_of_root = root_node.children
-  #
-  #    # ..... This is a depth-first and L-to-R pre-ordered traversal.
-  #    root_node.each { |node| node.content.reverse }
-  #
-  #    # ..... Lets remove a child node from the root node.
-  #    root_node.remove!(child1)
+  # {include:file:examples/example_basic.rb}
   #
   # @author Anupam Sengupta
   class TreeNode
     include Enumerable
+    include Tree::Utils::TreeMetricsHandler
     include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
 
@@ -241,7 +198,8 @@ module Tree
     #
     # Returns +nil+ if the receiver is a root node.
     #
-    # @return [Array, nil] An array of ancestors of the receiver node, or +nil+ if this is a root node.
+    # @return [Array<Tree::TreeNode>] An array of ancestors of the receiver node
+    # @return [nil] if this is a root node.
     def parentage
       return nil if is_root?
 
@@ -286,8 +244,9 @@ module Tree
 
     # Adds the specified child node to the receiver node.
     #
-    # This method can also be used for *grafting* a subtree into the receiver node's tree, if the specified child node
-    # is the root of a subtree (i.e., has child nodes under it).
+    # This method can also be used for *grafting* a subtree into the receiver
+    # node's tree, if the specified child node is the root of a subtree (i.e.,
+    # has child nodes under it).
     #
     # The receiver node becomes parent of the node passed in as the argument, and
     # the child is added as the last child ("right most") in the current set of
@@ -414,6 +373,7 @@ module Tree
       @children.length != 0
     end
 
+    # @!attribute [r] is_leaf?
     # Returns +true+ if the receiver node is a 'leaf' - i.e., one without
     # any children.
     #
@@ -432,15 +392,16 @@ module Tree
     # If a block is given, yields each child node to the block
     # traversing from left to right.
     #
-    # @yield [child] Each child is passed to the block, if given
-    # @yieldparam [Tree::TreeNode] child Each child node.
+    # @yieldparam child [Tree::TreeNode] Each child node.
     #
+    # @return [Tree::TreeNode] This node, if a block is given
     # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
     def children
       if block_given?
         @children.each {|child| yield child}
+        return self
       else
-        @children
+        return @children.clone
       end
     end
 
@@ -469,33 +430,41 @@ module Tree
     #
     # The traversal is *depth-first* and from *left-to-right* in pre-ordered sequence.
     #
-    # @yield [child] Each node is passed to the block.
-    # @yieldparam [Tree::TreeNode] child Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
     #
-    # @todo Need to return an Enumerator is a block is NOT given.
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def each(&block)             # :yields: node
+
+     return self.to_enum unless block_given?
+
       node_stack = [self]   # Start with this node
 
       until node_stack.empty?
         current = node_stack.shift    # Pop the top-most node
-        yield current                 # and process it
-        # Stack children of the current node at top of the stack
-        node_stack = current.children.clone.concat(node_stack)
+        if current                    # The node might be 'nil' (esp. for binary trees)
+          yield current               # and process it
+          # Stack children of the current node at top of the stack
+          node_stack = current.children.clone.concat(node_stack)
+        end
       end
 
+      return self if block_given?
     end
 
     # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
     # This is a synonym of {Tree::TreeNode#each}.
     #
-    # @yield [child] Each child is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #each
     # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def preordered_each(&block)  # :yields: node
       each(&block)
     end
@@ -504,12 +473,16 @@ module Tree
     # traversal at a given level is from *left-to-right*.  The receiver node itself is the first
     # node to be traversed.
     #
-    # @yield [child] Each node is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def breadth_each(&block)
+      return self.to_enum unless block_given?
+
       node_queue = [self]       # Create a queue with self as the initial entry
 
       # Use a queue to do breadth traversal
@@ -519,6 +492,8 @@ module Tree
         # Enqueue the children from left to right.
         node_to_traverse.children { |child| node_queue.push child }
       end
+
+      return self if block_given?
     end
 
     # Yields every leaf node of the (sub)tree rooted at the receiver node to the specified block.
@@ -526,14 +501,17 @@ module Tree
     # May yield this node as well if this is a leaf node.
     # Leaf traversal is *depth-first* and *left-to-right*.
     #
-    # @yield [node] Each leaf node is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each leaf node.
+    # @yieldparam node [Tree::TreeNode] Each leaf node.
     #
     # @see #each
     # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Array<Tree::TreeNode>] An array of the leaf nodes
     def each_leaf &block
       if block_given?
         self.each { |node| yield(node) if node.is_leaf? }
+        return self
       else
         self.select { |node| node.is_leaf?}
       end
@@ -586,40 +564,38 @@ module Tree
 
     # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
     #
-    # @yield [child] Each child is passed to the block.
-    # @yieldparam [Tree::TreeNode] node Each node.
+    # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
-    # @todo Refactor the code to replace recursion with iteration
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def postordered_each(&block)
-      children { |child| child.postordered_each(&block) } if has_children?
-      yield self
+      return self.to_enum unless block_given?
+
+      # Using a marked node in order to skip adding the children of nodes that
+      # have already been visited. This allows the stack depth to be controlled,
+      # and also allows stateful backtracking.
+      markednode = Struct.new(:node, :visited)
+      node_stack = [markednode.new(self, false)] # Start with self
+
+      until node_stack.empty?
+        peek_node = node_stack[0]
+        if peek_node.node.has_children? and not peek_node.visited
+          peek_node.visited = true
+          # Add the children to the stack. Use the marking structure.
+          marked_children = peek_node.node.children.map {|node| markednode.new(node, false)}
+          node_stack = marked_children.concat(node_stack)
+          next
+        else
+          yield node_stack.shift.node           # Pop and yield the current node
+        end
+      end
+
+      return self if block_given?
     end
 
     # @!endgroup
-
-    # @!attribute [r] size
-    # Total number of nodes in this (sub)tree, including the receiver node.
-    #
-    # Size of the tree is defined as:
-    #
-    # Size:: Total number nodes in the subtree including the receiver node.
-    #
-    # @return [Integer] Total number of nodes in this (sub)tree.
-    def size
-      inject(0) {|sum, node| sum + 1 }
-    end
-
-    # Convenience synonym for {Tree::TreeNode#size}.
-    #
-    # @deprecated This method name is ambiguous and may be removed.  Use TreeNode#size instead.
-    #
-    # @return [Integer] The total number of nodes in this (sub)tree.
-    # @see #size
-    def length
-      size()
-    end
 
     # Pretty prints the (sub)tree rooted at the receiver node.
     #
@@ -637,7 +613,7 @@ module Tree
 
       puts " #{name}"
 
-      children { |child| child.print_tree(level + 1)}
+      children { |child| child.print_tree(level + 1) if child } # Child might be 'nil'
     end
 
     # @!attribute [rw] root
@@ -707,19 +683,19 @@ module Tree
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
     #
-    # @yield [sibling] Each sibling is passed to the block.
-    # @yieldparam [Tree::TreeNode] sibling Each sibling node.
+    # @yieldparam sibling [Tree::TreeNode] Each sibling node.
     #
-    # @return [Array<Tree::TreeNode>] Array of siblings of this node.
+    # @return [Array<Tree::TreeNode>] Array of siblings of this node. Will return an empty array for *root*
+    # @return [Tree::TreeNode] This node, if no block is given
     #
     # @see #first_sibling
     # @see #last_sibling
     def siblings
-      return [] if is_root?
-
       if block_given?
         parent.children.each { |sibling| yield sibling if sibling != self }
+        return self
       else
+        return [] if is_root?
         siblings = []
         parent.children {|my_sibling| siblings << my_sibling if my_sibling != self}
         siblings
@@ -855,97 +831,6 @@ module Tree
           nodes[name] = self    # Add self to the list of nodes
         end
       end
-    end
-
-    # @!attribute [r] node_height
-    # Height of the (sub)tree from the receiver node.  Height of a node is defined as:
-    #
-    # Height:: Length of the longest downward path to a leaf from the node.
-    #
-    # - Height from a root node is height of the entire tree.
-    # - The height of a leaf node is zero.
-    #
-    # @return [Integer] Height of the node.
-    def node_height
-      return 0 if is_leaf?
-      1 + @children.collect { |child| child.node_height }.max
-    end
-
-    # @!attribute [r] node_depth
-    # Depth of the receiver node in its tree.  Depth of a node is defined as:
-    #
-    # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
-    #
-    # *Note* that the deprecated method Tree::TreeNode#depth was incorrectly computing this value.
-    # Please replace all calls to the old method with Tree::TreeNode#node_depth instead.
-    #
-    # 'level' is an alias for this method.
-    #
-    # @return [Integer] Depth of this node.
-    def node_depth
-      return 0 if is_root?
-      1 + parent.node_depth
-    end
-
-    alias level node_depth       # Aliased level() method to the node_depth().
-
-    # Returns depth of the tree from the receiver node. A single leaf node has a depth of 1.
-    #
-    # This method is *DEPRECATED* and may be removed in the subsequent releases.
-    # Note that the value returned by this method is actually the:
-    #
-    # _height_ + 1 of the node, *NOT* the _depth_.
-    #
-    # For correct and conventional behavior, please use {Tree::TreeNode#node_depth} and
-    # {Tree::TreeNode#node_height} methods instead.
-    #
-    # @return [Integer] depth of the node.
-    # @deprecated This method returns an incorrect value.  Use the 'node_depth' method instead.
-    #
-    # @see #node_depth
-    def depth
-      warn DeprecatedMethodWarning, 'This method is deprecated.  Please use node_depth() or node_height() instead (bug # 22535)'
-
-      return 1 if is_leaf?
-      1 + @children.collect { |child| child.depth }.max
-    end
-
-    # @!attribute [r] breadth
-    # Breadth of the tree at the receiver node's level.
-    # A single node without siblings has a breadth of 1.
-    #
-    # Breadth is defined to be:
-    # Breadth:: Number of sibling nodes to this node + 1 (this node itself),
-    # i.e., the number of children the parent of this node has.
-    #
-    # @return [Integer] breadth of the node's level.
-    def breadth
-      is_root? ? 1 : parent.children.size
-    end
-
-    # @!attribute [r] in_degree
-    # The incoming edge-count of the receiver node.
-    #
-    # In-degree is defined as:
-    # In-degree:: Number of edges arriving at the node (0 for root, 1 for all other nodes)
-    #
-    # - In-degree = 0 for a root or orphaned node
-    # - In-degree = 1 for a node which has a parent
-    #
-    # @return [Integer] The in-degree of this node.
-    def in_degree
-      is_root? ? 0 : 1
-    end
-
-    # @!attribute [r] out_degree
-    # The outgoing edge-count of the receiver node.
-    #
-    # Out-degree is defined as:
-    # Out-degree:: Number of edges leaving the node (zero for leafs)
-    #
-    # @return [Integer] The out-degree of this node.
-    def out_degree
-      is_leaf? ? 0 : children.size
     end
 
     protected :parent=, :set_as_root!, :create_dump_rep

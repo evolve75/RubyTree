@@ -38,6 +38,8 @@ Gem::Specification.new do |s|
   s.files                = Dir['lib/**/*.rb']  # The actual code
   s.files               += Dir['[A-Z]*']       # Various documentation files
   s.files               += Dir['test/**/*.rb'] # Test cases
+  s.files               += Dir['examples/**/*.rb'] # Examples
+
   s.files               += ['.gemtest']        # Support for gem-test
 
   s.require_paths        = ['lib']
@@ -49,7 +51,7 @@ Gem::Specification.new do |s|
   s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
 
   s.add_runtime_dependency 'structured_warnings' , '~> 0.1.4'
-  s.add_runtime_dependency 'json'                , '~> 1.8'
+  s.add_runtime_dependency 'json'                , '~> 1.7.6'
 
   s.add_development_dependency 'rake'            , '~> 10.1'
   s.add_development_dependency 'rdoc'            , '~> 4.1'

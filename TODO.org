@@ -131,10 +131,11 @@
   5. Check to ensure that the added node's name is unique to the destination tree
   6. Structural changes in the code to refactor out the non-core functions into modules
 
-*** STARTED Fix the stack exhaustion issue due to deep recursion on very large unbalanced trees
+*** DONE Fix the stack exhaustion issue due to deep recursion on very large unbalanced trees :ARCHIVE:
+    CLOSED: [2013-12-28 Sat 10:59]
     See [[Issue:12][Issue #12.]]  The following methods need fixes:
     - [X] [[file:lib/tree.rb::def%20each(][each]]
-    - [ ] [[file:lib/tree.rb::def%20postordered_each][postordered_each]]
+    - [X] [[file:lib/tree.rb::def%20postordered_each][postordered_each]]
 
 *** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child    :Partial:
     [[Issue:5][Issue #5.]]
@@ -172,10 +173,18 @@
     - [X] Handling of CamelCase methods
     - [X] Convertion to and from [[http://flori.github.com/json/][JSON]]
     - [ ] The merge feature
-    - [ ] The metrics measurements
+    - [X] The metrics measurements
 
 
 *** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
+
+*** TODO Fix the documentation strings for the methods (the Yard attributes)
+    DEADLINE: <2013-12-28 Sat>
+
+*** DONE Implement an `inordered_each` method for the [[file:lib/tree/b][BinaryTree]]                          :ARCHIVE:
+    CLOSED: [2013-12-28 Sat 16:32] DEADLINE: <2013-12-28 Sat>
+*** DONE Add some example code to the Gem                                                 :ARCHIVE:
+    CLOSED: [2013-12-28 Sat 12:12]
 *** DONE Pull in the unique node name validation from [[Pull:9][ysf]]                                 :ARCHIVE:
     CLOSED: [2013-02-21 Thu 20:29]
     Will need to make this configurable.

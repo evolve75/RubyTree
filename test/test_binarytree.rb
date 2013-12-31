@@ -3,7 +3,7 @@
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012, 2013 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -84,6 +84,50 @@ module TestTree
       assert_raise ArgumentError do
         @root << Tree::BinaryTreeNode.new("The third child!")
       end
+    end
+
+    # Test the inordered_each method.
+    def test_inordered_each
+      a = Tree::BinaryTreeNode.new("a")
+      b = Tree::BinaryTreeNode.new("b")
+      c = Tree::BinaryTreeNode.new("c")
+      d = Tree::BinaryTreeNode.new("d")
+      e = Tree::BinaryTreeNode.new("e")
+      f = Tree::BinaryTreeNode.new("f")
+      g = Tree::BinaryTreeNode.new("g")
+      h = Tree::BinaryTreeNode.new("h")
+      i = Tree::BinaryTreeNode.new("i")
+
+      # Create the following Tree
+      #        f         <-- level 0 (Root)
+      #      /   \
+      #     b      g     <-- level 1
+      #   /   \      \
+      #  a     d      i  <-- level 2
+      #       / \    /
+      #      c  e   h    <-- level 3
+      f << b << a
+      f << g
+      b << d << c
+      d << e
+      g.right_child = i         # This needs to be explicit
+      i << h
+
+      # The expected order of response
+      expected_array = [a, b, c, d, e, f, g, h, i]
+
+      result_array = []
+      result = f.inordered_each { |node| result_array << node.detached_copy}
+
+      assert_equal(result, f)   # each should return the original object
+
+      expected_array.each_index do |i|
+        # Match only the names.
+        assert_equal(expected_array[i].name, result_array[i].name)
+      end
+
+      assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerator.class )# Without a block
+      assert_equal(Enumerable::Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
     end
 
     # Test the left_child method.
