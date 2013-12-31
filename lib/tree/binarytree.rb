@@ -74,6 +74,8 @@ module Tree
     # @return [Tree::BinaryTreeNode] This node, if a block is given
     # @return [Enumerator] An enumerator on this tree, if a block is *not* given
     #
+    # @since 0.9.0
+    #
     # @see #each
     # @see #preordered_each
     # @see #postordered_each

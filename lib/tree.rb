@@ -198,7 +198,8 @@ module Tree
     #
     # Returns +nil+ if the receiver is a root node.
     #
-    # @return [Array, nil] An array of ancestors of the receiver node, or +nil+ if this is a root node.
+    # @return [Array<Tree::TreeNode>] An array of ancestors of the receiver node
+    # @return [nil] if this is a root node.
     def parentage
       return nil if is_root?
 
@@ -243,8 +244,9 @@ module Tree
 
     # Adds the specified child node to the receiver node.
     #
-    # This method can also be used for *grafting* a subtree into the receiver node's tree, if the specified child node
-    # is the root of a subtree (i.e., has child nodes under it).
+    # This method can also be used for *grafting* a subtree into the receiver
+    # node's tree, if the specified child node is the root of a subtree (i.e.,
+    # has child nodes under it).
     #
     # The receiver node becomes parent of the node passed in as the argument, and
     # the child is added as the last child ("right most") in the current set of
@@ -371,6 +373,7 @@ module Tree
       @children.length != 0
     end
 
+    # @!attribute [r] is_leaf?
     # Returns +true+ if the receiver node is a 'leaf' - i.e., one without
     # any children.
     #
