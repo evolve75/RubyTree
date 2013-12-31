@@ -2,7 +2,7 @@ language: ruby
 before_install:
   - gem update bundler
   - bundle --version
-  - gem update --system
+  - gem update --system 2.1.11
   - gem --version
   - gem install json --version 1.8.1
 bundler_args: --without development
