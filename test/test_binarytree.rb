@@ -126,7 +126,8 @@ module TestTree
         assert_equal(expected_array[i].name, result_array[i].name)
       end
 
-      assert_equal(Enumerator, f.inordered_each.class) # Without a block, each return the enum
+      assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerator.class )# Without a block
+      assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
     end
 
     # Test the left_child method.

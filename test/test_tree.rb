@@ -822,7 +822,8 @@ module TestTree
         assert_equal(expected_array[i].name, result_array[i].name)      # Match only the names.
       end
 
-      assert_equal(Enumerator, j.breadth_each.class) # Without a block
+      assert_equal(Enumerator, j.breadth_each.class) if defined?(Enumerator.class )# Without a block
+      assert_equal(Enumerator, j.breadth_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
     end
 
     # Test the preordered_each method.
@@ -860,7 +861,8 @@ module TestTree
         assert_equal(expected_array[i].name, result_array[i].name)
       end
 
-      assert_equal(Enumerator, j.preordered_each.class)
+      assert_equal(Enumerator, j.preordered_each.class) if defined?(Enumerator.class )# Without a block
+      assert_equal(Enumerator, j.preordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
     end
 
     # Test the postordered_each method.
@@ -898,7 +900,8 @@ module TestTree
         assert_equal(expected_array[i].name, result_array[i].name)
       end
 
-      assert_equal(Enumerator, j.postordered_each.class) # Without a block
+      assert_equal(Enumerator, j.postordered_each.class) if defined?(Enumerator.class )# Without a block
+      assert_equal(Enumerator, j.postordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
     end
 
     # test the detached_copy method.
