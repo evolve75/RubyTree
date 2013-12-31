@@ -17,18 +17,17 @@ rvm:
   - ruby-head    # The latest Ruby, whatever version it happens to be.
   - jruby-18mode # JRuby in 1.8 mode
   - jruby-19mode # JRuby in 1.9 mode
-  - rbx-2.1.1   # rbx has been problematic in Travis.
   - 1.8.7
   - ree          # Ruby Enterprise Edition
 
 matrix:
   allow_failures:
-    - rvm: rbx-2.1.1
+    - rvm: rbx            # rbx has been problematic.
   include:
-    - rvm: rbx-2.1.1
-      gemfile: gemfiles/Gemfile.rbx-2.1.1
+    - rvm: rbx
+      gemfile: gemfiles/Gemfile.rbx
   exclude:
-    - rvm: rbx-2.1.1
+    - rvm: rbx
       gemfile: Gemfile
 
 # blacklist
