@@ -1,5 +1,8 @@
 = RubyTree
 
+{<img src="https://badge.fury.io/rb/rubytree.png" alt="Gem Version"
+/>}[http://badge.fury.io/rb/rubytree]
+
 {<img src="https://codeclimate.com/badge.png"
 />}[https://codeclimate.com/github/evolve75/RubyTree]
 
