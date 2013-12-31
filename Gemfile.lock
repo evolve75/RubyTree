@@ -21,6 +21,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.5)
   rake (~> 10.1)
   rdoc (~> 4.1)
   rtagstask (>= 0.0.4)
