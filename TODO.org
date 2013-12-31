@@ -211,6 +211,7 @@
 
 * Unplanned / Not assigned to any release
 *** TODO Create a cycle-detection/validation mechanism to prevent cyclic graphs of nodes.
+*** TODO Revert the forced install of rubygem 2.1.11 from [[file:.travis.yml][.travis.yml]]
 *** TODO Create a generic validation method to check for various issues in the created tree.
 *** TODO Add a FAQ document to the project.
 *** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)
