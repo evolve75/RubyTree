@@ -38,6 +38,8 @@ incompatible API changes.
 
 == EXAMPLE:
 
+See the example at {examples/example_basic.rb}[examples/example_basic.rb] for a basic use case.
+
 {include:file:examples/example_basic.rb}
 
 == REQUIREMENTS:
@@ -88,7 +90,7 @@ for building and installing the gem.
 
 == DOCUMENTATION:
 
-The primary class for this implementation is {Tree::TreeNode} See the class
+The primary class for this implementation is {Tree::TreeNode}. See the class
 documentation for an example of using the library.
 
 If the *ri* documentation was generated during install, you can use this
