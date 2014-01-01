@@ -123,13 +123,23 @@
   This release contains the following features and fixes:
 
   1. Ability to merge in another tree at a chosen node
-  2. Ability to export the tree to a hash, and create a new tree from
+  2. Support for the [[http://ruby-doc.org/core-1.8.7/Comparable.html][Comparable]] mixin module
+  3. Ability to export the tree to a hash, and create a new tree from
      another existing hash
-  3. Fix (partial) for preventing cyclic graphs in the tree
-  4. Refactored =each= method to prevent stack errors while navigating
+  4. Fix (partial) for preventing cyclic graphs in the tree
+  5. Refactored =each= method to prevent stack errors while navigating
      deep trees
-  5. Check to ensure that the added node's name is unique to the destination tree
-  6. Structural changes in the code to refactor out the non-core functions into modules
+  6. Check to ensure that the added node's name is unique to the destination tree
+  7. Fix for the issue where tree traversal would fail if the binary-tree's left child was nil
+  8. Fixed the return type for the iterator methods (each, postordered_each, breadth_each, etc.). They now return an
+     Enumerator if *no* block is provided, or else return the receiver node itself, if a block *was* provided. This is
+     consistent with how Ruby's standard collections work
+  9. Structural changes in the code to refactor out the non-core functions into modules
+  10. Massive documentation updates
+  11. Addition of the examples directory (only a bare-bones placeholder for now, with the basic example code)
+  12. Ability to run the examples from the Rakefile
+  13. Various bundler and travis-ci related changes
+
 
 *** DONE Fix the stack exhaustion issue due to deep recursion on very large unbalanced trees :ARCHIVE:
     CLOSED: [2013-12-28 Sat 10:59]
@@ -137,49 +147,15 @@
     - [X] [[file:lib/tree.rb::def%20each(][each]]
     - [X] [[file:lib/tree.rb::def%20postordered_each][postordered_each]]
 
-*** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child    :Partial:
-    [[Issue:5][Issue #5.]]
-
-    This is a subtle problem to resolve.  The specific case of a node
-    being added to itself is trivial to resolve, and the fix has been
-    put in for 0.8.3.
-
-    However, the general problem is that in the current code, a node
-    can be added as a child to any portion of the tree down the
-    hierarchy (e.g., as a grandchild), which will need a more thorough
-    detection code in the ~TreeNode#add~ method, if it is to be done at
-    runtime.
-
-    The issue is really to prevent the tree becoming a graph.  Note
-    that the issue is with duplicate nodes, /not/ duplicated content.
-
-    A few options exist:
-    1. Perform a runtime check in the ~TreeNode#add~ method.  This will
-       cause a performance hit as the tree becomes larger.
-    2. Allow the additions to go through, but create a new ~validate~
-       method that checks for such cycles.
-    3. Create separate configuration object which can be attached to
-       the root of the tree, which allows per-tree configuration of
-       the behavior - this does allow for the user to take control,
-       but also introduces complications during tree mergers and
-       spitting subtrees.
-    4. Create a registry (to be maintained at the root?) of all nodes,
-       and use this for validating the node additions (and preventing
-       duplicates).  This needs to be a hash (to allow O(1) access),
-       and will sacrifice memory.  There might be a need to
-       restructure the internals to make better use of memory.
-
-*** STARTED Extract non-essential methods from Tree::TreeNode into separate files.
+*** DONE Extract non-essential methods from Tree::TreeNode into separate files.           :ARCHIVE:
+    CLOSED: [2013-12-31 Tue 21:55]
     - [X] Handling of CamelCase methods
     - [X] Convertion to and from [[http://flori.github.com/json/][JSON]]
-    - [ ] The merge feature
+    - [X] The merge feature
     - [X] The metrics measurements
 
-
-*** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
-
-*** TODO Fix the documentation strings for the methods (the Yard attributes)
-    DEADLINE: <2013-12-28 Sat>
+*** DONE Fix the documentation strings for the methods (the Yard attributes)              :ARCHIVE:
+    CLOSED: [2013-12-31 Tue 21:55] DEADLINE: <2013-12-28 Sat>
 
 *** DONE Implement an `inordered_each` method for the [[file:lib/tree/b][BinaryTree]]                          :ARCHIVE:
     CLOSED: [2013-12-28 Sat 16:32] DEADLINE: <2013-12-28 Sat>
@@ -208,9 +184,47 @@
     as root's root (no pun intended) makes accessing the root from anywhere in the tree much easier.
 
 
+* Next Release
+** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child     :Partial:
+   [[Issue:5][Issue #5.]]
+
+   This is a subtle problem to resolve.  The specific case of a node
+   being added to itself is trivial to resolve, and the fix has been
+   put in for 0.8.3.
+
+   However, the general problem is that in the current code, a node
+   can be added as a child to any portion of the tree down the
+   hierarchy (e.g., as a grandchild), which will need a more thorough
+   detection code in the ~TreeNode#add~ method, if it is to be done at
+   runtime.
+
+   The issue is really to prevent the tree becoming a graph.  Note
+   that the issue is with duplicate nodes, /not/ duplicated content.
+
+   A few options exist:
+   1. Perform a runtime check in the ~TreeNode#add~ method.  This will
+      cause a performance hit as the tree becomes larger.
+   2. Allow the additions to go through, but create a new ~validate~
+      method that checks for such cycles.
+   3. Create separate configuration object which can be attached to
+      the root of the tree, which allows per-tree configuration of
+      the behavior - this does allow for the user to take control,
+      but also introduces complications during tree mergers and
+      spitting subtrees.
+   4. Create a registry (to be maintained at the root?) of all nodes,
+      and use this for validating the node additions (and preventing
+      duplicates).  This needs to be a hash (to allow O(1) access),
+      and will sacrifice memory.  There might be a need to
+      restructure the internals to make better use of memory.
+** TODO Expand the examples section, and add supporting documentation
+** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
+
+
+
 
 * Unplanned / Not assigned to any release
 *** TODO Create a cycle-detection/validation mechanism to prevent cyclic graphs of nodes.
+*** TODO Revert the forced install of rubygem 2.1.11 from [[file:.travis.yml][.travis.yml]]
 *** TODO Create a generic validation method to check for various issues in the created tree.
 *** TODO Add a FAQ document to the project.
 *** TODO The semantic of length is probably unclear.  Should return the node_depth instead (or remove the method)

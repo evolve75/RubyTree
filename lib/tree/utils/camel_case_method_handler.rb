@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2012-08-25 22:04:14 anupam>
+# Time-stamp: <2013-12-31 20:48:13 anupam>
 #
-# Copyright (C) 2012 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -43,6 +43,7 @@ module Tree::Utils
   # invocation of such methods to the snake_case equivalents.
   module CamelCaseMethodHandler
     def self.included(base)
+      # @!visibility private
       # Allow the deprecated CamelCase method names.  Display a warning.
       # :nodoc:
       def method_missing(meth, *args, &blk)

@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2013-12-28 16:22:56 anupam>
+# Time-stamp: <2013-12-31 21:45:35 anupam>
 #
 # Copyright (C) 2013 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -43,12 +43,14 @@ module Tree::Utils
   module TreeMetricsHandler
     def self.included(base)
 
+      # @!group Metrics and Measures
+
       # @!attribute [r] size
-      # Total number of nodes in this (sub)tree, including the receiver node.
+      # Total number of nodes in this (sub)tree, including this node.
       #
       # Size of the tree is defined as:
       #
-      # Size:: Total number nodes in the subtree including the receiver node.
+      # Size:: Total number nodes in the subtree including this node.
       #
       # @return [Integer] Total number of nodes in this (sub)tree.
       def size
@@ -67,7 +69,7 @@ module Tree::Utils
       end
 
       # @!attribute [r] node_height
-      # Height of the (sub)tree from the receiver node.  Height of a node is defined as:
+      # Height of the (sub)tree from this node.  Height of a node is defined as:
       #
       # Height:: Length of the longest downward path to a leaf from the node.
       #
@@ -81,7 +83,7 @@ module Tree::Utils
       end
 
       # @!attribute [r] node_depth
-      # Depth of the receiver node in its tree.  Depth of a node is defined as:
+      # Depth of this node in its tree.  Depth of a node is defined as:
       #
       # Depth:: Length of the node's path to its root.  Depth of a root node is zero.
       #
@@ -105,7 +107,7 @@ module Tree::Utils
       end
 
       # @!attribute [r] depth
-      # Depth of the tree from the receiver node. A single leaf node has a depth of 1.
+      # Depth of the tree from this node. A single leaf node has a depth of 1.
       #
       # This method is *DEPRECATED* and may be removed in the subsequent releases.
       # Note that the value returned by this method is actually the:
@@ -127,7 +129,7 @@ module Tree::Utils
       end
 
       # @!attribute [r] breadth
-      # Breadth of the tree at the receiver node's level.
+      # Breadth of the tree at this node's level.
       # A single node without siblings has a breadth of 1.
       #
       # Breadth is defined to be:
@@ -140,7 +142,7 @@ module Tree::Utils
       end
 
       # @!attribute [r] in_degree
-      # The incoming edge-count of the receiver node.
+      # The incoming edge-count of this node.
       #
       # In-degree is defined as:
       # In-degree:: Number of edges arriving at the node (0 for root, 1 for all other nodes)
@@ -154,7 +156,7 @@ module Tree::Utils
       end
 
       # @!attribute [r] out_degree
-      # The outgoing edge-count of the receiver node.
+      # The outgoing edge-count of this node.
       #
       # Out-degree is defined as:
       # Out-degree:: Number of edges leaving the node (zero for leafs)
@@ -164,6 +166,7 @@ module Tree::Utils
         is_leaf? ? 0 : children.size
       end
 
+      # @!endgroup
     end # self.included
   end
 end

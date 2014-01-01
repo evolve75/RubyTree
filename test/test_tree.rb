@@ -145,7 +145,6 @@ module TestTree
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
 
-
       assert_equal(first_node <=> nil, +1)
       assert_equal(first_node <=> second_node, -1)
 
@@ -162,6 +161,24 @@ module TestTree
       assert_equal(first_node <=> second_node, 0)
 
       StandardWarning.enable
+    end
+
+    # Test the inclusion of Comparable
+    def test_is_comparable
+      nodeA = Tree::TreeNode.new("NodeA", "Some Content")
+      nodeB = Tree::TreeNode.new("NodeB", "Some Content")
+      nodeC = Tree::TreeNode.new("NodeC", "Some Content")
+
+      # Check if the nodes compare correctly
+      assert(nodeA <  nodeB, "Node A is lexically 'less than' node B")
+      assert(nodeA <= nodeB, "Node A is lexically 'less than' node B")
+      assert(nodeB >  nodeA, "Node B is lexically 'greater than' node A")
+      assert(nodeB >= nodeA, "Node B is lexically 'greater than' node A")
+
+      assert(!(nodeA == nodeB), "Node A and Node B are not equal")
+      assert(nodeB.between?(nodeA, nodeC), "Node B is lexically between node A and node C")
+
+
     end
 
     # Test the to_s method.  This is probably a little fragile right now.

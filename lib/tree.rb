@@ -44,17 +44,18 @@ require 'tree/version'
 require 'tree/utils/metrics_methods'
 require 'tree/utils/camel_case_method_handler'
 require 'tree/utils/json_converter'
+require 'tree/utils/tree_merge_handler'
 
-# This module provides a TreeNode class which is the primary class for representing
-# nodes in the tree.
+# This module provides a *TreeNode* class whose instances are the primary objects
+# for representing nodes in the tree.
 #
-# This module also acts as the namespace for all classes in the RubyTree package.
+# This module also acts as the namespace for all classes in the *RubyTree* package.
 module Tree
 
   # == TreeNode Class Description
   #
   # This class models the nodes for an *N-ary* tree data structure. The
-  # nodes are *named* and have a place-holder for the node data (i.e.,
+  # nodes are *named*, and have a place-holder for the node data (i.e.,
   # _content_ of the node). The node names are required to be *unique*
   # within the tree (as the name is implicitly used as an _ID_ within
   # the data structure).
@@ -88,9 +89,13 @@ module Tree
   # @author Anupam Sengupta
   class TreeNode
     include Enumerable
+    include Comparable
     include Tree::Utils::TreeMetricsHandler
     include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
+    include Tree::Utils::TreeMergeHandler
+
+    # @!group Core Attributes
 
     # @!attribute [r] name
     #
@@ -108,7 +113,6 @@ module Tree
     attr_reader   :name
 
     # @!attribute [rw] content
-    #
     # Content of this node.  Can be +nil+.  Note that there is no
     # uniqueness constraint related to this attribute.
     #
@@ -116,9 +120,77 @@ module Tree
     attr_accessor :content
 
     # @!attribute [r] parent
-    #
     # Parent of this node.  Will be +nil+ for a root node.
     attr_reader   :parent
+
+    # @!attribute [r] root
+    # Root node for the (sub)tree to which this node belongs.
+    # A root node's root is itself.
+    #
+    # @return [Tree::TreeNode] Root of the (sub)tree.
+    def root
+      root = self
+      root = root.parent while !root.is_root?
+      root
+    end
+
+    # @!attribute [r] is_root?
+    # Returns +true+ if this is a root node.  Note that
+    # orphaned children will also be reported as root nodes.
+    #
+    # @return [Boolean] +true+ if this is a root node.
+    def is_root?
+      @parent == nil
+    end
+
+    # @!attribute [r] has_content?
+    # +true+ if this node has content.
+    #
+    # @return [Boolean] +true+ if the node has content.
+    def has_content?
+      @content != nil
+    end
+
+    # @!attribute [r] is_leaf?
+    # +true+ if this node is a _leaf_ - i.e., one without
+    # any children.
+    #
+    # @return [Boolean] +true+ if this is a leaf node.
+    #
+    # @see #has_children?
+    def is_leaf?
+      !has_children?
+    end
+
+    # @!attribute [r] parentage
+    # An array of ancestors of this node in reversed order
+    # (the first element is the immediate parent of this node).
+    #
+    # Returns +nil+ if this is a root node.
+    #
+    # @return [Array<Tree::TreeNode>] An array of ancestors of this node
+    # @return [nil] if this is a root node.
+    def parentage
+      return nil if is_root?
+
+      parentage_array = []
+      prev_parent = self.parent
+      while (prev_parent)
+        parentage_array << prev_parent
+        prev_parent = prev_parent.parent
+      end
+      parentage_array
+    end
+
+    # @!attribute [r] has_children?
+    # +true+ if the this node has any child node.
+    #
+    # @return [Boolean] +true+ if child nodes exist.
+    #
+    # @see #is_leaf?
+    def has_children?
+      @children.length != 0
+    end
 
     # @!group Node Creation
 
@@ -133,10 +205,10 @@ module Tree
     #
     # @raise [ArgumentError] Raised if the node name is empty.
     #
-    # @note If the name is an +Integer+, then the semantics of +TreeNode[]+ can
-    #   be surprising, as an +Integer+ parameter to that method normally acts
-    #   as an index to the <em>children array</em>, and follows the
-    #   <em>zero-based</em> indexing convention.
+    # @note If the name is an +Integer+, then the semantics of {#[]} access
+    #   method can be surprising, as an +Integer+ parameter to that method
+    #   normally acts as an index to the children array, and follows the
+    #   _zero-based_ indexing convention.
     #
     # @see #[]
     def initialize(name, content = nil)
@@ -153,20 +225,20 @@ module Tree
       @children = []
     end
 
-    # Returns a copy of the receiver node, with its parent and children links removed.
+    # Returns a copy of this node, with its parent and children links removed.
     # The original node remains attached to its tree.
     #
-    # @return [Tree::TreeNode] A copy of the receiver node.
+    # @return [Tree::TreeNode] A copy of this node.
     def detached_copy
       Tree::TreeNode.new(@name, @content ? @content.clone : nil)
     end
 
-    # Returns a copy of entire (sub-)tree from receiver node.
+    # Returns a copy of entire (sub-)tree from this node.
     #
     # @author Vincenzo Farruggia
     # @since 0.8.0
     #
-    # @return [Tree::TreeNode] A copy of (sub-)tree from receiver node.
+    # @return [Tree::TreeNode] A copy of (sub-)tree from this node.
     def detached_subtree_copy
       new_node = detached_copy
       children { |child| new_node << child.detached_subtree_copy }
@@ -178,9 +250,52 @@ module Tree
     # @see Tree::TreeNode#detached_subtree_copy
     alias :dup :detached_subtree_copy
 
+    # Returns a {marshal-dump}[http://ruby-doc.org/core-1.8.7/Marshal.html]
+    # represention of the (sub)tree rooted at this node.
+    #
+    def marshal_dump
+      self.collect { |node| node.create_dump_rep }
+    end
+
+    # Creates a dump representation of this node and returns the same as
+    # a hash.
+    def create_dump_rep           # :nodoc:
+      { :name => @name, :parent => (is_root? ? nil : @parent.name),  :content => Marshal.dump(@content)}
+    end
+
+    protected :create_dump_rep
+
+    # Loads a marshalled dump of a tree and returns the root node of the
+    # reconstructed tree. See the
+    # {Marshal}[http://ruby-doc.org/core-1.8.7/Marshal.html] class for
+    # additional details.
+    #
+    #
+    # @todo This method probably should be a class method.  It currently clobbers self
+    #       and makes itself the root.
+    #
+    def marshal_load(dumped_tree_array)
+      nodes = { }
+      dumped_tree_array.each do |node_hash|
+        name        = node_hash[:name]
+        parent_name = node_hash[:parent]
+        content     = Marshal.load(node_hash[:content])
+
+        if parent_name then
+          nodes[name] = current_node = Tree::TreeNode.new(name, content)
+          nodes[parent_name].add current_node
+        else
+          # This is the root node, hence initialize self.
+          initialize(name, content)
+
+          nodes[name] = self    # Add self to the list of nodes
+        end
+      end
+    end
+
     # @!endgroup
 
-    # Returns string representation of the receiver node.
+    # Returns string representation of this node.
     # This method is primarily meant for debugging purposes.
     #
     # @return [String] A string representation of the node.
@@ -190,37 +305,6 @@ module Tree
         " Parent: " + (is_root?()  ? "<None>" : @parent.name.to_s) +
         " Children: #{@children.length}" +
         " Total Nodes: #{size()}"
-    end
-
-    # @!attribute [r] parentage
-    # An array of ancestors of the receiver node in reversed order
-    # (the first element is the immediate parent of the receiver).
-    #
-    # Returns +nil+ if the receiver is a root node.
-    #
-    # @return [Array<Tree::TreeNode>] An array of ancestors of the receiver node
-    # @return [nil] if this is a root node.
-    def parentage
-      return nil if is_root?
-
-      parentage_array = []
-      prev_parent = self.parent
-      while (prev_parent)
-        parentage_array << prev_parent
-        prev_parent = prev_parent.parent
-      end
-
-      parentage_array
-    end
-
-    # Protected method to set the parent node for the receiver node.
-    # This method should *NOT* be invoked by client code.
-    #
-    # @param [Tree::TreeNode] parent The parent node.
-    #
-    # @return [Tree::TreeNode] The parent node.
-    def parent=(parent)         # :nodoc:
-      @parent = parent
     end
 
     # @!group Structure Modification
@@ -242,15 +326,15 @@ module Tree
       add(child)
     end
 
-    # Adds the specified child node to the receiver node.
+    # Adds the specified child node to this node.
     #
-    # This method can also be used for *grafting* a subtree into the receiver
+    # This method can also be used for *grafting* a subtree into this
     # node's tree, if the specified child node is the root of a subtree (i.e.,
     # has child nodes under it).
     #
-    # The receiver node becomes parent of the node passed in as the argument, and
+    # this node becomes parent of the node passed in as the argument, and
     # the child is added as the last child ("right most") in the current set of
-    # children of the receiver node.
+    # children of this node.
     #
     # Additionally you can specify a insert position. The new node will be inserted
     # BEFORE that position. If you don't specify any position the node will be
@@ -291,7 +375,16 @@ module Tree
       return child
     end
 
-    # Removes the specified child node from the receiver node.
+    # Return a range of valid insertion positions.  Used in the #add method.
+    def insertion_range
+      max = @children.size
+      min = -(max+1)
+      min..max
+    end
+
+    private :insertion_range
+
+    # Removes the specified child node from this node.
     #
     # This method can also be used for *pruning* a sub-tree, in cases where the removed child node is
     # the root of the sub-tree to be pruned.
@@ -314,21 +407,33 @@ module Tree
       child
     end
 
-    # Removes the receiver node from its parent.  The receiver node becomes the new root for its subtree.
+    # Protected method to set the parent node for this node.
+    # This method should *NOT* be invoked by client code.
+    #
+    # @param [Tree::TreeNode] parent The parent node.
+    #
+    # @return [Tree::TreeNode] The parent node.
+    def parent=(parent)         # :nodoc:
+      @parent = parent
+    end
+
+    protected :parent=
+
+    # Removes this node from its parent. This node becomes the new root for its subtree.
     #
     # If this is the root node, then does nothing.
     #
-    # @return [Tree:TreeNode] +self+ (the removed receiver node) if the operation is successful, +nil+ otherwise.
+    # @return [Tree:TreeNode] +self+ (the removed node) if the operation is successful, +nil+ otherwise.
     #
     # @see #remove_all!
     def remove_from_parent!
       @parent.remove!(self) unless is_root?
     end
 
-    # Removes all children from the receiver node.  If an indepedent reference exists to the child
+    # Removes all children from this node.  If an independent reference exists to the child
     # nodes, then these child nodes report themselves as roots after this operation.
     #
-    # @return [Tree::TreeNode] The receiver node (+self+)
+    # @return [Tree::TreeNode] this node (+self+)
     #
     # @see #remove!
     # @see #remove_from_parent!
@@ -340,182 +445,26 @@ module Tree
       self
     end
 
-    # Returns +true+ if the receiver node has content.
-    #
-    # @return [Boolean] +true+ if the node has content.
-    def has_content?
-      @content != nil
-    end
-
-    # Protected method which sets the receiver node as a root node.
+    # Protected method which sets this node as a root node.
     #
     # @return +nil+.
     def set_as_root!              # :nodoc:
       @parent = nil
     end
 
+    protected :set_as_root!
+
+    # Freezes all nodes in the (sub)tree rooted at this node.
+    #
+    # The nodes become immutable after this operation.  In effect, the entire tree's
+    # structure and contents become _read-only_ and cannot be changed.
+    def freeze_tree!
+      each {|node| node.freeze}
+    end
+
     # @!endgroup
 
-    # Returns +true+ if the receiver is a root node.  Note that
-    # orphaned children will also be reported as root nodes.
-    #
-    # @return [Boolean] +true+ if this is a root node.
-    def is_root?
-      @parent == nil
-    end
-
-    # Returns +true+ if the receiver node has any child node.
-    #
-    # @return [Boolean] +true+ if child nodes exist.
-    #
-    # @see #is_leaf?
-    def has_children?
-      @children.length != 0
-    end
-
-    # @!attribute [r] is_leaf?
-    # Returns +true+ if the receiver node is a 'leaf' - i.e., one without
-    # any children.
-    #
-    # @return [Boolean] +true+ if this is a leaf node.
-    #
-    # @see #has_children?
-    def is_leaf?
-      !has_children?
-    end
-
-    # @!attribute [rw] children
-    # An array of all the immediate children of the receiver
-    # node.  The child nodes are ordered "left-to-right" in the
-    # returned array.
-    #
-    # If a block is given, yields each child node to the block
-    # traversing from left to right.
-    #
-    # @yieldparam child [Tree::TreeNode] Each child node.
-    #
-    # @return [Tree::TreeNode] This node, if a block is given
-    # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
-    def children
-      if block_given?
-        @children.each {|child| yield child}
-        return self
-      else
-        return @children.clone
-      end
-    end
-
-    # @!attribute [rw] first_child
-    # First child of the receiver node.
-    # Will be +nil+ if no children are present.
-    #
-    # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
-    def first_child
-      children.first
-    end
-
-    # @!attribute [rw] last_child
-    # Last child of the receiver node.
-    # Will be +nil+ if no children are present.
-    #
-    # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
-    def last_child
-      children.last
-    end
-
     # @!group Tree Traversal
-
-    # Traverses each node (including the receiver node) of the (sub)tree rooted at this node
-    # by yielding the nodes to the specified block.
-    #
-    # The traversal is *depth-first* and from *left-to-right* in pre-ordered sequence.
-    #
-    # @yieldparam node [Tree::TreeNode] Each node.
-    #
-    # @see #preordered_each
-    # @see #breadth_each
-    #
-    # @return [Tree::TreeNode] this node, if a block if given
-    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
-    def each(&block)             # :yields: node
-
-     return self.to_enum unless block_given?
-
-      node_stack = [self]   # Start with this node
-
-      until node_stack.empty?
-        current = node_stack.shift    # Pop the top-most node
-        if current                    # The node might be 'nil' (esp. for binary trees)
-          yield current               # and process it
-          # Stack children of the current node at top of the stack
-          node_stack = current.children.clone.concat(node_stack)
-        end
-      end
-
-      return self if block_given?
-    end
-
-    # Traverses the (sub)tree rooted at the receiver node in pre-ordered sequence.
-    # This is a synonym of {Tree::TreeNode#each}.
-    #
-    # @yieldparam node [Tree::TreeNode] Each node.
-    #
-    # @see #each
-    # @see #breadth_each
-    #
-    # @return [Tree::TreeNode] this node, if a block if given
-    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
-    def preordered_each(&block)  # :yields: node
-      each(&block)
-    end
-
-    # Performs breadth-first traversal of the (sub)tree rooted at the receiver node. The
-    # traversal at a given level is from *left-to-right*.  The receiver node itself is the first
-    # node to be traversed.
-    #
-    # @yieldparam node [Tree::TreeNode] Each node.
-    #
-    # @see #preordered_each
-    # @see #breadth_each
-    #
-    # @return [Tree::TreeNode] this node, if a block if given
-    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
-    def breadth_each(&block)
-      return self.to_enum unless block_given?
-
-      node_queue = [self]       # Create a queue with self as the initial entry
-
-      # Use a queue to do breadth traversal
-      until node_queue.empty?
-        node_to_traverse = node_queue.shift
-        yield node_to_traverse
-        # Enqueue the children from left to right.
-        node_to_traverse.children { |child| node_queue.push child }
-      end
-
-      return self if block_given?
-    end
-
-    # Yields every leaf node of the (sub)tree rooted at the receiver node to the specified block.
-    #
-    # May yield this node as well if this is a leaf node.
-    # Leaf traversal is *depth-first* and *left-to-right*.
-    #
-    # @yieldparam node [Tree::TreeNode] Each leaf node.
-    #
-    # @see #each
-    # @see #breadth_each
-    #
-    # @return [Tree::TreeNode] this node, if a block if given
-    # @return [Array<Tree::TreeNode>] An array of the leaf nodes
-    def each_leaf &block
-      if block_given?
-        self.each { |node| yield(node) if node.is_leaf? }
-        return self
-      else
-        self.select { |node| node.is_leaf?}
-      end
-    end
 
     # Returns the requested node from the set of immediate children.
     #
@@ -562,7 +511,51 @@ module Tree
       end
     end
 
-    # Traverses the (sub)tree rooted at the receiver node in post-ordered sequence.
+    # Traverses each node (including this node) of the (sub)tree rooted at this node
+    # by yielding the nodes to the specified block.
+    #
+    # The traversal is *depth-first* and from *left-to-right* in pre-ordered sequence.
+    #
+    # @yieldparam node [Tree::TreeNode] Each node.
+    #
+    # @see #preordered_each
+    # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    def each(&block)             # :yields: node
+
+     return self.to_enum unless block_given?
+
+      node_stack = [self]   # Start with this node
+
+      until node_stack.empty?
+        current = node_stack.shift    # Pop the top-most node
+        if current                    # The node might be 'nil' (esp. for binary trees)
+          yield current               # and process it
+          # Stack children of the current node at top of the stack
+          node_stack = current.children.clone.concat(node_stack)
+        end
+      end
+
+      return self if block_given?
+    end
+
+    # Traverses the (sub)tree rooted at this node in pre-ordered sequence.
+    # This is a synonym of {Tree::TreeNode#each}.
+    #
+    # @yieldparam node [Tree::TreeNode] Each node.
+    #
+    # @see #each
+    # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    def preordered_each(&block)  # :yields: node
+      each(&block)
+    end
+
+    # Traverses the (sub)tree rooted at this node in post-ordered sequence.
     #
     # @yieldparam node [Tree::TreeNode] Each node.
     #
@@ -595,44 +588,100 @@ module Tree
       return self if block_given?
     end
 
-    # @!endgroup
-
-    # Pretty prints the (sub)tree rooted at the receiver node.
+    # Performs breadth-first traversal of the (sub)tree rooted at this node. The
+    # traversal at a given level is from *left-to-right*.  this node itself is the first
+    # node to be traversed.
     #
-    # @param [Integer] level The indentation level (4 spaces) to start with.
-    def print_tree(level = 0)
-      if is_root?
-        print "*"
-      else
-        print "|" unless parent.is_last_sibling?
-        print(' ' * (level - 1) * 4)
-        print(is_last_sibling? ? "+" : "|")
-        print "---"
-        print(has_children? ? "+" : ">")
+    # @yieldparam node [Tree::TreeNode] Each node.
+    #
+    # @see #preordered_each
+    # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    def breadth_each(&block)
+      return self.to_enum unless block_given?
+
+      node_queue = [self]       # Create a queue with self as the initial entry
+
+      # Use a queue to do breadth traversal
+      until node_queue.empty?
+        node_to_traverse = node_queue.shift
+        yield node_to_traverse
+        # Enqueue the children from left to right.
+        node_to_traverse.children { |child| node_queue.push child }
       end
 
-      puts " #{name}"
-
-      children { |child| child.print_tree(level + 1) if child } # Child might be 'nil'
+      return self if block_given?
     end
 
-    # @!attribute [rw] root
-    # root node for the (sub)tree to which the receiver node belongs.
-    # A root node's root is itself.
+    # An array of all the immediate children of this node. The child
+    # nodes are ordered "left-to-right" in the returned array.
     #
-    # @return [Tree::TreeNode] Root of the (sub)tree.
-    def root
-      root = self
-      root = root.parent while !root.is_root?
-      root
+    # If a block is given, yields each child node to the block
+    # traversing from left to right.
+    #
+    # @yieldparam child [Tree::TreeNode] Each child node.
+    #
+    # @return [Tree::TreeNode] This node, if a block is given
+    # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
+    def children
+      if block_given?
+        @children.each {|child| yield child}
+        return self
+      else
+        return @children.clone
+      end
     end
 
-    # @!attribute [rw] first_sibling
-    # First sibling of the receiver node. If this is the root node, then returns
+    # Yields every leaf node of the (sub)tree rooted at this node to the specified block.
+    #
+    # May yield this node as well if this is a leaf node.
+    # Leaf traversal is *depth-first* and *left-to-right*.
+    #
+    # @yieldparam node [Tree::TreeNode] Each leaf node.
+    #
+    # @see #each
+    # @see #breadth_each
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Array<Tree::TreeNode>] An array of the leaf nodes
+    def each_leaf &block
+      if block_given?
+        self.each { |node| yield(node) if node.is_leaf? }
+        return self
+      else
+        self.select { |node| node.is_leaf?}
+      end
+    end
+
+    # @!endgroup
+
+    # @!group Navigating the Child Nodes
+
+    # First child of this node.
+    # Will be +nil+ if no children are present.
+    #
+    # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
+    def first_child
+      children.first
+    end
+
+    # Last child of this node.
+    # Will be +nil+ if no children are present.
+    #
+    # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
+    def last_child
+      children.last
+    end
+
+    # @!group Navigating the Sibling Nodes
+
+    # First sibling of this node. If this is the root node, then returns
     # itself.
     #
     # 'First' sibling is defined as follows:
-    # First sibling:: The left-most child of the receiver's parent, which may be the receiver itself
+    # First sibling:: The left-most child of this node's parent, which may be this node itself
     #
     # @return [Tree::TreeNode] The first sibling node.
     #
@@ -642,7 +691,7 @@ module Tree
       is_root? ? self : parent.children.first
     end
 
-    # Returns +true+ if the receiver node is the first sibling at its level.
+    # Returns +true+ if this node is the first sibling at its level.
     #
     # @return [Boolean] +true+ if this is the first sibling.
     #
@@ -652,12 +701,11 @@ module Tree
       first_sibling == self
     end
 
-    # @!attribute [rw] last_sibling
-    # Last sibling of the receiver node.  If this is the root node, then returns
+    # Last sibling of this node.  If this is the root node, then returns
     # itself.
     #
     # 'Last' sibling is defined as follows:
-    # Last sibling:: The right-most child of the receiver's parent, which may be the receiver itself
+    # Last sibling:: The right-most child of this node's parent, which may be this node itself
     #
     # @return [Tree::TreeNode] The last sibling node.
     #
@@ -667,7 +715,7 @@ module Tree
       is_root? ? self : parent.children.last
     end
 
-    # Returns +true+ if the receiver node is the last sibling at its level.
+    # Returns +true+ if this node is the last sibling at its level.
     #
     # @return [Boolean] +true+ if this is the last sibling.
     #
@@ -677,8 +725,7 @@ module Tree
       last_sibling == self
     end
 
-    # @!attribute [rw] siblings
-    # An array of siblings for the receiver node.  The receiver node is excluded.
+    # An array of siblings for this node. This node is excluded.
     #
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
@@ -702,7 +749,7 @@ module Tree
       end
     end
 
-    # Returns +true+ if the receiver node is the only child of its parent.
+    # +true+ if this node is the only child of its parent.
     #
     # As a special case, a root node will always return +true+.
     #
@@ -713,11 +760,10 @@ module Tree
       is_root? ? true : parent.children.size == 1
     end
 
-    # @!attribute [rw] next_sibling
-    # Next sibling for the receiver node.
-    # The 'next' node is defined as the node to right of the receiver node.
+    # Next sibling for this node.
+    # The _next_ node is defined as the node to right of this node.
     #
-    # Will return +nil+ if no subsequent node is present, or if the receiver is a root node.
+    # Will return +nil+ if no subsequent node is present, or if this is a root node.
     #
     # @return [Tree::treeNode] the next sibling node, if present.
     #
@@ -730,11 +776,10 @@ module Tree
       parent.children.at(myidx + 1) if myidx
     end
 
-    # @!attribute [rw] previous_sibling
-    # Previous sibling of the receiver node.
-    # 'Previous' node is defined to be the node to left of the receiver node.
+    # Previous sibling of this node.
+    # _Previous_ node is defined to be the node to left of this node.
     #
-    # Will return +nil+ if no predecessor node is present, or if the receiver is a root node.
+    # Will return +nil+ if no predecessor node is present, or if this is a root node.
     #
     # @return [Tree::treeNode] the previous sibling node, if present.
     #
@@ -747,35 +792,7 @@ module Tree
       parent.children.at(myidx - 1) if myidx && myidx > 0
     end
 
-    # Merge two trees that share the same root node. Returns a new tree containing the
-    # contents of the merge between other_tree and self. Duplicate nodes (coming from
-    # other_tree) will NOT be overwritten in self.
-    #
-    # @author Darren Oakley (https://github.com/dazoakley)
-    #
-    # @param [Tree::TreeNode] other_tree The other tree to merge with.
-    # @return [Tree::TreeNode] the resulting tree following the merge.
-    #
-    # @raise [TypeError] This exception is raised if other_tree is not a Tree::TreeNode.
-    # @raise [ArgumentError] This exception is raised if other_tree does not have the same root node as self.
-    def merge( other_tree )
-      check_merge_prerequisites( other_tree )
-      new_tree = merge_trees( self.root.dup, other_tree.root )
-    end
-
-    # Merge in another tree that shares the same root node. Duplicate nodes (coming from
-    # other_tree) will NOT be overwritten in self.
-    #
-    # @author Darren Oakley (https://github.com/dazoakley)
-    #
-    # @param [Tree::TreeNode] other_tree The other tree to merge with.
-    #
-    # @raise [TypeError] This exception is raised if other_tree is not a Tree::TreeNode.
-    # @raise [ArgumentError] This exception is raised if other_tree does not have the same root node as self.
-    def merge!( other_tree )
-      check_merge_prerequisites( other_tree )
-      merge_trees( self.root, other_tree.root )
-    end
+    # @!endgroup
 
     # Provides a comparision operation for the nodes.
     #
@@ -789,98 +806,23 @@ module Tree
       self.name <=> other.name
     end
 
-    # Freezes all nodes in the (sub)tree rooted at the receiver node.
+    # Pretty prints the (sub)tree rooted at this node.
     #
-    # The nodes become immutable after this operation.  In effect, the entire tree's
-    # structure and contents become _read-only_ and cannot be changed.
-    def freeze_tree!
-      each {|node| node.freeze}
-    end
-
-    # Returns a marshal-dump represention of the (sub)tree rooted at the receiver node.
-    def marshal_dump
-      self.collect { |node| node.create_dump_rep }
-    end
-
-    # Creates a dump representation of the receiver node and returns the same as a hash.
-    def create_dump_rep           # :nodoc:
-      { :name => @name, :parent => (is_root? ? nil : @parent.name),  :content => Marshal.dump(@content)}
-    end
-
-    # Loads a marshalled dump of a tree and returns the root node of the
-    # reconstructed tree. See the Marshal class for additional details.
-    #
-    #
-    # @todo This method probably should be a class method.  It currently clobbers self
-    #       and makes itself the root.
-    #
-    def marshal_load(dumped_tree_array)
-      nodes = { }
-      dumped_tree_array.each do |node_hash|
-        name        = node_hash[:name]
-        parent_name = node_hash[:parent]
-        content     = Marshal.load(node_hash[:content])
-
-        if parent_name then
-          nodes[name] = current_node = Tree::TreeNode.new(name, content)
-          nodes[parent_name].add current_node
-        else
-          # This is the root node, hence initialize self.
-          initialize(name, content)
-
-          nodes[name] = self    # Add self to the list of nodes
-        end
-      end
-    end
-
-    protected :parent=, :set_as_root!, :create_dump_rep
-
-    private
-
-    # Return a range of valid insertion positions.  Used in the #add method.
-    def insertion_range
-      max = @children.size
-      min = -(max+1)
-      min..max
-    end
-
-    # Utility function to check that the conditions for a tree merge are met.
-    #
-    # @author Darren Oakley (https://github.com/dazoakley)
-    #
-    # @see #merge
-    # @see #merge!
-    def check_merge_prerequisites( other_tree )
-      unless other_tree.is_a?(Tree::TreeNode)
-        raise TypeError, 'You can only merge in another instance of Tree::TreeNode'
+    # @param [Integer] level The indentation level (4 spaces) to start with.
+    def print_tree(level = 0)
+      if is_root?
+        print "*"
+      else
+        print "|" unless parent.is_last_sibling?
+        print(' ' * (level - 1) * 4)
+        print(is_last_sibling? ? "+" : "|")
+        print "---"
+        print(has_children? ? "+" : ">")
       end
 
-      unless self.root.name == other_tree.root.name
-        raise ArgumentError, 'Unable to merge trees as they do not share the same root'
-      end
-    end
+      puts " #{name}"
 
-    # Utility function to recursivley merge two subtrees.
-    #
-    # @author Darren Oakley (https://github.com/dazoakley)
-    #
-    # @param [Tree::TreeNode] tree1 The target tree to merge into.
-    # @param [Tree::TreeNode] tree2 The donor tree (that will be merged into target).
-    # @raise [Tree::TreeNode] The merged tree.
-    def merge_trees( tree1, tree2 )
-      names1 = tree1.has_children? ? tree1.children.map { |child| child.name } : []
-      names2 = tree2.has_children? ? tree2.children.map { |child| child.name } : []
-
-      names_to_merge = names2 - names1
-      names_to_merge.each do |name|
-        tree1 << tree2[name].detached_subtree_copy
-      end
-
-      tree1.children.each do |child|
-        merge_trees( child, tree2[child.name] ) unless tree2[child.name].nil?
-      end
-
-      return tree1
+      children { |child| child.print_tree(level + 1) if child } # Child might be 'nil'
     end
 
   end

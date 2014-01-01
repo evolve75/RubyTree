@@ -50,13 +50,13 @@ Gem::Specification.new do |s|
                             'API-CHANGES.rdoc', 'History.rdoc']
   s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
 
-  s.add_runtime_dependency 'structured_warnings' , '~> 0.1.4'
-  s.add_runtime_dependency 'json'                , '~> 1.7.6'
+  s.add_runtime_dependency 'structured_warnings' , '~> 0.1'
+  s.add_runtime_dependency 'json'                , '~> 1.8'
 
-  s.add_development_dependency 'rake'            , '~> 10.1'
+  s.add_development_dependency 'bundler'         , '~> 1.5'
   s.add_development_dependency 'rdoc'            , '~> 4.1'
   s.add_development_dependency 'yard'            , '~> 0.8'
-  s.add_development_dependency 'rtagstask'       , '>= 0.0.4'
+  s.add_development_dependency 'rtagstask'       , '~> 0.0'
 
   s.post_install_message = <<-EOF
     ========================================================================

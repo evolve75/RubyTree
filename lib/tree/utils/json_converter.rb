@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2012-08-25 22:55:05 anupam>
+# Time-stamp: <2013-12-31 21:57:42 anupam>
 #
-# Copyright (C) 2012 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -44,6 +44,8 @@ module Tree::Utils::JSONConverter
   def self.included(base)
     base.extend(ClassMethods)
   end
+
+  # @!group Converting to/from JSON
 
   # Creates a JSON ready Hash for the #to_json method.
   #
