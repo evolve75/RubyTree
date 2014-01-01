@@ -1,0 +1,5 @@
+.bundle/
+.yardoc/
+TAGS
+gem_graph.png
+rdoc/
