@@ -2,6 +2,61 @@
 
 = History of Changes
 
+=== 0.9.0 / 2013-12-31
+
+This is a feature and bug-fix release.
+
+==== The Features
+
+* Rubytree now supports +postordered+ traversal via the {Tree::TreeNode#postordered_each} method. Thanks to
+  to {https://github.com/pdecourcel Paul de Courcel} for this.
+
+* The Binary tree now supports +inorder+ traversal via the
+  {Tree::BinaryTreeNode#inordered_each} method.
+
+* Ability to merge in another tree at a chosen node, or merge two trees to
+  create a third tree. Thanks to {https://github.com/dazoakley Darren Oakley}
+  for this ({https://github.com/evolve75/RubyTree/pull/2 pull request #2})
+
+* RubyTree now mixes in the {http://ruby-doc.org/core-1.8.7/Comparable.html
+  Comparable} module.
+
+==== The Fixes
+
+* (Partial) fix for preventing cyclic graphs in the tree
+
+* Refactored the {Tree::TreeNode#each} method to prevent stack errors while navigating
+  deep trees ({https://github.com/evolve75/RubyTree/issues/12 issue #12})
+
+* Check to ensure that the added node's name is unique to the destination tree
+  ({https://github.com/evolve75/RubyTree/pull/9 merge #9}). Thanks to
+  {https://github.com/ysf Youssef Rebahi-Gilbert} for the idea and the initial
+  code
+
+* Fix for {issue 23}[https://github.com/evolve75/RubyTree/issues/23], where the
+  tree traversal on a binary tree would fail if the _left_ child was +nil+
+
+* The traversal methods ({Tree::TreeNode#each},
+  {Tree::TreeNode#preordered_each}, {Tree::TreeNode#postordered_each} and
+  {Tree::TreeNode#breadth_each}) now correctly return an
+  {http://ruby-doc.org/core-1.8.7/Enumerable.html Enumerator} as the
+  return value when no block is given, and return the receiver node if a block was
+  provided. This is consistent with how the standard Ruby collections work.
+
+==== Other Changes
+
+* Structural changes in the code to refactor out the non-core functions into
+  modules (mostly by extracting out non-core code as mixins).
+
+* Significant refactoring of the documentation. The {http://yardoc.org Yardoc}
+  tags are now extensively used.
+
+* Basic support built-in for including example code in the Gem. This will be
+  fully expanded in the next release.
+
+* Various changes to the {http://bundler.io bundler}, {https://travis-ci.org
+  travis-ci} and other Rakefile related changes.
+
 === 0.8.3 / 2012-08-21
 
 This is a primarily a bug-fix release, with some packaging changes.

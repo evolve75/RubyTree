@@ -9,6 +9,23 @@ Note: API level changes are expected to reduce dramatically after the 1.x
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+== Release 0.9.0 Changes
+
+- New post-ordered traversal via the {Tree::TreeNode#postordered_each} method.
+
+- The Binary Tree implementation now supports in-order traversal via the
+  {Tree::BinaryTreeNode#inordered_each} method.
+
+- RubyTree now mixes in the {http://ruby-doc.org/core-1.8.7/Comparable.html
+  Comparable} module.
+
+- The traversal methods ({Tree::TreeNode#each},
+  {Tree::TreeNode#preordered_each}, {Tree::TreeNode#postordered_each} and
+  {Tree::TreeNode#breadth_each}) now correctly return an
+  {http://ruby-doc.org/core-1.8.7/Enumerable.html Enumerator} as the
+  return value when no block is given, and return the receiver node if a block was
+  provided. This is consistent with how the standard Ruby collections work.
+
 == Release 0.8.3 Changes
 
 - {Tree::TreeNode#siblings} will now return an empty array for the root node.
