@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
     <title>RubyTree by evolve75</title>
   </head>
 
@@ -33,157 +33,162 @@
         <section id="main_content">
           <h1>RubyTree</h1>
 
-<h3>Description</h3>
+          <a href="http://badge.fury.io/rb/rubytree">
+            <img src="https://badge.fury.io/rb/rubytree@2x.png"
+                 alt="Gem Version" height="18">
+          </a>
 
-<p>RubyTree is a Ruby implementation of the generic tree data structure.  It
-provides a node-based model to store keyed node-elements in the tree and simple
-APIs to access, modify and traverse the structure.  RubyTree is node-centric,
-where individual nodes on the tree are the primary compositional and structural
-elements.</p>
+          <h3>Description</h3>
 
-<p>This implementation also mixes in the Enumerable module to allow standard access
-to the tree as a collection.</p>
+          <p>RubyTree is a Ruby implementation of the generic tree data structure.  It
+            provides a node-based model to store keyed node-elements in the tree and simple
+            APIs to access, modify and traverse the structure.  RubyTree is node-centric,
+            where individual nodes on the tree are the primary compositional and structural
+            elements.</p>
 
-<h3>Synopsis</h3>
+          <p>This implementation also mixes in the Enumerable module to allow standard access
+            to the tree as a collection.</p>
 
-<p>As an example, the following code-snippet implements this tree structure:</p>
+          <h3>Synopsis</h3>
 
-<pre><code>                +------------+
-                |    ROOT    |
-                +-----+------+
-        +-------------+------------+
-        |                          |
-+-------+-------+          +-------+-------+
-|  CHILD 1      |          |  CHILD 2      |
-+-------+-------+          +---------------+
-        |
-        |
-+-------+-------+
-| GRANDCHILD 1  |
-+---------------+
-</code></pre>
+          <p>As an example, the following code-snippet implements this tree structure:</p>
 
-<div class="highlight"><pre> <span class="c1"># ..... Example starts.</span>
- <span class="nb">require</span> <span class="s1">'tree'</span>                 <span class="c1"># Load the library</span>
+          <pre><code>                +------------+
+              |    ROOT    |
+              +-----+------+
+              +-------------+------------+
+              |                          |
+              +-------+-------+          +-------+-------+
+              |  CHILD 1      |          |  CHILD 2      |
+              +-------+-------+          +---------------+
+              |
+              |
+              +-------+-------+
+              | GRANDCHILD 1  |
+              +---------------+
+          </code></pre>
 
- <span class="c1"># ..... Create the root node first.  Note that every node has a name and an optional content payload.</span>
- <span class="n">root_node</span> <span class="o">=</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"ROOT"</span><span class="p">,</span> <span class="s2">"Root Content"</span><span class="p">)</span>
+          <div class="highlight"><pre> <span class="c1"># ..... Example starts.</span>
+              <span class="nb">require</span> <span class="s1">'tree'</span>                 <span class="c1"># Load the library</span>
 
- <span class="c1"># ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.</span>
- <span class="n">root_node</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"CHILD1"</span><span class="p">,</span> <span class="s2">"Child1 Content"</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"GRANDCHILD1"</span><span class="p">,</span> <span class="s2">"GrandChild1 Content"</span><span class="p">)</span>
- <span class="n">root_node</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"CHILD2"</span><span class="p">,</span> <span class="s2">"Child2 Content"</span><span class="p">)</span>
+              <span class="c1"># ..... Create the root node first.  Note that every node has a name and an optional content payload.</span>
+              <span class="n">root_node</span> <span class="o">=</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"ROOT"</span><span class="p">,</span> <span class="s2">"Root Content"</span><span class="p">)</span>
 
- <span class="c1"># ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.</span>
- <span class="n">root_node</span><span class="o">.</span><span class="n">print_tree</span>
+              <span class="c1"># ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.</span>
+              <span class="n">root_node</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"CHILD1"</span><span class="p">,</span> <span class="s2">"Child1 Content"</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"GRANDCHILD1"</span><span class="p">,</span> <span class="s2">"GrandChild1 Content"</span><span class="p">)</span>
+              <span class="n">root_node</span> <span class="o">&lt;&lt;</span> <span class="no">Tree</span><span class="o">::</span><span class="no">TreeNode</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">"CHILD2"</span><span class="p">,</span> <span class="s2">"Child2 Content"</span><span class="p">)</span>
 
- <span class="c1"># ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.</span>
- <span class="n">child1</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">[</span><span class="s2">"CHILD1"</span><span class="o">]</span>
- <span class="n">grand_child1</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">[</span><span class="s2">"CHILD1"</span><span class="o">][</span><span class="s2">"GRANDCHILD1"</span><span class="o">]</span>
+              <span class="c1"># ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.</span>
+              <span class="n">root_node</span><span class="o">.</span><span class="n">print_tree</span>
 
- <span class="c1"># ..... Lets retrieve siblings of the current node as an array.</span>
- <span class="n">siblings_of_child1</span> <span class="o">=</span> <span class="n">child1</span><span class="o">.</span><span class="n">siblings</span>
+              <span class="c1"># ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.</span>
+              <span class="n">child1</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">[</span><span class="s2">"CHILD1"</span><span class="o">]</span>
+              <span class="n">grand_child1</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">[</span><span class="s2">"CHILD1"</span><span class="o">][</span><span class="s2">"GRANDCHILD1"</span><span class="o">]</span>
 
- <span class="c1"># ..... Lets retrieve immediate children of the root node as an array.</span>
- <span class="n">children_of_root</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">.</span><span class="n">children</span>
+              <span class="c1"># ..... Lets retrieve siblings of the current node as an array.</span>
+              <span class="n">siblings_of_child1</span> <span class="o">=</span> <span class="n">child1</span><span class="o">.</span><span class="n">siblings</span>
 
- <span class="c1"># ..... This is a depth-first and L-to-R pre-ordered traversal.</span>
- <span class="n">root_node</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span> <span class="n">node</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">reverse</span> <span class="p">}</span>
+              <span class="c1"># ..... Lets retrieve immediate children of the root node as an array.</span>
+              <span class="n">children_of_root</span> <span class="o">=</span> <span class="n">root_node</span><span class="o">.</span><span class="n">children</span>
 
- <span class="c1"># ..... Lets remove a child node from the root node.</span>
- <span class="n">root_node</span><span class="o">.</span><span class="n">remove!</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
-</pre></div>
+              <span class="c1"># ..... This is a depth-first and L-to-R pre-ordered traversal.</span>
+              <span class="n">root_node</span><span class="o">.</span><span class="n">each</span> <span class="p">{</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span> <span class="n">node</span><span class="o">.</span><span class="n">content</span><span class="o">.</span><span class="n">reverse</span> <span class="p">}</span>
 
-<h3>Requirements</h3>
+              <span class="c1"># ..... Lets remove a child node from the root node.</span>
+              <span class="n">root_node</span><span class="o">.</span><span class="n">remove!</span><span class="p">(</span><span class="n">child1</span><span class="p">)</span>
+          </pre></div>
 
-<ul>
-<li><p>Ruby 1.8+  (<a href="http://www.ruby-lang.org">http://www.ruby-lang.org</a>)</p></li>
-<li>
-<p>Run-time Dependencies:</p>
+          <h3>Requirements</h3>
 
-<ul>
-<li><a href="http://github.com/schmidt/structured_warnings">structured_warnings</a></li>
-<li>
-<a href="http://yardoc.org">Yard</a> for the documentation</li>
-<li>
-<a href="http://flori.github.com/json">JSON</a> for converting to/from the JSON format</li>
-</ul>
-</li>
-<li>
-<p>Development dependencies (not required for installing the gem):</p>
+          <ul>
+            <li><p>Ruby 1.8+  (<a href="http://www.ruby-lang.org">http://www.ruby-lang.org</a>)</p></li>
+            <li>
+              <p>Run-time Dependencies:</p>
 
-<ul>
-<li><a href="http://seattlerb.rubyforge.org/hoe/Hoe.html">Hoe</a></li>
-<li><a href="http://gemcutter.org/gems/gemcutter">gemcutter</a></li>
-<li><a href="http://codeforpeople.rubyforge.org/rubyforge">Rubyforge</a></li>
-</ul>
-</li>
-</ul><h3>Installation</h3>
+              <ul>
+                <li><a href="http://github.com/schmidt/structured_warnings">structured_warnings</a></li>
+                <li>
+                  <a href="http://yardoc.org">Yard</a> for the documentation</li>
+                <li>
+                  <a href="http://flori.github.com/json">JSON</a> for converting to/from the JSON format</li>
+              </ul>
+            </li>
+            <li>
+              <p>Development dependencies (not required for installing the gem):</p>
 
-<p>Installing RubyTree is simple. Just do:</p>
+              <ul>
+                <li><a href="http://seattlerb.rubyforge.org/hoe/Hoe.html">Hoe</a></li>
+                <li><a href="http://gemcutter.org/gems/gemcutter">gemcutter</a></li>
+                <li><a href="http://codeforpeople.rubyforge.org/rubyforge">Rubyforge</a></li>
+              </ul>
+            </li>
+          </ul><h3>Installation</h3>
 
-<pre><code>$ gem install rubytree
-</code></pre>
+          <p>Installing RubyTree is simple. Just do:</p>
 
-<h3>Documentation</h3>
+          <pre><code>$ gem install rubytree
+          </code></pre>
 
-<p>The main class for is Tree::TreeNode. See the class documentation for an usage
-example.</p>
+          <h3>Documentation</h3>
 
-<p>From a command line/terminal prompt, you can issue the following command to view
-the text mode ri documentation:</p>
+          <p>The main class for is Tree::TreeNode. See the class documentation for an usage
+            example.</p>
 
-<pre><code>$ ri Tree::TreeNode
-</code></pre>
+          <p>From a command line/terminal prompt, you can issue the following command to view
+            the text mode ri documentation:</p>
 
-<p>Documentation for the latest released version is always available at:</p>
+          <pre><code>$ ri Tree::TreeNode
+          </code></pre>
 
-<p><a href="http://rubytree.rubyforge.org/rdoc">http://rubytree.rubyforge.org/rdoc</a></p>
+          <p>Documentation for the latest released version is always available at:</p>
 
-<p>Documentation for the latest git HEAD is available at:</p>
+          <p><a href="http://rubytree.rubyforge.org/rdoc">http://rubytree.rubyforge.org/rdoc</a></p>
 
-<p><a href="http://rdoc.info/projects/evolve75/RubyTree">http://rdoc.info/projects/evolve75/RubyTree</a></p>
+          <p>Documentation for the latest git HEAD is available at:</p>
 
-<p>Note that the documentation is formatted for <a href="http://yardoc.org">Yard</a>.</p>
+          <p><a href="http://rdoc.info/projects/evolve75/RubyTree">http://rdoc.info/projects/evolve75/RubyTree</a></p>
 
-<p>== Acknowledgments</p>
+          <p>Note that the documentation is formatted for <a href="http://yardoc.org">Yard</a>.</p>
 
-<p>I would like to acknowledge the following contributors for helping improve RubyTree:</p>
+          <p>== Acknowledgments</p>
 
-<ol>
-<li>
-<a href="http://github.com/railsbros-dirk">Dirk Breuer</a> for contributing the JSON conversion code.</li>
-<li>Vincenzo Farruggia for contributing the (sub)tree cloning code.</li>
-<li>
-<a href="https://github.com/escline">Eric Cline</a> for the Rails JSON encoding fix.</li>
-</ol><h3>License</h3>
+          <p>I would like to acknowledge the following contributors for helping improve RubyTree:</p>
 
-<p>RubyTree is licensed under the <a href="http://www.opensource.org/licenses/bsd-license.php">BSD</a> license.</p>
+          <ol>
+            <li>
+              <a href="http://github.com/railsbros-dirk">Dirk Breuer</a> for contributing the JSON conversion code.</li>
+            <li>Vincenzo Farruggia for contributing the (sub)tree cloning code.</li>
+            <li>
+              <a href="https://github.com/escline">Eric Cline</a> for the Rails JSON encoding fix.</li>
+          </ol><h3>License</h3>
 
-<p>Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
-All rights reserved.</p>
+          <p>RubyTree is licensed under the <a href="http://www.opensource.org/licenses/bsd-license.php">BSD</a> license.</p>
 
-<p>Redistribution and use in source and binary forms, with or without modification,
-are permitted provided that the following conditions are met:</p>
+          <p>Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012 Anupam Sengupta
+            All rights reserved.</p>
 
-<ul>
-<li><p>Redistributions of source code must retain the above copyright notice, this
-list of conditions and the following disclaimer.</p></li>
-<li><p>Redistributions in binary form must reproduce the above copyright notice, this
-list of conditions and the following disclaimer in the documentation and/or
-other materials provided with the distribution.</p></li>
-<li><p>Neither the name of the organization nor the names of its contributors may be
-used to endorse or promote products derived from this software without
-specific prior written permission.</p></li>
-</ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+          <p>Redistribution and use in source and binary forms, with or without modification,
+            are permitted provided that the following conditions are met:</p>
+
+          <ul>
+            <li><p>Redistributions of source code must retain the above copyright notice, this
+                list of conditions and the following disclaimer.</p></li>
+            <li><p>Redistributions in binary form must reproduce the above copyright notice, this
+                list of conditions and the following disclaimer in the documentation and/or
+                other materials provided with the distribution.</p></li>
+            <li><p>Neither the name of the organization nor the names of its contributors may be
+                used to endorse or promote products derived from this software without
+                specific prior written permission.</p></li>
+          </ul><p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+            ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+            WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+            DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+            ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+            (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+            LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+            ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+            (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+            SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
         </section>
 
         <footer>
@@ -191,16 +196,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
           This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
-                  <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-326849-6");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+        <script type="text/javascript">
+          var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+          document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+        </script>
+        <script type="text/javascript">
+          try {
+          var pageTracker = _gat._getTracker("UA-326849-6");
+          pageTracker._trackPageview();
+          } catch(err) {}
+        </script>
 
       </div>
     </div>
