@@ -51,6 +51,52 @@ module Tree
   #
   class BinaryTreeNode < TreeNode
 
+    # @!group Core Attributes
+
+    # @!attribute [rw] left_child
+    # Left child of the receiver node. Note that left Child == first Child.
+    #
+    # @return [Tree::BinaryTreeNode] The left most (or first) child.
+    #
+    # @see #right_child
+    def left_child
+      children.first
+    end
+
+    # @!attribute [rw] right_child
+    # Right child of the receiver node. Note that right child == last child unless there is only one child.
+    #
+    # Returns +nil+ if the right child does not exist.
+    #
+    # @return [Tree::BinaryTreeNode] The right child, or +nil+ if the right side child does not exist.
+    #
+    # @see #left_child
+    def right_child
+      children[1]
+    end
+
+    # @!attribute is_left_child?
+    # +true+ if the receiver node is the left child of its parent.
+    # Always returns +false+ if it is a root node.
+    #
+    # @return [Boolean] +true+ if this is the left child of its parent.
+    def is_left_child?
+      return false if is_root?
+      self == parent.left_child
+    end
+
+    # @!attribute [r] is_right_child?
+    # +true+ if the receiver node is the right child of its parent.
+    # Always returns +false+ if it is a root node.
+    #
+    # @return [Boolean] +true+ if this is the right child of its parent.
+    def is_right_child?
+      return false if is_root?
+      self == parent.right_child
+    end
+
+    # @!group Structure Modification
+
     # Adds the specified child node to the receiver node.  The child node's parent is set to be the receiver.
     #
     # The child nodes are added in the order of addition, i.e., the first child added becomes the left node, and the
@@ -101,28 +147,6 @@ module Tree
 
     end
 
-    # @!attribute [rw] left_child
-    # Left child of the receiver node. Note that left Child == first Child.
-    #
-    # @return [Tree::BinaryTreeNode] The left most (or first) child.
-    #
-    # @see #right_child
-    def left_child
-      children.first
-    end
-
-    # @!attribute [rw] right_child
-    # Right child of the receiver node. Note that right child == last child unless there is only one child.
-    #
-    # Returns +nil+ if the right child does not exist.
-    #
-    # @return [Tree::BinaryTreeNode] The right child, or +nil+ if the right side child does not exist.
-    #
-    # @see #left_child
-    def right_child
-      children[1]
-    end
-
     # A protected method to allow insertion of child nodes at the specified location.
     # Note that this method allows insertion of +nil+ nodes.
     #
@@ -140,6 +164,8 @@ module Tree
       child.parent               = self if child
       child
     end
+
+    protected :set_child_at
 
     # Sets the left child of the receiver node. If a previous child existed, it is replaced.
     #
@@ -165,30 +191,10 @@ module Tree
       set_child_at child, 1
     end
 
-    # Returns +true+ if the receiver node is the left child of its parent.
-    # Always returns +false+ if it is a root node.
-    #
-    # @return [Boolean] +true+ if this is the left child of its parent.
-    def is_left_child?
-      return false if is_root?
-      self == parent.left_child
-    end
-
-    # Returns +true+ if the receiver node is the right child of its parent.
-    # Always returns +false+ if it is a root node.
-    #
-    # @return [Boolean] +true+ if this is the right child of its parent.
-    def is_right_child?
-      return false if is_root?
-      self == parent.right_child
-    end
-
     # Swaps the left and right child nodes of the receiver node with each other.
     def swap_children
       self.left_child, self.right_child = self.right_child, self.left_child
     end
-
-    protected :set_child_at
 
   end
 
