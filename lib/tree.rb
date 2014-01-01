@@ -89,6 +89,7 @@ module Tree
   # @author Anupam Sengupta
   class TreeNode
     include Enumerable
+    include Comparable
     include Tree::Utils::TreeMetricsHandler
     include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
