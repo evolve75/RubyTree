@@ -12,7 +12,7 @@ require "tree/version"
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2012-08-21'
+  s.date                  = '2014-01-03'
   s.version               = Tree::VERSION
   s.license               = 'BSD'
 
@@ -25,14 +25,30 @@ Gem::Specification.new do |s|
 
   s.summary               = %q{A generic tree data structure.}
   s.description           = <<-EOF
-    RubyTree is a Ruby implementation of the generic tree data structure.
-    It provides a node-based model to store uniquely identifiable node-elements
-    in the tree and simple APIs to access, modify and traverse the structure.
-    RubyTree is node-centric, where individual nodes on the tree are the primary
-    compositional and structural elements.
 
-    This implementation also mixes in the Enumerable module to allow standard
-    access to the tree as a collection.
+    RubyTree is a pure Ruby implementation of the generic tree data structure. It
+    provides a node-based model to store named nodes in the tree, and provides
+    simple APIs to access, modify and traverse the structure.
+
+    The implementation is node-centric, where individual nodes in the tree are the
+    primary structural elements. All common tree-traversal methods (pre-order,
+    post-order, and breadth-first) are supported.
+
+    The library mixes in the Enumerable and Comparable modules to allow access to
+    the tree as a standard collection (iteration, comparison, etc.).
+
+    A Binary tree is also provided, which provides the in-order traversal in
+    addition to the other methods.
+
+    RubyTree supports importing from, and exporting to JSON, and also supports the
+    Ruby's standard object marshaling.
+
+    This is a BSD licensed open source project, and is hosted at
+    http://github.com/evolve75/RubyTree, and is available as a standard gem from
+    http://rubygems.org/gems/rubytree.
+
+    The home page for RubyTree is at http://rubytree.rubyforge.org.
+
   EOF
 
   s.files                = Dir['lib/**/*.rb']  # The actual code
