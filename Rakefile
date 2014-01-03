@@ -2,7 +2,7 @@
 #
 # Rakefile - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006, 2007, 2009, 2010, 2011, 2012, 2013  Anupam Sengupta
+# Copyright (c) 2006, 2007, 2009, 2010, 2011, 2012, 2013, 2014  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -106,6 +106,11 @@ namespace :test do              # ................................ Test related
     example.pattern = 'examples/**/example_*.rb'
     example.verbose = true
     example.warning = false
+  end
+
+  desc "Run the code coverage"
+  task :coverage do
+    ruby 'test/run_test.rb'
   end
 
   begin

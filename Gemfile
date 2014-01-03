@@ -5,6 +5,7 @@ gemspec
 
 group :development, :test do
   gem "rake", "~> 10.1"
+  gem "coveralls", ">= 0.7", :require => false
 end
 
 # Local Variables:

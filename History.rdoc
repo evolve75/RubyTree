@@ -2,7 +2,17 @@
 
 = History of Changes
 
-=== 0.9.0 / 2013-12-31
+=== 0.9.2 / 2014-01-03
+
+* Yanked R0.9.1 as the History file was not updated.
+
+=== 0.9.1 / 2014-01-03
+
+* Updated the Gem description.
+
+* Incorporated code coverage using the coverall gem.
+
+=== 0.9.0 / 2014-01-02
 
 This is a feature and bug-fix release.
 
