@@ -4,7 +4,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2014 Anupam Sengupta
 # All rights reserved.
 
 $:.unshift File.expand_path("../lib", __FILE__)
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
 
   s.test_files           = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files     = ['README.rdoc', 'LICENSE.rdoc',
+  s.extra_rdoc_files     = ['README.md', 'LICENSE.md',
                             'API-CHANGES.rdoc', 'History.rdoc']
   s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
 
