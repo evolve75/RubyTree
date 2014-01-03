@@ -1,4 +1,10 @@
-# RubyTree #
+<!--
+  README.md
+
+  Copyright (C) 2014 Anupam Sengupta (anupamsg@gmail.com)
+
+-->
+# **RubyTree** #
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
 [![Travis Build Status](https://secure.travis-ci.org/evolve75/RubyTree.png)](http://travis-ci.org/evolve75/rubytree)
@@ -9,39 +15,41 @@
 
 ## DESCRIPTION: ##
 
-RubyTree is a pure Ruby implementation of the generic
+**RubyTree** is a pure Ruby implementation of the generic
 [tree data structure][tree_data_structure]. It provides a node-based model to
-store keyed node-elements in the tree, and provides simple APIs to access,
-modify and traverse the structure.
+store named nodes in the tree, and provides simple APIs to access, modify and
+traverse the structure.
 
-RubyTree is node-centric, where individual nodes in the tree are the primary
-structural elements. All common tree-traversal methods ([pre-order][],
+The implementation is *node-centric*, where individual nodes in the tree are the
+primary structural elements. All common tree-traversal methods ([pre-order][],
 [post-order][], and [breadth-first][]) are supported.
 
-RubyTree mixes in the [Enumerable][] and [Comparable][] modules to allow access
-to the tree as a standard collection.
+The library mixes in the [Enumerable][] and [Comparable][] modules to allow access
+to the tree as a standard collection (iteration, comparison, etc.).
 
-A [Binary tree][] is also provided, which provides the [in-order][] traversal
-method in addition to the others.
+A [Binary tree][] is also provided, which provides the [in-order][] traversal in
+addition to the other methods.
 
-RubyTree supports importing from, and exporting to [JSON][], and also supports
-the standard Ruby [marshaling][].
+**RubyTree** supports importing from, and exporting to [JSON][], and also supports
+the Ruby's standard object [marshaling][].
 
-RubyTree is a [BSD licensed][BSD] open source project, and is hosted at
-[github.com/evolve75/RubyTree][rt@github].
+This is a [BSD licensed][BSD] open source project, and is hosted at
+[github.com/evolve75/RubyTree][rt@github], and is available as a standard gem from
+[rubygems.org/gems/rubytree][rt_gem].
 
-The home page is at [rubytree.rubyforge.org][rt_site].
-
-The library is available as a standard gem at [rubygems.org/gems/rubytree][rt_gem].
+The home page for **RubyTree** is at [rubytree.rubyforge.org][rt_site].
 
 ## WHAT'S NEW: ##
 
-See [History](./History.rdoc) for the detailed changelog.
+See [History](./History.rdoc) for the detailed Changelog.
 
 See [API-CHANGES](./API-CHANGES.rdoc) for the detailed description of
 API level changes.
 
-## EXAMPLE: ##
+## GETTING STARTED: ##
+
+This is a basic usage example of the library to create and manipulate a tree.
+See the [API][rt_doc] documentation for more details.
 
 ```ruby
 #!/usr/bin/env ruby
@@ -123,12 +131,12 @@ To install the [gem][rt_gem], run this command from a terminal/shell:
 
     $ gem install rubytree
 
-This should install the gem file for RubyTree. Note that you might need to have
+This should install the gem file for **RubyTree**. Note that you might need to have
 super-user privileges (root/sudo) to successfully install the gem.
 
 ### Installing from the tgz/zip file ###
 
-RubyTree also be downloaded as a `tar/zip` file (or as a `gem`) from:
+**RubyTree** also be downloaded as a `tar/zip` file (or as a `gem`) from:
 
 [rubyforge.org/frs/?group_id=1215&release_id=8817][rt@rubyforge]
 
@@ -154,7 +162,7 @@ gem.
 
 ## DOCUMENTATION: ##
 
-The primary class for this implementation is {Tree::TreeNode}. See the class
+The primary class **RubyTree** is {Tree::TreeNode}. See the class
 documentation for an example of using the library.
 
 If the *ri* documentation was generated during install, you can use this
@@ -174,14 +182,14 @@ Note that the documentation is formatted using [Yard][].
 
 ## DEVELOPERS: ##
 
-This section is only for modifying RubyTree itself. It is not required for using
+This section is only for modifying **RubyTree** itself. It is not required for using
 the library!
 
 You can download the latest released source code as a tar or zip file, as
 mentioned above in the installation section.
 
 Alternatively, you can checkout the latest commit/revision from the Version
-Control System. Note that RubyTree's primary [SCM][] is [git][] and is hosted on
+Control System. Note that **RubyTree**'s primary [SCM][] is [git][] and is hosted on
 [github.com][rt@github].
 
 ### Using the git Repository ###
@@ -198,7 +206,7 @@ or
 
 ### Setting up the Development Environment ###
 
-RubyTree uses [Bundler][] to manage its dependencies. This allows for a
+**RubyTree** uses [Bundler][] to manage its dependencies. This allows for a
 simplified dependency management, for both run-time as well as during build.
 
 After checking out the source, run:
@@ -217,7 +225,7 @@ downloaded and installed automatically by [Bundler][].
 
 ## ACKNOWLEDGMENTS: ##
 
-A big thanks to the following contributors for helping improve RubyTree:
+A big thanks to the following contributors for helping improve **RubyTree**:
 
 1. [Dirk Breuer](http://github.com/railsbros-dirk) for contributing the JSON
    conversion code.
@@ -231,8 +239,8 @@ A big thanks to the following contributors for helping improve RubyTree:
 
 ## LICENSE: ##
 
-RubyTree is licensed under the terms of the [BSD][] license. See
-the [LICENSE.md](./LICENSE.md) file for details.
+**RubyTree** is licensed under the terms of the [BSD][] license. See
+[LICENSE.md](./LICENSE.md) for details.
 
 {include:file:LICENSE.md}
         __       _           _
@@ -242,18 +250,22 @@ the [LICENSE.md](./LICENSE.md) file for details.
      \/ \_/\__,_|_.__/ \__, |\__|_|  \___|\___|
                       |___/
 
-[SCM]:                  http://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
-[breadth-first]:        http://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
 [BSD]:                  http://opensource.org/licenses/bsd-license.php "BSD License"
+[Binary tree]:          http://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
 [Bundler]:              http://bundler.io "Bundler"
 [Comparable]:           http://ruby-doc.org/core-1.8.7/Comparable.html "Comparable mix-in"
 [Enumerable]:           http://ruby-doc.org/core-1.9.3/Enumerable.html "Enumerable mix-in"
+[JSON]:                 http://flori.github.com/json "JSON"
+[Rake]:                 http://rake.rubyforge.org "Rake"
+[Ruby]:                 http://www.ruby-lang.org "Ruby Programming Language"
+[SCM]:                  http://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
+[Yard]:                 http://yardoc.org "Yard Document Generator"
+[breadth-first]:        http://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
 [git]:                  http://git-scm.com "Git SCM"
 [in-order]:             http://en.wikipedia.org/wiki/Tree_traversal#In-order "In-order (symmetric) Traversal"
-[JSON]:                 http://flori.github.com/json "JSON"
+[marshaling]:           http://ruby-doc.org/core-1.8.7/Marshal.html "Marshaling in Ruby"
 [post-order]:           http://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
 [pre-order]:            http://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
-[Rake]:                 http://rake.rubyforge.org "Rake"
 [rt@github]:            http://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
 [rt@rubyforge]:         http://rubyforge.org/frs/?group_id=1215&release_id=8817 "RubyTree at Rubyforge"
 [rt_doc@head]:          http://rdoc.info/projects/evolve75/RubyTree "RubyTree Documentation for VCS Head"
@@ -262,7 +274,3 @@ the [LICENSE.md](./LICENSE.md) file for details.
 [rt_site]:              http://rubytree.rubyforge.org "RubyTree Site"
 [structured_warnings]:  http://github.com/schmidt/structured_warnings "structured_warnings"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
-[Yard]:                 http://yardoc.org "Yard Document Generator"
-[Binary tree]: http://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
-[marshaling]: http://ruby-doc.org/core-1.8.7/Marshal.html "Marshaling in Ruby"
-[Ruby]: http://www.ruby-lang.org "Ruby Programming Language"
