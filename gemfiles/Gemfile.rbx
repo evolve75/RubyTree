@@ -4,8 +4,8 @@ source 'https://rubygems.org'
 gemspec :path => '..'
 
 platforms :rbx do
-  gem "rubysl", "~> 2.1"
-  gem "rubysl-test-unit", "~> 2.1"
+  gem "rubysl"
+  gem "rubysl-test-unit"
 end
 
 group :development, :test do

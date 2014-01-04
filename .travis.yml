@@ -13,7 +13,6 @@ rvm:
   - 1.9.2
   - 1.9.3
   - 2.0.0
-  - 2.1.0
   - ruby-head    # The latest Ruby, whatever version it happens to be.
   - jruby-18mode # JRuby in 1.8 mode
   - jruby-19mode # JRuby in 1.9 mode
@@ -26,6 +25,8 @@ matrix:
   include:
     - rvm: rbx
       gemfile: gemfiles/Gemfile.rbx
+    - rvm: 2.1.0
+      env: COVERAGE=true
   exclude:
     - rvm: rbx
       gemfile: Gemfile
