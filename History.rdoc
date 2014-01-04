@@ -6,6 +6,10 @@
 
 * Yanked R0.9.1 as the History file was not updated.
 
+* Updated the gem description.
+
+* Changed the travis-ci build to include coverall support.
+
 === 0.9.1 / 2014-01-03
 
 * Updated the Gem description.
