@@ -9,9 +9,6 @@ before_install:
 bundler_args: --without development
 cache: bundler
 
-env:
-  - COVERAGE=true
-
 script: "bundle exec rake test:coverage"
 
 rvm:
@@ -31,6 +28,8 @@ matrix:
   include:
     - rvm: rbx
       gemfile: gemfiles/Gemfile.rbx
+    - rvm: 2.1.0
+      env: COVERAGE=true
   exclude:
     - rvm: rbx
       gemfile: Gemfile
