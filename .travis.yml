@@ -9,8 +9,6 @@ before_install:
 bundler_args: --without development
 cache: bundler
 
-script: "bundle exec rake test:coverage"
-
 rvm:
   - 1.9.2
   - 1.9.3

@@ -40,7 +40,13 @@ PKG_VER  = GEM_SPEC.version
 GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
 
 desc "Default Task (Run the tests)"
-task :default => 'test:unit'
+task :default do
+  if ENV["COVERAGE"]
+    Rake::Task["test:coverage"].invoke
+  else
+    Rake::Task["test:unit"].invoke
+  end
+end
 
 desc "Display the current gem version"
 task :version do
