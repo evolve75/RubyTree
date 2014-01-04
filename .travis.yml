@@ -12,7 +12,7 @@ cache: bundler
 env:
   - COVERAGE=true
 
-script: "rake test:coverage"
+script: "bundle exec rake test:coverage"
 
 rvm:
   - 1.9.2
