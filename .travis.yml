@@ -34,5 +34,6 @@ matrix:
 # blacklist
 branches:
   except:
+    - develop
     - rt-site
     - gh-pages
