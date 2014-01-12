@@ -1,12 +1,10 @@
-# version.rb - This file is part of the RubyTree package.
+#!/usr/bin/env ruby
 #
-# This file provides the version number for Rubytree.
+# run_test.rb:: Run all the tests from the Ruby command line.
 #
-# Author:: Anupam Sengupta (anupamsg@gmail.com)
-#
-# Copyright (c) 2012, 2013, 2014 Anupam Sengupta
-#
-# All rights reserved.
+# Author:  Anupam Sengupta
+# Time-stamp: <2014-01-03 21:15:37 anupam>
+# Copyright (C) 2014 Anupam Sengupta <anupamsg@gmail.com>
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -34,8 +32,29 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-#
-module Tree
-  # Rubytree Package Version
-  VERSION = '0.9.2'
+base_dir = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+lib_dir  = File.join(base_dir, "lib")
+test_dir = File.join(base_dir, "test")
+
+$LOAD_PATH.unshift(lib_dir)
+
+if ENV["COVERAGE"]
+  begin
+    require 'simplecov'
+    require 'coveralls'
+
+    SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+
+    SimpleCov.start do
+      add_filter '/test/'
+      add_group 'Core Classes', '/lib/.*tree.rb'
+      add_group 'Internal Utilities', '/lib/tree/utils/.*.rb'
+    end
+  rescue LoadError => e
+    puts "Could not load simplecov; continuing without code coverage"
+  end
 end
+
+require 'test/unit'
+
+exit Test::Unit::AutoRunner.run(true, test_dir)
