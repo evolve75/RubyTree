@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -40,11 +40,6 @@
 #
 
 require 'tree/tree_deps'
-require 'tree/version'
-require 'tree/utils/metrics_methods'
-require 'tree/utils/camel_case_method_handler'
-require 'tree/utils/json_converter'
-require 'tree/utils/tree_merge_handler'
 
 # This module provides a *TreeNode* class whose instances are the primary objects
 # for representing nodes in the tree.
