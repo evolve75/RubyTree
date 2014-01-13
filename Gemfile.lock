@@ -14,12 +14,13 @@ GEM
       simplecov (>= 0.7)
       term-ansicolor
       thor
-    docile (1.1.1)
+    docile (1.1.2)
     json (1.8.1)
     mime-types (2.0)
-    multi_json (1.8.2)
+    multi_json (1.8.4)
     rake (10.1.1)
-    rdoc (4.1.0)
+    rdoc (4.1.1)
+      json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rtags (0.98)

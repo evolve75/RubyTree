@@ -1,11 +1,8 @@
 language: ruby
 before_install:
   - 'echo "gem: --no-ri --no-rdoc" > ~/.gemrc'
-  - gem update bundler
   - bundle --version
-  - gem update --system 2.1.11
   - gem --version
-#  - gem install json --version 1.8.1
 bundler_args: --without development
 cache: bundler
 
