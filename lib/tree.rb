@@ -52,8 +52,8 @@ module Tree
   # This class models the nodes for an *N-ary* tree data structure. The
   # nodes are *named*, and have a place-holder for the node data (i.e.,
   # _content_ of the node). The node names are required to be *unique*
-  # within the tree (as the name is implicitly used as an _ID_ within
-  # the data structure).
+  # amongst the sibling/peer nodes. Note that the name is implicitly
+  # used as an _ID_ within the data structure).
   #
   # The node's _content_ is *not* required to be unique across
   # different nodes in the tree, and can be +nil+ as well.
@@ -355,9 +355,10 @@ module Tree
     def add(child, at_index = -1)
       raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
       raise ArgumentError, "Attempting add node to itself" if self == child
-
+      raise ArgumentError, "Attempting to add root as a child" if self.root == child
       # Lazy mans unique test, won't test if children of child are unique in this tree too.
-      self.root.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
+      #self.root.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
+      self.children.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)

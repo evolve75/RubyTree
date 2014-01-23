@@ -2,7 +2,7 @@
 
 # test_tree.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -339,11 +339,39 @@ module TestTree
       assert_equal(5, @root.size, "Should have five nodes")
       assert_equal(2, @child3.size, "Should have two nodes")
 
-      # Test the addition of a duplicate node (duplicate being defined as a node with the same name).
-      assert_raise(RuntimeError) { @root.add(Tree::TreeNode.new(@child1.name)) }
-
       # Test the addition of a nil node.
       assert_raise(ArgumentError) { @root.add(nil) }
+    end
+
+    # Test the addition of a duplicate node (duplicate being defined as a node with the same name).
+    def test_add_duplicate
+      # We need to allow duplicate nodes which are not *siblings*.
+      # Example (see https://github.com/evolve75/RubyTree/issues/24):
+      #
+      # * root
+      # |---+ one
+      # |   +---> deep
+      # +---+ two
+      #     +---> deep
+      #
+      # In this case, the two 'deep' nodes should not be considered duplicates
+
+      root = Tree::TreeNode.new("root")
+      one  = Tree::TreeNode.new("one")
+      two  = Tree::TreeNode.new("two")
+      deep = Tree::TreeNode.new("deep")
+
+
+      root << one << deep
+      # The same child cannot be added under any circumstance
+      assert_raise(RuntimeError) { root.add(Tree::TreeNode.new(one.name)) }
+      assert_raise(RuntimeError) { root.add(one) }
+
+      begin
+        root << two << deep
+      rescue RuntimeError => e
+        fail("Error! The RuntimeError should not have been thrown.")
+      end
     end
 
     # Test Addition at a specific position
@@ -1201,7 +1229,7 @@ module TestTree
 
       # And now a scenario where the node addition is done down the hierarchy
       child =  Tree::TreeNode.new("child")
-      assert_raise(RuntimeError) { root << child << root }
+      assert_raise(ArgumentError) { root << child << root }
     end
 
     # Test whether the tree_leaf method works correctly
@@ -1215,12 +1243,19 @@ module TestTree
 
     end
 
-    # Test if node names are really unique in the whole tree
+    # Test if node names are really unique in the child array.
+    # Note that this does not prevent duplicates elsewhere in the tree.
     def test_unique_node_names
       setup_test_tree
 
       assert_raise(RuntimeError) { @root << @child1 }
-      assert_raise(RuntimeError) { @root.first_child << @child2 }
+
+      begin
+        @root.first_child << @child2
+      rescue RuntimeError => e
+        fail("No error should have been raised for adding a non-sibling duplicate.")
+      end
+
     end
 
     # Setup function to build some extra trees to play with.
