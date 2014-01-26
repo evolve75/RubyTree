@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -40,11 +40,6 @@
 #
 
 require 'tree/tree_deps'
-require 'tree/version'
-require 'tree/utils/metrics_methods'
-require 'tree/utils/camel_case_method_handler'
-require 'tree/utils/json_converter'
-require 'tree/utils/tree_merge_handler'
 
 # This module provides a *TreeNode* class whose instances are the primary objects
 # for representing nodes in the tree.
@@ -57,8 +52,8 @@ module Tree
   # This class models the nodes for an *N-ary* tree data structure. The
   # nodes are *named*, and have a place-holder for the node data (i.e.,
   # _content_ of the node). The node names are required to be *unique*
-  # within the tree (as the name is implicitly used as an _ID_ within
-  # the data structure).
+  # amongst the sibling/peer nodes. Note that the name is implicitly
+  # used as an _ID_ within the data structure).
   #
   # The node's _content_ is *not* required to be unique across
   # different nodes in the tree, and can be +nil+ as well.
@@ -360,9 +355,10 @@ module Tree
     def add(child, at_index = -1)
       raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
       raise ArgumentError, "Attempting add node to itself" if self == child
-
+      raise ArgumentError, "Attempting to add root as a child" if self.root == child
       # Lazy mans unique test, won't test if children of child are unique in this tree too.
-      self.root.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
+      #self.root.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
+      self.children.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)

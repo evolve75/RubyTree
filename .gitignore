@@ -7,5 +7,3 @@ pkg/
 rdoc/
 tmp/
 .bundle/install.log
-gem_graph.png
-.coveralls.yml
