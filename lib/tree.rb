@@ -354,11 +354,11 @@ module Tree
     # @see #<<
     def add(child, at_index = -1)
       raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
-      raise ArgumentError, "Attempting add node to itself" if self == child
-      raise ArgumentError, "Attempting to add root as a child" if self.root == child
+      raise ArgumentError, "Attempting add node to itself" if self.equal?(child)
+      raise ArgumentError, "Attempting add root as a child" if self.equal?(root) unless self.is_root?
+
       # Lazy mans unique test, won't test if children of child are unique in this tree too.
-      #self.root.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
-      self.children.each { |node| raise "Child #{child.name} already added!" if node.name == child.name }
+      raise "Child #{child.name} already added!" if @children_hash.include?(child.name)
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)

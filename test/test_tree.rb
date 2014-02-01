@@ -359,8 +359,8 @@ module TestTree
       root = Tree::TreeNode.new("root")
       one  = Tree::TreeNode.new("one")
       two  = Tree::TreeNode.new("two")
+      three= Tree::TreeNode.new("three")
       deep = Tree::TreeNode.new("deep")
-
 
       root << one << deep
       # The same child cannot be added under any circumstance
@@ -370,7 +370,17 @@ module TestTree
       begin
         root << two << deep
       rescue RuntimeError => e
-        fail("Error! The RuntimeError should not have been thrown.")
+        fail("Error! The RuntimeError should not have been thrown. The same node can be added to different branches.")
+      end
+
+      assert_raise(ArgumentError) {root << three << three }
+
+      root.remove_all!          # Because the first child 'three' whould have been added.
+      begin
+        three_dup = Tree::TreeNode.new("three")
+        root << three << three_dup
+      rescue RuntimeError => e
+        fail("Error! The RuntimeError should not have been thrown. The same node name can be used in the branch.")
       end
     end
 
@@ -1229,7 +1239,11 @@ module TestTree
 
       # And now a scenario where the node addition is done down the hierarchy
       child =  Tree::TreeNode.new("child")
-      assert_raise(ArgumentError) { root << child << root }
+      begin
+        root << child << root
+      rescue ArgumentError => e
+        fail("The ArgumentError should not have been raised.")
+      end
     end
 
     # Test whether the tree_leaf method works correctly

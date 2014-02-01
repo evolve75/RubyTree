@@ -2,6 +2,10 @@
 
 = History of Changes
 
+=== 0.9.3 / 2014-02-01
+
+* Fixed the issue with globally unique node names. See Github issue #24.
+
 === 0.9.2 / 2014-01-03
 
 * Yanked R0.9.1 as the History file was not updated.

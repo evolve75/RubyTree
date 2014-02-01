@@ -9,6 +9,12 @@ Note: API level changes are expected to reduce dramatically after the 1.x
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+== Release 0.9.3 Changes
+
+- The validation for unique node names has changed in the {Tree::TreeNode#add}
+  method. RubyTree no longer enforces globally unique names. The node-names need
+  to be unique only between the sibling nodes.
+
 == Release 0.9.0 Changes
 
 - New post-ordered traversal via the {Tree::TreeNode#postordered_each} method.

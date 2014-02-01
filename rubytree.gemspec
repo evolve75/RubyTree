@@ -75,19 +75,9 @@ Gem::Specification.new do |s|
 
   s.post_install_message = <<-EOF
     ========================================================================
-                    Thank you for installing rubytree.
+                    Thank you for installing RubyTree.
 
-    Note that the TreeNode#siblings method has changed in 0.8.3.
-    It now returns an empty array for the root node.
-
-                 WARNING: SIGNIFICANT API CHANGE in 0.8.0 !
-                 ------------------------------------------
-
-    Please note that as of 0.8.0 the CamelCase method names are DEPRECATED.
-    The new method names follow the ruby_convention (separated by '_').
-
-    The old CamelCase methods still work (a warning will be displayed),
-    but may go away in the future.
+    Note:: As of 0.9.3, node names do not need to be globally unique.
 
     Details of the API changes are documented in the API-CHANGES file.
     ========================================================================
