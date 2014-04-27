@@ -112,7 +112,7 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 1.8.x, 1.9.x, 2.0.x, or 2.1.0x.
+* [Ruby][] 1.8.x, 1.9.x, 2.0.x, or 2.1.x.
 
 
 * Run-time Dependencies:
@@ -243,6 +243,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [LICENSE.md](./LICENSE.md) for details.
 
 {include:file:LICENSE.md}
+
         __       _           _
        /__\_   _| |__  _   _| |_ _ __ ___  ___
       / \// | | | '_ \| | | | __| '__/ _ \/ _ \
