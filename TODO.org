@@ -117,7 +117,7 @@
 
 
 
-* R0.9.0
+* R0.9.0                                                                                  :ARCHIVE:
   DEADLINE: <2013-02-24 Sun>
 
   This release contains the following features and fixes:
@@ -184,7 +184,10 @@
     as root's root (no pun intended) makes accessing the root from anywhere in the tree much easier.
 
 
+
+
 * Next Release
+  DEADLINE: <2014-03-02 Sun>
 ** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child     :Partial:
    [[Issue:5][Issue #5.]]
 
@@ -218,8 +221,7 @@
       restructure the internals to make better use of memory.
 ** TODO Expand the examples section, and add supporting documentation
 ** TODO Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).
-
-
+** TODO Convert all documentation to markdown mode.
 
 
 * Unplanned / Not assigned to any release
