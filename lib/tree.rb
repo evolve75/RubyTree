@@ -348,7 +348,7 @@ module Tree
     # @return [Tree::TreeNode] The added child node.
     #
     # @raise [RuntimeError] This exception is raised if another child node with the same
-    # name exists, or if an invalid insertion position is specified.
+    #                       name exists, or if an invalid insertion position is specified.
     # @raise [ArgumentError] This exception is raised if a +nil+ node is passed as the argument.
     #
     # @see #<<
