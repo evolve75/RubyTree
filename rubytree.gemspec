@@ -19,8 +19,8 @@ Gem::Specification.new do |s|
   s.platform              = Gem::Platform::RUBY
   s.author                = 'Anupam Sengupta'
   s.email                 = 'anupamsg@gmail.com'
-  s.homepage              = 'http://rubytree.rubyforge.org'
-  s.rubyforge_project     = 'rubytree'
+  s.homepage              = 'http://rubytree.anupamsg.me'
+
   s.required_ruby_version = '>=1.8.7'
 
   s.summary               = %q{A generic tree data structure.}
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
     http://github.com/evolve75/RubyTree, and is available as a standard gem from
     http://rubygems.org/gems/rubytree.
 
-    The home page for RubyTree is at http://rubytree.rubyforge.org.
+    The home page for RubyTree is at http://rubytree.anupamsg.me.
 
   EOF
 

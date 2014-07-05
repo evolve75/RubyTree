@@ -34,4 +34,4 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 [BSD]:       http://opensource.org/licenses/bsd-license.php "BSD License"
-[RubyTree]:  http://rubytree.rubyforge.org/ "RubyTree Home Page"
+[RubyTree]:  http://rubytree.anupamsg.me/ "RubyTree Home Page"

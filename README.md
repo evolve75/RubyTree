@@ -37,7 +37,7 @@ This is a [BSD licensed][BSD] open source project, and is hosted at
 [github.com/evolve75/RubyTree][rt@github], and is available as a standard gem from
 [rubygems.org/gems/rubytree][rt_gem].
 
-The home page for **RubyTree** is at [rubytree.rubyforge.org][rt_site].
+The home page for **RubyTree** is at [rubytree.anupamsg.me][rt_site].
 
 ## WHAT'S NEW: ##
 
@@ -134,32 +134,6 @@ To install the [gem][rt_gem], run this command from a terminal/shell:
 This should install the gem file for **RubyTree**. Note that you might need to have
 super-user privileges (root/sudo) to successfully install the gem.
 
-### Installing from the tgz/zip file ###
-
-**RubyTree** also be downloaded as a `tar/zip` file (or as a `gem`) from:
-
-[rubyforge.org/frs/?group_id=1215&release_id=8817][rt@rubyforge]
-
-The file-name is one of:
-
-* `rubytree-<VERSION>.gem` - The rubygem
-
-* `rubytree-<VERSION>.tgz` - GZipped source files
-
-* `rubytree-<VERSION>.zip` - Zipped  source files
-
-Download the appropriate file-type for your system.
-
-Extract the archive file (`tgz` or `zip`) and run the following command from the
-top-level source directory:
-
-    $ ruby ./setup.rb
-
-You may need administrator/super-user privileges to complete the setup using
-this method. Note that the source code contains the `Rakefile` for building
-using [Rake][], which might an easier mechanism for building and installing the
-gem.
-
 ## DOCUMENTATION: ##
 
 The primary class **RubyTree** is {Tree::TreeNode}. See the class
@@ -172,7 +146,7 @@ command at the terminal to view the text mode ri documentation:
 
 Documentation for the latest released version is available at:
 
-[rubytree.rubyforge.org/rdoc][rt_doc]
+[rubytree.anupamsg.me/rdoc][rt_doc]
 
 Documentation for the latest git HEAD is available at:
 
@@ -257,7 +231,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Comparable]:           http://ruby-doc.org/core-1.8.7/Comparable.html "Comparable mix-in"
 [Enumerable]:           http://ruby-doc.org/core-1.9.3/Enumerable.html "Enumerable mix-in"
 [JSON]:                 http://flori.github.com/json "JSON"
-[Rake]:                 http://rake.rubyforge.org "Rake"
+[Rake]:                 https://rubygems.org/gems/rake "Rake"
 [Ruby]:                 http://www.ruby-lang.org "Ruby Programming Language"
 [SCM]:                  http://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
 [Yard]:                 http://yardoc.org "Yard Document Generator"
@@ -268,10 +242,9 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [post-order]:           http://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
 [pre-order]:            http://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
 [rt@github]:            http://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
-[rt@rubyforge]:         http://rubyforge.org/frs/?group_id=1215&release_id=8817 "RubyTree at Rubyforge"
 [rt_doc@head]:          http://rdoc.info/projects/evolve75/RubyTree "RubyTree Documentation for VCS Head"
-[rt_doc]:               http://rubytree.rubyforge.org/rdoc "RubyTree Documentation"
+[rt_doc]:               http://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
 [rt_gem]:               http://rubygems.org/gems/rubytree "RubyTree Gem"
-[rt_site]:              http://rubytree.rubyforge.org "RubyTree Site"
+[rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
 [structured_warnings]:  http://github.com/schmidt/structured_warnings "structured_warnings"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
