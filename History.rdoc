@@ -2,6 +2,10 @@
 
 = History of Changes
 
+=== 0.9.4 / 2014-07-04
+
+* Changed all references to {http://rubyforge.org}.
+
 === 0.9.3 / 2014-02-01
 
 * Fixed the issue with globally unique node names. See Github issue #24.
