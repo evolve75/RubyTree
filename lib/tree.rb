@@ -806,7 +806,7 @@ module Tree
     #
     # @param [Integer] level The indentation level (4 spaces) to start with.
     # @param [Proc] block optional block to use for rendering 
-    def print_tree(level = 0, block = ->(node, prefix) { puts "#{prefix} #{node.name}" })
+    def print_tree(level = 0, block = lambda { |node, prefix|  puts "#{prefix} #{node.name}" })
       prefix = ''
       if is_root?
         prefix << '*'
