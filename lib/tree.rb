@@ -805,20 +805,22 @@ module Tree
     # Pretty prints the (sub)tree rooted at this node.
     #
     # @param [Integer] level The indentation level (4 spaces) to start with.
-    def print_tree(level = 0)
+    # @param [Proc] block optional block to use for rendering 
+    def print_tree(level = 0, block = lambda { |node, prefix|  puts "#{prefix} #{node.name}" })
+      prefix = ''
       if is_root?
-        print "*"
+        prefix << '*'
       else
-        print "|" unless parent.is_last_sibling?
-        print(' ' * (level - 1) * 4)
-        print(is_last_sibling? ? "+" : "|")
-        print "---"
-        print(has_children? ? "+" : ">")
+        prefix << '|' unless parent.is_last_sibling?
+        prefix << (' ' * (level - 1) * 4)
+        prefix << (is_last_sibling? ? '+' : '|')
+        prefix << '---'
+        prefix << (has_children? ? '+' : '>')
       end
 
-      puts " #{name}"
+      block.call(self, prefix)
 
-      children { |child| child.print_tree(level + 1) if child } # Child might be 'nil'
+      children { |child| child.print_tree(level + 1, block) if child } # Child might be 'nil'
     end
 
   end
