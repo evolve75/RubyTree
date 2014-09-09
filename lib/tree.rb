@@ -805,7 +805,7 @@ module Tree
     # Pretty prints the (sub)tree rooted at this node.
     #
     # @param [Integer] level The indentation level (4 spaces) to start with.
-    def print_tree(level = 0)
+    def print_tree(max_depth = nil, level = 0)
       if is_root?
         print "*"
       else
@@ -817,6 +817,8 @@ module Tree
       end
 
       puts " #{name}"
+      
+      return unless max_depth.nil? || level < max_depth
 
       children { |child| child.print_tree(level + 1) if child } # Child might be 'nil'
     end
