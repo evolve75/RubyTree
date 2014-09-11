@@ -462,6 +462,9 @@ module TestTree
 
       @root.replace!(@child2, @child4)
 
+      # Also test replacing with a node of the same name
+      @root.replace! @child4, @child4.detached_copy
+
       assert_equal(4, @root.size, "Should have three nodes")
       assert(@root.children.include?(@child1), "Should parent child1")
       refute(@root.children.include?(@child2), "Should not parent child2")

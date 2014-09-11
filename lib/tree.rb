@@ -388,8 +388,12 @@ module Tree
     #
     # @return [Tree::TreeNode] The removed child node
     def replace!(old_child, new_child)
-      add new_child, @children.find_index(old_child)
-      remove! old_child
+      child_index = @children.find_index(old_child)
+
+      old_child = remove! old_child
+      add new_child, child_index
+
+      return old_child
     end
 
     # Replaces the node with another node
