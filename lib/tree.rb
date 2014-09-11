@@ -380,6 +380,27 @@ module Tree
 
     private :insertion_range
 
+
+    # Replaces the specified child node with another child node on this node.
+    #
+    # @param [Tree::TreeNode] old_child The child node to be replaced.
+    # @param [Tree::TreeNode] new_child The child node to be replaced with.
+    #
+    # @return [Tree::TreeNode] The removed child node
+    def replace!(old_child, new_child)
+      add new_child, @children.find_index(old_child)
+      remove! old_child
+    end
+
+    # Replaces the node with another node
+    #
+    # @param [Tree::TreeNode] node The node to replace this node with
+    #
+    # @return [Tree::TreeNode] The replaced child node
+    def replace_with(node)
+      @parent.replace!(self, node)
+    end
+
     # Removes the specified child node from this node.
     #
     # This method can also be used for *pruning* a sub-tree, in cases where the removed child node is
