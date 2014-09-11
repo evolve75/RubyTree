@@ -458,7 +458,7 @@ module TestTree
       assert(@root.children.include?(@child1), "Should parent child1")
       assert(@root.children.include?(@child2), "Should parent child2")
       assert(@root.children.include?(@child3), "Should parent child3")
-      refute(@root.children.include?(@child4), "Should not parent child4")
+      assert(!@root.children.include?(@child4), "Should not parent child4")
 
       @root.replace!(@child2, @child4)
 
@@ -467,7 +467,7 @@ module TestTree
 
       assert_equal(4, @root.size, "Should have three nodes")
       assert(@root.children.include?(@child1), "Should parent child1")
-      refute(@root.children.include?(@child2), "Should not parent child2")
+      assert(!@root.children.include?(@child2), "Should not parent child2")
       assert(@root.children.include?(@child3), "Should parent child3")
       assert(@root.children.include?(@child4), "Should parent child4")
       assert_equal(1, @root.children.find_index(@child4), "Should add child4 to index 1")
@@ -480,13 +480,13 @@ module TestTree
       assert_equal(3, @root.size, "Should have three nodes")
       assert(@root.children.include?(@child1), "Should parent child1")
       assert(@root.children.include?(@child2), "Should parent child2")
-      refute(@root.children.include?(@child3), "Should not parent child3")
+      assert(!@root.children.include?(@child3), "Should not parent child3")
 
       @child2.replace_with @child3
 
       assert_equal(3, @root.size, "Should have three nodes")
       assert(@root.children.include?(@child1), "Should parent child1")
-      refute(@root.children.include?(@child2), "Should not parent child2")
+      assert(!@root.children.include?(@child2), "Should not parent child2")
       assert(@root.children.include?(@child3), "Should parent child3")
     end
 
