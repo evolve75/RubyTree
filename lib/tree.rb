@@ -822,7 +822,7 @@ module Tree
 
       block.call(self, prefix)
 
-      return unless max_depth.nil? || level < max_depth
+      return unless max_depth.nil? || level < max_depth # Exit if the max level is defined, and reached.
 
       children { |child| child.print_tree(level + 1, block) if child } # Child might be 'nil'
     end
