@@ -448,6 +448,48 @@ module TestTree
       assert_equal(5, @root.children.size, "Should have five child nodes")
     end
 
+    # Test the replace! and replace_with! methods
+    def test_replace_bang
+      @root << @child1
+      @root << @child2
+      @root << @child3
+
+      assert_equal(4, @root.size, "Should have four nodes")
+      assert(@root.children.include?(@child1), "Should parent child1")
+      assert(@root.children.include?(@child2), "Should parent child2")
+      assert(@root.children.include?(@child3), "Should parent child3")
+      assert(!@root.children.include?(@child4), "Should not parent child4")
+
+      @root.replace!(@child2, @child4)
+
+      # Also test replacing with a node of the same name
+      @root.replace! @child4, @child4.detached_copy
+
+      assert_equal(4, @root.size, "Should have three nodes")
+      assert(@root.children.include?(@child1), "Should parent child1")
+      assert(!@root.children.include?(@child2), "Should not parent child2")
+      assert(@root.children.include?(@child3), "Should parent child3")
+      assert(@root.children.include?(@child4), "Should parent child4")
+      assert_equal(1, @root.children.find_index(@child4), "Should add child4 to index 1")
+    end
+
+    def test_replace_with
+      @root << @child1
+      @root << @child2
+
+      assert_equal(3, @root.size, "Should have three nodes")
+      assert(@root.children.include?(@child1), "Should parent child1")
+      assert(@root.children.include?(@child2), "Should parent child2")
+      assert(!@root.children.include?(@child3), "Should not parent child3")
+
+      @child2.replace_with @child3
+
+      assert_equal(3, @root.size, "Should have three nodes")
+      assert(@root.children.include?(@child1), "Should parent child1")
+      assert(!@root.children.include?(@child2), "Should not parent child2")
+      assert(@root.children.include?(@child3), "Should parent child3")
+    end
+
     # Test the remove! and remove_all! methods.
     def test_remove_bang
       @root << @child1
