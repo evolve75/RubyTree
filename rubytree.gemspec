@@ -55,6 +55,7 @@ Gem::Specification.new do |s|
   s.files               += Dir['[A-Z]*']       # Various documentation files
   s.files               += Dir['test/**/*.rb'] # Test cases
   s.files               += Dir['examples/**/*.rb'] # Examples
+
   s.files               += ['.gemtest']        # Support for gem-test
 
   s.require_paths        = ['lib']
