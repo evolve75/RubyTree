@@ -63,6 +63,73 @@ module TestTree
       assert_equal(@root.children.size, 0, "Initially no children should be present")
     end
 
+    def test_from_hash
+      # Can make a root note without a name
+      assert_raise (ArgumentError) { Tree::BinaryTreeNode.from_hash({})}
+      # Can't have multiple roots
+      assert_raise (ArgumentError) { Tree::BinaryTreeNode.from_hash({:A => {}, :B => {}}) }
+
+      # Can't have more than 2 children
+      too_many_kids = {:A => {:B => {}, :C => {}, :D => {} } }
+      assert_raise(ArgumentError) { Tree::BinaryTreeNode.from_hash(too_many_kids) }
+
+      valid_hash = {:A => {:B => {}, :C => { :D => {} } } }
+      tree = Tree::BinaryTreeNode.from_hash(valid_hash)
+      #    A
+      #   / \
+      #  B   C
+      #      |
+      #      D
+
+      assert_same(tree.class, Tree::BinaryTreeNode)
+      assert_same(tree.name, :A)
+      assert_equal(tree.is_root?, true)
+      assert_equal(tree.is_leaf?, false)
+      assert_equal(tree.children.count, 2) # B, C, D
+      assert_equal(tree.size, 4)
+      assert_equal(tree.left_child.name, :B)
+      assert_equal(tree.right_child.name, :C)
+
+      valid_hash_with_content = {[:A, "Content!"] => {:B => {}, :C => { [:D, "More content"] => {} } } }
+      tree2 = Tree::BinaryTreeNode.from_hash(valid_hash_with_content)
+
+      assert_equal(tree2.class, Tree::BinaryTreeNode)
+      assert_equal(tree2.content, "Content!" )
+      assert_equal(tree2[:C][:D].content, "More content")
+    end
+
+    def test_add_from_hash
+      root = Tree::BinaryTreeNode.new("Root")
+
+      # Can't have too many children
+      too_many_kids = {:child1 => {}, :child2 => {}, :child3 => {}}
+      assert_raise(ArgumentError) { root.add_from_hash(too_many_kids) }
+      assert_equal(root.children.count, 0) # Nothing added
+
+      # Well behaved when adding nothing
+      assert_equal(root.add_from_hash({}), [])
+      assert_equal(root.size, 1)
+
+      valid_hash = {:A => {}, :B => { :C => {}, [:D, "leaf"] => {} } }
+      added = root.add_from_hash(valid_hash)
+      #   root
+      #   / \
+      #  A   B
+      #     / \
+      #    C   D
+
+      assert_equal(added.class, Array)
+      assert_equal(added.count, 2)
+      assert_equal(root.size, 5)
+      assert_equal(root.children.count, 2)
+      assert_equal(root[:B][:D].content, "leaf")
+
+      # Can't add more than two children
+      assert_raise(ArgumentError) { root.add_from_hash({:X => {}}) }
+      node = Tree::BinaryTreeNode.new("Root 2")
+      assert_raise(ArgumentError) { node.add_from_hash({:A => {}, :B => {}, :C => {}}) }
+    end
+
     # Test the add method.
     def test_add
       @root.add @left_child1

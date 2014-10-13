@@ -113,6 +113,38 @@ module Tree
       super(child)
     end
 
+
+    # Instantiate and insert child nodes from data in a Ruby +Hash+
+    #
+    # This method is used in conjunction with {Tree::TreeNode.from_hash} to
+    # provide a convenient way of building and inserting child nodes present
+    # in a Ruby hashes.
+    #
+    # This method will instantiate a {Tree::TreeNode} instance for each top-
+    # level key of the input hash, to be inserted as children of the receiver
+    # instance.
+    #
+    # Nested hashes are expected and further child nodes will be created and
+    # added accordingly. If a hash key is a single value that value will be
+    # used as the name for the node.  If a hash key is an Array, both node
+    # name and content will be populated.
+    #
+    # A leaf element of the tree should be represented as a hash key with
+    # corresponding value nil or {}.
+    # 
+    # @example
+    #   root = Tree::TreeNode.new(:A, "Root content!")
+    #   root.add_from_hash({:B => {:D => {}}, [:C, "C content!"] => {}})
+    #
+    # @param [Hash] children The hash of child subtrees.
+    # @raise [ArgumentError] This exception is raised if hash contains too many children.
+    # @raise [ArgumentError] This exception is raised if a non-hash is passed.
+    # @return [Array] Array of child nodes added
+    def add_from_hash(hash)
+      raise ArgumentError, "Too many children" if hash.size + @children.size > 2
+      super(hash)
+    end
+
     # Performs inorder traversal (including this node).
     #
     # @yieldparam node [Tree::BinaryTreeNode]  Each node (in-order).
