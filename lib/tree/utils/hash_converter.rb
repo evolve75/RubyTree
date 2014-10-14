@@ -1,9 +1,14 @@
+# Provides utility methods for converting between {Tree::TreeNode} and Ruby's
+# native +Hash+.
 module Tree::Utils::HashConverter
 
   def self.included(base)
     base.extend(ClassMethods)
   end
 
+  # Methods in {Tree::Utils::HashConverter::ClassMethods} will be added as
+  # class methods on any class mixing in the {Tree::Utils::HashConverter}
+  # module.
   module ClassMethods
 
     # Factory method builds a {Tree::TreeNode} from a +Hash+.
@@ -40,6 +45,7 @@ module Tree::Utils::HashConverter
     # @raise [ArgumentError] This exception is raised if a non-Hash is passed.
     # @raise [ArgumentError] This exception is raised if the hash has multiple top-level elements.
     # @raise [ArgumentError] This exception is raised if the hash contains values that are not hashes or nils.
+
     def from_hash(hash)
       raise ArgumentError, "Argument must be a type of hash" unless hash.is_a?(Hash)
       raise ArgumentError, "Hash must have one top-level element" if hash.size != 1
@@ -82,6 +88,7 @@ module Tree::Utils::HashConverter
     # @param [Hash] children The hash of child subtrees.
     # @raise [ArgumentError] This exception is raised if a non-hash is passed.
     # @return [Array] Array of child nodes added
+    # @see ClassMethods#from_hash
     def add_from_hash(children)
       raise ArgumentError, "Argument must be a type of hash" unless children.is_a?(Hash)
 
@@ -93,5 +100,25 @@ module Tree::Utils::HashConverter
       end
 
       child_nodes
+    end
+
+    # Convert a node and its subtree into a Ruby hash.
+    # 
+    # @example
+    #    root = Tree::TreeNode.new(:root, "root content")
+    #    root << Tree::TreeNode.new(:child1, "child1 content")
+    #    root << Tree::TreeNode.new(:child2, "child2 content")
+    #    root.to_h # => {[:root, "root content"] => { [:child1, "child1 content"] => {}, [:child2, "child2 content"] => {}}}
+    # @author Jen Hamon (http://www.github.com/jhamon)
+    # @return [Hash] Hash representation of tree.
+    def to_h
+      key = has_content? ? [name, content] : name
+
+      children_hash = {}
+      children do |child|
+        children_hash.merge! child.to_h
+      end
+
+      { key => children_hash }
     end
 end

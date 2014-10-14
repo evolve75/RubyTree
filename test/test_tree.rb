@@ -249,6 +249,48 @@ module TestTree
       assert_raise (ArgumentError) { tree.add_from_hash({:X => "Not a hash or nil"}) }
     end
 
+    # Test exporting to ruby Hash
+    def test_to_h
+      a = Tree::TreeNode.new(:A)
+      b = Tree::TreeNode.new(:B)
+      c = Tree::TreeNode.new(:C)
+      d = Tree::TreeNode.new(:D)
+      e = Tree::TreeNode.new(:E)
+      f = Tree::TreeNode.new(:F)
+      g = Tree::TreeNode.new(:G)
+      #   A
+      #  / \
+      # B   C
+      # |  / \
+      # E F   G
+
+      a << b
+      a << c
+      c << f
+      c << g
+      b << e
+
+      exported = a.to_h
+      expected = {:A => {:B => {:E => {}}, :C => {:F => {}, :G => {}}}}
+      assert_equal(exported, expected)
+    end
+
+    # Test that from_hash and to_h are symmetric
+    def test_to_h_from_hash_symmetry
+      #     A
+      #    / \
+      #   B   C
+      #  /|\   \
+      # E F G   H
+      # |\      |
+      # I J     K
+
+      input = {:A => {:B => {:E => {:I => {}, :J =>{}}, :F => {}, :G => {}}, :C =>{:H => {:K => {}}}}}
+
+      node = Tree::TreeNode.from_hash(input)
+      assert_equal(node.to_h, input)
+    end
+
     # Test the presence of content in the nodes.
     def test_has_content_eh
       a_node = Tree::TreeNode.new("A Node")
