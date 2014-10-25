@@ -131,19 +131,19 @@ module TestTree
 
       hash = {[:A, "Root content"] => {
                     :B => {
-                          :E => {}, 
+                          :E => {},
                           :F => {
-                                :H => {}, 
+                                :H => {},
                                 [:I, "Leaf content"] => {}
                                 }
-                           }, 
+                           },
                     :C => {},
                     :D => {
                           :G => {}
                           }
                     }
              }
-      
+
       tree = Tree::TreeNode.from_hash(hash)
 
       assert_same(tree.class, Tree::TreeNode)
@@ -183,12 +183,12 @@ module TestTree
 
       hash = {[:A, "Root content"] => {
                     :B => {
-                          :E => nil, 
+                          :E => nil,
                           :F => {
-                                :H => nil, 
+                                :H => nil,
                                 [:I, "Leaf content"] => nil
                                 }
-                           }, 
+                           },
                     :C => nil,
                     :D => {
                           :G => nil
@@ -235,7 +235,7 @@ module TestTree
       #  |
       #  D
 
-      added_children = tree.add_from_hash(hash) 
+      added_children = tree.add_from_hash(hash)
       assert_equal(added_children.class, Array)
       assert_equal(added_children.count, 2)
       assert_equal(tree.size, 7)
@@ -1081,17 +1081,25 @@ module TestTree
       f << h
       j << k << z
 
-      # Create the response
-      result_array = Array.new
+      # Test when a block is given
+      result_array = []
       result = j.breadth_each { |node| result_array << node.detached_copy }
 
-      assert_equal(j, result)
+      assert_equal(j, result)   # The invocation target is returned
+
       expected_array.each_index do |i|
         assert_equal(expected_array[i].name, result_array[i].name)      # Match only the names.
       end
 
-      assert_equal(Enumerator, j.breadth_each.class) if defined?(Enumerator.class )# Without a block
-      assert_equal(Enumerable::Enumerator, j.breadth_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
+      assert_equal(Enumerator, j.breadth_each.class) if defined?(Enumerator.class ) # Without a block
+      assert_equal(Enumerable::Enumerator, j.breadth_each.class) if defined?(Enumerable::Enumerator.class) # Without a block
+
+      # Now test without a block
+      result_array = j.breadth_each.collect { |node| node}
+      expected_array.each_index do |i|
+        assert_equal(expected_array[i].name, result_array[i].name)      # Match only the names.
+      end
+
     end
 
     # Test the preordered_each method.
@@ -1158,18 +1166,28 @@ module TestTree
       f << h
       j << k << z
 
+      # Test when a block is given
       result_array = []
       result = j.postordered_each { |node| result_array << node.detached_copy}
 
-      assert_equal(j, result)   # Each returns the invocation target
+      assert_equal(j, result)   # The invocation target is returned
 
       expected_array.each_index do |i|
         # Match only the names.
         assert_equal(expected_array[i].name, result_array[i].name)
       end
 
-      assert_equal(Enumerator, j.postordered_each.class) if defined?(Enumerator.class )# Without a block
-      assert_equal(Enumerable::Enumerator, j.postordered_each.class) if defined?(Enumerable::Enumerator.class )# Without a block
+      assert_equal(Enumerator, j.postordered_each.class) if defined?(Enumerator.class) # Without a block
+      assert_equal(Enumerable::Enumerator, j.postordered_each.class) if defined?(Enumerable::Enumerator.class) # Without a block
+
+      # Now test without a block
+      result_array = j.postordered_each.collect { |node| node }
+
+      expected_array.each_index do |i|
+        # Match only the names.
+        assert_equal(expected_array[i].name, result_array[i].name)
+      end
+
     end
 
     # test the detached_copy method.

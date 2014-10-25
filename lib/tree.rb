@@ -586,7 +586,7 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def postordered_each(&block)
-      return self.to_enum unless block_given?
+      return self.to_enum(:postordered_each) unless block_given?
 
       # Using a marked node in order to skip adding the children of nodes that
       # have already been visited. This allows the stack depth to be controlled,
@@ -622,7 +622,7 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     def breadth_each(&block)
-      return self.to_enum unless block_given?
+      return self.to_enum(:breadth_each) unless block_given?
 
       node_queue = [self]       # Create a queue with self as the initial entry
 
