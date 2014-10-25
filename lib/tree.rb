@@ -849,7 +849,7 @@ module Tree
 
       return unless max_depth.nil? || level < max_depth # Exit if the max level is defined, and reached.
 
-      children { |child| child.print_tree(level + 1, block) if child } # Child might be 'nil'
+      children { |child| child.print_tree(level + 1, max_depth, block) if child } # Child might be 'nil'
     end
 
   end
