@@ -1,12 +1,12 @@
-# json.rb - This file is part of the RubyTree package.
+# json_converter.rb - This file is part of the RubyTree package.
 #
-# = json.rb - Provides conversion to and from JSON.
+# = json_converter.rb - Provides conversion to and from JSON.
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2013-12-31 21:57:42 anupam>
+# Time-stamp: <2014-10-25 16:16:23 anupam>
 #
-# Copyright (C) 2012, 2013 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013, 2014 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
