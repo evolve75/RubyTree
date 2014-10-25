@@ -1,5 +1,42 @@
-# Provides utility methods for converting between {Tree::TreeNode} and Ruby's
-# native +Hash+.
+# hash_converter.rb - This file is part of the RubyTree package.
+#
+# = hash_converter.rb - Provides utility methods for converting between
+#   {Tree::TreeNode} and Ruby's native +Hash+.
+#
+# Author::  Jen Hamon (http://www.github.com/jhamon)
+#
+# Time-stamp: <2014-10-25 16:20:23 anupam>
+#
+# Copyright (C) 2014 Jen Hamon (http://www.github.com/jhamon) and
+#                    Anupam Sengupta <anupamsg@gmail.com>
+#
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without modification,
+# are permitted provided that the following conditions are met:
+#
+# - Redistributions of source code must retain the above copyright notice, this
+#   list of conditions and the following disclaimer.
+#
+# - Redistributions in binary form must reproduce the above copyright notice, this
+#   list of conditions and the following disclaimer in the documentation and/or
+#   other materials provided with the distribution.
+#
+# - Neither the name of the organization nor the names of its contributors may
+#   be used to endorse or promote products derived from this software without
+#   specific prior written permission.
+#
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 module Tree::Utils::HashConverter
 
   def self.included(base)
@@ -20,9 +57,9 @@ module Tree::Utils::HashConverter
     # populated.
     #
     # A leaf element of the tree should be represented as a hash key with
-    # corresponding value nil or {}.
+    # corresponding value +nil+ or +{}+.
     #
-    # @example 
+    # @example
     #   TreeNode.from_hash({:A => {:B => {}, :C => {:D => {}, :E => {}}}})
     #   # would be parsed into the following tree structure:
     #   #    A
@@ -78,8 +115,8 @@ module Tree::Utils::HashConverter
     # name and content will be populated.
     #
     # A leaf element of the tree should be represented as a hash key with
-    # corresponding value nil or {}.
-    # 
+    # corresponding value +nil+ or {}.
+    #
     # @example
     #   root = Tree::TreeNode.new(:A, "Root content!")
     #   root.add_from_hash({:B => {:D => {}}, [:C, "C content!"] => {}})
@@ -103,7 +140,7 @@ module Tree::Utils::HashConverter
     end
 
     # Convert a node and its subtree into a Ruby hash.
-    # 
+    #
     # @example
     #    root = Tree::TreeNode.new(:root, "root content")
     #    root << Tree::TreeNode.new(:child1, "child1 content")
