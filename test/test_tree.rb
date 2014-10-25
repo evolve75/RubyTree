@@ -120,6 +120,177 @@ module TestTree
       assert_equal(2    , @root.node_height, "Root's height after adding the children should be 2")
     end
 
+    def test_from_hash
+      #      A
+      #    / | \
+      #   B  C  D
+      #  / \   /
+      # E   F G
+      #    / \
+      #   H   I
+
+      hash = {[:A, "Root content"] => {
+                    :B => {
+                          :E => {}, 
+                          :F => {
+                                :H => {}, 
+                                [:I, "Leaf content"] => {}
+                                }
+                           }, 
+                    :C => {},
+                    :D => {
+                          :G => {}
+                          }
+                    }
+             }
+      
+      tree = Tree::TreeNode.from_hash(hash)
+
+      assert_same(tree.class, Tree::TreeNode)
+      assert_same(tree.name, :A)
+      assert_equal(tree.is_root?, true)
+      assert_equal(tree.is_leaf?, false)
+      assert_equal(tree.size, 9)
+      assert_equal(tree.content, "Root content")
+      assert_equal(tree.children.count, 3) # B, C, D
+
+      leaf_with_content = tree[:B][:F][:I]
+      assert_equal(leaf_with_content.content, "Leaf content")
+      assert_equal(leaf_with_content.is_leaf?, true)
+
+      leaf_without_content = tree[:C]
+      assert_equal(leaf_without_content.is_leaf?, true)
+
+      interior_node = tree[:B][:F]
+      assert_equal(interior_node.is_leaf?, false)
+      assert_equal(interior_node.children.count, 2)
+
+      # Can't make a node without a name
+      assert_raise (ArgumentError) { Tree::TreeNode.from_hash({}) }
+      # Can't have multiple roots
+      assert_raise (ArgumentError) { Tree::TreeNode.from_hash({:A => {}, :B => {}}) }
+
+    end
+
+    def test_from_hash_with_nils
+      #      A
+      #    / | \
+      #   B  C  D
+      #  / \   /
+      # E   F G
+      #    / \
+      #   H   I
+
+      hash = {[:A, "Root content"] => {
+                    :B => {
+                          :E => nil, 
+                          :F => {
+                                :H => nil, 
+                                [:I, "Leaf content"] => nil
+                                }
+                           }, 
+                    :C => nil,
+                    :D => {
+                          :G => nil
+                          }
+                    }
+             }
+
+      tree = Tree::TreeNode.from_hash(hash)
+
+      assert_same(tree.class, Tree::TreeNode)
+      assert_same(tree.name, :A)
+      assert_equal(tree.is_root?, true)
+      assert_equal(tree.is_leaf?, false)
+      assert_equal(tree.size, 9)
+      assert_equal(tree.content, "Root content")
+      assert_equal(tree.children.count, 3) # B, C, D
+
+      leaf_with_content = tree[:B][:F][:I]
+      assert_equal(leaf_with_content.content, "Leaf content")
+      assert_equal(leaf_with_content.is_leaf?, true)
+
+      leaf_without_content = tree[:C]
+      assert_equal(leaf_without_content.is_leaf?, true)
+
+      interior_node = tree[:B][:F]
+      assert_equal(interior_node.is_leaf?, false)
+      assert_equal(interior_node.children.count, 2)
+    end
+
+    def test_add_from_hash
+      tree = Tree::TreeNode.new(:A)
+
+      # Doesn't blow up when added an empty hash
+      hash = {}
+      assert_equal(tree.add_from_hash(hash), [])
+
+      # Okay, now try a real hash
+      hash = {:B => {:C => {:D => nil}, :E => {}, :F => {}}, [:G, "G content"] => {}}
+      #      A
+      #     / \
+      #    B   G
+      #   /|\
+      #  C E F
+      #  |
+      #  D
+
+      added_children = tree.add_from_hash(hash) 
+      assert_equal(added_children.class, Array)
+      assert_equal(added_children.count, 2)
+      assert_equal(tree.size, 7)
+      assert_equal(tree[:G].content, "G content")
+      assert_equal(tree[:G].is_leaf?, true)
+      assert_equal(tree[:B].size, 5)
+      assert_equal(tree[:B].children.count, 3)
+
+      assert_raise (ArgumentError) { tree.add_from_hash([]) }
+      assert_raise (ArgumentError) { tree.add_from_hash("not a hash") }
+      assert_raise (ArgumentError) { tree.add_from_hash({:X => "Not a hash or nil"}) }
+    end
+
+    # Test exporting to ruby Hash
+    def test_to_h
+      a = Tree::TreeNode.new(:A)
+      b = Tree::TreeNode.new(:B)
+      c = Tree::TreeNode.new(:C)
+      d = Tree::TreeNode.new(:D)
+      e = Tree::TreeNode.new(:E)
+      f = Tree::TreeNode.new(:F)
+      g = Tree::TreeNode.new(:G)
+      #   A
+      #  / \
+      # B   C
+      # |  / \
+      # E F   G
+
+      a << b
+      a << c
+      c << f
+      c << g
+      b << e
+
+      exported = a.to_h
+      expected = {:A => {:B => {:E => {}}, :C => {:F => {}, :G => {}}}}
+      assert_equal(exported, expected)
+    end
+
+    # Test that from_hash and to_h are symmetric
+    def test_to_h_from_hash_symmetry
+      #     A
+      #    / \
+      #   B   C
+      #  /|\   \
+      # E F G   H
+      # |\      |
+      # I J     K
+
+      input = {:A => {:B => {:E => {:I => {}, :J =>{}}, :F => {}, :G => {}}, :C =>{:H => {:K => {}}}}}
+
+      node = Tree::TreeNode.from_hash(input)
+      assert_equal(node.to_h, input)
+    end
+
     # Test the presence of content in the nodes.
     def test_has_content_eh
       a_node = Tree::TreeNode.new("A Node")

@@ -89,6 +89,7 @@ module Tree
     include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
+    include Tree::Utils::HashConverter
 
     # @!group Core Attributes
 
