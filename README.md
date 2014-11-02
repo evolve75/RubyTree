@@ -210,6 +210,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
    duplicate node names in the tree (globally unique names).
 6. [Paul de Courcel](https://github.com/pdecourcel) for adding the
    `postordered_each` method.
+7. [Jen Hamon](http://www.github.com/jhamon) for adding the `from_hash` method.
 
 ## LICENSE: ##
 

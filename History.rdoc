@@ -2,6 +2,18 @@
 
 = History of Changes
 
+=== 0.9.5pre / 2014-11-01
+
+* Fixed {issue 13}[https://github.com/evolve75/RubyTree/issues/13] with the
+  patch provided by {Jen Hamon}[http://www.github.com/jhamon].
+
+* Fixed a bug in {Tree::TreeNode#print_tree} with the patch provided by
+  {Evan Sharp}[https://github.com/packetmonkey]
+
+* Fixed {issue 31}[https://github.com/evolve75/RubyTree/issues/31], which was
+  causing incorrect behavior n {Tree::TreeNode#postordered_each} and
+  {Tree::TreeNode#breadth_each} methods when a block was not provided.
+
 === 0.9.4 / 2014-07-04
 
 * Changed all references to {http://rubyforge.org}.
