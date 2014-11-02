@@ -8,7 +8,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2007, 2008, 2009, 2010, 2012, 2013 Anupam Sengupta
+# Copyright (c) 2007, 2008, 2009, 2010, 2012, 2013, 2014 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -131,18 +131,18 @@ module Tree
     #
     # A leaf element of the tree should be represented as a hash key with
     # corresponding value nil or {}.
-    # 
+    #
     # @example
     #   root = Tree::TreeNode.new(:A, "Root content!")
     #   root.add_from_hash({:B => {:D => {}}, [:C, "C content!"] => {}})
     #
-    # @param [Hash] children The hash of child subtrees.
+    # @param [Hash] hashed_subtree The hash of child subtrees.
     # @raise [ArgumentError] This exception is raised if hash contains too many children.
     # @raise [ArgumentError] This exception is raised if a non-hash is passed.
     # @return [Array] Array of child nodes added
-    def add_from_hash(hash)
-      raise ArgumentError, "Too many children" if hash.size + @children.size > 2
-      super(hash)
+    def add_from_hash(hashed_subtree)
+      raise ArgumentError, "Too many children" if hashed_subtree.size + @children.size > 2
+      super(hashed_subtree)
     end
 
     # Performs inorder traversal (including this node).

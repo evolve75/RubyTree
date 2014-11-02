@@ -8,7 +8,7 @@
   patch provided by {Jen Hamon}[http://www.github.com/jhamon].
 
 * Fixed a bug in {Tree::TreeNode#print_tree} with the patch provided by
-  {Evan Sharp}[https://github.com/packetmonkey]
+  {https://github.com/packetmonkey Evan Sharp}.
 
 * Fixed {issue 31}[https://github.com/evolve75/RubyTree/issues/31], which was
   causing incorrect behavior n {Tree::TreeNode#postordered_each} and
