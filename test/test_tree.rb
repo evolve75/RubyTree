@@ -1586,6 +1586,27 @@ module TestTree
       assert_raise(TypeError) { @root.merge!('ROOT') }
     end
 
+    def test_name_accessor
+      setup_test_tree
+
+      assert_equal 'ROOT', @root.name, "Name should be 'ROOT'"
+
+      @root.name = 'ROOT2'
+
+      assert_equal 'ROOT2', @root.name, "Name should be 'ROOT2'"
+    end
+
+    def test_renam
+      setup_test_tree
+
+      @root.rename 'ALT_ROOT'
+      assert_equal('ALT_ROOT', @root.name, "Name should be 'ALT_ROOT'")
+
+      @child1.rename 'ALT_Child1'
+      assert_equal('ALT_Child1', @child1.name)
+      assert_equal('ALT_Child1', @child1.name, "Name should be 'ALT_Child1'")
+      assert_equal(@child1, @root['ALT_Child1'], 'Should be able to access from parent using new name')
+    end
   end
 end
 
