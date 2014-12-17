@@ -2,11 +2,16 @@
 
 = History of Changes
 
+=== 0.9.5pre3 / 2014-12-16
+
+* Minor fix to correct the release date. This release is otherwise identical to
+  0.9.5pre2.
+
 === 0.9.5pre2 / 2014-12-16
 
 * Added {Tree::TreeNode#rename} and {Tree::TreeNode#rename_child} methods by
-  merging in code from {https://github.com/evolve75/RubyTree/pull/35}. Thanks
-  to {http://github.com/packetmonkey Evan Sharp}.
+  merging in code from {https://github.com/evolve75/RubyTree/pull/35}. Thanks to
+  {http://github.com/packetmonkey Evan Sharp}.
 
 === 0.9.5pre / 2014-11-01
 
