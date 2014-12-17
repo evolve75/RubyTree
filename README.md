@@ -211,6 +211,9 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 6. [Paul de Courcel](https://github.com/pdecourcel) for adding the
    `postordered_each` method.
 7. [Jen Hamon](http://www.github.com/jhamon) for adding the `from_hash` method.
+8. [Evan Sharp](https://github.com/packetmonkey) for adding the `rename` and
+   `rename_child` methods.
+
 
 ## LICENSE: ##
 

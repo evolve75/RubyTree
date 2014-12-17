@@ -93,7 +93,7 @@ module Tree
 
     # @!group Core Attributes
 
-    # @!attribute [rw] name
+    # @!attribute [r] name
     #
     # Name of this node.  Expected to be unique within the tree.
     #
@@ -110,7 +110,7 @@ module Tree
     #
     # @see content
     # @see rename
-    attr_accessor   :name
+    attr_reader   :name
 
     # @!attribute [rw] content
     # Content of this node.  Can be +nil+.  Note that there is no
@@ -387,7 +387,7 @@ module Tree
 
     # Renames the node and updates the parent's reference to it
     #
-    # @param [Object] name Name of the node.  Conventional usage is to pass a String
+    # @param [Object] new_name Name of the node.  Conventional usage is to pass a String
     #   (Integer names may cause *surprises*)
     #
     # @return [Object] The old name
@@ -395,24 +395,36 @@ module Tree
       old_name = @name
 
       if is_root?
-        @name = new_name
+        self.name=(new_name)
       else
-        @parent.rename_child @name, new_name
+        @parent.rename_child old_name, new_name
       end
 
       old_name
     end
 
-    # Renames the specified child node 
+    # Renames the specified child node
     #
-    # @param [Object] name old Name of the node. Conventional usage is to pass
+    # @param [Object] old_name old Name of the node. Conventional usage is to pass
     #   a String (Integer names may cause *surprises*)
     #
-    # @param [Object] name new Name of the node. Conventional usage is to pass
+    # @param [Object] new_name new Name of the node. Conventional usage is to pass
     #   a String (Integer names may cause *surprises*)
     def rename_child(old_name, new_name)
+      raise ArgumentError, "Invalid child name specified: " + old_name unless @children_hash.has_key?(old_name)
+
       @children_hash[new_name] = @children_hash.delete(old_name)
-      @children_hash[new_name].name= new_name
+      @children_hash[new_name].name=(new_name)
+    end
+
+    # Protected method to set the name of this node.
+    # This method should *NOT* be invoked by client code.
+    #
+    # @param [Object] new_name The node Name to set.
+    #
+    # @return [Object] The new name.
+    def name=(new_name)
+      @name = new_name
     end
 
     # Replaces the specified child node with another child node on this node.
@@ -472,7 +484,7 @@ module Tree
       @parent = parent
     end
 
-    protected :parent=
+    protected :parent=, :name=
 
     # Removes this node from its parent. This node becomes the new root for its subtree.
     #

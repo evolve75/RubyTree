@@ -1591,21 +1591,29 @@ module TestTree
 
       assert_equal 'ROOT', @root.name, "Name should be 'ROOT'"
 
-      @root.name = 'ROOT2'
-
-      assert_equal 'ROOT2', @root.name, "Name should be 'ROOT2'"
+      assert_raise (NoMethodError) {@root.name = 'ROOT2'} # The name assignment is protected
     end
 
-    def test_renam
+    def test_rename
       setup_test_tree
 
       @root.rename 'ALT_ROOT'
       assert_equal('ALT_ROOT', @root.name, "Name should be 'ALT_ROOT'")
 
       @child1.rename 'ALT_Child1'
-      assert_equal('ALT_Child1', @child1.name)
       assert_equal('ALT_Child1', @child1.name, "Name should be 'ALT_Child1'")
       assert_equal(@child1, @root['ALT_Child1'], 'Should be able to access from parent using new name')
+    end
+
+    def test_rename_child
+      setup_test_tree
+
+      assert_raise(ArgumentError) {@root.rename_child('Not_Present_Child1', 'ALT_Child1')}
+
+      @root.rename_child('Child1', 'ALT_Child1')
+      assert_equal('ALT_Child1', @child1.name, "Name should be 'ALT_Child1'")
+      assert_equal(@child1, @root['ALT_Child1'], 'Should be able to access from parent using new name')
+
     end
   end
 end
