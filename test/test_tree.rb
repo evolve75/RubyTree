@@ -1591,7 +1591,6 @@ module TestTree
 
       assert_equal 'ROOT', @root.name, "Name should be 'ROOT'"
 
-      assert_raise (NoMethodError) {@root.name = 'ROOT2'} # The name assignment is protected
     end
 
     def test_rename
