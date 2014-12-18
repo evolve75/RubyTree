@@ -482,6 +482,7 @@ module Tree
     # @return [Tree::TreeNode] The parent node.
     def parent=(parent)         # :nodoc:
       @parent = parent
+      @node_depth = nil
     end
 
     protected :parent=, :name=
@@ -516,7 +517,7 @@ module Tree
     #
     # @return +nil+.
     def set_as_root!              # :nodoc:
-      @parent = nil
+      self.parent = nil
     end
 
     protected :set_as_root!
