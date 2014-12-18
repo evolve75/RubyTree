@@ -140,7 +140,7 @@ module Tree
     #
     # @return [Boolean] +true+ if this is a root node.
     def is_root?
-      @parent == nil
+      @parent.nil?
     end
 
     # @!attribute [r] has_content?
