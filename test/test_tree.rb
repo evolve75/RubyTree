@@ -1610,6 +1610,35 @@ module TestTree
       assert_equal(@child1, @root['ALT_Child1'], 'Should be able to access from parent using new name')
 
     end
+
+    def test_change_parent
+      root_node = Tree::TreeNode.new("OLDROOT")
+
+      child_node = Tree::TreeNode.new("CHILD")
+      assert_equal(child_node.node_depth, 0)
+
+      root_node << child_node
+      assert_equal(root_node["CHILD"].name, "CHILD")
+      assert_equal(root_node.node_depth, 0)
+      assert_equal(child_node.node_depth, 1)
+
+      grandchild_node = Tree::TreeNode.new("GRANDCHILD")
+      child_node << grandchild_node
+      assert_equal(root_node["CHILD"]["GRANDCHILD"].name, "GRANDCHILD")
+      assert_equal(root_node.node_depth, 0)
+      assert_equal(child_node.node_depth, 1)
+      assert_equal(grandchild_node.node_depth, 2)
+
+      root2_node = Tree::TreeNode.new("NEWROOT")
+      assert_equal(root2_node.node_depth, 0)
+
+      # Move the grand child to a new root.
+      root2_node << grandchild_node
+      assert_equal(root2_node["GRANDCHILD"].name, "GRANDCHILD")
+      assert_equal(grandchild_node.parent, root2_node)
+      assert_equal(grandchild_node.node_depth, 1)
+
+    end
   end
 end
 

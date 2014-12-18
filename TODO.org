@@ -187,7 +187,8 @@
 
 
 * R0.9.5
-** TODO Check the lazy initialization of =@node_depth= and changes in parent nodes
+** DONE Check the lazy initialization of =@node_depth= and changes in parent nodes          :ARCHIVE:
+   CLOSED: [2014-12-18 Thu 11:05]
 ** DONE Pull the performance improvements from Aidan [[Pull:37][#37]]                                  :ARCHIVE:
    CLOSED: [2014-12-18 Thu 10:27]
 ** DONE Pull the =hash= converter code from [[https://github.com/markthomas/RubyTree/commits/master][Mark Thomas]] ([[Issue:13][Issue #13]]).                        :ARCHIVE:

@@ -12,7 +12,7 @@ require "tree/version"
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2014-12-16'
+  s.date                  = '2014-12-17'
   s.version               = Tree::VERSION
   s.license               = 'BSD'
 

@@ -2,6 +2,11 @@
 
 = History of Changes
 
+=== 0.9.5pre4 / 2014-12-17
+
+* Added performance improvements to {Tree::TreeNode#is_root?} and
+  {Tree::TreeNode#node_depth}. Thanks to {https://github.com/aidansteele Aidan Steel}.
+
 === 0.9.5pre3 / 2014-12-16
 
 * Minor fix to correct the release date. This release is otherwise identical to

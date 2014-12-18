@@ -213,6 +213,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 7. [Jen Hamon](http://www.github.com/jhamon) for adding the `from_hash` method.
 8. [Evan Sharp](https://github.com/packetmonkey) for adding the `rename` and
    `rename_child` methods.
+9. [Aidan Steele](https://github.com/aidansteele) for performance improvements
+   to `is_root?` and `node_depth`.
 
 
 ## LICENSE: ##
