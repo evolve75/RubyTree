@@ -1470,11 +1470,7 @@ module TestTree
 
       # And now a scenario where the node addition is done down the hierarchy
       child =  Tree::TreeNode.new("child")
-      begin
-        root << child << root
-      rescue ArgumentError => e
-        fail("The ArgumentError should not have been raised.")
-      end
+      assert_raise(ArgumentError) { root << child << root }
     end
 
     # Test whether the tree_leaf method works correctly

@@ -360,7 +360,7 @@ module Tree
     def add(child, at_index = -1)
       raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
       raise ArgumentError, "Attempting add node to itself" if self.equal?(child)
-      raise ArgumentError, "Attempting add root as a child" if self.equal?(root) unless self.is_root?
+      raise ArgumentError, "Attempting add root as a child" if child.equal?(root)
 
       # Lazy mans unique test, won't test if children of child are unique in this tree too.
       raise "Child #{child.name} already added!" if @children_hash.include?(child.name)
