@@ -23,7 +23,7 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
-    rtags (0.98)
+    rtags (0.97)
     rtagstask (0.0.4)
       rtags (> 0.0.0)
     simplecov (0.9.1)
