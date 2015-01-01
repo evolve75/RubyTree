@@ -4,7 +4,7 @@
 
 === 0.9.5pre5 / 2015-01-01
 
-* Fixed {issue 32}{https://github.com/evolve75/RubyTree/issues/32} and enabled
+* Fixed {issue 32}[https://github.com/evolve75/RubyTree/issues/32] and enabled
   'move' semantics on the {Tree::TreeNode#add} method, so that a child being
   added, that has an existing parent, will be removed from its old parent, prior
   to being added to the new location.
@@ -12,7 +12,7 @@
 === 0.9.5pre4 / 2014-12-17
 
 * Added performance improvements to {Tree::TreeNode#is_root?} and
-  {Tree::TreeNode#node_depth}. Thanks to {https://github.com/aidansteele Aidan Steel}.
+  {Tree::Utils::TreeMetricsHandler#node_depth}. Thanks to {https://github.com/aidansteele Aidan Steel}.
 
 === 0.9.5pre3 / 2014-12-16
 
