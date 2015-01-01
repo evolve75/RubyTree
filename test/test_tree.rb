@@ -146,24 +146,24 @@ module TestTree
 
       tree = Tree::TreeNode.from_hash(hash)
 
-      assert_same(tree.class, Tree::TreeNode)
+      assert_same(Tree::TreeNode, tree.class)
       assert_same(tree.name, :A)
-      assert_equal(tree.is_root?, true)
-      assert_equal(tree.is_leaf?, false)
-      assert_equal(tree.size, 9)
-      assert_equal(tree.content, "Root content")
-      assert_equal(tree.children.count, 3) # B, C, D
+      assert_equal(true, tree.is_root?)
+      assert_equal(false, tree.is_leaf?)
+      assert_equal(9, tree.size)
+      assert_equal("Root content", tree.content)
+      assert_equal(3, tree.children.count) # B, C, D
 
       leaf_with_content = tree[:B][:F][:I]
-      assert_equal(leaf_with_content.content, "Leaf content")
-      assert_equal(leaf_with_content.is_leaf?, true)
+      assert_equal("Leaf content", leaf_with_content.content)
+      assert_equal(true, leaf_with_content.is_leaf?)
 
       leaf_without_content = tree[:C]
-      assert_equal(leaf_without_content.is_leaf?, true)
+      assert_equal(true, leaf_without_content.is_leaf?)
 
       interior_node = tree[:B][:F]
-      assert_equal(interior_node.is_leaf?, false)
-      assert_equal(interior_node.children.count, 2)
+      assert_equal(false, interior_node.is_leaf?)
+      assert_equal(2, interior_node.children.count)
 
       # Can't make a node without a name
       assert_raise (ArgumentError) { Tree::TreeNode.from_hash({}) }
@@ -198,24 +198,24 @@ module TestTree
 
       tree = Tree::TreeNode.from_hash(hash)
 
-      assert_same(tree.class, Tree::TreeNode)
-      assert_same(tree.name, :A)
-      assert_equal(tree.is_root?, true)
-      assert_equal(tree.is_leaf?, false)
-      assert_equal(tree.size, 9)
-      assert_equal(tree.content, "Root content")
-      assert_equal(tree.children.count, 3) # B, C, D
+      assert_same(Tree::TreeNode, tree.class)
+      assert_same(:A, tree.name)
+      assert_equal(true, tree.is_root?)
+      assert_equal(false, tree.is_leaf?)
+      assert_equal(9, tree.size)
+      assert_equal("Root content", tree.content)
+      assert_equal(3, tree.children.count) # B, C, D
 
       leaf_with_content = tree[:B][:F][:I]
-      assert_equal(leaf_with_content.content, "Leaf content")
-      assert_equal(leaf_with_content.is_leaf?, true)
+      assert_equal("Leaf content", leaf_with_content.content)
+      assert_equal(true, leaf_with_content.is_leaf?)
 
       leaf_without_content = tree[:C]
-      assert_equal(leaf_without_content.is_leaf?, true)
+      assert_equal(true, leaf_without_content.is_leaf?)
 
       interior_node = tree[:B][:F]
-      assert_equal(interior_node.is_leaf?, false)
-      assert_equal(interior_node.children.count, 2)
+      assert_equal(false, interior_node.is_leaf?)
+      assert_equal(2, interior_node.children.count)
     end
 
     def test_add_from_hash
@@ -223,7 +223,7 @@ module TestTree
 
       # Doesn't blow up when added an empty hash
       hash = {}
-      assert_equal(tree.add_from_hash(hash), [])
+      assert_equal([], tree.add_from_hash(hash))
 
       # Okay, now try a real hash
       hash = {:B => {:C => {:D => nil}, :E => {}, :F => {}}, [:G, "G content"] => {}}
@@ -236,13 +236,13 @@ module TestTree
       #  D
 
       added_children = tree.add_from_hash(hash)
-      assert_equal(added_children.class, Array)
-      assert_equal(added_children.count, 2)
-      assert_equal(tree.size, 7)
-      assert_equal(tree[:G].content, "G content")
-      assert_equal(tree[:G].is_leaf?, true)
-      assert_equal(tree[:B].size, 5)
-      assert_equal(tree[:B].children.count, 3)
+      assert_equal(Array, added_children.class)
+      assert_equal(2, added_children.count)
+      assert_equal(7, tree.size)
+      assert_equal("G content", tree[:G].content)
+      assert_equal(true, tree[:G].is_leaf?)
+      assert_equal(5, tree[:B].size)
+      assert_equal(3, tree[:B].children.count)
 
       assert_raise (ArgumentError) { tree.add_from_hash([]) }
       assert_raise (ArgumentError) { tree.add_from_hash("not a hash") }
@@ -272,7 +272,7 @@ module TestTree
 
       exported = a.to_h
       expected = {:A => {:B => {:E => {}}, :C => {:F => {}, :G => {}}}}
-      assert_equal(exported, expected)
+      assert_equal(expected, exported)
     end
 
     # Test that from_hash and to_h are symmetric
@@ -288,7 +288,7 @@ module TestTree
       input = {:A => {:B => {:E => {:I => {}, :J =>{}}, :F => {}, :G => {}}, :C =>{:H => {:K => {}}}}}
 
       node = Tree::TreeNode.from_hash(input)
-      assert_equal(node.to_h, input)
+      assert_equal(input, node.to_h)
     end
 
     # Test the presence of content in the nodes.
@@ -316,20 +316,20 @@ module TestTree
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
 
-      assert_equal(first_node <=> nil, +1)
-      assert_equal(first_node <=> second_node, -1)
+      assert_equal(+1, first_node <=> nil)
+      assert_equal(-1, first_node <=> second_node)
 
       second_node = Tree::TreeNode.new(1)
-      assert_equal(first_node <=> second_node, 0)
+      assert_equal(0, first_node <=> second_node)
 
       first_node  = Tree::TreeNode.new("ABC")
       second_node = Tree::TreeNode.new("XYZ")
 
-      assert_equal(first_node <=> nil, +1)
-      assert_equal(first_node <=> second_node, -1)
+      assert_equal(+1, first_node <=> nil)
+      assert_equal(-1, first_node <=> second_node)
 
       second_node = Tree::TreeNode.new("ABC")
-      assert_equal(first_node <=> second_node, 0)
+      assert_equal(0, first_node <=> second_node)
 
       StandardWarning.enable
     end

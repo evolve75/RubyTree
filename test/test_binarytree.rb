@@ -3,7 +3,7 @@
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012, 2013 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2015 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -64,7 +64,7 @@ module TestTree
     end
 
     def test_from_hash
-      # Can make a root note without a name
+      # Can't make a root node without a name
       assert_raise (ArgumentError) { Tree::BinaryTreeNode.from_hash({})}
       # Can't have multiple roots
       assert_raise (ArgumentError) { Tree::BinaryTreeNode.from_hash({:A => {}, :B => {}}) }
@@ -82,20 +82,20 @@ module TestTree
       #      D
 
       assert_same(tree.class, Tree::BinaryTreeNode)
-      assert_same(tree.name, :A)
-      assert_equal(tree.is_root?, true)
-      assert_equal(tree.is_leaf?, false)
-      assert_equal(tree.children.count, 2) # B, C, D
-      assert_equal(tree.size, 4)
-      assert_equal(tree.left_child.name, :B)
-      assert_equal(tree.right_child.name, :C)
+      assert_same(:A, tree.name)
+      assert_equal(true, tree.is_root?)
+      assert_equal(false, tree.is_leaf?)
+      assert_equal(2, tree.children.count) # B, C, D
+      assert_equal(4, tree.size)
+      assert_equal(:B, tree.left_child.name)
+      assert_equal(:C, tree.right_child.name)
 
       valid_hash_with_content = {[:A, "Content!"] => {:B => {}, :C => { [:D, "More content"] => {} } } }
       tree2 = Tree::BinaryTreeNode.from_hash(valid_hash_with_content)
 
-      assert_equal(tree2.class, Tree::BinaryTreeNode)
-      assert_equal(tree2.content, "Content!" )
-      assert_equal(tree2[:C][:D].content, "More content")
+      assert_equal(Tree::BinaryTreeNode, tree2.class)
+      assert_equal("Content!" , tree2.content)
+      assert_equal("More content", tree2[:C][:D].content)
     end
 
     def test_add_from_hash
@@ -104,11 +104,11 @@ module TestTree
       # Can't have too many children
       too_many_kids = {:child1 => {}, :child2 => {}, :child3 => {}}
       assert_raise(ArgumentError) { root.add_from_hash(too_many_kids) }
-      assert_equal(root.children.count, 0) # Nothing added
+      assert_equal(0, root.children.count) # Nothing added
 
       # Well behaved when adding nothing
-      assert_equal(root.add_from_hash({}), [])
-      assert_equal(root.size, 1)
+      assert_equal([], root.add_from_hash({}))
+      assert_equal(1, root.size)
 
       valid_hash = {:A => {}, :B => { :C => {}, [:D, "leaf"] => {} } }
       added = root.add_from_hash(valid_hash)
@@ -118,11 +118,11 @@ module TestTree
       #     / \
       #    C   D
 
-      assert_equal(added.class, Array)
-      assert_equal(added.count, 2)
-      assert_equal(root.size, 5)
+      assert_equal(Array, added.class)
+      assert_equal(2, added.count)
+      assert_equal(5, root.size)
       assert_equal(root.children.count, 2)
-      assert_equal(root[:B][:D].content, "leaf")
+      assert_equal("leaf", root[:B][:D].content)
 
       # Can't add more than two children
       assert_raise(ArgumentError) { root.add_from_hash({:X => {}}) }
@@ -186,7 +186,7 @@ module TestTree
       result_array = []
       result = f.inordered_each { |node| result_array << node.detached_copy}
 
-      assert_equal(result, f)   # each should return the original object
+      assert_equal(f, result)   # each should return the original object
 
       expected_array.each_index do |i|
         # Match only the names.
