@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -347,6 +347,12 @@ module Tree
     #
     # This is to prevent +nil+ nodes being created as children if a non-existant position is used.
     #
+    # If the new node being added has an existing parent node, then it will be
+    # removed from this pre-existing parent prior to being added as a child to
+    # this node. I.e., the child node will effectively be moved from its old
+    # parent to this node. In this situation, after the operation is complete,
+    # the node will no longer exist as a child for its old parent.
+    #
     # @param [Tree::TreeNode] child The child node to add.
     # @param [optional, Number] at_index The optional position where the node is to be inserted.
     #
@@ -364,6 +370,8 @@ module Tree
 
       # Lazy mans unique test, won't test if children of child are unique in this tree too.
       raise "Child #{child.name} already added!" if @children_hash.include?(child.name)
+
+      child.parent.remove! child if child.parent # Detach from the old parent
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)

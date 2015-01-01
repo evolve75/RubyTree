@@ -2,7 +2,7 @@
 
 # test_tree.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -512,6 +512,7 @@ module TestTree
 
       # Test the addition of a nil node.
       assert_raise(ArgumentError) { @root.add(nil) }
+
     end
 
     # Test the addition of a duplicate node (duplicate being defined as a node with the same name).
@@ -1615,28 +1616,45 @@ module TestTree
       root_node = Tree::TreeNode.new("OLDROOT")
 
       child_node = Tree::TreeNode.new("CHILD")
-      assert_equal(child_node.node_depth, 0)
+      assert_equal(0, child_node.node_depth)
 
       root_node << child_node
       assert_equal(root_node["CHILD"].name, "CHILD")
-      assert_equal(root_node.node_depth, 0)
-      assert_equal(child_node.node_depth, 1)
+      assert_equal(0, root_node.node_depth)
+      assert_equal(1, child_node.node_depth)
 
       grandchild_node = Tree::TreeNode.new("GRANDCHILD")
       child_node << grandchild_node
       assert_equal(root_node["CHILD"]["GRANDCHILD"].name, "GRANDCHILD")
-      assert_equal(root_node.node_depth, 0)
-      assert_equal(child_node.node_depth, 1)
-      assert_equal(grandchild_node.node_depth, 2)
+      assert_equal(0, root_node.node_depth)
+      assert_equal(1, child_node.node_depth)
+      assert_equal(2, grandchild_node.node_depth)
 
       root2_node = Tree::TreeNode.new("NEWROOT")
-      assert_equal(root2_node.node_depth, 0)
+      assert_equal(0, root2_node.node_depth)
 
       # Move the grand child to a new root.
       root2_node << grandchild_node
       assert_equal(root2_node["GRANDCHILD"].name, "GRANDCHILD")
-      assert_equal(grandchild_node.parent, root2_node)
-      assert_equal(grandchild_node.node_depth, 1)
+      assert_equal(root2_node, grandchild_node.parent)
+      assert_equal(1, grandchild_node.node_depth)
+
+      # Test the move semantics for addition of an existing child node
+      root1 = Tree::TreeNode.new("1")
+      root1 << Tree::TreeNode.new("2") << Tree::TreeNode.new("4")
+      root1 << Tree::TreeNode.new("3") << Tree::TreeNode.new("5")
+      root1["3"] << Tree::TreeNode.new("6")
+      assert_equal(root1["3"]["6"].name, "6")
+
+      # Create a new tree
+      root2 = root1.dup
+      assert_equal(root1, root2)
+      assert_not_same(root1, root2)
+
+      # Now 'move' the "4" node to the new tree. This should have 'dup' semantics.
+      root2["3"] << root1["2"]["4"]
+      assert_equal("3", root2["3"]["4"].parent.name) # This is on the new tree
+      assert_nil(root1["2"]["4"])                    # This is on the old tree
 
     end
   end

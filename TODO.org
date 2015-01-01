@@ -187,6 +187,8 @@
 
 
 * R0.9.5
+** DONE Fix [[Issue:32][Issue #32]] and enable move semantics on the TreeNode#add method.               :ARCHIVE:
+   CLOSED: [2015-01-01 Thu 16:05]
 ** DONE Check the lazy initialization of =@node_depth= and changes in parent nodes          :ARCHIVE:
    CLOSED: [2014-12-18 Thu 11:05]
 ** DONE Pull the performance improvements from Aidan [[Pull:37][#37]]                                  :ARCHIVE:
@@ -235,6 +237,7 @@
       restructure the internals to make better use of memory.
 ** STARTED Convert all documentation to markdown mode.
 ** TODO Expand the examples section, and add supporting documentation
+
 * Unplanned / Not assigned to any release
 *** DONE [#A] Migrate the website and references from http://rubyforge.org/               :ARCHIVE:
     CLOSED: [2014-07-04 Fri 22:18]

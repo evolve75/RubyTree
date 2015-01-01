@@ -9,6 +9,14 @@ Note: API level changes are expected to reduce dramatically after the 1.x
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+== Release 0.9.5 Changes
+
+- The {Tree::TreeNode#add} method now provides 'move' semantics, if a child
+  which is on an existing tree is added to another tree, or location on the same
+  tree. In this situation, the child node is removed from its old position, and
+  added to the new parent node. After the add operation is complete, the child
+  no longer exists on the old tree/location.
+
 == Release 0.9.3 Changes
 
 - The validation for unique node names has changed in the {Tree::TreeNode#add}
