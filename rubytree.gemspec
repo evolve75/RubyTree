@@ -73,6 +73,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rdoc'            , '~> 4.1'
   s.add_development_dependency 'yard'            , '~> 0.8'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'
+  s.add_development_dependency 'test-unit'       , '~> 3.0'
 
   s.post_install_message = <<-EOF
     ========================================================================
