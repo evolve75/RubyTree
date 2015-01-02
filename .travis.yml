@@ -1,10 +1,10 @@
 language: ruby
 before_install:
+  - gem install bundler
   - 'echo "gem: --no-ri --no-rdoc" > ~/.gemrc'
   - bundle --version
   - gem --version
 bundler_args: --without development
-cache: bundler
 
 rvm:
   - 1.9.2
