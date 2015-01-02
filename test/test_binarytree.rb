@@ -87,6 +87,7 @@ module TestTree
       assert_equal(false, tree.is_leaf?)
       assert_equal(2, tree.children.count) # B, C, D
       assert_equal(4, tree.size)
+      tree.print_tree
       assert(tree[:B].is_left_child?)
       assert(tree[:C].is_right_child?)
       assert_equal(:C, tree.right_child.name)
