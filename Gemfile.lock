@@ -42,10 +42,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.5)
+  bundler (~> 1.7)
   coveralls (>= 0.7)
-  rake (~> 10.1)
-  rdoc (~> 4.1)
+  rake (~> 10.4)
+  rdoc (~> 4.2)
   rtagstask (~> 0.0)
   rubytree!
   yard (~> 0.8)

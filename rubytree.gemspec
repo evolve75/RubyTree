@@ -4,7 +4,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013, 2014 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2014, 2015 Anupam Sengupta
 # All rights reserved.
 
 $:.unshift File.expand_path("../lib", __FILE__)
@@ -12,7 +12,7 @@ require "tree/version"
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2014-12-17'
+  s.date                  = '2015-01-04'
   s.version               = Tree::VERSION
   s.license               = 'BSD'
 
@@ -69,8 +69,9 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'structured_warnings' , '~> 0.1'
   s.add_runtime_dependency 'json'                , '~> 1.8'
 
-  s.add_development_dependency 'bundler'         , '~> 1.5'
-  s.add_development_dependency 'rdoc'            , '~> 4.1'
+  s.add_development_dependency 'rake'            , '~> 10.4'
+  s.add_development_dependency 'bundler'         , '~> 1.7'
+  s.add_development_dependency 'rdoc'            , '~> 4.2'
   s.add_development_dependency 'yard'            , '~> 0.8'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'
 
@@ -78,7 +79,7 @@ Gem::Specification.new do |s|
     ========================================================================
                     Thank you for installing RubyTree.
 
-    Note:: As of 0.9.3, node names do not need to be globally unique.
+    Note:: As of 0.9.5, the Tree::TreeNode#add method has 'move' semantics.
 
     Details of the API changes are documented in the API-CHANGES file.
     ========================================================================
