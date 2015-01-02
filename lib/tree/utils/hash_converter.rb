@@ -5,9 +5,9 @@
 #
 # Author::  Jen Hamon (http://www.github.com/jhamon)
 #
-# Time-stamp: <2014-10-25 16:20:23 anupam>
+# Time-stamp: <2015-01-02 15:11:03 anupam>
 #
-# Copyright (C) 2014 Jen Hamon (http://www.github.com/jhamon) and
+# Copyright (C) 2014, 2015 Jen Hamon (http://www.github.com/jhamon) and
 #                    Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
