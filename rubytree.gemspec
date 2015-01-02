@@ -71,6 +71,7 @@ Gem::Specification.new do |s|
 
   # Note: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler'         , '~> 1.7'
+  s.add_development_dependency 'test-unit'       , '~> 3.0'
   s.add_development_dependency 'rdoc'            , '~> 4.2'
   s.add_development_dependency 'yard'            , '~> 0.8'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'

@@ -18,9 +18,9 @@ GEM
     json (1.8.1)
     mime-types (2.4.3)
     multi_json (1.10.1)
+    power_assert (0.2.2)
     rake (10.4.2)
     rdoc (4.2.0)
-      json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     rtags (0.97)
@@ -34,6 +34,8 @@ GEM
     structured_warnings (0.1.4)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
+    test-unit (3.0.9)
+      power_assert
     thor (0.18.1)
     tins (0.13.2)
     yard (0.8.7.6)
@@ -48,4 +50,5 @@ DEPENDENCIES
   rdoc (~> 4.2)
   rtagstask (~> 0.0)
   rubytree!
+  test-unit (~> 3.0)
   yard (~> 0.8)
