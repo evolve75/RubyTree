@@ -254,3 +254,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
 [structured_warnings]:  http://github.com/schmidt/structured_warnings "structured_warnings"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/evolve75/rubytree/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
