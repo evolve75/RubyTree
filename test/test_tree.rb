@@ -1018,6 +1018,9 @@ module TestTree
       end
 
       assert_equal(2, @child4.node_depth, "Child 4 should have depth 2")
+
+      @root << @child5 << @child3
+      assert_equal(3, @child4.node_depth, "Child 4 should have depth 3 after Child 5 inserted above")
     end
 
     # Test the level method.  Since this is an alias of node_depth, we just test for equivalence

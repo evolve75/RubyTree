@@ -94,7 +94,8 @@ module Tree::Utils
       #
       # @return [Integer] Depth of this node.
       def node_depth
-        @node_depth ||= is_root? ? 0 : (1 + parent.node_depth)
+        return 0 if is_root?
+        1 + parent.node_depth
       end
 
       # @!attribute [r] level
