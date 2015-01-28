@@ -230,7 +230,7 @@ module Tree
     #
     # @return [Tree::TreeNode] A copy of this node.
     def detached_copy
-      Tree::TreeNode.new(@name, @content ? @content.clone : nil)
+      self.class.new(@name, @content ? @content.clone : nil)
     end
 
     # Returns a copy of entire (sub-)tree from this node.
