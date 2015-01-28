@@ -610,7 +610,7 @@ module Tree
         if current                    # The node might be 'nil' (esp. for binary trees)
           yield current               # and process it
           # Stack children of the current node at top of the stack
-          node_stack = current.children.clone.concat(node_stack)
+          node_stack = current.children.concat(node_stack)
         end
       end
 
