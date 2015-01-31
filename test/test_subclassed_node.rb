@@ -64,6 +64,11 @@ module TestTree
 
     end
 
+    def test_subclassed_detached_copy_is_same_class
+      root = MyNode.new("Root")
+      assert_equal(MyNode, root.detached_copy.class)
+    end
+
   end
 end
 
