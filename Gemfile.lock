@@ -19,7 +19,7 @@ GEM
     mime-types (2.4.3)
     multi_json (1.10.1)
     netrc (0.10.3)
-    power_assert (0.2.2)
+    power_assert (0.2.3)
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
