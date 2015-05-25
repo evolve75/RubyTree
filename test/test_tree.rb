@@ -1660,6 +1660,74 @@ module TestTree
       assert_nil(root1["2"]["4"])                    # This is on the old tree
 
     end
+
+    # Test the get_path_as_string method.
+    def test_get_path_as_string
+      j = Tree::TreeNode.new("j")
+      f = Tree::TreeNode.new("f")
+      k = Tree::TreeNode.new("k")
+      a = Tree::TreeNode.new("a")
+      d = Tree::TreeNode.new("d")
+      h = Tree::TreeNode.new("h")
+      z = Tree::TreeNode.new("z")
+      p = Tree::TreeNode.new("p")
+      t = Tree::TreeNode.new("t")
+      e = Tree::TreeNode.new("e")
+
+      # Create the following Tree
+      #        j         <-- level 0 (Root)
+      #      /   \
+      #     f      k     <-- level 1
+      #   /   \      \
+      #  a     h      z  <-- level 2
+      #   \   / \
+      #    d p   t       <-- level 3
+      #   /
+      #  e               <-- level 4
+      j << f << a << d << e
+      f << h
+      h << p
+      h << t
+      j << k << z
+
+      assert_equal(t.path_as_string(' => '), 'j => f => h => t')
+      assert_equal(z.path_as_string(' => '), 'j => k => z')
+      assert_equal(a.path_as_string(' => '), 'j => f => a')
+    end
+
+    # Test the get_path_as_array method.
+    def test_get_path_as_array
+      j = Tree::TreeNode.new("j")
+      f = Tree::TreeNode.new("f")
+      k = Tree::TreeNode.new("k")
+      a = Tree::TreeNode.new("a")
+      d = Tree::TreeNode.new("d")
+      h = Tree::TreeNode.new("h")
+      z = Tree::TreeNode.new("z")
+      p = Tree::TreeNode.new("p")
+      t = Tree::TreeNode.new("t")
+      e = Tree::TreeNode.new("e")
+
+      # Create the following Tree
+      #        j         <-- level 0 (Root)
+      #      /   \
+      #     f      k     <-- level 1
+      #   /   \      \
+      #  a     h      z  <-- level 2
+      #   \   / \
+      #    d p   t       <-- level 3
+      #   /
+      #  e               <-- level 4
+      j << f << a << d << e
+      f << h
+      h << p
+      h << t
+      j << k << z
+
+      assert_equal(e.path_as_array, ['j', 'f', 'a', 'd', 'e'])
+      assert_equal(p.path_as_array, ['j', 'f' , 'h', 'p'])
+      assert_equal(k.path_as_array, ['j', 'k'])
+    end
   end
 end
 
