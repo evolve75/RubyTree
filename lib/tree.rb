@@ -915,8 +915,8 @@ module Tree
     # @param [String] separator The separator between the nodes.
     #
     # @return [String] The path from the root to the node in string format
-    def path_as_string(separator)
-      get_path_array.reverse.join(separator)
+    def path_as_string(separator, attribute=:name)
+      get_path_array(attribute).reverse.join(separator)
     end
 
     # Node path.
@@ -925,16 +925,16 @@ module Tree
     # The root always has +nil+ siblings.
     #
     # @return [Array<String>] An array with the nodes from the root to the node itself
-    def path_as_array
-      get_path_array.reverse
+    def path_as_array(attribute=:name)
+      get_path_array(attribute).reverse
     end
 
-    def get_path_array(current_array_path = [])
-      path_array = current_array_path + [name]
+    def get_path_array(attribute=:name, current_array_path = [])
+      path_array = current_array_path + [send(attribute)]
       if !parent
         path_array
       else
-        parent.get_path_array(path_array)
+        parent.get_path_array(attribute, path_array)
       end
     end
   end
