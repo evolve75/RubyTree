@@ -916,7 +916,7 @@ module Tree
     #
     # @return [String] The path from the root to the node in string format
     def path_as_string(separator)
-      get_path_array().reverse.join(separator)
+      get_path_array.reverse.join(separator)
     end
 
     # Node path.
@@ -926,16 +926,15 @@ module Tree
     #
     # @return [Array<String>] An array with the nodes from the root to the node itself
     def path_as_array
-      get_path_array().reverse
+      get_path_array.reverse
     end
 
     def get_path_array(current_array_path = [])
       path_array = current_array_path + [name]
       if !parent
-        return path_array
+        path_array
       else
-        path_array=parent.get_path_array(path_array)
-        return path_array
+        parent.get_path_array(path_array)
       end
     end
   end
