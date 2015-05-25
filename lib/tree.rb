@@ -907,5 +907,36 @@ module Tree
       children { |child| child.print_tree(level + 1, max_depth, block) if child } # Child might be 'nil'
     end
 
+        # Node path.
+    #
+    # If a block is provided, yields each of the sibling nodes to the block.
+    # The root always has +nil+ siblings.
+    #
+    # @param [String] separator The separator between the nodes.
+    #
+    # @return [String] The path from the root to the node in string format
+    def path_as_string(separator)
+      get_path_array().reverse.join(separator)
+    end
+
+    # Node path.
+    #
+    # If a block is provided, yields each of the sibling nodes to the block.
+    # The root always has +nil+ siblings.
+    #
+    # @return [Array<String>] An array with the nodes from the root to the node itself
+    def path_as_array
+      get_path_array().reverse
+    end
+
+    def get_path_array(current_array_path = [])
+      path_array = current_array_path + [name]
+      if !parent
+        return path_array
+      else
+        path_array=parent.get_path_array(path_array)
+        return path_array
+      end
+    end
   end
 end
