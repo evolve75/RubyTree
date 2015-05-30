@@ -36,8 +36,8 @@ smooth transition to the new APIs.
 - The traversal methods ({Tree::TreeNode#each},
   {Tree::TreeNode#preordered_each}, {Tree::TreeNode#postordered_each} and
   {Tree::TreeNode#breadth_each}) now correctly return an
-  {http://ruby-doc.org/core-1.8.7/Enumerable.html Enumerator} as the
-  return value when no block is given, and return the receiver node if a block was
+  {http://ruby-doc.org/core-1.8.7/Enumerable.html Enumerator} as the return
+  value when no block is given, and return the receiver node if a block was
   provided. This is consistent with how the standard Ruby collections work.
 
 == Release 0.8.3 Changes
@@ -67,12 +67,12 @@ smooth transition to the new APIs.
   - {Tree::TreeNode#[]}
   - {Tree::BinaryTreeNode#add}
 
-- Added {Tree::Utils::TreeMetricsHandler#level Tree::TreeNode#level} as an alias for
-  {Tree::Utils::TreeMetricsHandler#node_depth Tree::TreeNode#node_depth}
+- Added {Tree::Utils::TreeMetricsHandler#level Tree::TreeNode#level} as an alias
+  for {Tree::Utils::TreeMetricsHandler#node_depth Tree::TreeNode#node_depth}
 
 - Added new methods {Tree::Utils::TreeMetricsHandler#in_degree
-  Tree::TreeNode#in_degree} and {Tree::Utils::TreeMetricsHandler#out_degree Tree::TreeNode#out_degree}
-  to report the node's degree stats
+  Tree::TreeNode#in_degree} and {Tree::Utils::TreeMetricsHandler#out_degree
+  Tree::TreeNode#out_degree} to report the node's degree stats
 
 - {Tree::TreeNode#is_only_child?} now returns +true+ for a root node.
 
@@ -82,15 +82,15 @@ smooth transition to the new APIs.
 - {Tree::TreeNode#add} and {Tree::TreeNode#<<} now throw an ArgumentError
   exception if a +nil+ node is passed as an argument.
 
-- Added new methods {Tree::Utils::JSONConverter#to_json Tree::TreeNode#to_json} and
-  {Tree::Utils::JSONConverter::ClassMethods#json_create Tree::TreeNode#json_create} to
-  convert to/from the JSON format. Thanks to
+- Added new methods {Tree::Utils::JSONConverter#to_json Tree::TreeNode#to_json}
+  and {Tree::Utils::JSONConverter::ClassMethods#json_create
+  Tree::TreeNode#json_create} to convert to/from the JSON format. Thanks to
   Dirk[http://github.com/railsbros-dirk] for this change.
 
 == Release 0.6.1 Changes
 
-- Deprecated the {Tree::Utils::TreeMetricsHandler#depth} method as it was returning an incorrect
-  depth value. Have introduced a new replacement method
+- Deprecated the {Tree::Utils::TreeMetricsHandler#depth} method as it was
+  returning an incorrect depth value. Have introduced a new replacement method
   {Tree::Utils::TreeMetricsHandler#node_depth} which returns the correct result.
 
 # Local Variables:

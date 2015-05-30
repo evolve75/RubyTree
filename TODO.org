@@ -187,6 +187,7 @@
 
 
 * R0.9.5
+** TODO Add the `#get_path_as_string` method from feature request #48
 ** DONE Fix [[Issue:32][Issue #32]] and enable move semantics on the TreeNode#add method.               :ARCHIVE:
    CLOSED: [2015-01-01 Thu 16:05]
 ** DONE Check the lazy initialization of =@node_depth= and changes in parent nodes          :ARCHIVE:

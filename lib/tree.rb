@@ -9,19 +9,19 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015 Anupam Sengupta
+# Copyright (c) 2006-2015 Anupam Sengupta
 #
 # All rights reserved.
 #
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
 #
 # - Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
 #
-# - Redistributions in binary form must reproduce the above copyright notice, this
-#   list of conditions and the following disclaimer in the documentation and/or
-#   other materials provided with the distribution.
+# - Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
 #
 # - Neither the name of the organization nor the names of its contributors may
 #   be used to endorse or promote products derived from this software without
@@ -30,21 +30,22 @@
 #   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
 require 'tree/tree_deps'
 
-# This module provides a *TreeNode* class whose instances are the primary objects
-# for representing nodes in the tree.
+# This module provides a *TreeNode* class whose instances are the primary
+# objects for representing nodes in the tree.
 #
-# This module also acts as the namespace for all classes in the *RubyTree* package.
+# This module also acts as the namespace for all classes in the *RubyTree*
+# package.
 module Tree
 
   # == TreeNode Class Description
@@ -199,8 +200,9 @@ module Tree
     #
     # The content can be of any type, and defaults to +nil+.
     #
-    # @param [Object] name Name of the node.  Conventional usage is to pass a String
-    #   (Integer names may cause *surprises*)
+    # @param [Object] name Name of the node. Conventional usage is to pass a
+    #   String (Integer names may cause *surprises*)
+    #
     # @param [Object] content Content of the node.
     #
     # @raise [ArgumentError] Raised if the node name is empty.
@@ -217,7 +219,9 @@ module Tree
 
       if name.kind_of?(Integer)
         warn StandardWarning,
-             "Using integer as node name. Semantics of TreeNode[] may not be what you expect! #{name} #{content}"
+             "Using integer as node name."\
+             " Semantics of TreeNode[] may not be what you expect!"\
+             " #{name} #{content}"
       end
 
       self.set_as_root!
@@ -260,7 +264,10 @@ module Tree
     # Creates a dump representation of this node and returns the same as
     # a hash.
     def create_dump_rep           # :nodoc:
-      { :name => @name, :parent => (is_root? ? nil : @parent.name),  :content => Marshal.dump(@content)}
+      { :name => @name,
+        :parent => (is_root? ? nil : @parent.name),
+        :content => Marshal.dump(@content)
+      }
     end
 
     protected :create_dump_rep
@@ -271,8 +278,8 @@ module Tree
     # additional details.
     #
     #
-    # @todo This method probably should be a class method.  It currently clobbers self
-    #       and makes itself the root.
+    # @todo This method probably should be a class method. It currently clobbers
+    #       self and makes itself the root.
     #
     def marshal_load(dumped_tree_array)
       nodes = { }
@@ -336,16 +343,18 @@ module Tree
     # the child is added as the last child ("right most") in the current set of
     # children of this node.
     #
-    # Additionally you can specify a insert position. The new node will be inserted
-    # BEFORE that position. If you don't specify any position the node will be
-    # just appended. This feature is provided to make implementation of node
-    # movement within the tree very simple.
+    # Additionally you can specify a insert position. The new node will be
+    # inserted BEFORE that position. If you don't specify any position the node
+    # will be just appended. This feature is provided to make implementation of
+    # node movement within the tree very simple.
     #
-    # If an insertion position is provided, it needs to be within the valid range of:
+    # If an insertion position is provided, it needs to be within the valid
+    # range of:
     #
     #    -children.size..children.size
     #
-    # This is to prevent +nil+ nodes being created as children if a non-existant position is used.
+    # This is to prevent +nil+ nodes being created as children if a non-existant
+    # position is used.
     #
     # If the new node being added has an existing parent node, then it will be
     # removed from this pre-existing parent prior to being added as a child to
@@ -354,29 +363,43 @@ module Tree
     # the node will no longer exist as a child for its old parent.
     #
     # @param [Tree::TreeNode] child The child node to add.
-    # @param [optional, Number] at_index The optional position where the node is to be inserted.
+    #
+    # @param [optional, Number] at_index The optional position where the node is
+    #                                    to be inserted.
     #
     # @return [Tree::TreeNode] The added child node.
     #
-    # @raise [RuntimeError] This exception is raised if another child node with the same
-    #                       name exists, or if an invalid insertion position is specified.
-    # @raise [ArgumentError] This exception is raised if a +nil+ node is passed as the argument.
+    # @raise [RuntimeError] This exception is raised if another child node with
+    #                       the same name exists, or if an invalid insertion
+    #                       position is specified.
+    #
+    # @raise [ArgumentError] This exception is raised if a +nil+ node is passed
+    #                        as the argument.
     #
     # @see #<<
     def add(child, at_index = -1)
-      raise ArgumentError, "Attempting to add a nil node" unless child # Only handles the immediate child scenario
-      raise ArgumentError, "Attempting add node to itself" if self.equal?(child)
-      raise ArgumentError, "Attempting add root as a child" if child.equal?(root)
+      # Only handles the immediate child scenario
+      raise ArgumentError,
+            "Attempting to add a nil node" unless child
+      raise ArgumentError,
+            "Attempting add node to itself" if self.equal?(child)
+      raise ArgumentError,
+            "Attempting add root as a child" if child.equal?(root)
 
-      # Lazy mans unique test, won't test if children of child are unique in this tree too.
-      raise "Child #{child.name} already added!" if @children_hash.include?(child.name)
+      # Lazy mans unique test, won't test if children of child are unique in
+      # this tree too.
+      raise "Child #{child.name} already added!"\
+            if @children_hash.include?(child.name)
 
       child.parent.remove! child if child.parent # Detach from the old parent
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)
       else
-        raise "Attempting to insert a child at a non-existent location (#{at_index}) when only positions from #{insertion_range.min} to #{insertion_range.max} exist."
+        raise "Attempting to insert a child at a non-existent location"\
+              " (#{at_index}) "\
+              "when only positions from "\
+              "#{insertion_range.min} to #{insertion_range.max} exist."
       end
 
       @children_hash[child.name]  = child
@@ -395,8 +418,8 @@ module Tree
 
     # Renames the node and updates the parent's reference to it
     #
-    # @param [Object] new_name Name of the node.  Conventional usage is to pass a String
-    #   (Integer names may cause *surprises*)
+    # @param [Object] new_name Name of the node. Conventional usage is to pass a
+    #                          String (Integer names may cause *surprises*)
     #
     # @return [Object] The old name
     def rename(new_name)
@@ -413,13 +436,14 @@ module Tree
 
     # Renames the specified child node
     #
-    # @param [Object] old_name old Name of the node. Conventional usage is to pass
-    #   a String (Integer names may cause *surprises*)
+    # @param [Object] old_name old Name of the node. Conventional usage is to
+    #                     pass a String (Integer names may cause *surprises*)
     #
-    # @param [Object] new_name new Name of the node. Conventional usage is to pass
-    #   a String (Integer names may cause *surprises*)
+    # @param [Object] new_name new Name of the node. Conventional usage is to
+    #   pass a String (Integer names may cause *surprises*)
     def rename_child(old_name, new_name)
-      raise ArgumentError, "Invalid child name specified: " + old_name unless @children_hash.has_key?(old_name)
+      raise ArgumentError, "Invalid child name specified: #{old_name}"\
+            unless @children_hash.has_key?(old_name)
 
       @children_hash[new_name] = @children_hash.delete(old_name)
       @children_hash[new_name].name=(new_name)
@@ -495,19 +519,22 @@ module Tree
 
     protected :parent=, :name=
 
-    # Removes this node from its parent. This node becomes the new root for its subtree.
+    # Removes this node from its parent. This node becomes the new root for its
+    # subtree.
     #
     # If this is the root node, then does nothing.
     #
-    # @return [Tree:TreeNode] +self+ (the removed node) if the operation is successful, +nil+ otherwise.
+    # @return [Tree:TreeNode] +self+ (the removed node) if the operation is
+    #                                successful, +nil+ otherwise.
     #
     # @see #remove_all!
     def remove_from_parent!
       @parent.remove!(self) unless is_root?
     end
 
-    # Removes all children from this node.  If an independent reference exists to the child
-    # nodes, then these child nodes report themselves as roots after this operation.
+    # Removes all children from this node. If an independent reference exists to
+    # the child nodes, then these child nodes report themselves as roots after
+    # this operation.
     #
     # @return [Tree::TreeNode] this node (+self+)
     #
@@ -568,29 +595,33 @@ module Tree
     #   in not in range, or the name is not present, then a +nil+
     #   is returned.
     #
-    # @note The use of +Integer+ names is allowed by using the optional +num_as_name+ flag.
+    # @note The use of +Integer+ names is allowed by using the optional
+    #       +num_as_name+ flag.
     #
     # @raise [ArgumentError] Raised if the +name_or_index+ argument is +nil+.
     #
     # @see #add
     # @see #initialize
     def [](name_or_index, num_as_name=false)
-      raise ArgumentError, "Name_or_index needs to be provided!" if name_or_index == nil
+      raise ArgumentError,
+            "Name_or_index needs to be provided!" if name_or_index == nil
 
       if name_or_index.kind_of?(Integer) and not num_as_name
         @children[name_or_index]
       else
         if num_as_name and not name_or_index.kind_of?(Integer)
-          warn StandardWarning, "Redundant use of the `num_as_name` flag for non-integer node name"
+          warn StandardWarning,
+             "Redundant use of the `num_as_name` flag for non-integer node name"
         end
         @children_hash[name_or_index]
       end
     end
 
-    # Traverses each node (including this node) of the (sub)tree rooted at this node
-    # by yielding the nodes to the specified block.
+    # Traverses each node (including this node) of the (sub)tree rooted at this
+    # node by yielding the nodes to the specified block.
     #
-    # The traversal is *depth-first* and from *left-to-right* in pre-ordered sequence.
+    # The traversal is *depth-first* and from *left-to-right* in pre-ordered
+    # sequence.
     #
     # @yieldparam node [Tree::TreeNode] Each node.
     #
@@ -607,7 +638,7 @@ module Tree
 
       until node_stack.empty?
         current = node_stack.shift    # Pop the top-most node
-        if current                    # The node might be 'nil' (esp. for binary trees)
+        if current                    # Might be 'nil' (esp. for binary trees)
           yield current               # and process it
           # Stack children of the current node at top of the stack
           node_stack = current.children.concat(node_stack)
@@ -653,7 +684,8 @@ module Tree
         if peek_node.node.has_children? and not peek_node.visited
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
-          marked_children = peek_node.node.children.map {|node| markednode.new(node, false)}
+          marked_children =
+            peek_node.node.children.map {|node| markednode.new(node, false)}
           node_stack = marked_children.concat(node_stack)
           next
         else
@@ -665,8 +697,8 @@ module Tree
     end
 
     # Performs breadth-first traversal of the (sub)tree rooted at this node. The
-    # traversal at a given level is from *left-to-right*.  this node itself is the first
-    # node to be traversed.
+    # traversal at a given level is from *left-to-right*. this node itself is
+    # the first node to be traversed.
     #
     # @yieldparam node [Tree::TreeNode] Each node.
     #
@@ -700,7 +732,9 @@ module Tree
     # @yieldparam child [Tree::TreeNode] Each child node.
     #
     # @return [Tree::TreeNode] This node, if a block is given
-    # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block is given.
+    #
+    # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block
+    #                                 is given.
     def children
       if block_given?
         @children.each {|child| yield child}
@@ -710,7 +744,8 @@ module Tree
       end
     end
 
-    # Yields every leaf node of the (sub)tree rooted at this node to the specified block.
+    # Yields every leaf node of the (sub)tree rooted at this node to the
+    # specified block.
     #
     # May yield this node as well if this is a leaf node.
     # Leaf traversal is *depth-first* and *left-to-right*.
@@ -757,7 +792,9 @@ module Tree
     # itself.
     #
     # 'First' sibling is defined as follows:
-    # First sibling:: The left-most child of this node's parent, which may be this node itself
+    #
+    # First sibling:: The left-most child of this node's parent, which may be
+    # this node itself
     #
     # @return [Tree::TreeNode] The first sibling node.
     #
@@ -781,7 +818,9 @@ module Tree
     # itself.
     #
     # 'Last' sibling is defined as follows:
-    # Last sibling:: The right-most child of this node's parent, which may be this node itself
+    #
+    # Last sibling:: The right-most child of this node's parent, which may be
+    # this node itself
     #
     # @return [Tree::TreeNode] The last sibling node.
     #
@@ -808,7 +847,9 @@ module Tree
     #
     # @yieldparam sibling [Tree::TreeNode] Each sibling node.
     #
-    # @return [Array<Tree::TreeNode>] Array of siblings of this node. Will return an empty array for *root*
+    # @return [Array<Tree::TreeNode>] Array of siblings of this node. Will
+    #                                 return an empty array for *root*
+    #
     # @return [Tree::TreeNode] This node, if no block is given
     #
     # @see #first_sibling
@@ -820,7 +861,8 @@ module Tree
       else
         return [] if is_root?
         siblings = []
-        parent.children {|my_sibling| siblings << my_sibling if my_sibling != self}
+        parent.children {|my_sibling|
+                         siblings << my_sibling if my_sibling != self}
         siblings
       end
     end
@@ -839,7 +881,8 @@ module Tree
     # Next sibling for this node.
     # The _next_ node is defined as the node to right of this node.
     #
-    # Will return +nil+ if no subsequent node is present, or if this is a root node.
+    # Will return +nil+ if no subsequent node is present, or if this is a root
+    # node.
     #
     # @return [Tree::treeNode] the next sibling node, if present.
     #
@@ -855,7 +898,8 @@ module Tree
     # Previous sibling of this node.
     # _Previous_ node is defined to be the node to left of this node.
     #
-    # Will return +nil+ if no predecessor node is present, or if this is a root node.
+    # Will return +nil+ if no predecessor node is present, or if this is a root
+    # node.
     #
     # @return [Tree::treeNode] the previous sibling node, if present.
     #
@@ -876,7 +920,8 @@ module Tree
     #
     # @param [Tree::TreeNode] other The other node to compare against.
     #
-    # @return [Integer] +1 if this node is a 'successor', 0 if equal and -1 if this node is a 'predecessor'.
+    # @return [Integer] +1 if this node is a 'successor', 0 if equal and -1 if
+    #                   this node is a 'predecessor'.
     def <=>(other)
       return +1 if other == nil
       self.name <=> other.name
@@ -885,9 +930,12 @@ module Tree
     # Pretty prints the (sub)tree rooted at this node.
     #
     # @param [Integer] level The indentation level (4 spaces) to start with.
-    # @param [Integer] max_depth optional maximum depth at which the printing with stop.
+    # @param [Integer] max_depth optional maximum depth at which the printing
+    #                            with stop.
     # @param [Proc] block optional block to use for rendering
-    def print_tree(level = 0, max_depth = nil, block = lambda { |node, prefix|  puts "#{prefix} #{node.name}" })
+    def print_tree(level = 0, max_depth = nil,
+                   block = lambda { |node, prefix|
+                     puts "#{prefix} #{node.name}" })
       prefix = ''
 
       if is_root?
@@ -902,9 +950,12 @@ module Tree
 
       block.call(self, prefix)
 
-      return unless max_depth.nil? || level < max_depth # Exit if the max level is defined, and reached.
+      # Exit if the max level is defined, and reached.
+      return unless max_depth.nil? || level < max_depth
 
-      children { |child| child.print_tree(level + 1, max_depth, block) if child } # Child might be 'nil'
+      children { |child|
+        child.print_tree(level + 1,
+                         max_depth, block) if child } # Child might be 'nil'
     end
 
   end

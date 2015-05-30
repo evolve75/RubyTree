@@ -3,21 +3,21 @@
 # tree_merge_handler.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2013-12-31 21:52:59 anupam>
+# Time-stamp: <2015-05-30 14:25:24 anupam>
 #
-# Copyright (C) 2013 Anupam Sengupta (anupamsg@gmail.com)
+# Copyright (C) 2013, 2015 Anupam Sengupta (anupamsg@gmail.com)
 #
 # All rights reserved.
 #
-# Redistribution and use in source and binary forms, with or without modification,
-# are permitted provided that the following conditions are met:
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
 #
 # - Redistributions of source code must retain the above copyright notice, this
 #   list of conditions and the following disclaimer.
 #
-# - Redistributions in binary form must reproduce the above copyright notice, this
-#   list of conditions and the following disclaimer in the documentation and/or
-#   other materials provided with the distribution.
+# - Redistributions in binary form must reproduce the above copyright notice,
+#   this list of conditions and the following disclaimer in the documentation
+#   and/or other materials provided with the distribution.
 #
 # - Neither the name of the organization nor the names of its contributors may
 #   be used to endorse or promote products derived from this software without
@@ -26,13 +26,13 @@
 #   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
-# ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-# ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-# SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
 # Provides utility methods to merge two {Tree::TreeNode} based trees.
@@ -41,7 +41,8 @@ module Tree::Utils::TreeMergeHandler
 
   # @!group Merging Trees
 
-  # Merge two trees that share the same root node and returns <em>a new tree</em>.
+  # Merge two trees that share the same root node and returns <em>a new
+  # tree</em>.
   #
   # The new tree contains the contents of the merge between _other_tree_ and
   # self. Duplicate nodes (coming from _other_tree_) will *NOT* be overwritten
@@ -52,8 +53,11 @@ module Tree::Utils::TreeMergeHandler
   # @param [Tree::TreeNode] other_tree The other tree to merge with.
   # @return [Tree::TreeNode] the resulting tree following the merge.
   #
-  # @raise [TypeError] This exception is raised if _other_tree_ is not a {Tree::TreeNode}.
-  # @raise [ArgumentError] This exception is raised if _other_tree_ does not have the same root node as self.
+  # @raise [TypeError] This exception is raised if _other_tree_ is not a
+  #                    {Tree::TreeNode}.
+  #
+  # @raise [ArgumentError] This exception is raised if _other_tree_ does not
+  #                        have the same root node as self.
   def merge(other_tree)
     check_merge_prerequisites(other_tree)
     new_tree = merge_trees( self.root.dup, other_tree.root )
@@ -67,8 +71,11 @@ module Tree::Utils::TreeMergeHandler
   #
   # @param [Tree::TreeNode] other_tree The other tree to merge with.
   #
-  # @raise [TypeError] This exception is raised if _other_tree_ is not a {Tree::TreeNode}.
-  # @raise [ArgumentError] This exception is raised if _other_tree_ does not have the same root node as self.
+  # @raise [TypeError] This exception is raised if _other_tree_ is not a
+  #                    {Tree::TreeNode}.
+  #
+  # @raise [ArgumentError] This exception is raised if _other_tree_ does not
+  #                        have the same root node as self.
   def merge!(other_tree)
     check_merge_prerequisites( other_tree )
     merge_trees( self.root, other_tree.root )
@@ -84,11 +91,13 @@ module Tree::Utils::TreeMergeHandler
   # @see #merge!
   def check_merge_prerequisites(other_tree)
     unless other_tree.is_a?(Tree::TreeNode)
-      raise TypeError, 'You can only merge in another instance of Tree::TreeNode'
+      raise TypeError,
+            'You can only merge in another instance of Tree::TreeNode'
     end
 
     unless self.root.name == other_tree.root.name
-      raise ArgumentError, 'Unable to merge trees as they do not share the same root'
+      raise ArgumentError,
+            'Unable to merge trees as they do not share the same root'
     end
   end
 
@@ -97,7 +106,8 @@ module Tree::Utils::TreeMergeHandler
   # @author Darren Oakley (https://github.com/dazoakley)
   #
   # @param [Tree::TreeNode] tree1 The target tree to merge into.
-  # @param [Tree::TreeNode] tree2 The donor tree (that will be merged into target).
+  # @param [Tree::TreeNode] tree2 The donor tree (that will be merged
+  #                               into target).
   # @raise [Tree::TreeNode] The merged tree.
   def merge_trees(tree1, tree2)
     names1 = tree1.has_children? ? tree1.children.map { |child| child.name } : []

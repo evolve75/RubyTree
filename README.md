@@ -1,7 +1,7 @@
 <!--
   README.md
 
-  Copyright (C) 2014 Anupam Sengupta (anupamsg@gmail.com)
+  Copyright (C) 2006-2015 Anupam Sengupta (anupamsg@gmail.com)
 
 -->
 # **RubyTree** #
@@ -24,18 +24,18 @@ The implementation is *node-centric*, where individual nodes in the tree are the
 primary structural elements. All common tree-traversal methods ([pre-order][],
 [post-order][], and [breadth-first][]) are supported.
 
-The library mixes in the [Enumerable][] and [Comparable][] modules to allow access
-to the tree as a standard collection (iteration, comparison, etc.).
+The library mixes in the [Enumerable][] and [Comparable][] modules to allow
+access to the tree as a standard collection (iteration, comparison, etc.).
 
 A [Binary tree][] is also provided, which provides the [in-order][] traversal in
 addition to the other methods.
 
-**RubyTree** supports importing from, and exporting to [JSON][], and also supports
-the Ruby's standard object [marshaling][].
+**RubyTree** supports importing from, and exporting to [JSON][], and also
+supports the Ruby's standard object [marshaling][].
 
 This is a [BSD licensed][BSD] open source project, and is hosted at
-[github.com/evolve75/RubyTree][rt@github], and is available as a standard gem from
-[rubygems.org/gems/rubytree][rt_gem].
+[github.com/evolve75/RubyTree][rt@github], and is available as a standard gem
+from [rubygems.org/gems/rubytree][rt_gem].
 
 The home page for **RubyTree** is at [rubytree.anupamsg.me][rt_site].
 
@@ -79,31 +79,35 @@ See the [API][rt_doc] documentation for more details.
 # ..... Example starts.
 require 'tree'                 # Load the library
 
-# ..... Create the root node first.  Note that every node has a name and an optional content payload.
+# ..... Create the root node first.
+# ..... Note that every node has a name and an optional content payload.
 root_node = Tree::TreeNode.new("ROOT", "Root Content")
 root_node.print_tree
 
-# ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
+# ..... Now insert the child nodes.
+#       Note that you can "chain" the child insertions to any depth.
 root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
 root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
 
-# ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
+# ..... Lets print the representation to stdout.
+# ..... This is primarily used for debugging purposes.
 root_node.print_tree
 
-# ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
+# ..... Lets directly access children and grandchildren of the root.
+# ..... The can be "chained" for a given path to any depth.
 child1       = root_node["CHILD1"]
 grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
 
-# ..... Now lets retrieve siblings of the current node as an array.
+# ..... Now retrieve siblings of the current node as an array.
 siblings_of_child1 = child1.siblings
 
-# ..... Lets retrieve immediate children of the root node as an array.
+# ..... Retrieve immediate children of the root node as an array.
 children_of_root = root_node.children
 
 # ..... This is a depth-first and L-to-R pre-ordered traversal.
 root_node.each { |node| node.content.reverse }
 
-# ..... Lets remove a child node from the root node.
+# ..... Remove a child node from the root node.
 root_node.remove!(child1)
 ```
 
@@ -131,8 +135,8 @@ To install the [gem][rt_gem], run this command from a terminal/shell:
 
     $ gem install rubytree
 
-This should install the gem file for **RubyTree**. Note that you might need to have
-super-user privileges (root/sudo) to successfully install the gem.
+This should install the gem file for **RubyTree**. Note that you might need to
+have super-user privileges (root/sudo) to successfully install the gem.
 
 ## DOCUMENTATION: ##
 
@@ -156,15 +160,15 @@ Note that the documentation is formatted using [Yard][].
 
 ## DEVELOPERS: ##
 
-This section is only for modifying **RubyTree** itself. It is not required for using
-the library!
+This section is only for modifying **RubyTree** itself. It is not required for
+using the library!
 
 You can download the latest released source code as a tar or zip file, as
 mentioned above in the installation section.
 
 Alternatively, you can checkout the latest commit/revision from the Version
-Control System. Note that **RubyTree**'s primary [SCM][] is [git][] and is hosted on
-[github.com][rt@github].
+Control System. Note that **RubyTree**'s primary [SCM][] is [git][] and is
+hosted on [github.com][rt@github].
 
 ### Using the git Repository ###
 
@@ -257,4 +261,3 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/evolve75/rubytree/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
