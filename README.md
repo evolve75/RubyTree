@@ -109,6 +109,8 @@ root_node.each { |node| node.content.reverse }
 
 # ..... Remove a child node from the root node.
 root_node.remove!(child1)
+
+# .... Many more methods are available. Check out the documentation!
 ```
 
 This example can also be found at
@@ -219,7 +221,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
    `rename_child` methods.
 9. [Aidan Steele](https://github.com/aidansteele) for performance improvements
    to `is_root?` and `node_depth`.
-
+10. [Marco Ziccadi](https://github.com/MZic) for adding the `path_as_string` and
+    `path_as_array` methods.
 
 ## LICENSE: ##
 

@@ -2,6 +2,12 @@
 
 = History of Changes
 
+=== 0.9.5pre7 / 2015-05-30
+
+* Added new methods for getting the path of a node as a string. These have been
+  added as a new mixin {Tree::Utils::TreePathHandler}. Thanks to
+  {https://github.com/MZic Marco Ziccardi}.
+
 === 0.9.5pre5 / 2015-01-01
 
 * Fixed {issue 32}[https://github.com/evolve75/RubyTree/issues/32] and enabled

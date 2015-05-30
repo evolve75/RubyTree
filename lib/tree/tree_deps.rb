@@ -42,6 +42,7 @@ require 'json'
 
 require 'tree/version'
 require 'tree/utils/metrics_methods'
+require 'tree/utils/path_methods'
 require 'tree/utils/camel_case_method_handler'
 require 'tree/utils/json_converter'
 require 'tree/utils/tree_merge_handler'

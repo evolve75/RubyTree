@@ -87,6 +87,7 @@ module Tree
     include Enumerable
     include Comparable
     include Tree::Utils::TreeMetricsHandler
+    include Tree::Utils::TreePathHandler
     include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
