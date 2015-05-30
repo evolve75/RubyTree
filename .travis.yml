@@ -13,8 +13,8 @@ rvm:
   - 2.0.0
   - 2.2.1
 #  - ruby-head    # The latest Ruby, whatever version it happens to be.
-  - jruby-18mode
-  - jruby-19mode
+# - jruby-18mode
+# - jruby-19mode
 
 
 matrix:
