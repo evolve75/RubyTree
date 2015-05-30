@@ -3,7 +3,7 @@
 # tree_merge_handler.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2015-05-30 14:25:24 anupam>
+# Time-stamp: <2015-05-30 16:06:18 anupam>
 #
 # Copyright (C) 2013, 2015 Anupam Sengupta (anupamsg@gmail.com)
 #
@@ -60,7 +60,8 @@ module Tree::Utils::TreeMergeHandler
   #                        have the same root node as self.
   def merge(other_tree)
     check_merge_prerequisites(other_tree)
-    new_tree = merge_trees( self.root.dup, other_tree.root )
+    new_tree = merge_trees(self.root.dup, other_tree.root)
+    return new_tree
   end
 
   # Merge in another tree (that shares the same root node) into +this+ tree.
