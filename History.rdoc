@@ -2,6 +2,10 @@
 
 = History of Changes
 
+=== 0.9.5 / 2015-05-30
+
+* Released 0.9.5.
+
 === 0.9.5pre7 / 2015-05-30
 
 * Added new methods for getting the path of a node as a string. These have been
