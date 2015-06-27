@@ -8,7 +8,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
-    coveralls (0.8.1)
+    coveralls (0.8.2)
       json (~> 1.8)
       rest-client (>= 1.6.8, < 2)
       simplecov (~> 0.10.0)
@@ -19,7 +19,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
-    json (1.8.2)
+    json (1.8.3)
     mime-types (2.6.1)
     netrc (0.10.3)
     power_assert (0.2.3)
@@ -38,12 +38,12 @@ GEM
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
     structured_warnings (0.2.0)
-    term-ansicolor (1.3.0)
+    term-ansicolor (1.3.2)
       tins (~> 1.0)
-    test-unit (3.1.1)
+    test-unit (3.1.2)
       power_assert
     thor (0.19.1)
-    tins (1.5.2)
+    tins (1.5.4)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
