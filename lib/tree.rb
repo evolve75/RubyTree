@@ -934,7 +934,7 @@ module Tree
     # @param [Integer] max_depth optional maximum depth at which the printing
     #                            with stop.
     # @param [Proc] block optional block to use for rendering
-    def print_tree(level = 0, max_depth = nil,
+    def print_tree(level = node_depth, max_depth = nil,
                    block = lambda { |node, prefix|
                      puts "#{prefix} #{node.name}" })
       prefix = ''
