@@ -11,7 +11,6 @@
 [![Dependency Status](https://gemnasium.com/evolve75/RubyTree.png)](https://gemnasium.com/evolve75/RubyTree)
 [![Code Climate](https://codeclimate.com/github/evolve75/RubyTree.png)](https://codeclimate.com/github/evolve75/RubyTree)
 [![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/473b881f1075bf9f255f0181dde6068f)](http://githalytics.com/evolve75/RubyTree)
 
 ## DESCRIPTION: ##
 
