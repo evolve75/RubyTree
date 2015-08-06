@@ -1,5 +1,3 @@
-# @markup rdoc
-
 = History of Changes
 
 === 0.9.5 / 2015-05-30
