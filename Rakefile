@@ -45,6 +45,7 @@ task :default do
     Rake::Task["test:coverage"].invoke
   else
     Rake::Task["test:unit"].invoke
+    Rake::Task["spec"].invoke
   end
 end
 
@@ -131,6 +132,17 @@ namespace :test do              # ................................ Test related
     # Oh well. Can't have everything.
   end
 
+end
+
+begin                            # ................................ rspec tests
+  require 'rspec/core/rake_task'
+
+  RSpec::Core::RakeTask.new(:spec) do |t|
+    t.fail_on_error = false
+    t.rspec_opts = ["--color", "--format doc"]
+  end
+rescue LoadError
+  # Cannot load rspec.
 end
 
  namespace :tag do               # ................................ Emacs Tags

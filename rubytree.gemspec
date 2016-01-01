@@ -12,7 +12,7 @@ require "tree/version"
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2015-05-30'
+  s.date                  = '2015-12-31'
   s.version               = Tree::VERSION
   s.license               = 'BSD'
 
@@ -54,6 +54,7 @@ Gem::Specification.new do |s|
   s.files                = Dir['lib/**/*.rb']  # The actual code
   s.files               += Dir['[A-Z]*']       # Various documentation files
   s.files               += Dir['test/**/*.rb'] # Test cases
+  s.files               += Dir['spec/**/*.rb'] # Rspec Test cases
   s.files               += Dir['examples/**/*.rb'] # Examples
 
   s.files               += ['.gemtest']        # Support for gem-test
@@ -74,6 +75,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rdoc'            , '~> 4.2'
   s.add_development_dependency 'yard'            , '~> 0.8'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'
+  s.add_development_dependency 'rspec'           , '~> 3.4'
 
   s.post_install_message = <<-EOF
     ========================================================================

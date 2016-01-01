@@ -316,7 +316,7 @@ module TestTree
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
 
-      assert_equal(+1, first_node <=> nil)
+      assert_nil(first_node <=> nil)
       assert_equal(-1, first_node <=> second_node)
 
       second_node = Tree::TreeNode.new(1)
@@ -325,7 +325,7 @@ module TestTree
       first_node  = Tree::TreeNode.new("ABC")
       second_node = Tree::TreeNode.new("XYZ")
 
-      assert_equal(+1, first_node <=> nil)
+      assert_nil(first_node <=> nil)
       assert_equal(-1, first_node <=> second_node)
 
       second_node = Tree::TreeNode.new("ABC")

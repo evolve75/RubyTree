@@ -3,8 +3,8 @@
 # example_basic.rb:: Basic usage of the tree library.
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2013-12-28 12:14:20 anupam>
-# Copyright (C) 2013 Anupam Sengupta <anupamsg@gmail.com>
+# Time-stamp: <2015-12-31 22:17:30 anupam>
+# Copyright (C) 2013, 2015 Anupam Sengupta <anupamsg@gmail.com>
 #
 # The following example implements this tree structure:
 #
@@ -45,6 +45,9 @@ siblings_of_child1 = child1.siblings
 
 # ..... Lets retrieve immediate children of the root node as an array.
 children_of_root = root_node.children
+
+# ..... Retrieve the parent of a node.
+parent = child1.parent
 
 # ..... This is a depth-first and L-to-R pre-ordered traversal.
 root_node.each { |node| node.content.reverse }

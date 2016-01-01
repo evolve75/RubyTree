@@ -1,5 +1,19 @@
 = History of Changes
 
+=== 0.9.7 / 2015-12-31
+
+* Released 0.9.6. This is a minor bug-fix release.
+
+* This release allows the {Tree::TreeNode#print_tree} method to be used on
+  non-root nodes. Thanks to {https://github.com/ojab Ojab}.
+
+* The spaceship operator ('<=>') now returns 'nil' if the object being compared
+  to is itself 'nil' or not another {Tree::TreeNode}.
+
+=== 0.9.6 / 2015-05-30
+
+* Released 0.9.6, which is same as 0.9.5, except for an update to the Gem release date.
+
 === 0.9.5 / 2015-05-30
 
 * Released 0.9.5.
