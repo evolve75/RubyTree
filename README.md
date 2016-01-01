@@ -103,6 +103,9 @@ siblings_of_child1 = child1.siblings
 # ..... Retrieve immediate children of the root node as an array.
 children_of_root = root_node.children
 
+# ..... Retrieve the parent of a node.
+parent = child1.parent
+
 # ..... This is a depth-first and L-to-R pre-ordered traversal.
 root_node.each { |node| node.content.reverse }
 
