@@ -163,6 +163,14 @@ module Tree
     def is_leaf?
       !has_children?
     end
+    #goes to left child, assumes tree is a binary tree
+    def left
+      self.children[0] if self.children[0]
+    end
+    #goes to right child, assumes tree is a binary tree
+    def right
+      self.children[1] if self.children[1]
+    end
 
     # @!attribute [r] parentage
     # An array of ancestors of this node in reversed order
