@@ -35,6 +35,8 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require_relative '../../../lib/tree/utils/utils'
+
 # Provides utility methods to merge two {Tree::TreeNode} based trees.
 # @since 0.9.0
 module Tree::Utils::TreeMergeHandler
@@ -60,8 +62,7 @@ module Tree::Utils::TreeMergeHandler
   #                        have the same root node as self.
   def merge(other_tree)
     check_merge_prerequisites(other_tree)
-    new_tree = merge_trees(self.root.dup, other_tree.root)
-    return new_tree
+    merge_trees(self.root.dup, other_tree.root)
   end
 
   # Merge in another tree (that shares the same root node) into +this+ tree.
@@ -102,7 +103,7 @@ module Tree::Utils::TreeMergeHandler
     end
   end
 
-  # Utility function to recursivley merge two subtrees.
+  # Utility function to recursively merge two subtrees.
   #
   # @author Darren Oakley (https://github.com/dazoakley)
   #
@@ -123,7 +124,7 @@ module Tree::Utils::TreeMergeHandler
       merge_trees( child, tree2[child.name] ) unless tree2[child.name].nil?
     end
 
-    return tree1
+    tree1
   end
 
 end

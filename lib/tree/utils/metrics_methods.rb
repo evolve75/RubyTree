@@ -36,11 +36,13 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require_relative '../../../lib/tree'
 require 'structured_warnings'
 
 module Tree::Utils
   # Provides utility functions to measure various tree metrics.
   module TreeMetricsHandler
+    # noinspection RubyUnusedLocalVariable
     def self.included(base)
 
       # @!group Metrics and Measures
@@ -66,7 +68,7 @@ module Tree::Utils
       # @return [Integer] The total number of nodes in this (sub)tree.
       # @see #size
       def length
-        size()
+        self.size
       end
 
       # @!attribute [r] node_height
@@ -128,8 +130,8 @@ module Tree::Utils
       # @see #node_depth
       def depth
         warn DeprecatedMethodWarning,
-             "This method is deprecated.  "\
-             "Please use node_depth() or node_height() instead (bug # 22535)"
+             'This method is deprecated.  '\
+             'Please use node_depth() or node_height() instead (bug # 22535)'
 
         return 1 if is_leaf?
         1 + @children.collect { |child| child.depth }.max

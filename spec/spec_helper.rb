@@ -7,4 +7,4 @@
 # Copyright (C) 2015 Anupam Sengupta <anupamsg@gmail.com>
 #
 
-require "tree"
+require 'tree'

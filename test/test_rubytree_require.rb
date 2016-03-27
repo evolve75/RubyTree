@@ -33,7 +33,7 @@
 #
 
 require 'test/unit'
-require 'rubytree'
+require_relative '../lib/rubytree'
 
 module TestTree
 
@@ -42,7 +42,7 @@ module TestTree
 
     # A simple test.  We are just checking whether the require worked.
     def test_create_a_simple_node
-      assert_not_nil(Tree::TreeNode.new("Root", "A Root node"))
+      assert_not_nil(Tree::TreeNode.new('Root', 'A Root node'))
     end
   end
 end
