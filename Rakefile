@@ -33,23 +33,23 @@
 #
 
 require 'rubygems'
-GEM_SPEC = eval(File.read("rubytree.gemspec")) # Load the gemspec.
+GEM_SPEC = eval(File.read('./rubytree.gemspec')) # Load the gemspec.
 
 PKG_NAME = GEM_SPEC.name
 PKG_VER  = GEM_SPEC.version
 GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
 
-desc "Default Task (Run the tests)"
+desc 'Default Task (Run the tests)'
 task :default do
-  if ENV["COVERAGE"]
-    Rake::Task["test:coverage"].invoke
+  if ENV['COVERAGE']
+    Rake::Task['test:coverage'].invoke
   else
-    Rake::Task["test:unit"].invoke
-    Rake::Task["spec"].invoke
+    Rake::Task['test:unit'].invoke
+    Rake::Task['spec'].invoke
   end
 end
 
-desc "Display the current gem version"
+desc 'Display the current gem version'
 task :version do
   puts "Current Version: #{GEM_NAME}"
 end
@@ -59,21 +59,21 @@ task :clean => 'gem:clobber_package'
 CLEAN.include('coverage')
 task :clobber => [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard']
 
-desc "Open an irb session preloaded with this library"
+desc 'Open an irb session preloaded with this library'
 task :console do
-  sh "irb -rubygems -r ./lib/tree.rb"
+  sh 'irb -rubygems -r ./lib/tree.rb'
 end
 
 namespace :doc do               # ................................ Documentation
   begin
-    gem 'rdoc', ">= 2.4.2"      # To get around a stupid bug in Ruby 1.9.2 Rake.
+    gem 'rdoc', '>= 2.4.2' # To get around a stupid bug in Ruby 1.9.2 Rake.
     require 'rdoc/task'
     Rake::RDocTask.new do |rdoc|
       rdoc.rdoc_dir = 'rdoc'
       rdoc.title    = "#{PKG_NAME}-#{PKG_VER}"
       rdoc.main     = 'README.rdoc'
       rdoc.rdoc_files.include(GEM_SPEC.extra_rdoc_files)
-      rdoc.rdoc_files.include('lib/**/*.rb')
+      rdoc.rdoc_files.include('./lib/**/*.rb')
     end
   rescue LoadError
     # Oh well.
@@ -83,19 +83,19 @@ namespace :doc do               # ................................ Documentation
     require 'yard'
     YARD::Rake::YardocTask.new do |t|
       t.files   = ['lib/**/*.rb', '-', GEM_SPEC.extra_rdoc_files]
-      t.options = ['--no-private', '--embed-mixins']
+      t.options = %w(--no-private --embed-mixins)
     end
   rescue LoadError
     # Oh well.
   end
 
-  desc "Remove YARD Documentation"
+  desc 'Remove YARD Documentation'
   task :clobber_yard do
     rm_rf 'doc'
   end
 end
 
-desc "Run the test cases"
+desc 'Run the test cases'
 task :test => 'test:unit'
 
 namespace :test do              # ................................ Test related
@@ -107,7 +107,7 @@ namespace :test do              # ................................ Test related
     test.verbose = false
   end
 
-  desc "Run the examples"
+  desc 'Run the examples'
   Rake::TestTask.new(:examples) do |example|
     example.libs << 'lib' << 'examples'
     example.pattern = 'examples/**/example_*.rb'
@@ -115,7 +115,7 @@ namespace :test do              # ................................ Test related
     example.warning = false
   end
 
-  desc "Run the code coverage"
+  desc 'Run the code coverage'
   task :coverage do
     ruby 'test/run_test.rb'
   end
@@ -123,7 +123,7 @@ namespace :test do              # ................................ Test related
   begin
     require 'rcov/rcovtask'
     Rcov::RcovTask.new(:rcov) do |t|
-      t.libs << "test"
+      t.libs << 'test'
       t.test_files = FileList['test/**/test_*.rb']
       t.verbose = true
       t.rcov_opts << '--exclude /gems/,/Library/,/usr/,spec,lib/tasks'
@@ -139,7 +139,7 @@ begin                            # ................................ rspec tests
 
   RSpec::Core::RakeTask.new(:spec) do |t|
     t.fail_on_error = false
-    t.rspec_opts = ["--color", "--format doc"]
+    t.rspec_opts = ['--color', '--format doc']
   end
 rescue LoadError
   # Cannot load rspec.
@@ -164,7 +164,7 @@ namespace :gem do               # ................................ Gem related
     pkg.need_tar = true
   end
 
-  desc "Push the gem into the Rubygems repository"
+  desc 'Push the gem into the Rubygems repository'
   task :push => :gem do
     sh "gem push pkg/#{GEM_NAME}"
   end

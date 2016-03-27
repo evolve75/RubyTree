@@ -1,7 +1,7 @@
 <!--
   README.md
 
-  Copyright (C) 2006-2015 Anupam Sengupta (anupamsg@gmail.com)
+  Copyright (C) 2006-2015, 2017 Anupam Sengupta (anupamsg@gmail.com)
 
 -->
 # **RubyTree** #
@@ -120,7 +120,7 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 1.8.x, 1.9.x, 2.0.x, or 2.1.x.
+* [Ruby][] 1.8.x, 1.9.x, 2.0.x, 2.1.x or 2.4.x.x
 
 
 * Run-time Dependencies:

@@ -35,6 +35,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+require_relative '../utils/utils'
 require 'json'
 
 # Provides utility methods to convert a {Tree::TreeNode} to and from
@@ -57,21 +58,24 @@ module Tree::Utils::JSONConverter
   # Rails uses JSON in ActiveSupport, and all Rails JSON encoding goes through
   # +as_json+.
   #
+  # @param [Object] options
+  #
   # @see #to_json
   # @see http://stackoverflow.com/a/6880638/273808
+  # noinspection RubyUnusedLocalVariable
   def as_json(options = {})
 
     json_hash = {
-      "name"         => name,
-      "content"      => content,
-      JSON.create_id => self.class.name
+        name: name,
+        content: content,
+        JSON.create_id => self.class.name
     }
 
     if has_children?
-      json_hash["children"] = children
+      json_hash['children'] = children
     end
 
-    return json_hash
+    json_hash
 
   end
 
@@ -114,13 +118,13 @@ module Tree::Utils::JSONConverter
     # @see http://flori.github.com/json
     def json_create(json_hash)
 
-      node = new(json_hash["name"], json_hash["content"])
+      node = new(json_hash['name'], json_hash['content'])
 
-      json_hash["children"].each do |child|
+      json_hash['children'].each do |child|
         node << child
-      end if json_hash["children"]
+      end if json_hash['children']
 
-      return node
+      node
 
     end
   end

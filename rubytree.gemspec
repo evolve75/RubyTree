@@ -4,11 +4,10 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013, 2014, 2015 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2014, 2015, 2017 Anupam Sengupta
 # All rights reserved.
 
-$:.unshift File.expand_path("../lib", __FILE__)
-require "tree/version"
+require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
@@ -63,19 +62,18 @@ Gem::Specification.new do |s|
 
   s.test_files           = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files     = ['README.md', 'LICENSE.md',
-                            'API-CHANGES.rdoc', 'History.rdoc']
-  s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
+  s.extra_rdoc_files     = %w(README.md LICENSE.md API-CHANGES.rdoc History.rdoc)
+  s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
 
-  s.add_runtime_dependency 'structured_warnings' , '~> 0.2'
-  s.add_runtime_dependency 'json'                , '~> 1.8'
+  s.add_runtime_dependency 'structured_warnings' , '~> 0.3'
+  s.add_runtime_dependency 'json'                , '~> 2.1'
 
   # Note: Rake is added as a development and test dependency in the Gemfile.
-  s.add_development_dependency 'bundler'         , '~> 1.7'
-  s.add_development_dependency 'rdoc'            , '~> 4.2'
-  s.add_development_dependency 'yard'            , '~> 0.8'
+  s.add_development_dependency 'bundler'         , '~> 1.10'
+  s.add_development_dependency 'rdoc'            , '~> 6.0'
+  s.add_development_dependency 'yard'            , '~> 0.9'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'
-  s.add_development_dependency 'rspec'           , '~> 3.4'
+  s.add_development_dependency 'rspec'           , '~> 3.7'
 
   s.post_install_message = <<-EOF
     ========================================================================

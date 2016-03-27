@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2015-05-30 14:23:23 anupam>
+# Time-stamp: <2017-12-21 12:49:25 anupam>
 #
-# Copyright (C) 2013, 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2013, 2015, 2017 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -36,11 +36,13 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require_relative '../../../lib/tree'
 require 'structured_warnings'
 
 module Tree::Utils
   # Provides utility functions to measure various tree metrics.
   module TreeMetricsHandler
+    # noinspection RubyUnusedLocalVariable
     def self.included(base)
 
       # @!group Metrics and Measures
@@ -66,7 +68,7 @@ module Tree::Utils
       # @return [Integer] The total number of nodes in this (sub)tree.
       # @see #size
       def length
-        size()
+        self.size
       end
 
       # @!attribute [r] node_height
@@ -127,9 +129,9 @@ module Tree::Utils
       #
       # @see #node_depth
       def depth
-        warn DeprecatedMethodWarning,
-             "This method is deprecated.  "\
-             "Please use node_depth() or node_height() instead (bug # 22535)"
+        warn StructuredWarnings::DeprecatedMethodWarning,
+             'This method is deprecated.  '\
+             'Please use node_depth() or node_height() instead (bug # 22535)'
 
         return 1 if is_leaf?
         1 + @children.collect { |child| child.depth }.max

@@ -36,9 +36,12 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require_relative '../../../lib/tree'
+
 module Tree::Utils
   # Provides utility methods for path extraction
   module TreePathHandler
+    # noinspection RubyUnusedLocalVariable
     def self.included(base)
 
       # @!group Node Path
@@ -53,7 +56,7 @@ module Tree::Utils
       # @return [String] The node path with names separated using the specified
       #                  separator.
       def path_as_string(separator = '=>')
-        path_as_array().join(separator)
+        path_as_array.join(separator)
       end
 
       # Returns the node-names from this node to the root as an array. The first
@@ -61,8 +64,8 @@ module Tree::Utils
       #
       # @return [Array] The array containing the node names for the path to this
       # node
-      def path_as_array()
-        get_path_name_array().reverse
+      def path_as_array
+        get_path_name_array.reverse
       end
 
       # @!visibility private
@@ -76,10 +79,9 @@ module Tree::Utils
         path_array = current_array_path + [name]
 
         if !parent              # If detached node or root node.
-          return path_array
+          path_array
         else                    # Else recurse to parent node.
           path_array = parent.get_path_name_array(path_array)
-          return path_array
         end
       end
 

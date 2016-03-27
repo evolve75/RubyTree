@@ -38,7 +38,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'tree'
+require_relative '../tree'
 
 module Tree
 
@@ -114,7 +114,7 @@ module Tree
     # @raise [ArgumentError] This exception is raised if two children are
     #                        already present.
     def add(child)
-      raise ArgumentError, "Already has two child nodes" if @children.size == 2
+      raise ArgumentError, 'Already has two child nodes' if @children.size == 2
 
       super(child)
     end
@@ -150,12 +150,12 @@ module Tree
     # @raise [ArgumentError] This exception is raised if a non-hash is passed.
     # @return [Array] Array of child nodes added
     def add_from_hash(hashed_subtree)
-      raise ArgumentError, "Too many children"\
+      raise ArgumentError, 'Too many children'\
                            if hashed_subtree.size + @children.size > 2
       super(hashed_subtree)
     end
 
-    # Performs inorder traversal (including this node).
+    # Performs in-order traversal (including this node).
     #
     # @yieldparam node [Tree::BinaryTreeNode]  Each node (in-order).
     #
@@ -164,9 +164,12 @@ module Tree
     #
     # @since 0.9.0
     #
+    # @param [Object] block
+    #
     # @see #each
     # @see #preordered_each
     # @see #postordered_each
+    # noinspection RubyUnusedLocalVariable
     def inordered_each(&block)
 
       return self.to_enum unless block_given?
@@ -179,13 +182,13 @@ module Tree
           node_stack.push(current_node)
           current_node = current_node.left_child
         else
-          current_node = node_stack.pop()
+          current_node = node_stack.pop
           yield current_node
           current_node = current_node.right_child
         end
       end
 
-      return self if block_given?
+      self if block_given?
 
     end
 
@@ -201,7 +204,7 @@ module Tree
     #
     # @raise [ArgumentError] If the index is out of limits.
     def set_child_at(child, at_index)
-      raise ArgumentError "A binary tree cannot have more than two children."\
+      raise ArgumentError 'A binary tree cannot have more than two children.'\
                           unless (0..1).include? at_index
 
       @children[at_index]        = child
