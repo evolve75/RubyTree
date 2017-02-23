@@ -310,8 +310,7 @@ module TestTree
 
     # Test the <=> operator.
     def test_spaceship
-      require 'structured_warnings'
-      StandardWarning.disable   # Disable the warnings for using integers as node names
+
 
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
@@ -331,7 +330,6 @@ module TestTree
       second_node = Tree::TreeNode.new("ABC")
       assert_equal(0, first_node <=> second_node)
 
-      StandardWarning.enable
     end
 
     # Test the inclusion of Comparable
@@ -956,8 +954,7 @@ module TestTree
     # instead of depth.  This method has been deprecated in this release and may be removed in the future.
     def test_depth
       begin
-        require 'structured_warnings'
-        assert_warn(DeprecatedMethodWarning) { do_deprecated_depth }
+        assert_not_empty(capture_output { do_deprecated_depth }.last)
       rescue LoadError
         # Since the structued_warnings package is not present, we revert to good old Kernel#warn behavior.
         do_deprecated_depth
@@ -1413,23 +1410,8 @@ module TestTree
                               isOnlyChild? nextSibling previousSibling nodeHeight nodeDepth
                               removeFromParent! removeAll! freezeTree! }
 
-      require 'structured_warnings'
-
-      DeprecatedMethodWarning.disable do
-        assert(@root.isRoot?)   # Test if the original method is really called
-      end
-
       meth_names_to_test.each do |meth_name|
-        assert_warn(DeprecatedMethodWarning) {@root.send(meth_name)}
-      end
-
-      # Special Case for printTree to avoid putting stuff on the STDOUT during the unit test.
-      begin
-        require 'stringio'
-        $stdout = StringIO.new
-        assert_warn(DeprecatedMethodWarning) { @root.send('printTree') }
-      ensure
-        $stdout = STDOUT
+        assert_not_empty(capture_output{@root.send(meth_name)}.last)
       end
 
     end
@@ -1437,13 +1419,14 @@ module TestTree
     # Test usage of integers as node names
     def test_integer_node_names
 
-      require 'structured_warnings'
-      assert_warn(StandardWarning) do
+      captured_output = capture_output do
         @n_root = Tree::TreeNode.new(0, "Root Node")
         @n_child1 = Tree::TreeNode.new(1, "Child Node 1")
         @n_child2 = Tree::TreeNode.new(2, "Child Node 2")
         @n_child3 = Tree::TreeNode.new("three", "Child Node 3")
       end
+
+      assert_not_empty(captured_output.last)
 
       @n_root << @n_child1
       @n_root << @n_child2
@@ -1457,12 +1440,11 @@ module TestTree
       # Sanity check for the "normal" string name cases. Both cases should work.
       assert_equal(@n_root["three", false].name, "three")
 
-      StandardWarning.disable
+
       assert_equal(@n_root["three", true].name, "three")
 
       # Also ensure that the warning is actually being thrown
-      StandardWarning.enable
-      assert_warn(StandardWarning) {assert_equal(@n_root["three", true].name, "three") }
+      assert_not_empty(capture_output{@n_root["three", true].name}.last)
     end
 
     # Test the addition of a node to itself as a child

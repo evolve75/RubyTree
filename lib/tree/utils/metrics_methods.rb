@@ -36,8 +36,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'structured_warnings'
-
 module Tree::Utils
   # Provides utility functions to measure various tree metrics.
   module TreeMetricsHandler
@@ -127,8 +125,7 @@ module Tree::Utils
       #
       # @see #node_depth
       def depth
-        warn DeprecatedMethodWarning,
-             "This method is deprecated.  "\
+        warn "This method is deprecated.  "\
              "Please use node_depth() or node_height() instead (bug # 22535)"
 
         return 1 if is_leaf?
