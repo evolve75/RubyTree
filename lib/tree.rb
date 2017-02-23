@@ -219,8 +219,7 @@ module Tree
       @name, @content = name, content
 
       if name.kind_of?(Integer)
-        warn StandardWarning,
-             "Using integer as node name."\
+        puts "Using integer as node name."\
              " Semantics of TreeNode[] may not be what you expect!"\
              " #{name} #{content}"
       end
