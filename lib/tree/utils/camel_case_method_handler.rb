@@ -40,7 +40,6 @@ module Tree::Utils
   # Provides utility functions to handle CamelCase methods, and redirect
   # invocation of such methods to the snake_case equivalents.
   module CamelCaseMethodHandler
-    def self.included(base)
       # @!visibility private
       # Allow the deprecated CamelCase method names.  Display a warning.
       # :nodoc:
@@ -71,6 +70,5 @@ module Tree::Utils
         word
       end
 
-    end # self.included
   end
 end

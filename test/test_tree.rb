@@ -310,8 +310,6 @@ module TestTree
 
     # Test the <=> operator.
     def test_spaceship
-
-
       first_node  = Tree::TreeNode.new(1)
       second_node = Tree::TreeNode.new(2)
 
@@ -329,7 +327,6 @@ module TestTree
 
       second_node = Tree::TreeNode.new("ABC")
       assert_equal(0, first_node <=> second_node)
-
     end
 
     # Test the inclusion of Comparable
@@ -953,12 +950,7 @@ module TestTree
     # Test the depth computation algorithm.  Note that this is an incorrect computation and actually returns height+1
     # instead of depth.  This method has been deprecated in this release and may be removed in the future.
     def test_depth
-      begin
-        assert_not_empty(capture_output { do_deprecated_depth }.last)
-      rescue LoadError
-        # Since the structued_warnings package is not present, we revert to good old Kernel#warn behavior.
-        do_deprecated_depth
-      end
+      assert_not_empty(capture_output { do_deprecated_depth }.last)
     end
 
     # Run the assertions for the deprecated depth method.
@@ -1410,15 +1402,17 @@ module TestTree
                               isOnlyChild? nextSibling previousSibling nodeHeight nodeDepth
                               removeFromParent! removeAll! freezeTree! }
 
+      assert(@root.isRoot?)   # Test if the original method is really called
+
       meth_names_to_test.each do |meth_name|
         assert_not_empty(capture_output{@root.send(meth_name)}.last)
       end
+      assert_not_empty(capture_output{@root.send('printTree') }.last)
 
     end
 
     # Test usage of integers as node names
     def test_integer_node_names
-
       captured_output = capture_output do
         @n_root = Tree::TreeNode.new(0, "Root Node")
         @n_child1 = Tree::TreeNode.new(1, "Child Node 1")

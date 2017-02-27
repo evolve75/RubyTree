@@ -120,11 +120,10 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 1.8.x, 1.9.x, 2.0.x, or 2.1.x.
+* [Ruby][]  1.9.x, 2.0.x, 2.1.x, 2.3.x 2.4.x
 
 
 * Run-time Dependencies:
-    * [structured_warnings][]
     * [JSON][] for converting to/from the JSON format
 
 
@@ -262,7 +261,6 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [rt_doc]:               http://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
 [rt_gem]:               http://rubygems.org/gems/rubytree "RubyTree Gem"
 [rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
-[structured_warnings]:  http://github.com/schmidt/structured_warnings "structured_warnings"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
 [RSpec]:                https://relishapp.com/rspec/
 

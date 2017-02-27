@@ -313,11 +313,7 @@ module TestTree
 
       assert_not_empty(capture_output{@root.leftChild = @left_child2}.last)
       assert_not_empty(capture_output{@root.rightChild = @right_child2}.last)
-      #ruby self include private policy changed in 2.3
-      if RUBY_VERSION<'2.3.0'
-        assert_raise(NoMethodError) {  @root.to_snake_case("ABCD") }
-      end
-
+      assert_raise(NoMethodError) {  @root.to_snake_case("ABCD") }
     end
 
   end
