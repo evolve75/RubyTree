@@ -235,7 +235,13 @@ module Tree
     #
     # @return [Tree::TreeNode] A copy of this node.
     def detached_copy
-      self.class.new(@name, @content ? @content.clone : nil)
+      cloned_content =
+        begin
+          @content ? @content.clone : nil
+        rescue TypeError
+          @content
+        end
+      self.class.new(@name, cloned_content)
     end
 
     # Returns a copy of entire (sub-)tree from this node.

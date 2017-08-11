@@ -103,4 +103,17 @@ describe Tree do
 
     it_behaves_like "any cloned node"
   end
+
+  context "#detached_copy", "with unclonable content" do
+    before(:each) do
+      @tree = Tree::TreeNode.new("A", :unclonable_content)
+      @clone = @tree.detached_copy
+    end
+
+    it "keeps the content" do
+      expect(@clone.content).to be @tree.content
+    end
+
+    it_behaves_like "any cloned node"
+  end
 end
