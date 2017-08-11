@@ -71,4 +71,36 @@ describe Tree do
 
     it_behaves_like "any detached node"
   end
+
+  shared_examples_for "any cloned node" do
+    it "is equal to the original" do
+      expect(@clone).to eq @tree
+    end
+    it "is not identical to the original" do
+      expect(clone).not_to be @tree
+    end
+  end
+
+  context "#detached_copy", "without content" do
+    before(:each) do
+      @tree = Tree::TreeNode.new("A", nil)
+      @clone = @tree.detached_copy
+    end
+
+    it_behaves_like "any cloned node"
+  end
+
+  context "#detached_copy", "with clonable content" do
+    before(:each) do
+      @tree = Tree::TreeNode.new("A", "clonable content")
+      @clone = @tree.detached_copy
+    end
+
+    it "makes a clone of the content" do
+      expect(@clone.content).to eq @tree.content
+      expect(@clone.content).not_to be @tree.content
+    end
+
+    it_behaves_like "any cloned node"
+  end
 end
