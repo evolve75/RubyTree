@@ -237,7 +237,7 @@ module Tree
     def detached_copy
       cloned_content =
         begin
-          @content ? @content.clone : nil
+          @content && @content.clone
         rescue TypeError
           @content
         end

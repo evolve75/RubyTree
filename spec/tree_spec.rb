@@ -116,4 +116,17 @@ describe Tree do
 
     it_behaves_like "any cloned node"
   end
+
+  context "#detached_copy", "with false as content" do
+    before(:each) do
+      @tree = Tree::TreeNode.new("A", false)
+      @clone = @tree.detached_copy
+    end
+
+    it "keeps the content" do
+      expect(@clone.content).to be @tree.content
+    end
+
+    it_behaves_like "any cloned node"
+  end
 end
