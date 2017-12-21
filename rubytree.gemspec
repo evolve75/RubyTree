@@ -11,7 +11,7 @@ require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2015-12-31'
+  s.date                  = '2017-12-21'
   s.version               = Tree::VERSION
   s.license               = 'BSD'
 
@@ -69,7 +69,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json'                , '~> 2.1'
 
   # Note: Rake is added as a development and test dependency in the Gemfile.
-  s.add_development_dependency 'bundler'         , '~> 1.10'
+  s.add_development_dependency 'bundler'         , '~> 1.16'
   s.add_development_dependency 'rdoc'            , '~> 6.0'
   s.add_development_dependency 'yard'            , '~> 0.9'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'
@@ -79,7 +79,7 @@ Gem::Specification.new do |s|
     ========================================================================
                     Thank you for installing RubyTree.
 
-    Note:: As of 0.9.5, the Tree::TreeNode#add method has 'move' semantics.
+    Note:: As of 1.0.0, RubyTree can only support MRI Ruby >= 2.2.x
 
     Details of the API changes are documented in the API-CHANGES file.
     ========================================================================
