@@ -1,7 +1,7 @@
 <!--
   README.md
 
-  Copyright (C) 2006-2015, 2017 Anupam Sengupta (anupamsg@gmail.com)
+  Copyright (C) 2006-2017 Anupam Sengupta (anupamsg@gmail.com)
 
 -->
 # **RubyTree** #
@@ -244,8 +244,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [BSD]:                  http://opensource.org/licenses/bsd-license.php "BSD License"
 [Binary tree]:          http://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
 [Bundler]:              http://bundler.io "Bundler"
-[Comparable]:           http://ruby-doc.org/core-1.8.7/Comparable.html "Comparable mix-in"
-[Enumerable]:           http://ruby-doc.org/core-1.9.3/Enumerable.html "Enumerable mix-in"
+[Comparable]:           http://ruby-doc.org/core-2.4.2/Comparable.html "Comparable mix-in"
+[Enumerable]:           http://ruby-doc.org/core-2.4.2/Enumerable.html "Enumerable mix-in"
 [JSON]:                 http://flori.github.com/json "JSON"
 [Rake]:                 https://rubygems.org/gems/rake "Rake"
 [Ruby]:                 http://www.ruby-lang.org "Ruby Programming Language"
@@ -254,7 +254,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [breadth-first]:        http://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
 [git]:                  http://git-scm.com "Git SCM"
 [in-order]:             http://en.wikipedia.org/wiki/Tree_traversal#In-order "In-order (symmetric) Traversal"
-[marshaling]:           http://ruby-doc.org/core-1.8.7/Marshal.html "Marshaling in Ruby"
+[marshaling]:           http://ruby-doc.org/core-2.4.2/Marshal.html "Marshaling in Ruby"
 [post-order]:           http://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
 [pre-order]:            http://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
 [rt@github]:            http://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
