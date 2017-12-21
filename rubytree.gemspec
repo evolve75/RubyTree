@@ -7,8 +7,7 @@
 # Copyright (c) 2012, 2013, 2014, 2015 Anupam Sengupta
 # All rights reserved.
 
-$:.unshift File.expand_path("../lib", __FILE__)
-require "tree/version"
+require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
@@ -63,9 +62,8 @@ Gem::Specification.new do |s|
 
   s.test_files           = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files     = ['README.md', 'LICENSE.md',
-                            'API-CHANGES.rdoc', 'History.rdoc']
-  s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
+  s.extra_rdoc_files     = %w(README.md LICENSE.md API-CHANGES.rdoc History.rdoc)
+  s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
 
   s.add_runtime_dependency 'structured_warnings' , '~> 0.2'
   s.add_runtime_dependency 'json'                , '~> 1.8'

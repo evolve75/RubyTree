@@ -36,6 +36,9 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Provides utilities and mixin modules for RubyTree.
+
+require_relative '../../../lib/tree'
+
 module Tree::Utils
   # Empty module.  Being used as a namespace.
 end

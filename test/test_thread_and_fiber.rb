@@ -34,7 +34,7 @@
 
 require 'test/unit'
 require 'json'
-require 'tree'
+require_relative '../lib/tree'
 
 module TestTree
   # Test class for the Tree node.
@@ -42,7 +42,7 @@ module TestTree
 
     # Test long and unbalanced trees
     def create_long_depth_trees(depth=100)
-      tree = Tree::TreeNode.new("/")
+      tree = Tree::TreeNode.new('/')
       current = tree
       depth.times do |i|
         new_node = Tree::TreeNode.new("#{i}")
@@ -50,7 +50,7 @@ module TestTree
         current = new_node
       end
 
-      tree.each { |n| nil }
+      tree.each { |_| nil }
       tree
     end
 

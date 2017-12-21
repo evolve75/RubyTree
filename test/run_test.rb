@@ -32,13 +32,13 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-base_dir = File.expand_path(File.join(File.dirname(__FILE__), ".."))
-lib_dir  = File.join(base_dir, "lib")
-test_dir = File.join(base_dir, "test")
+base_dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+lib_dir  = File.join(base_dir, 'lib')
+test_dir = File.join(base_dir, 'test')
 
 $LOAD_PATH.unshift(lib_dir)
 
-if ENV["COVERAGE"]
+if ENV['COVERAGE']
   begin
     require 'simplecov'
     require 'coveralls'
@@ -51,10 +51,10 @@ if ENV["COVERAGE"]
       add_group 'Internal Utilities', '/lib/tree/utils/.*.rb'
     end
   rescue LoadError => e
-    puts "Could not load simplecov; continuing without code coverage"
+    puts 'Could not load simplecov; continuing without code coverage' + e.cause
   end
 end
 
 require 'test/unit'
 
-exit Test::Unit::AutoRunner.run(true, test_dir)
+Test::Unit::AutoRunner.run(true, test_dir)

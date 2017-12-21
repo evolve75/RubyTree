@@ -83,6 +83,7 @@ module Tree
   # {include:file:examples/example_basic.rb}
   #
   # @author Anupam Sengupta
+  # noinspection RubyTooManyMethodsInspection
   class TreeNode
     include Enumerable
     include Comparable
@@ -132,7 +133,7 @@ module Tree
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
       root = self
-      root = root.parent while !root.is_root?
+      root = root.parent until root.is_root?
       root
     end
 
@@ -177,7 +178,7 @@ module Tree
 
       parentage_array = []
       prev_parent = self.parent
-      while (prev_parent)
+      while prev_parent
         parentage_array << prev_parent
         prev_parent = prev_parent.parent
       end
@@ -215,13 +216,13 @@ module Tree
     #
     # @see #[]
     def initialize(name, content = nil)
-      raise ArgumentError, "Node name HAS to be provided!" if name == nil
+      raise ArgumentError, 'Node name HAS to be provided!' if name == nil
       @name, @content = name, content
 
       if name.kind_of?(Integer)
         warn StandardWarning,
-             "Using integer as node name."\
-             " Semantics of TreeNode[] may not be what you expect!"\
+             'Using integer as node name.'\
+             ' Semantics of TreeNode[] may not be what you expect!'\
              " #{name} #{content}"
       end
 
@@ -256,7 +257,7 @@ module Tree
     alias :dup :detached_subtree_copy
 
     # Returns a {marshal-dump}[http://ruby-doc.org/core-1.8.7/Marshal.html]
-    # represention of the (sub)tree rooted at this node.
+    # representation of the (sub)tree rooted at this node.
     #
     def marshal_dump
       self.collect { |node| node.create_dump_rep }
@@ -265,15 +266,15 @@ module Tree
     # Creates a dump representation of this node and returns the same as
     # a hash.
     def create_dump_rep           # :nodoc:
-      { :name => @name,
-        :parent => (is_root? ? nil : @parent.name),
-        :content => Marshal.dump(@content)
+      {name: @name,
+       parent: (is_root? ? nil : @parent.name),
+       content: Marshal.dump(@content)
       }
     end
 
     protected :create_dump_rep
 
-    # Loads a marshalled dump of a tree and returns the root node of the
+    # Loads a marshaled dump of a tree and returns the root node of the
     # reconstructed tree. See the
     # {Marshal}[http://ruby-doc.org/core-1.8.7/Marshal.html] class for
     # additional details.
@@ -289,7 +290,7 @@ module Tree
         parent_name = node_hash[:parent]
         content     = Marshal.load(node_hash[:content])
 
-        if parent_name then
+        if parent_name
           nodes[name] = current_node = Tree::TreeNode.new(name, content)
           nodes[parent_name].add current_node
         else
@@ -308,11 +309,7 @@ module Tree
     #
     # @return [String] A string representation of the node.
     def to_s
-      "Node Name: #{@name}" +
-        " Content: " + (@content.to_s || "<Empty>") +
-        " Parent: " + (is_root?()  ? "<None>" : @parent.name.to_s) +
-        " Children: #{@children.length}" +
-        " Total Nodes: #{size()}"
+      "Node Name: #{@name} Content: #{(@content.to_s || '<Empty>')} Parent: #{(is_root? ? '<None>' : @parent.name.to_s)} Children: #{@children.length} Total Nodes: #{size}"
     end
 
     # @!group Structure Modification
@@ -354,7 +351,7 @@ module Tree
     #
     #    -children.size..children.size
     #
-    # This is to prevent +nil+ nodes being created as children if a non-existant
+    # This is to prevent +nil+ nodes being created as children if a non-existent
     # position is used.
     #
     # If the new node being added has an existing parent node, then it will be
@@ -381,11 +378,11 @@ module Tree
     def add(child, at_index = -1)
       # Only handles the immediate child scenario
       raise ArgumentError,
-            "Attempting to add a nil node" unless child
+            'Attempting to add a nil node' unless child
       raise ArgumentError,
-            "Attempting add node to itself" if self.equal?(child)
+            'Attempting add node to itself' if self.equal?(child)
       raise ArgumentError,
-            "Attempting add root as a child" if child.equal?(root)
+            'Attempting add root as a child' if child.equal?(root)
 
       # Lazy mans unique test, won't test if children of child are unique in
       # this tree too.
@@ -397,15 +394,15 @@ module Tree
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)
       else
-        raise "Attempting to insert a child at a non-existent location"\
+        raise 'Attempting to insert a child at a non-existent location'\
               " (#{at_index}) "\
-              "when only positions from "\
+              'when only positions from '\
               "#{insertion_range.min} to #{insertion_range.max} exist."
       end
 
       @children_hash[child.name]  = child
       child.parent = self
-      return child
+      child
     end
 
     # Return a range of valid insertion positions.  Used in the #add method.
@@ -472,7 +469,7 @@ module Tree
       old_child = remove! old_child
       add new_child, child_index
 
-      return old_child
+      old_child
     end
 
     # Replaces the node with another node
@@ -605,14 +602,14 @@ module Tree
     # @see #initialize
     def [](name_or_index, num_as_name=false)
       raise ArgumentError,
-            "Name_or_index needs to be provided!" if name_or_index == nil
+            'Name_or_index needs to be provided!' if name_or_index == nil
 
       if name_or_index.kind_of?(Integer) and not num_as_name
         @children[name_or_index]
       else
         if num_as_name and not name_or_index.kind_of?(Integer)
           warn StandardWarning,
-             "Redundant use of the `num_as_name` flag for non-integer node name"
+               'Redundant use of the `num_as_name` flag for non-integer node name'
         end
         @children_hash[name_or_index]
       end
@@ -624,6 +621,7 @@ module Tree
     # The traversal is *depth-first* and from *left-to-right* in pre-ordered
     # sequence.
     #
+    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
@@ -631,6 +629,7 @@ module Tree
     #
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    # noinspection RubyUnusedLocalVariable
     def each(&block)             # :yields: node
 
      return self.to_enum unless block_given?
@@ -646,7 +645,7 @@ module Tree
         end
       end
 
-      return self if block_given?
+      self if block_given?
     end
 
     # Traverses the (sub)tree rooted at this node in pre-ordered sequence.
@@ -665,20 +664,22 @@ module Tree
 
     # Traverses the (sub)tree rooted at this node in post-ordered sequence.
     #
+    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
     # @see #breadth_each
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    # noinspection RubyUnusedLocalVariable
     def postordered_each(&block)
       return self.to_enum(:postordered_each) unless block_given?
 
       # Using a marked node in order to skip adding the children of nodes that
       # have already been visited. This allows the stack depth to be controlled,
       # and also allows stateful backtracking.
-      markednode = Struct.new(:node, :visited)
-      node_stack = [markednode.new(self, false)] # Start with self
+      marked_node = Struct.new(:node, :visited)
+      node_stack = [marked_node.new(self, false)] # Start with self
 
       until node_stack.empty?
         peek_node = node_stack[0]
@@ -686,7 +687,7 @@ module Tree
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
-            peek_node.node.children.map {|node| markednode.new(node, false)}
+            peek_node.node.children.map {|node| marked_node.new(node, false)}
           node_stack = marked_children.concat(node_stack)
           next
         else
@@ -694,13 +695,14 @@ module Tree
         end
       end
 
-      return self if block_given?
+      self if block_given?
     end
 
     # Performs breadth-first traversal of the (sub)tree rooted at this node. The
     # traversal at a given level is from *left-to-right*. this node itself is
     # the first node to be traversed.
     #
+    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
@@ -708,6 +710,7 @@ module Tree
     #
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    # noinspection RubyUnusedLocalVariable
     def breadth_each(&block)
       return self.to_enum(:breadth_each) unless block_given?
 
@@ -721,7 +724,7 @@ module Tree
         node_to_traverse.children { |child| node_queue.push child }
       end
 
-      return self if block_given?
+      self if block_given?
     end
 
     # An array of all the immediate children of this node. The child
@@ -739,9 +742,9 @@ module Tree
     def children
       if block_given?
         @children.each {|child| yield child}
-        return self
+        self
       else
-        return @children.clone
+        @children.clone
       end
     end
 
@@ -751,6 +754,7 @@ module Tree
     # May yield this node as well if this is a leaf node.
     # Leaf traversal is *depth-first* and *left-to-right*.
     #
+    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each leaf node.
     #
     # @see #each
@@ -758,12 +762,13 @@ module Tree
     #
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Array<Tree::TreeNode>] An array of the leaf nodes
-    def each_leaf &block
+    # noinspection RubyUnusedLocalVariable
+    def each_leaf(&block)
       if block_given?
         self.each { |node| yield(node) if node.is_leaf? }
-        return self
+        self
       else
-        self.select { |node| node.is_leaf?}
+        self.select { |node| node.is_leaf? }
       end
     end
 
@@ -776,7 +781,7 @@ module Tree
     #
     # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
     def first_child
-      children.first
+      @children.first
     end
 
     # Last child of this node.
@@ -784,7 +789,7 @@ module Tree
     #
     # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
     def last_child
-      children.last
+      @children.last
     end
 
     # @!group Navigating the Sibling Nodes
@@ -858,7 +863,7 @@ module Tree
     def siblings
       if block_given?
         parent.children.each { |sibling| yield sibling if sibling != self }
-        return self
+        self
       else
         return [] if is_root?
         siblings = []
@@ -892,8 +897,8 @@ module Tree
     def next_sibling
       return nil if is_root?
 
-      myidx = parent.children.index(self)
-      parent.children.at(myidx + 1) if myidx
+      idx = parent.children.index(self)
+      parent.children.at(idx + 1) if idx
     end
 
     # Previous sibling of this node.
@@ -909,15 +914,15 @@ module Tree
     def previous_sibling
       return nil if is_root?
 
-      myidx = parent.children.index(self)
-      parent.children.at(myidx - 1) if myidx && myidx > 0
+      idx = parent.children.index(self)
+      parent.children.at(idx - 1) if idx && idx > 0
     end
 
     # @!endgroup
 
-    # Provides a comparision operation for the nodes.
+    # Provides a comparison operation for the nodes.
     #
-    # Comparision is based on the natural ordering of the node name objects.
+    # Comparison is based on the natural ordering of the node name objects.
     #
     # @param [Tree::TreeNode] other The other node to compare against.
     #
@@ -935,7 +940,7 @@ module Tree
     # @param [Integer] max_depth optional maximum depth at which the printing
     #                            with stop.
     # @param [Proc] block optional block to use for rendering
-    def print_tree(level = node_depth, max_depth = nil,
+    def print_tree(level = self.node_depth, max_depth = nil,
                    block = lambda { |node, prefix|
                      puts "#{prefix} #{node.name}" })
       prefix = ''
