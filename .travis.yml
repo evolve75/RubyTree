@@ -17,8 +17,8 @@ matrix:
   include:
     - rvm: rbx
       gemfile: gemfiles/Gemfile.rbx
-    - rvm: 2.4.2
-      env: COVERAGE=true
+  #   - rvm: 2.4.3         #
+  #     env: COVERAGE=true #
   exclude:
     - rvm: rbx
       gemfile: Gemfile
