@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2015-05-30 14:14:09 anupam>
+# Time-stamp: <2017-12-21 13:42:15 anupam>
 #
-# Copyright (C) 2012, 2013, 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013, 2015, 2017 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -36,6 +36,7 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+require_relative '../../../lib/tree'
 require 'structured_warnings'
 
 module Tree::Utils
@@ -47,17 +48,17 @@ module Tree::Utils
       # Allow the deprecated CamelCase method names.  Display a warning.
       # :nodoc:
       def method_missing(meth, *args, &blk)
-        if self.respond_to?(new_method_name = to_snake_case(meth))
-          warn DeprecatedMethodWarning,
-               "The camelCased methods are deprecated. "\
+        if self.respond_to?((new_method_name = to_snake_case(meth)))
+          warn StructuredWarnings::DeprecatedMethodWarning,
+               'The camelCased methods are deprecated. ' +
                "Please use #{new_method_name} instead of #{meth}"
-          return send(new_method_name, *args, &blk)
+          send(new_method_name, *args, &blk)
         else
           super
         end
       end
 
-      private
+      protected
 
       # @!visibility private
       # Convert a CamelCasedWord to a underscore separated camel_cased_word.
@@ -65,11 +66,11 @@ module Tree::Utils
       # @param [String] camel_cased_word The word to be converted to snake_case.
       # @return [String] the snake_cased_word.
       def to_snake_case(camel_cased_word)
-        word = camel_cased_word.to_s.dup
+        word = camel_cased_word.to_s
         word.gsub!(/::/, '/')
         word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
         word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
-        word.tr!("-", "_")
+        word.tr!('-', '_')
         word.downcase!
         word
       end

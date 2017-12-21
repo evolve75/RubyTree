@@ -7,15 +7,9 @@ before_install:
 bundler_args: --without development
 
 rvm:
-  - 1.8.7
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-  - 2.2.1
-#  - ruby-head    # The latest Ruby, whatever version it happens to be.
-# - jruby-18mode
-# - jruby-19mode
-
+  - 2.2.9
+  - 2.3.6
+  - 2.4.3
 
 matrix:
   allow_failures:
@@ -23,8 +17,8 @@ matrix:
   include:
     - rvm: rbx
       gemfile: gemfiles/Gemfile.rbx
-    - rvm: 2.1.5
-      env: COVERAGE=true
+  #   - rvm: 2.4.3         #
+  #     env: COVERAGE=true #
   exclude:
     - rvm: rbx
       gemfile: Gemfile

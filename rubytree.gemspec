@@ -4,15 +4,14 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013, 2014, 2015 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2014, 2015, 2017 Anupam Sengupta
 # All rights reserved.
 
-$:.unshift File.expand_path("../lib", __FILE__)
-require "tree/version"
+require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2015-12-31'
+  s.date                  = '2017-12-21'
   s.version               = Tree::VERSION
   s.license               = 'BSD'
 
@@ -21,7 +20,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=1.8.7'
+  s.required_ruby_version = '>=2.2'
 
   s.summary               = %q{A generic tree data structure.}
   s.description           = <<-EOF
@@ -63,25 +62,24 @@ Gem::Specification.new do |s|
 
   s.test_files           = Dir.glob('test/**/test_*.rb')
 
-  s.extra_rdoc_files     = ['README.md', 'LICENSE.md',
-                            'API-CHANGES.rdoc', 'History.rdoc']
-  s.rdoc_options         = ["--title", "Rubytree Documentation", "--quiet"]
+  s.extra_rdoc_files     = %w(README.md LICENSE.md API-CHANGES.rdoc History.rdoc)
+  s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
 
-  s.add_runtime_dependency 'structured_warnings' , '~> 0.2'
-  s.add_runtime_dependency 'json'                , '~> 1.8'
+  s.add_runtime_dependency 'structured_warnings' , '~> 0.3'
+  s.add_runtime_dependency 'json'                , '~> 2.1'
 
   # Note: Rake is added as a development and test dependency in the Gemfile.
-  s.add_development_dependency 'bundler'         , '~> 1.7'
-  s.add_development_dependency 'rdoc'            , '~> 4.2'
-  s.add_development_dependency 'yard'            , '~> 0.8'
+  s.add_development_dependency 'bundler'         , '~> 1.16'
+  s.add_development_dependency 'rdoc'            , '~> 6.0'
+  s.add_development_dependency 'yard'            , '~> 0.9'
   s.add_development_dependency 'rtagstask'       , '~> 0.0'
-  s.add_development_dependency 'rspec'           , '~> 3.4'
+  s.add_development_dependency 'rspec'           , '~> 3.7'
 
   s.post_install_message = <<-EOF
     ========================================================================
                     Thank you for installing RubyTree.
 
-    Note:: As of 0.9.5, the Tree::TreeNode#add method has 'move' semantics.
+    Note:: As of 1.0.0, RubyTree can only support MRI Ruby >= 2.2.x
 
     Details of the API changes are documented in the API-CHANGES file.
     ========================================================================

@@ -2,7 +2,7 @@
 #
 # = rubytree_deps.rb - Dependencies for RubyTree
 #
-# Centralizes and lists the dependencies forthe RubyTree gem.
+# Centralizes and lists the dependencies for the RubyTree gem.
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
@@ -40,10 +40,10 @@
 require 'structured_warnings'
 require 'json'
 
-require 'tree/version'
-require 'tree/utils/metrics_methods'
-require 'tree/utils/path_methods'
-require 'tree/utils/camel_case_method_handler'
-require 'tree/utils/json_converter'
-require 'tree/utils/tree_merge_handler'
-require 'tree/utils/hash_converter'
+require_relative '../tree/version'
+require_relative '../tree/utils/metrics_methods'
+require_relative '../tree/utils/path_methods'
+require_relative '../tree/utils/camel_case_method_handler'
+require_relative '../tree/utils/json_converter'
+require_relative '../tree/utils/tree_merge_handler'
+require_relative '../tree/utils/hash_converter'

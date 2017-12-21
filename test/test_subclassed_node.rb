@@ -2,7 +2,7 @@
 
 # test_subclassed_node.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2012 Anupam Sengupta
+# Copyright (c) 2012, 2017 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -34,7 +34,7 @@
 
 require 'test/unit'
 require 'json'
-require 'tree'
+require_relative '../lib/tree'
 
 module TestTree
 
@@ -45,27 +45,28 @@ module TestTree
     class MyNode < Tree::TreeNode
       # A dummy method to test the camelCasedMethod resolution
       def my_dummy_method
-        "Hello"
+        'Hello'
       end
     end
 
-    def test_subclassed_camelcase_methods
-      root = MyNode.new("Root")
+    def test_camelcase_methods
+      root = MyNode.new('Root')
 
-      assert_equal("Hello", root.my_dummy_method)
+      assert_equal('Hello', root.my_dummy_method)
 
       # We should get a warning as we are invoking the camelCase version of the dummy method.
-      assert_warn(DeprecatedMethodWarning) { root.send('MyDummyMethod') }
+      assert_warn(StructuredWarnings::DeprecatedMethodWarning) { root.send('MyDummyMethod') }
 
-      # Test if the structured_warnings can be disabled to call the CamelCa
-      DeprecatedMethodWarning.disable do
-        assert_equal("Hello", root.myDummyMethod)
+      # Test if the structured_warnings can be disabled to call the CamelCase methods.
+      StructuredWarnings::DeprecatedMethodWarning.disable do
+        # noinspection RubyResolve
+        assert_equal('Hello', root.myDummyMethod)
       end
 
     end
 
-    def test_subclassed_detached_copy_is_same_class
-      root = MyNode.new("Root")
+    def test_detached_copy_same_clz
+      root = MyNode.new('Root')
       assert_equal(MyNode, root.detached_copy.class)
     end
 

@@ -37,6 +37,8 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+require_relative '../../../lib/tree/utils/utils'
+
 module Tree::Utils::HashConverter
 
   def self.included(base)
@@ -92,16 +94,16 @@ module Tree::Utils::HashConverter
     #                        values that are not hashes or nils.
 
     def from_hash(hash)
-      raise ArgumentError, "Argument must be a type of hash"\
+      raise ArgumentError, 'Argument must be a type of hash'\
                            unless hash.is_a?(Hash)
 
-      raise ArgumentError, "Hash must have one top-level element"\
+      raise ArgumentError, 'Hash must have one top-level element'\
                            if hash.size != 1
 
       root, children = hash.first
 
       unless [Hash, NilClass].include?(children.class)
-        raise ArgumentError, "Invalid child. Must be nil or hash."
+        raise ArgumentError, 'Invalid child. Must be nil or hash.'
       end
 
       node = self.new(*root)
@@ -138,7 +140,7 @@ module Tree::Utils::HashConverter
     # @return [Array] Array of child nodes added
     # @see ClassMethods#from_hash
     def add_from_hash(children)
-      raise ArgumentError, "Argument must be a type of hash"\
+      raise ArgumentError, 'Argument must be a type of hash'\
                            unless children.is_a?(Hash)
 
       child_nodes = []
