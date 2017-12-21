@@ -314,7 +314,7 @@ module TestTree
       assert_warn(StructuredWarnings::DeprecatedMethodWarning) {@root.leftChild = @left_child2}
       # noinspection RubyResolve
       assert_warn(StructuredWarnings::DeprecatedMethodWarning) {@root.rightChild = @right_child2}
-      assert_raise(NoMethodError) {@root.to_snake_case('dummy')} # Make sure the right method is visible
+      assert_raise(NoMethodError) {@root.DummyMethodDoesNotExist} # Make sure the right method is visible
 
     end
 
