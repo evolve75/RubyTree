@@ -2,7 +2,7 @@
 
 # test_tree.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2017 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2017, 2020, 2020 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -941,12 +941,11 @@ module TestTree
       assert_equal('ABC', @root.content, "Content should be 'ABC'")
       @root.freeze_tree!
       # Note: The error raised here depends on the Ruby version.
+      # For Ruby > 2.6, FrozenError is raised
       # For Ruby > 1.9, RuntimeError is raised
       # For Ruby ~ 1.8, TypeError is raised
-      assert_raise(RuntimeError, TypeError) {@root.content = '123'
-      }
-      assert_raise(RuntimeError, TypeError) {@root[0].content = '123'
-      }
+      assert_raise(RuntimeError, FrozenError, TypeError) {@root.content = '123'}
+      assert_raise(RuntimeError, FrozenError, TypeError) {@root[0].content = '123'}
     end
 
     # Test whether the content is accessible
