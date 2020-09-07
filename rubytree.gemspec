@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.2'
+  s.required_ruby_version = '>=2.3'
 
   s.summary               = %q{A generic tree data structure.}
   s.description           = <<-EOF
