@@ -58,8 +58,6 @@ module Tree::Utils
         end
       end
 
-      protected
-
       # @!visibility private
       # Convert a CamelCasedWord to a underscore separated camel_cased_word.
       #
@@ -74,6 +72,7 @@ module Tree::Utils
         word.downcase!
         word
       end
+      protected :to_snake_case
 
     end # self.included
   end
