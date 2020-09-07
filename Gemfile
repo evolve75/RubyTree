@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development, :test do
-  gem 'rake', '~> 10.4'
+  gem 'rake', '~> 13.0'
   gem 'test-unit', '~> 3.0'
   gem 'coveralls', '>= 0.7', :require => false, :platforms => :mri_21
   gem 'rspec', '>= 3.4'
