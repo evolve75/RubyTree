@@ -941,11 +941,18 @@ module TestTree
       assert_equal('ABC', @root.content, "Content should be 'ABC'")
       @root.freeze_tree!
       # Note: The error raised here depends on the Ruby version.
-      # For Ruby > 2.6, FrozenError is raised
+      # For Ruby > 2.5, FrozenError is raised
       # For Ruby > 1.9, RuntimeError is raised
       # For Ruby ~ 1.8, TypeError is raised
-      assert_raise(RuntimeError, FrozenError, TypeError) {@root.content = '123'}
-      assert_raise(RuntimeError, FrozenError, TypeError) {@root[0].content = '123'}
+      require 'rubygems' # Only needed for ruby pre-1.9.0 but it's safe for later versions (evaluates to false).
+      if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new('1.9.0')
+        assert_raise(RuntimeError, TypeError) {@root.content = '123'}
+        assert_raise(RuntimeError, TypeError) {@root[0].content = '123'}
+      else
+        assert_raise(FrozenError) {@root.content = '123'}
+        assert_raise(FrozenError) {@root[0].content = '123'}
+      end
+
     end
 
     # Test whether the content is accessible
