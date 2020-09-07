@@ -82,7 +82,7 @@ DEPENDENCIES
   rdoc (~> 6.2.1)
   rspec (>= 3.9.0)
   rtagstask (~> 0.0.4)
-  rubocop (>= 0.90.0)
+  rubocop
   rubytree!
   test-unit (~> 3.3.6)
   yard (~> 0.9.25)
