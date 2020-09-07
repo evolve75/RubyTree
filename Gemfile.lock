@@ -68,7 +68,7 @@ GEM
     thor (0.19.4)
     tins (1.16.3)
     unicode-display_width (1.7.0)
-    yard (0.9.12)
+    yard (0.9.25)
 
 PLATFORMS
   ruby
