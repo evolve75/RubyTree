@@ -945,7 +945,7 @@ module TestTree
       # For Ruby > 1.9, RuntimeError is raised
       # For Ruby ~ 1.8, TypeError is raised
       require 'rubygems' # Only needed for ruby pre-1.9.0 but it's safe for later versions (evaluates to false).
-      if Gem::Version.new(RUBY_VERSION) <= Gem::Version.new('2.4.0')
+      if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('2.5')
         assert_raise(RuntimeError, TypeError) {@root.content = '123'}
         assert_raise(RuntimeError, TypeError) {@root[0].content = '123'}
       else
