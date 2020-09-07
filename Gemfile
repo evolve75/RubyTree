@@ -8,6 +8,7 @@ group :development, :test do
   gem 'test-unit', '~> 3.0'
   gem 'coveralls', '>= 0.7', :require => false, :platforms => :mri_21
   gem 'rspec', '>= 3.4'
+  gem 'rubocop'
 end
 
 # Local Variables:
