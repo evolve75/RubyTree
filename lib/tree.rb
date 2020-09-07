@@ -772,6 +772,28 @@ module Tree
       end
     end
 
+    # Yields every level of the (sub)tree rooted at this node to the
+    # specified block.
+    #
+    # Will yield this node as well since it is considered the first level.
+    #
+    # @yieldparam level [Array<Tree::TreeNode>] All nodes in the level
+    #
+    # @return [Tree::TreeNode] this node, if a block if given
+    # @return [Enumerator] an enumerator on this tree, if a block is *not* given
+    def each_level &block
+      if block_given?
+        level = [self]
+        until level.empty?
+          yield level
+          level = level.map(&:children).flatten
+        end
+        return self
+      else
+        self.each
+      end
+    end
+
     # @!endgroup
 
     # @!group Navigating the Child Nodes
