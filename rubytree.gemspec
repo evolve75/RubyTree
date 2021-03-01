@@ -11,9 +11,9 @@ require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2020-09-07'
+  s.date                  = '2021-03-01'
   s.version               = Tree::VERSION
-  s.license               = 'BSD'
+  s.license               = 'BSD-3-Clause-Clear'
 
   s.platform              = Gem::Platform::RUBY
   s.author                = 'Anupam Sengupta'
