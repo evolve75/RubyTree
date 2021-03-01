@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006-2015, 2017 Anupam Sengupta
+# Copyright (c) 2006-2021 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -177,7 +177,7 @@ module Tree
       return nil if is_root?
 
       parentage_array = []
-      prev_parent = self.parent
+      prev_parent = parent
       while prev_parent
         parentage_array << prev_parent
         prev_parent = prev_parent.parent
@@ -216,18 +216,19 @@ module Tree
     #
     # @see #[]
     def initialize(name, content = nil)
-      raise ArgumentError, 'Node name HAS to be provided!' if name == nil
+      raise ArgumentError, 'Node name HAS to be provided!' if name.nil?
+
       @name, @content = name, content
 
-      if name.kind_of?(Integer)
+      if name.is_a?(Integer)
         warn StructuredWarnings::StandardWarning,
              'Using integer as node name.'\
              ' Semantics of TreeNode[] may not be what you expect!'\
              " #{name} #{content}"
       end
 
-      self.set_as_root!
-      @children_hash = Hash.new
+      set_as_root!
+      @children_hash = {}
       @children = []
     end
 
@@ -254,18 +255,18 @@ module Tree
     # Alias for {Tree::TreeNode#detached_subtree_copy}
     #
     # @see Tree::TreeNode#detached_subtree_copy
-    alias :dup :detached_subtree_copy
+    alias dup detached_subtree_copy
 
     # Returns a {marshal-dump}[http://ruby-doc.org/core-1.8.7/Marshal.html]
     # representation of the (sub)tree rooted at this node.
     #
     def marshal_dump
-      self.collect { |node| node.create_dump_rep }
+      collect { |node| node.create_dump_rep }
     end
 
     # Creates a dump representation of this node and returns the same as
     # a hash.
-    def create_dump_rep           # :nodoc:
+    def create_dump_rep # :nodoc:
       {name: @name,
        parent: (is_root? ? nil : @parent.name),
        content: Marshal.dump(@content)
@@ -297,7 +298,7 @@ module Tree
           # This is the root node, hence initialize self.
           initialize(name, content)
 
-          nodes[name] = self    # Add self to the list of nodes
+          nodes[name] = self # Add self to the list of nodes
         end
       end
     end
@@ -377,19 +378,18 @@ module Tree
     # @see #<<
     def add(child, at_index = -1)
       # Only handles the immediate child scenario
-      raise ArgumentError,
-            'Attempting to add a nil node' unless child
-      raise ArgumentError,
-            'Attempting add node to itself' if self.equal?(child)
-      raise ArgumentError,
-            'Attempting add root as a child' if child.equal?(root)
+      raise ArgumentError, 'Attempting to add a nil node' unless child
 
-      # Lazy mans unique test, won't test if children of child are unique in
+      raise ArgumentError, 'Attempting add node to itself' if equal?(child)
+      
+      raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
+
+      # Lazy man's unique test, won't test if children of child are unique in
       # this tree too.
       raise "Child #{child.name} already added!"\
             if @children_hash.include?(child.name)
 
-      child.parent.remove! child if child.parent # Detach from the old parent
+      child.parent&.remove! child # Detach from the old parent
 
       if insertion_range.include?(at_index)
         @children.insert(at_index, child)
@@ -400,7 +400,7 @@ module Tree
               "#{insertion_range.min} to #{insertion_range.max} exist."
       end
 
-      @children_hash[child.name]  = child
+      @children_hash[child.name] = child
       child.parent = self
       child
     end
@@ -424,7 +424,7 @@ module Tree
       old_name = @name
 
       if is_root?
-        self.name=(new_name)
+        self.name = new_name
       else
         @parent.rename_child old_name, new_name
       end
@@ -441,10 +441,10 @@ module Tree
     #   pass a String (Integer names may cause *surprises*)
     def rename_child(old_name, new_name)
       raise ArgumentError, "Invalid child name specified: #{old_name}"\
-            unless @children_hash.has_key?(old_name)
+            unless @children_hash.key?(old_name)
 
       @children_hash[new_name] = @children_hash.delete(old_name)
-      @children_hash[new_name].name=(new_name)
+      @children_hash[new_name].name=new_name
     end
 
     # Protected method to set the name of this node.
@@ -453,9 +453,7 @@ module Tree
     # @param [Object] new_name The node Name to set.
     #
     # @return [Object] The new name.
-    def name=(new_name)
-      @name = new_name
-    end
+    attr_writer :name
 
     # Replaces the specified child node with another child node on this node.
     #
@@ -510,7 +508,7 @@ module Tree
     # @param [Tree::TreeNode] parent The parent node.
     #
     # @return [Tree::TreeNode] The parent node.
-    def parent=(parent)         # :nodoc:
+    def parent=(parent) # :nodoc:
       @parent = parent
       @node_depth = nil
     end
@@ -549,7 +547,7 @@ module Tree
     # Protected method which sets this node as a root node.
     #
     # @return +nil+.
-    def set_as_root!              # :nodoc:
+    def set_as_root! # :nodoc:
       self.parent = nil
     end
 
@@ -601,13 +599,12 @@ module Tree
     # @see #add
     # @see #initialize
     def [](name_or_index, num_as_name=false)
-      raise ArgumentError,
-            'Name_or_index needs to be provided!' if name_or_index == nil
+      raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
 
-      if name_or_index.kind_of?(Integer) and not num_as_name
+      if name_or_index.is_a?(Integer) && !num_as_name
         @children[name_or_index]
       else
-        if num_as_name and not name_or_index.kind_of?(Integer)
+        if num_as_name && !name_or_index.is_a?(Integer)
           warn StructuredWarnings::StandardWarning,
                'Redundant use of the `num_as_name` flag for non-integer node name'
         end
@@ -630,22 +627,22 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
-    def each(&block)             # :yields: node
+    def each(&block) # :yields: node
 
-     return self.to_enum unless block_given?
+     return to_enum unless block_given?
 
-      node_stack = [self]   # Start with this node
+     node_stack = [self] # Start with this node
 
-      until node_stack.empty?
-        current = node_stack.shift    # Pop the top-most node
-        if current                    # Might be 'nil' (esp. for binary trees)
-          yield current               # and process it
-          # Stack children of the current node at top of the stack
-          node_stack = current.children.concat(node_stack)
-        end
-      end
+     until node_stack.empty?
+       current = node_stack.shift    # Pop the top-most node
+       if current                    # Might be 'nil' (esp. for binary trees)
+         yield current               # and process it
+         # Stack children of the current node at top of the stack
+         node_stack = current.children.concat(node_stack)
+       end
+     end
 
-      self if block_given?
+     self if block_given?
     end
 
     # Traverses the (sub)tree rooted at this node in pre-ordered sequence.
@@ -658,7 +655,7 @@ module Tree
     #
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
-    def preordered_each(&block)  # :yields: node
+    def preordered_each(&block) # :yields: node
       each(&block)
     end
 
@@ -673,7 +670,7 @@ module Tree
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
     def postordered_each(&block)
-      return self.to_enum(:postordered_each) unless block_given?
+      return to_enum(:postordered_each) unless block_given?
 
       # Using a marked node in order to skip adding the children of nodes that
       # have already been visited. This allows the stack depth to be controlled,
@@ -683,7 +680,7 @@ module Tree
 
       until node_stack.empty?
         peek_node = node_stack[0]
-        if peek_node.node.has_children? and not peek_node.visited
+        if peek_node.node.has_children? && !peek_node.visited
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
@@ -691,7 +688,7 @@ module Tree
           node_stack = marked_children.concat(node_stack)
           next
         else
-          yield node_stack.shift.node           # Pop and yield the current node
+          yield node_stack.shift.node # Pop and yield the current node
         end
       end
 
@@ -712,9 +709,9 @@ module Tree
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
     def breadth_each(&block)
-      return self.to_enum(:breadth_each) unless block_given?
+      return to_enum(:breadth_each) unless block_given?
 
-      node_queue = [self]       # Create a queue with self as the initial entry
+      node_queue = [self] # Create a queue with self as the initial entry
 
       # Use a queue to do breadth traversal
       until node_queue.empty?
@@ -765,7 +762,7 @@ module Tree
     # noinspection RubyUnusedLocalVariable
     def each_leaf(&block)
       if block_given?
-        self.each { |node| yield(node) if node.is_leaf? }
+        each { |node| yield(node) if node.is_leaf? }
         self
       else
         self.select { |node| node.is_leaf? }
@@ -788,9 +785,9 @@ module Tree
           yield level
           level = level.map(&:children).flatten
         end
-        return self
+        self
       else
-        self.each
+        each
       end
     end
 
@@ -888,6 +885,7 @@ module Tree
         self
       else
         return [] if is_root?
+
         siblings = []
         parent.children {|my_sibling|
                          siblings << my_sibling if my_sibling != self}
@@ -952,8 +950,9 @@ module Tree
     #                   this node is a 'predecessor'. Returns 'nil' if the other
     #                   object is not a 'Tree::TreeNode'.
     def <=>(other)
-      return nil if other == nil || other.class != Tree::TreeNode
-      self.name <=> other.name
+      return nil if other.nil? || other.class != Tree::TreeNode
+
+      name <=> other.name
     end
 
     # Pretty prints the (sub)tree rooted at this node.
@@ -962,7 +961,7 @@ module Tree
     # @param [Integer] max_depth optional maximum depth at which the printing
     #                            with stop.
     # @param [Proc] block optional block to use for rendering
-    def print_tree(level = self.node_depth, max_depth = nil,
+    def print_tree(level = node_depth, max_depth = nil,
                    block = lambda { |node, prefix|
                      puts "#{prefix} #{node.name}" })
       prefix = ''
@@ -983,8 +982,8 @@ module Tree
       return unless max_depth.nil? || level < max_depth
 
       children { |child|
-        child.print_tree(level + 1,
-                         max_depth, block) if child } # Child might be 'nil'
+        child&.print_tree(level + 1,
+                         max_depth, block) } # Child might be 'nil'
     end
 
   end
