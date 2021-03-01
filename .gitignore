@@ -6,4 +6,7 @@ doc/
 pkg/
 rdoc/
 tmp/
-.bundle/install.log
+.bundle/
+vendor/
+.idea/
+
