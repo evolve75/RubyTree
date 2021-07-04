@@ -121,7 +121,7 @@ module Tree::Utils::JSONConverter
       node = new(json_hash['name'], json_hash['content'])
 
       json_hash['children'].each do |child|
-        node << child
+        node << json_create(child)
       end if json_hash['children']
 
       node
