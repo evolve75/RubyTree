@@ -36,8 +36,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require_relative '../../../lib/tree'
-
 module Tree::Utils
   # Provides utility methods for path extraction
   module TreePathHandler
