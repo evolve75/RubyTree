@@ -89,7 +89,6 @@ module Tree
     include Comparable
     include Tree::Utils::TreeMetricsHandler
     include Tree::Utils::TreePathHandler
-    include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
     include Tree::Utils::HashConverter

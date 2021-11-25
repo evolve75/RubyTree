@@ -1413,38 +1413,6 @@ module TestTree
       assert_equal(k[1].name, root_node[1].name, 'Child 2 should be returned')
     end
 
-    # Test the old CamelCase method names
-    def test_old_camel_case_names
-      setup_test_tree
-
-      meth_names_to_test = %w{isRoot? isLeaf? hasContent?
-                              hasChildren? firstChild lastChild
-                              firstSibling isFirstSibling? lastSibling isLastSibling?
-                              isOnlyChild? nextSibling previousSibling nodeHeight nodeDepth
-                              removeFromParent! removeAll! freezeTree! }
-
-      require 'structured_warnings'
-
-      StructuredWarnings::DeprecatedMethodWarning.disable do
-        # noinspection RubyResolve
-        assert(@root.isRoot?)   # Test if the original method is really called
-      end
-
-      meth_names_to_test.each do |meth_name|
-        assert_warn(StructuredWarnings::DeprecatedMethodWarning) {@root.send(meth_name)}
-      end
-
-      # Special Case for printTree to avoid putting stuff on the STDOUT during the unit test.
-      begin
-        require 'stringio'
-        $stdout = StringIO.new
-        assert_warn(StructuredWarnings::DeprecatedMethodWarning) { @root.send('printTree') }
-      ensure
-        $stdout = STDOUT
-      end
-
-    end
-
     # Test usage of integers as node names
     def test_integer_node_names
 
