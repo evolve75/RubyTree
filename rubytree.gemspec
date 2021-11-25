@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.4'
+  s.required_ruby_version = '>=2.6'
 
   s.summary               = %q{A generic tree data structure.}
   s.description           = <<-EOF
@@ -69,11 +69,14 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json'                , '~> 2.3.1'
 
   # Note: Rake is added as a development and test dependency in the Gemfile.
-  s.add_development_dependency 'bundler'         , '~> 2.1.4'
-  s.add_development_dependency 'rdoc'            , '~> 6.2.1'
-  s.add_development_dependency 'yard'            , '~> 0.9.25'
-  s.add_development_dependency 'rtagstask'       , '~> 0.0.4'
-  s.add_development_dependency 'rspec'           , '~> 3.9.0'
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rdoc'
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'rtagstask'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency "rake"
+  s.add_development_dependency "test-unit"
+
 
   s.post_install_message = <<-EOF
     ========================================================================

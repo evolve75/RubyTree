@@ -1,16 +1,4 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
-# Specify your gem's dependencies in rubytree.gemspec
+source "https://rubygems.org"
 gemspec
-
-group :development, :test do
-  gem 'rake', '>= 13.0.1'
-  gem 'test-unit', '~> 3.3.6'
-  gem 'coveralls', '>= 0.8.23', :require => false, :platforms => :mri_21
-  gem 'rspec', '>= 3.9.0'
-  gem 'rubocop'
-end
-
-# Local Variables:
-# mode: ruby
-# End:
