@@ -216,14 +216,9 @@ module Tree
     # @see #[]
     def initialize(name, content = nil)
       raise ArgumentError, 'Node name HAS to be provided!' if name == nil
-      @name, @content = name, content
 
-      if name.kind_of?(Integer)
-        warn StructuredWarnings::StandardWarning,
-             'Using integer as node name.'\
-             ' Semantics of TreeNode[] may not be what you expect!'\
-             " #{name} #{content}"
-      end
+      name = name.to_s if name.kind_of?(Integer)
+      @name, @content = name, content
 
       self.set_as_root!
       @children_hash = Hash.new
@@ -592,24 +587,17 @@ module Tree
     #   in not in range, or the name is not present, then a +nil+
     #   is returned.
     #
-    # @note The use of +Integer+ names is allowed by using the optional
-    #       +num_as_name+ flag.
-    #
     # @raise [ArgumentError] Raised if the +name_or_index+ argument is +nil+.
     #
     # @see #add
     # @see #initialize
-    def [](name_or_index, num_as_name=false)
+    def [](name_or_index)
       raise ArgumentError,
             'Name_or_index needs to be provided!' if name_or_index == nil
 
-      if name_or_index.kind_of?(Integer) and not num_as_name
+      if name_or_index.kind_of?(Integer)
         @children[name_or_index]
       else
-        if num_as_name and not name_or_index.kind_of?(Integer)
-          warn StructuredWarnings::StandardWarning,
-               'Redundant use of the `num_as_name` flag for non-integer node name'
-        end
         @children_hash[name_or_index]
       end
     end
