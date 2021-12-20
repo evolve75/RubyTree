@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.4'
+  s.required_ruby_version = '>=2.5'
 
   s.summary               = %q{A generic tree data structure.}
   s.description           = <<-EOF
@@ -66,7 +66,7 @@ Gem::Specification.new do |s|
   s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
 
   s.add_runtime_dependency 'structured_warnings' , '~> 0.4.0'
-  s.add_runtime_dependency 'json'                , '~> 2.3.1'
+  s.add_runtime_dependency 'json'                , '~> 2.3.0' # erlaube kompatibility mit Keycloak 3.2.1 gem
 
   # Note: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler'         , '~> 2.1.4'
