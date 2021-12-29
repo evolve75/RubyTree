@@ -43,7 +43,7 @@ module Tree::Utils
   # Provides utility functions to measure various tree metrics.
   module TreeMetricsHandler
     # noinspection RubyUnusedLocalVariable
-    def self.included(base)
+    def self.included(_base)
       # @!group Metrics and Measures
 
       # @!attribute [r] size
@@ -67,7 +67,7 @@ module Tree::Utils
       # @return [Integer] The total number of nodes in this (sub)tree.
       # @see #size
       def length
-        self.size
+        size
       end
 
       # @!attribute [r] node_height

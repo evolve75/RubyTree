@@ -44,7 +44,7 @@ module TestTree
       tree = Tree::TreeNode.new('/')
       current = tree
       depth.times do |i|
-        new_node = Tree::TreeNode.new("#{i}")
+        new_node = Tree::TreeNode.new(i.to_s)
         current << new_node
         current = new_node
       end

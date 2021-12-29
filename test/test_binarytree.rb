@@ -64,9 +64,9 @@ module TestTree
 
     def test_from_hash
       # Can't make a root node without a name
-      assert_raise (ArgumentError) { Tree::BinaryTreeNode.from_hash({}) }
+      assert_raise(ArgumentError) { Tree::BinaryTreeNode.from_hash({}) }
       # Can't have multiple roots
-      assert_raise (ArgumentError) { Tree::BinaryTreeNode.from_hash({ A: {}, B: {} }) }
+      assert_raise(ArgumentError) { Tree::BinaryTreeNode.from_hash({ A: {}, B: {} }) }
 
       # Can't have more than 2 children
       too_many_kids = { A: { B: {}, C: {}, D: {} } }
@@ -191,7 +191,9 @@ module TestTree
       end
 
       assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerator.class) # Without a block
-      assert_equal(Enumerable::Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class) # Without a block
+      if defined?(Enumerable::Enumerator.class)
+        assert_equal(Enumerable::Enumerator, f.inordered_each.class)
+      end # Without a block
     end
 
     # Test the left_child method.
@@ -303,7 +305,7 @@ module TestTree
 
       require 'structured_warnings'
 
-      meth_names_for_test = %w{leftChild isLeftChild? rightChild isRightChild?}
+      meth_names_for_test = %w[leftChild isLeftChild? rightChild isRightChild?]
 
       meth_names_for_test.each do |meth_name|
         assert_warn(StructuredWarnings::DeprecatedMethodWarning) { @root.send(meth_name) }

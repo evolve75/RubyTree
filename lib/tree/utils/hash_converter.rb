@@ -100,11 +100,9 @@ module Tree::Utils::HashConverter
 
       root, children = hash.first
 
-      unless [Hash, NilClass].include?(children.class)
-        raise ArgumentError, 'Invalid child. Must be nil or hash.'
-      end
+      raise ArgumentError, 'Invalid child. Must be nil or hash.' unless [Hash, NilClass].include?(children.class)
 
-      node = self.new(*root)
+      node = new(*root)
       node.add_from_hash(children) unless children.nil?
       node
     end

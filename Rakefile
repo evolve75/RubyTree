@@ -55,9 +55,9 @@ task :version do
 end
 
 require 'rake/clean'
-task :clean => 'gem:clobber_package'
+task clean: 'gem:clobber_package'
 CLEAN.include('coverage')
-task :clobber => [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard']
+task clobber: [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard']
 
 desc 'Open an irb session preloaded with this library'
 task :console do
@@ -83,7 +83,7 @@ namespace :doc do # ................................ Documentation
     require 'yard'
     YARD::Rake::YardocTask.new do |t|
       t.files   = ['lib/**/*.rb', '-', GEM_SPEC.extra_rdoc_files]
-      t.options = %w(--no-private --embed-mixins)
+      t.options = %w[--no-private --embed-mixins]
     end
   rescue LoadError
     # Oh well.
@@ -96,7 +96,7 @@ namespace :doc do # ................................ Documentation
 end
 
 desc 'Run the test cases'
-task :test => 'test:unit'
+task test: 'test:unit'
 
 namespace :test do # ................................ Test related
   require 'rake/testtask'
@@ -144,15 +144,13 @@ rescue LoadError
 end
 
 namespace :tag do # ................................ Emacs Tags
-  begin
-    require 'rtagstask'
-    RTagsTask.new(:tags) do |rd|
-      rd.vi = false
-      CLEAN.include('TAGS')
-    end
-  rescue LoadError
-    # Oh well. Can't have everything.
+  require 'rtagstask'
+  RTagsTask.new(:tags) do |rd|
+    rd.vi = false
+    CLEAN.include('TAGS')
   end
+rescue LoadError
+  # Oh well. Can't have everything.
 end
 
 namespace :gem do               # ................................ Gem related
@@ -163,7 +161,7 @@ namespace :gem do               # ................................ Gem related
   end
 
   desc 'Push the gem into the Rubygems repository'
-  task :push => :gem do
+  task push: :gem do
     sh "gem push pkg/#{GEM_NAME}"
   end
 end

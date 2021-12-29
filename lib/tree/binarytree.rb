@@ -170,13 +170,13 @@ module Tree
     # @see #preordered_each
     # @see #postordered_each
     # noinspection RubyUnusedLocalVariable
-    def inordered_each(&block)
-      return self.to_enum unless block_given?
+    def inordered_each
+      return to_enum unless block_given?
 
       node_stack = []
       current_node = self
 
-      until node_stack.empty? and current_node == nil
+      until node_stack.empty? and current_node.nil?
         if current_node
           node_stack.push(current_node)
           current_node = current_node.left_child
@@ -243,7 +243,7 @@ module Tree
 
     # Swaps the left and right child nodes of the receiver node with each other.
     def swap_children
-      self.left_child, self.right_child = self.right_child, self.left_child
+      self.left_child, self.right_child = right_child, left_child
     end
   end
 end

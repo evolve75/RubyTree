@@ -108,11 +108,11 @@ module Tree
     # +content+ attribute for any non-unique node requirements.
     #
     # If you want to change the name, you probably want to call +rename+
-    # instead.
+    # instead. Note that +name=+ is a protected method.
     #
     # @see content
     # @see rename
-    attr_reader   :name
+    attr_accessor :name
 
     # @!attribute [rw] content
     # Content of this node.  Can be +nil+.  Note that there is no
@@ -217,7 +217,8 @@ module Tree
     def initialize(name, content = nil)
       raise ArgumentError, 'Node name HAS to be provided!' if name.nil?
 
-      @name, @content = name, content
+      @name = name
+      @content = content
 
       if name.is_a?(Integer)
         warn StructuredWarnings::StandardWarning,
@@ -308,7 +309,7 @@ module Tree
     #
     # @return [String] A string representation of the node.
     def to_s
-      "Node Name: #{@name} Content: #{(@content.to_s || '<Empty>')} Parent: #{(is_root? ? '<None>' : @parent.name.to_s)} Children: #{@children.length} Total Nodes: #{size}"
+      "Node Name: #{@name} Content: #{@content.to_s || '<Empty>'} Parent: #{is_root? ? '<None>' : @parent.name.to_s} Children: #{@children.length} Total Nodes: #{size}"
     end
 
     # @!group Structure Modification
@@ -444,14 +445,6 @@ module Tree
       @children_hash[new_name] = @children_hash.delete(old_name)
       @children_hash[new_name].name = new_name
     end
-
-    # Protected method to set the name of this node.
-    # This method should *NOT* be invoked by client code.
-    #
-    # @param [Object] new_name The node Name to set.
-    #
-    # @return [Object] The new name.
-    attr_writer :name
 
     # Replaces the specified child node with another child node on this node.
     #
@@ -625,18 +618,18 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
-    def each(&block) # :yields: node
+    def each # :yields: node
       return to_enum unless block_given?
 
       node_stack = [self] # Start with this node
 
       until node_stack.empty?
-        current = node_stack.shift    # Pop the top-most node
-        if current                    # Might be 'nil' (esp. for binary trees)
-          yield current               # and process it
-          # Stack children of the current node at top of the stack
-          node_stack = current.children.concat(node_stack)
-        end
+        current = node_stack.shift # Pop the top-most node
+        next unless current # Might be 'nil' (esp. for binary trees)
+
+        yield current # and process it
+        # Stack children of the current node at top of the stack
+        node_stack = current.children.concat(node_stack)
       end
 
       self if block_given?
@@ -666,7 +659,7 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
-    def postordered_each(&block)
+    def postordered_each
       return to_enum(:postordered_each) unless block_given?
 
       # Using a marked node in order to skip adding the children of nodes that
@@ -705,7 +698,7 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
-    def breadth_each(&block)
+    def breadth_each
       return to_enum(:breadth_each) unless block_given?
 
       node_queue = [self] # Create a queue with self as the initial entry
@@ -733,9 +726,9 @@ module Tree
     #
     # @return [Array<Tree::TreeNode>] An array of the child nodes, if no block
     #                                 is given.
-    def children
+    def children(&block)
       if block_given?
-        @children.each { |child| yield child }
+        @children.each(&block)
         self
       else
         @children.clone
@@ -757,7 +750,7 @@ module Tree
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Array<Tree::TreeNode>] An array of the leaf nodes
     # noinspection RubyUnusedLocalVariable
-    def each_leaf(&block)
+    def each_leaf
       if block_given?
         each { |node| yield(node) if node.is_leaf? }
         self
@@ -775,7 +768,7 @@ module Tree
     #
     # @return [Tree::TreeNode] this node, if a block if given
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
-    def each_level &block
+    def each_level
       if block_given?
         level = [self]
         until level.empty?
@@ -884,9 +877,9 @@ module Tree
         return [] if is_root?
 
         siblings = []
-        parent.children { |my_sibling|
+        parent.children do |my_sibling|
           siblings << my_sibling if my_sibling != self
-        }
+        end
         siblings
       end
     end
@@ -980,10 +973,11 @@ module Tree
       # Exit if the max level is defined, and reached.
       return unless max_depth.nil? || level < max_depth
 
-      children { |child|
+      # Child might be 'nil'
+      children do |child|
         child&.print_tree(level + 1,
                           max_depth, block)
-      }       # Child might be 'nil'
+      end
     end
   end
 end

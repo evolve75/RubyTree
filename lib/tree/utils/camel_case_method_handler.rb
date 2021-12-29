@@ -43,12 +43,12 @@ module Tree::Utils
   # Provides utility functions to handle CamelCase methods, and redirect
   # invocation of such methods to the snake_case equivalents.
   module CamelCaseMethodHandler
-    def self.included(base)
+    def self.included(_base)
       # @!visibility private
       # Allow the deprecated CamelCase method names.  Display a warning.
       # :nodoc:
       def method_missing(meth, *args, &blk)
-        if self.respond_to?((new_method_name = to_snake_case(meth)))
+        if respond_to?((new_method_name = to_snake_case(meth)))
           warn StructuredWarnings::DeprecatedMethodWarning,
                'The camelCased methods are deprecated. ' +
                "Please use #{new_method_name} instead of #{meth}"

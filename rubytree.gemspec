@@ -1,5 +1,3 @@
-# -*- encoding: utf-8 -*-
-
 #
 # gemspec for the rubytree gem.
 #
@@ -71,14 +69,14 @@ Gem::Specification.new do |s|
 
   # Development dependencies.
   s.add_development_dependency 'bundler', '~> 2.3.4'
+  s.add_development_dependency 'coveralls', '>= 0.8.23'
   s.add_development_dependency 'rake', '>= 13.0.6'
-  s.add_development_dependency 'test-unit', '>= 3.5.3'
   s.add_development_dependency 'rdoc', '>= 6.4.0'
   s.add_development_dependency 'rspec', '~> 3.10.0'
   s.add_development_dependency 'rtagstask', '~> 0.0.4'
-  s.add_development_dependency 'yard', '~> 0.9.27'
-  s.add_development_dependency 'coveralls', '>= 0.8.23'
   s.add_development_dependency 'rubocop', '>= 1.24.0'
+  s.add_development_dependency 'test-unit', '>= 3.5.3'
+  s.add_development_dependency 'yard', '~> 0.9.27'
 
   s.post_install_message = <<-END_OF_TEXT
     ========================================================================
