@@ -2,7 +2,7 @@
 #
 # Rakefile - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006-2015  Anupam Sengupta
+# Copyright (c) 2006-2021  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -66,7 +66,7 @@ end
 
 namespace :doc do # ................................ Documentation
   begin
-    gem 'rdoc', '>= 2.4.2' # To get around a stupid bug in Ruby 1.9.2 Rake.
+    gem 'rdoc', '>= 6.4.0' # To get around a stupid bug in Ruby 1.9.2 Rake.
     require 'rdoc/task'
     Rake::RDocTask.new do |rdoc|
       rdoc.rdoc_dir = 'rdoc'

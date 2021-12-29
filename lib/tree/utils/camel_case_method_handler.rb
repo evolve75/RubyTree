@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2017-12-21 13:42:15 anupam>
+# Time-stamp: <2021-12-29 13:02:04 anupam>
 #
-# Copyright (C) 2012, 2013, 2015, 2017 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013, 2015, 2017, 2021 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -36,7 +36,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require_relative '../../../lib/tree'
 require 'structured_warnings'
 
 module Tree::Utils

@@ -4,9 +4,9 @@
 #
 # Author::  Marco Ziccardi and Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2015-05-30 16:04:00 anupam>
+# Time-stamp: <2021-12-29 13:01:58 anupam>
 #
-# Copyright (C) 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2015, 2021 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -35,8 +35,6 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
-require_relative '../../../lib/tree'
 
 module Tree::Utils
   # Provides utility methods for path extraction
