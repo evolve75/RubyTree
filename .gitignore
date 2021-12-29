@@ -1,3 +1,8 @@
+.DS_Store
+.idea/
+doc/
+pkg/
+vendor/
 .bundle/
 .yardoc/
 TAGS
