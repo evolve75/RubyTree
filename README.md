@@ -1,7 +1,7 @@
 <!--
   README.md
 
-  Copyright (C) 2006-2017, 2020 Anupam Sengupta (anupamsg@gmail.com)
+  Copyright (C) 2006-2017, 2020, 2021 Anupam Sengupta (anupamsg@gmail.com)
 
 -->
 # **RubyTree** #
@@ -54,9 +54,7 @@ See the [API][rt_doc] documentation for more details.
 #
 # example_basic.rb:: Basic usage of the tree library.
 #
-# Author:  Anupam Sengupta
-# Time-stamp: <2013-12-28 12:14:20 anupam>
-# Copyright (C) 2013 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2013-2021 Anupam Sengupta <anupamsg@gmail.com>
 #
 # The following example implements this tree structure:
 #
@@ -119,7 +117,7 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 2.2.x, 2.3.x or 2.4.x
+* [Ruby][] 2.7.x+
 
 
 * Run-time Dependencies:

@@ -1,5 +1,30 @@
 = History of Changes
 
+=== 1.0.2 / 2021-12-29
+
+* A minor maintenance version to address a minor but annoying warning for
+circular dependencies.
+
+=== 1.0.1 / 2021-12-29
+
+* Updated all dependencies (dev and runtime) to their latest stable releases.
+  This is to primarily address potential CVE exposures from upstream libraries.
+
+* Updated the supported version of MRI Ruby to 2.7.x
+
+* Minor code cleanup using the safe automated corrections using rubocop.
+
+* Note that this was never released to {https://rubygems.org rubygems.org})
+
+=== 1.0.0 / 2017-12-21
+
+* Finally! Released version 1.0.0.
+
+* This is a maintenance release that updates the dependent gem versions and
+  addresses a few security vulnerabilities for older upstream gem packages.
+
+* With this release, Rubytree now requires Ruby version 2.2.x or higher.
+
 === 0.9.7 / 2015-12-31
 
 * Released 0.9.6. This is a minor bug-fix release.
