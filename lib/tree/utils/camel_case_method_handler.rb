@@ -66,14 +66,13 @@ module Tree::Utils
       def to_snake_case(camel_cased_word)
         word = camel_cased_word.to_s
         word.gsub!(/::/, '/')
-        word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-        word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+        word.gsub!(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        word.gsub!(/([a-z\d])([A-Z])/, '\1_\2')
         word.tr!('-', '_')
         word.downcase!
         word
       end
       protected :to_snake_case
-
     end # self.included
   end
 end

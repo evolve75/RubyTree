@@ -41,7 +41,6 @@ require 'json'
 # Provides utility methods to convert a {Tree::TreeNode} to and from
 # JSON[http://flori.github.com/json/].
 module Tree::Utils::JSONConverter
-
   def self.included(base)
     base.extend(ClassMethods)
   end
@@ -64,11 +63,10 @@ module Tree::Utils::JSONConverter
   # @see http://stackoverflow.com/a/6880638/273808
   # noinspection RubyUnusedLocalVariable
   def as_json(options = {})
-
     json_hash = {
-        name: name,
-        content: content,
-        JSON.create_id => self.class.name
+      name: name,
+      content: content,
+      JSON.create_id => self.class.name
     }
 
     if has_children?
@@ -76,7 +74,6 @@ module Tree::Utils::JSONConverter
     end
 
     json_hash
-
   end
 
   # Creates a JSON representation of this node including all it's children.
@@ -117,7 +114,6 @@ module Tree::Utils::JSONConverter
     # @see #to_json
     # @see http://flori.github.com/json
     def json_create(json_hash)
-
       node = new(json_hash['name'], json_hash['content'])
 
       json_hash['children'].each do |child|
@@ -125,7 +121,6 @@ module Tree::Utils::JSONConverter
       end if json_hash['children']
 
       node
-
     end
   end
 end

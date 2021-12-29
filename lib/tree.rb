@@ -47,7 +47,6 @@ require 'tree/tree_deps'
 # This module also acts as the namespace for all classes in the *RubyTree*
 # package.
 module Tree
-
   # == TreeNode Class Description
   #
   # This class models the nodes for an *N-ary* tree data structure. The
@@ -267,10 +266,9 @@ module Tree
     # Creates a dump representation of this node and returns the same as
     # a hash.
     def create_dump_rep # :nodoc:
-      {name: @name,
-       parent: (is_root? ? nil : @parent.name),
-       content: Marshal.dump(@content)
-      }
+      { name: @name,
+        parent: (is_root? ? nil : @parent.name),
+        content: Marshal.dump(@content) }
     end
 
     protected :create_dump_rep
@@ -285,7 +283,7 @@ module Tree
     #       self and makes itself the root.
     #
     def marshal_load(dumped_tree_array)
-      nodes = { }
+      nodes = {}
       dumped_tree_array.each do |node_hash|
         name        = node_hash[:name]
         parent_name = node_hash[:parent]
@@ -381,7 +379,7 @@ module Tree
       raise ArgumentError, 'Attempting to add a nil node' unless child
 
       raise ArgumentError, 'Attempting add node to itself' if equal?(child)
-      
+
       raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
 
       # Lazy man's unique test, won't test if children of child are unique in
@@ -408,7 +406,7 @@ module Tree
     # Return a range of valid insertion positions.  Used in the #add method.
     def insertion_range
       max = @children.size
-      min = -(max+1)
+      min = -(max + 1)
       min..max
     end
 
@@ -444,7 +442,7 @@ module Tree
             unless @children_hash.key?(old_name)
 
       @children_hash[new_name] = @children_hash.delete(old_name)
-      @children_hash[new_name].name=new_name
+      @children_hash[new_name].name = new_name
     end
 
     # Protected method to set the name of this node.
@@ -558,7 +556,7 @@ module Tree
     # The nodes become immutable after this operation.  In effect, the entire tree's
     # structure and contents become _read-only_ and cannot be changed.
     def freeze_tree!
-      each {|node| node.freeze}
+      each { |node| node.freeze }
     end
 
     # @!endgroup
@@ -598,7 +596,7 @@ module Tree
     #
     # @see #add
     # @see #initialize
-    def [](name_or_index, num_as_name=false)
+    def [](name_or_index, num_as_name = false)
       raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
 
       if name_or_index.is_a?(Integer) && !num_as_name
@@ -628,21 +626,20 @@ module Tree
     # @return [Enumerator] an enumerator on this tree, if a block is *not* given
     # noinspection RubyUnusedLocalVariable
     def each(&block) # :yields: node
+      return to_enum unless block_given?
 
-     return to_enum unless block_given?
+      node_stack = [self] # Start with this node
 
-     node_stack = [self] # Start with this node
+      until node_stack.empty?
+        current = node_stack.shift    # Pop the top-most node
+        if current                    # Might be 'nil' (esp. for binary trees)
+          yield current               # and process it
+          # Stack children of the current node at top of the stack
+          node_stack = current.children.concat(node_stack)
+        end
+      end
 
-     until node_stack.empty?
-       current = node_stack.shift    # Pop the top-most node
-       if current                    # Might be 'nil' (esp. for binary trees)
-         yield current               # and process it
-         # Stack children of the current node at top of the stack
-         node_stack = current.children.concat(node_stack)
-       end
-     end
-
-     self if block_given?
+      self if block_given?
     end
 
     # Traverses the (sub)tree rooted at this node in pre-ordered sequence.
@@ -684,7 +681,7 @@ module Tree
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
-            peek_node.node.children.map {|node| marked_node.new(node, false)}
+            peek_node.node.children.map { |node| marked_node.new(node, false) }
           node_stack = marked_children.concat(node_stack)
           next
         else
@@ -738,7 +735,7 @@ module Tree
     #                                 is given.
     def children
       if block_given?
-        @children.each {|child| yield child}
+        @children.each { |child| yield child }
         self
       else
         @children.clone
@@ -887,8 +884,9 @@ module Tree
         return [] if is_root?
 
         siblings = []
-        parent.children {|my_sibling|
-                         siblings << my_sibling if my_sibling != self}
+        parent.children { |my_sibling|
+          siblings << my_sibling if my_sibling != self
+        }
         siblings
       end
     end
@@ -963,7 +961,8 @@ module Tree
     # @param [Proc] block optional block to use for rendering
     def print_tree(level = node_depth, max_depth = nil,
                    block = lambda { |node, prefix|
-                     puts "#{prefix} #{node.name}" })
+                             puts "#{prefix} #{node.name}"
+                           })
       prefix = ''
 
       if is_root?
@@ -983,8 +982,8 @@ module Tree
 
       children { |child|
         child&.print_tree(level + 1,
-                         max_depth, block) } # Child might be 'nil'
+                          max_depth, block)
+      }       # Child might be 'nil'
     end
-
   end
 end

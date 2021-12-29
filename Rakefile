@@ -64,7 +64,7 @@ task :console do
   sh 'irb -rubygems -r ./lib/tree.rb'
 end
 
-namespace :doc do               # ................................ Documentation
+namespace :doc do # ................................ Documentation
   begin
     gem 'rdoc', '>= 2.4.2' # To get around a stupid bug in Ruby 1.9.2 Rake.
     require 'rdoc/task'
@@ -98,8 +98,7 @@ end
 desc 'Run the test cases'
 task :test => 'test:unit'
 
-namespace :test do              # ................................ Test related
-
+namespace :test do # ................................ Test related
   require 'rake/testtask'
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
@@ -131,10 +130,9 @@ namespace :test do              # ................................ Test related
   rescue LoadError
     # Oh well. Can't have everything.
   end
-
 end
 
-begin                            # ................................ rspec tests
+begin # ................................ rspec tests
   require 'rspec/core/rake_task'
 
   RSpec::Core::RakeTask.new(:spec) do |t|
@@ -145,7 +143,7 @@ rescue LoadError
   # Cannot load rspec.
 end
 
- namespace :tag do               # ................................ Emacs Tags
+namespace :tag do # ................................ Emacs Tags
   begin
     require 'rtagstask'
     RTagsTask.new(:tags) do |rd|
@@ -155,7 +153,7 @@ end
   rescue LoadError
     # Oh well. Can't have everything.
   end
- end
+end
 
 namespace :gem do               # ................................ Gem related
   require 'rubygems/package_task'

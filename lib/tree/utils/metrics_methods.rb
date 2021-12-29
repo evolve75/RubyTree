@@ -44,7 +44,6 @@ module Tree::Utils
   module TreeMetricsHandler
     # noinspection RubyUnusedLocalVariable
     def self.included(base)
-
       # @!group Metrics and Measures
 
       # @!attribute [r] size
@@ -56,7 +55,7 @@ module Tree::Utils
       #
       # @return [Integer] Total number of nodes in this (sub)tree.
       def size
-        inject(0) {|sum, node| sum + 1 if node}
+        inject(0) { |sum, node| sum + 1 if node }
       end
 
       # @!attribute [r] length
@@ -82,6 +81,7 @@ module Tree::Utils
       # @return [Integer] Height of the node.
       def node_height
         return 0 if is_leaf?
+
         1 + @children.collect { |child| child.node_height }.max
       end
 
@@ -100,6 +100,7 @@ module Tree::Utils
       # @return [Integer] Depth of this node.
       def node_depth
         return 0 if is_root?
+
         1 + parent.node_depth
       end
 
@@ -134,6 +135,7 @@ module Tree::Utils
              'Please use node_depth() or node_height() instead (bug # 22535)'
 
         return 1 if is_leaf?
+
         1 + @children.collect { |child| child.depth }.max
       end
 

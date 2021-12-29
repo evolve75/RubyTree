@@ -41,7 +41,6 @@
 require_relative '../tree'
 
 module Tree
-
   # Provides a Binary tree implementation. This node allows only two child nodes
   # (left and right child). It also provides direct access to the left or right
   # child, including assignment to the same.
@@ -51,7 +50,6 @@ module Tree
   # @author Anupam Sengupta
   #
   class BinaryTreeNode < TreeNode
-
     # @!group Core Attributes
 
     # @!attribute [rw] left_child
@@ -85,6 +83,7 @@ module Tree
     # @return [Boolean] +true+ if this is the left child of its parent.
     def is_left_child?
       return false if is_root?
+
       self == parent.left_child
     end
 
@@ -95,6 +94,7 @@ module Tree
     # @return [Boolean] +true+ if this is the right child of its parent.
     def is_right_child?
       return false if is_root?
+
       self == parent.right_child
     end
 
@@ -118,7 +118,6 @@ module Tree
 
       super(child)
     end
-
 
     # Instantiate and insert child nodes from data in a Ruby +Hash+
     #
@@ -152,6 +151,7 @@ module Tree
     def add_from_hash(hashed_subtree)
       raise ArgumentError, 'Too many children'\
                            if hashed_subtree.size + @children.size > 2
+
       super(hashed_subtree)
     end
 
@@ -171,7 +171,6 @@ module Tree
     # @see #postordered_each
     # noinspection RubyUnusedLocalVariable
     def inordered_each(&block)
-
       return self.to_enum unless block_given?
 
       node_stack = []
@@ -189,7 +188,6 @@ module Tree
       end
 
       self if block_given?
-
     end
 
     # A protected method to allow insertion of child nodes at the specified
@@ -247,7 +245,5 @@ module Tree
     def swap_children
       self.left_child, self.right_child = self.right_child, self.left_child
     end
-
   end
-
 end

@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 #
 # gemspec for the rubytree gem.
 #
@@ -88,5 +89,4 @@ Gem::Specification.new do |s|
     Details of the API changes are documented in the API-CHANGES file.
     ========================================================================
   END_OF_TEXT
-
 end

@@ -37,10 +37,8 @@ require 'json'
 require_relative '../lib/tree'
 
 module TestTree
-
   # Test class for the Tree node.
   class TestSubclassedTreeNode < Test::Unit::TestCase
-
     # A subclassed node to test various inheritance related features.
     class MyNode < Tree::TreeNode
       # A dummy method to test the camelCasedMethod resolution
@@ -62,14 +60,12 @@ module TestTree
         # noinspection RubyResolve
         assert_equal('Hello', root.myDummyMethod)
       end
-
     end
 
     def test_detached_copy_same_clz
       root = MyNode.new('Root')
       assert_equal(MyNode, root.detached_copy.class)
     end
-
   end
 end
 

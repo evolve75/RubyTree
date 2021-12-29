@@ -11,7 +11,6 @@ require 'rspec'
 require 'spec_helper'
 
 describe Tree do
-
   shared_examples_for 'any detached node' do
     it 'should not equal "Object.new"' do
       expect(@tree).not_to eq(Object.new)
@@ -25,7 +24,6 @@ describe Tree do
     it 'does not have a parent node' do
       expect(@tree.parent).to eq(nil)
     end
-
   end
   context '#initialize', 'with empty name and nil content' do
     before(:each) do
