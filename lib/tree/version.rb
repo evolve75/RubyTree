@@ -4,7 +4,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013, 2014, 2015, 2017, 2020 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2014, 2015, 2017, 2020, 2021 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -36,5 +36,5 @@
 
 module Tree
   # Rubytree Package Version
-  VERSION = '1.0.2'.freeze
+  VERSION = '1.0.1'.freeze
 end

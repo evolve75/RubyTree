@@ -42,8 +42,7 @@ module Tree::Utils
   # Provides utility methods for path extraction
   module TreePathHandler
     # noinspection RubyUnusedLocalVariable
-    def self.included(base)
-
+    def self.included(_base)
       # @!group Node Path
 
       # Returns the path of this node from the root as a string, with the node
@@ -90,5 +89,4 @@ module Tree::Utils
       # @!endgroup
     end # self.included
   end
-
 end
