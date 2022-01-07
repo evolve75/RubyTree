@@ -221,8 +221,7 @@ module Tree
       @content = content
 
       if name.is_a?(Integer)
-        warn StructuredWarnings::StandardWarning,
-             'Using integer as node name.'\
+        warn 'Using integer as node name.'\
              ' Semantics of TreeNode[] may not be what you expect!'\
              " #{name} #{content}"
       end
@@ -596,8 +595,7 @@ module Tree
         @children[name_or_index]
       else
         if num_as_name && !name_or_index.is_a?(Integer)
-          warn StructuredWarnings::StandardWarning,
-               'Redundant use of the `num_as_name` flag for non-integer node name'
+          warn 'Redundant use of the `num_as_name` flag for non-integer node name'
         end
         @children_hash[name_or_index]
       end

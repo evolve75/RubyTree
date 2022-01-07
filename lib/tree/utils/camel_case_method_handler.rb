@@ -36,8 +36,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'structured_warnings'
-
 module Tree::Utils
   # Provides utility functions to handle CamelCase methods, and redirect
   # invocation of such methods to the snake_case equivalents.
@@ -48,8 +46,7 @@ module Tree::Utils
       # :nodoc:
       def method_missing(meth, *args, &blk)
         if respond_to?((new_method_name = to_snake_case(meth)))
-          warn StructuredWarnings::DeprecatedMethodWarning,
-               'The camelCased methods are deprecated. ' +
+          warn 'The camelCased methods are deprecated. ' +
                "Please use #{new_method_name} instead of #{meth}"
           send(new_method_name, *args, &blk)
         else
