@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2017-12-21 13:42:15 anupam>
+# Time-stamp: <2021-12-29 13:02:04 anupam>
 #
-# Copyright (C) 2012, 2013, 2015, 2017 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013, 2015, 2017, 2021 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -36,19 +36,18 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require_relative '../../../lib/tree'
 require 'structured_warnings'
 
 module Tree::Utils
   # Provides utility functions to handle CamelCase methods, and redirect
   # invocation of such methods to the snake_case equivalents.
   module CamelCaseMethodHandler
-    def self.included(base)
+    def self.included(_base)
       # @!visibility private
       # Allow the deprecated CamelCase method names.  Display a warning.
       # :nodoc:
       def method_missing(meth, *args, &blk)
-        if self.respond_to?((new_method_name = to_snake_case(meth)))
+        if respond_to?((new_method_name = to_snake_case(meth)))
           warn StructuredWarnings::DeprecatedMethodWarning,
                'The camelCased methods are deprecated. ' +
                "Please use #{new_method_name} instead of #{meth}"
@@ -66,14 +65,13 @@ module Tree::Utils
       def to_snake_case(camel_cased_word)
         word = camel_cased_word.to_s
         word.gsub!(/::/, '/')
-        word.gsub!(/([A-Z]+)([A-Z][a-z])/,'\1_\2')
-        word.gsub!(/([a-z\d])([A-Z])/,'\1_\2')
+        word.gsub!(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+        word.gsub!(/([a-z\d])([A-Z])/, '\1_\2')
         word.tr!('-', '_')
         word.downcase!
         word
       end
       protected :to_snake_case
-
     end # self.included
   end
 end

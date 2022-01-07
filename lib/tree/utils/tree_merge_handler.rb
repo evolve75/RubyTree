@@ -40,7 +40,6 @@ require_relative '../../../lib/tree/utils/utils'
 # Provides utility methods to merge two {Tree::TreeNode} based trees.
 # @since 0.9.0
 module Tree::Utils::TreeMergeHandler
-
   # @!group Merging Trees
 
   # Merge two trees that share the same root node and returns <em>a new
@@ -62,7 +61,7 @@ module Tree::Utils::TreeMergeHandler
   #                        have the same root node as self.
   def merge(other_tree)
     check_merge_prerequisites(other_tree)
-    merge_trees(self.root.dup, other_tree.root)
+    merge_trees(root.dup, other_tree.root)
   end
 
   # Merge in another tree (that shares the same root node) into +this+ tree.
@@ -79,8 +78,8 @@ module Tree::Utils::TreeMergeHandler
   # @raise [ArgumentError] This exception is raised if _other_tree_ does not
   #                        have the same root node as self.
   def merge!(other_tree)
-    check_merge_prerequisites( other_tree )
-    merge_trees( self.root, other_tree.root )
+    check_merge_prerequisites(other_tree)
+    merge_trees(root, other_tree.root)
   end
 
   private
@@ -97,7 +96,7 @@ module Tree::Utils::TreeMergeHandler
             'You can only merge in another instance of Tree::TreeNode'
     end
 
-    unless self.root.name == other_tree.root.name
+    unless root.name == other_tree.root.name
       raise ArgumentError,
             'Unable to merge trees as they do not share the same root'
     end
@@ -121,10 +120,9 @@ module Tree::Utils::TreeMergeHandler
     end
 
     tree1.children.each do |child|
-      merge_trees( child, tree2[child.name] ) unless tree2[child.name].nil?
+      merge_trees(child, tree2[child.name]) unless tree2[child.name].nil?
     end
 
     tree1
   end
-
 end

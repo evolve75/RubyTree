@@ -23,7 +23,7 @@
 #    +---------------+
 
 # ..... Example starts.
-require 'tree'                 # Load the library
+require 'tree' # Load the library
 
 # ..... Create the root node first.  Note that every node has a name and an optional content payload.
 root_node = Tree::TreeNode.new('ROOT', 'Root Content')

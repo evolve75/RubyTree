@@ -39,13 +39,12 @@ require_relative '../lib/tree'
 module TestTree
   # Test class for the Tree node.
   class TestFiberAndThreadOnNode < Test::Unit::TestCase
-
     # Test long and unbalanced trees
-    def create_long_depth_trees(depth=100)
+    def create_long_depth_trees(depth = 100)
       tree = Tree::TreeNode.new('/')
       current = tree
       depth.times do |i|
-        new_node = Tree::TreeNode.new("#{i}")
+        new_node = Tree::TreeNode.new(i.to_s)
         current << new_node
         current = new_node
       end
@@ -58,30 +57,28 @@ module TestTree
     # failure for very large depths on unbalanced nodes.
     def test_fiber_for_recursion
       return unless defined?(Fiber.class) # Fibers exist only from Ruby 1.9 onwards.
+
       assert_nothing_thrown do
         Fiber.new do
-          depth = 1000             # Use a reasonably large depth, which would trip a recursive stack
+          depth = 1000 # Use a reasonably large depth, which would trip a recursive stack
           root = create_long_depth_trees(depth)
-          assert_equal(depth+1, root.size)
+          assert_equal(depth + 1, root.size)
         end.resume
       end
-
     end # test_fiber
 
     # Test the recursive methods with a thread. The stack usage is causing
     # failure for very large depths on unbalanced nodes.
     def test_thread_for_recursion
       assert_nothing_thrown do
-        depth = 1000             # Use a reasonably large depth, which would trip a recursive stack
+        depth = 1000 # Use a reasonably large depth, which would trip a recursive stack
         Thread.abort_on_exception = true
         Thread.new do
           root = create_long_depth_trees(depth)
-          assert_equal(depth+1, root.size)
+          assert_equal(depth + 1, root.size)
         end
       end
-
     end # test_thread
-
   end
 end
 

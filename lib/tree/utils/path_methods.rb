@@ -4,9 +4,9 @@
 #
 # Author::  Marco Ziccardi and Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2015-05-30 16:04:00 anupam>
+# Time-stamp: <2021-12-29 13:01:58 anupam>
 #
-# Copyright (C) 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2015, 2021 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -36,14 +36,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require_relative '../../../lib/tree'
-
 module Tree::Utils
   # Provides utility methods for path extraction
   module TreePathHandler
     # noinspection RubyUnusedLocalVariable
-    def self.included(base)
-
+    def self.included(_base)
       # @!group Node Path
 
       # Returns the path of this node from the root as a string, with the node
@@ -90,5 +87,4 @@ module Tree::Utils
       # @!endgroup
     end # self.included
   end
-
 end

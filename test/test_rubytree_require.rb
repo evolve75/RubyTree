@@ -36,10 +36,8 @@ require 'test/unit'
 require_relative '../lib/rubytree'
 
 module TestTree
-
   # Test class for checking whether require 'rubytree' works.
   class TestRequireRubytree < Test::Unit::TestCase
-
     # A simple test.  We are just checking whether the require worked.
     def test_create_a_simple_node
       assert_not_nil(Tree::TreeNode.new('Root', 'A Root node'))

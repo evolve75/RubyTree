@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2015-05-30 14:25:57 anupam>
+# Time-stamp: <2021-12-29 13:02:08 anupam>
 #
-# Copyright (C) 2012, 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2015, 2021 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -36,8 +36,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 # Provides utilities and mixin modules for RubyTree.
-
-require_relative '../../../lib/tree'
 
 module Tree::Utils
   # Empty module.  Being used as a namespace.
