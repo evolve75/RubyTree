@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006-2021 Anupam Sengupta
+# Copyright (c) 2006-2022 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -88,7 +88,6 @@ module Tree
     include Comparable
     include Tree::Utils::TreeMetricsHandler
     include Tree::Utils::TreePathHandler
-    include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
     include Tree::Utils::HashConverter
@@ -215,17 +214,10 @@ module Tree
     #
     # @see #[]
     def initialize(name, content = nil)
-      raise ArgumentError, 'Node name HAS to be provided!' if name.nil?
+      raise ArgumentError, 'Node name HAS to be provided!' if name == nil
 
-      @name = name
-      @content = content
-
-      if name.is_a?(Integer)
-        warn StructuredWarnings::StandardWarning,
-             'Using integer as node name.'\
-             ' Semantics of TreeNode[] may not be what you expect!'\
-             " #{name} #{content}"
-      end
+      name = name.to_s if name.kind_of?(Integer)
+      @name, @content = name, content
 
       set_as_root!
       @children_hash = {}
@@ -582,23 +574,17 @@ module Tree
     #   in not in range, or the name is not present, then a +nil+
     #   is returned.
     #
-    # @note The use of +Integer+ names is allowed by using the optional
-    #       +num_as_name+ flag.
-    #
     # @raise [ArgumentError] Raised if the +name_or_index+ argument is +nil+.
     #
     # @see #add
     # @see #initialize
-    def [](name_or_index, num_as_name = false)
-      raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
+    def [](name_or_index)
+      raise ArgumentError,
+            'Name_or_index needs to be provided!' if name_or_index == nil
 
-      if name_or_index.is_a?(Integer) && !num_as_name
+      if name_or_index.kind_of?(Integer)
         @children[name_or_index]
       else
-        if num_as_name && !name_or_index.is_a?(Integer)
-          warn StructuredWarnings::StandardWarning,
-               'Redundant use of the `num_as_name` flag for non-integer node name'
-        end
         @children_hash[name_or_index]
       end
     end

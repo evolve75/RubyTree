@@ -1,8 +1,4 @@
-source 'https://rubygems.org'
+# frozen_string_literal: true
 
-# Specify your gem's dependencies in rubytree.gemspec
+source "https://rubygems.org"
 gemspec
-
-# Local Variables:
-# mode: ruby
-# End:

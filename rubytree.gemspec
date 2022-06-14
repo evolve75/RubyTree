@@ -3,7 +3,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013, 2014, 2015, 2017, 2020, 2021 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2014, 2015, 2017, 2020, 2021, 2022 Anupam Sengupta
 # All rights reserved.
 
 require './lib/tree/version'
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.7'
+  s.required_ruby_version = '>=2.6'
 
   s.summary               = 'A generic tree data structure.'
   s.description           = <<-END_OF_TEXT
@@ -64,21 +64,19 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files     = %w[README.md LICENSE.md API-CHANGES.rdoc History.rdoc]
   s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
 
-  s.add_runtime_dependency 'json', '~> 2.6.1'
-  s.add_runtime_dependency 'structured_warnings', '~> 0.4.0'
+  s.add_runtime_dependency 'json'                , '> 2.3.1'
 
-  # Development dependencies.
-  s.add_development_dependency 'bundler', '~> 2.3.4'
-  s.add_development_dependency 'coveralls', '>= 0.8.23'
-  s.add_development_dependency 'rake', '>= 13.0.6'
-  s.add_development_dependency 'rdoc', '>= 6.4.0'
-  s.add_development_dependency 'rspec', '~> 3.10.0'
-  s.add_development_dependency 'rtagstask', '~> 0.0.4'
-  s.add_development_dependency 'rubocop', '>= 1.24.0'
-  s.add_development_dependency 'test-unit', '>= 3.5.3'
-  s.add_development_dependency 'yard', '~> 0.9.27'
+  # Note: Rake is added as a development and test dependency in the Gemfile.
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rdoc'
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'rtagstask'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency "rake"
+  s.add_development_dependency "test-unit"
 
-  s.post_install_message = <<-END_OF_TEXT
+
+  s.post_install_message = <<-EOF
     ========================================================================
                     Thank you for installing RubyTree.
 
@@ -86,5 +84,5 @@ Gem::Specification.new do |s|
 
     Details of the API changes are documented in the API-CHANGES file.
     ========================================================================
-  END_OF_TEXT
+  EOF
 end

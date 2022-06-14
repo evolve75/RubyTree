@@ -3,7 +3,7 @@
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2015, 2017 Anupam Sengupta
+# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2015, 2017, 2022 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -296,26 +296,6 @@ module TestTree
       assert_equal(@left_child1, @root.last_child, 'left_child1 should now be the last child')
       assert_equal(@right_child1, @root[0], 'right_child1 should now be the first child')
       assert_equal(@left_child1, @root[1], 'left_child1 should now be the last child')
-    end
-
-    # Test the old CamelCase method names
-    def test_old_camel_case_names
-      @left_child2  = Tree::BinaryTreeNode.new('A Child at Left', 'Child Node @ left')
-      @right_child2 = Tree::BinaryTreeNode.new('B Child at Right', 'Child Node @ right')
-
-      require 'structured_warnings'
-
-      meth_names_for_test = %w[leftChild isLeftChild? rightChild isRightChild?]
-
-      meth_names_for_test.each do |meth_name|
-        assert_warn(StructuredWarnings::DeprecatedMethodWarning) { @root.send(meth_name) }
-      end
-
-      # noinspection RubyResolve
-      assert_warn(StructuredWarnings::DeprecatedMethodWarning) { @root.leftChild = @left_child2 }
-      # noinspection RubyResolve
-      assert_warn(StructuredWarnings::DeprecatedMethodWarning) { @root.rightChild = @right_child2 }
-      assert_raise(NoMethodError) { @root.DummyMethodDoesNotExist } # Make sure the right method is visible
     end
   end
 end

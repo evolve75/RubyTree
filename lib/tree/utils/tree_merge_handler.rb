@@ -35,8 +35,6 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require_relative '../../../lib/tree/utils/utils'
-
 # Provides utility methods to merge two {Tree::TreeNode} based trees.
 # @since 0.9.0
 module Tree::Utils::TreeMergeHandler
