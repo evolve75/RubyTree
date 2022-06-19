@@ -1,3 +1,7 @@
+# Check the dependencies for vulnerabilities.
+#
+# This runs as a Github Action
+
 version: 2
 updates:
   - package-ecosystem: "bundler"
