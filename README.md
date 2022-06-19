@@ -1,7 +1,7 @@
 <!--
   README.md
 
-  Copyright (C) 2006-2017, 2020, 2021 Anupam Sengupta (anupamsg@gmail.com)
+  Copyright (C) 2006-2022 Anupam Sengupta (anupamsg@gmail.com)
 
 -->
 # **RubyTree** #
@@ -121,7 +121,6 @@ This example can also be found at
 
 
 * Run-time Dependencies:
-    * [structured_warnings][]
     * [JSON][] for converting to/from the JSON format
 
 
@@ -223,6 +222,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
    to `is_root?` and `node_depth`.
 10. [Marco Ziccadi](https://github.com/MZic) for adding the `path_as_string` and
     `path_as_array` methods.
+11. [John Mortlock](https://github.com/jmortlock) for significant modernization
+    of the library code and addition of Github `workflows`.
 
 ## LICENSE: ##
 
