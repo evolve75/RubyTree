@@ -283,7 +283,7 @@ module Tree
         content     = Marshal.load(node_hash[:content])
 
         if parent_name
-          nodes[name] = current_node = Tree::TreeNode.new(name, content)
+          nodes[name] = current_node = self.class.new(name, content)
           nodes[parent_name].add current_node
         else
           # This is the root node, hence initialize self.
@@ -920,9 +920,8 @@ module Tree
     #                   this node is a 'predecessor'. Returns 'nil' if the other
     #                   object is not a 'Tree::TreeNode'.
     def <=>(other)
-      return nil if other.nil? || other.class != Tree::TreeNode
-
-      name <=> other.name
+      return nil if other == nil || !other.is_a?(Tree::TreeNode)
+      self.name <=> other.name
     end
 
     # Pretty prints the (sub)tree rooted at this node.
