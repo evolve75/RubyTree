@@ -2,7 +2,7 @@
 #
 # Rakefile - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006-2021  Anupam Sengupta
+# Copyright (c) 2006-2022  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -95,15 +95,29 @@ namespace :doc do # ................................ Documentation
   end
 end
 
-desc 'Run the test cases'
-task test: 'test:unit'
+desc 'Run the unit tests'
+task test: %w[test:unit]
 
 namespace :test do # ................................ Test related
+  desc 'Run all the tests'
+  task all: %w[test:unit test:spec test:examples]
+
   require 'rake/testtask'
   Rake::TestTask.new(:unit) do |test|
     test.libs << 'lib' << 'test'
     test.pattern = 'test/**/test_*.rb'
     test.verbose = false
+  end
+
+  begin # ................................ rspec tests
+    require 'rspec/core/rake_task'
+
+    RSpec::Core::RakeTask.new(:spec) do |t|
+      t.fail_on_error = false
+      t.rspec_opts = ['--color', '--format doc']
+    end
+  rescue LoadError
+    # Cannot load rspec.
   end
 
   desc 'Run the examples'
@@ -132,17 +146,6 @@ namespace :test do # ................................ Test related
   end
 end
 
-begin # ................................ rspec tests
-  require 'rspec/core/rake_task'
-
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.fail_on_error = false
-    t.rspec_opts = ['--color', '--format doc']
-  end
-rescue LoadError
-  # Cannot load rspec.
-end
-
 namespace :tag do # ................................ Emacs Tags
   require 'rtagstask'
   RTagsTask.new(:tags) do |rd|
@@ -164,4 +167,12 @@ namespace :gem do               # ................................ Gem related
   task push: :gem do
     sh "gem push pkg/#{GEM_NAME}"
   end
+end
+
+require 'rubocop/rake_task'     # ................................ Ruby linting
+
+RuboCop::RakeTask.new(:rubocop) do |t|
+  t.options = ['--display-cop-names']
+  t.requires << 'rubocop-rake'
+  t.requires << 'rubocop-rspec'
 end
