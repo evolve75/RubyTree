@@ -19,6 +19,10 @@
 * RubyTree now allows proper sub-classing of {Tree::TreeNode}. Thanks to
   {https://github.com/jack12816 jack12816} for this.
 
+* RubyTree now correctly handles creating detached copies of unclonable objects
+  such as +:symbol+, +true|false+, etc. Thanks to {https://github.com/igneus
+  igneus} for this.
+
 === 1.0.2 / 2021-12-29
 
 * A minor maintenance version to address a minor but annoying warning for

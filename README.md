@@ -227,6 +227,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
     of the library code and addition of Github `workflows`.
 12. [Hermann Mayer](https://github.com/jack12816) for adding support for
     specialized tree nodes (sub-classes of `Tree::TreeNode`).
+13. [Jakub Pavlik](https://github.com/igneus) for fixing the creation of
+    detached copies of unclonable objects such as `:symbol`, `true|false`, etc.
 
 ## LICENSE: ##
 
