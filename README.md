@@ -33,9 +33,9 @@ The home page for **RubyTree** is at [rubytree.anupamsg.me][rt_site].
 
 ## WHAT'S NEW: ##
 
-See [History](file:History.md) for the detailed Changelog.
+See [History](./History.md) for the detailed Changelog.
 
-See [API-CHANGES](file:API-CHANGES.md) for the detailed description of
+See [API-CHANGES](./API-CHANGES.md) for the detailed description of
 API level changes.
 
 ## GETTING STARTED: ##
