@@ -1,9 +1,3 @@
-<!--
-  README.md
-
-  Copyright (C) 2006-2022 Anupam Sengupta (anupamsg@gmail.com)
-
--->
 # **RubyTree** #
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
@@ -39,9 +33,9 @@ The home page for **RubyTree** is at [rubytree.anupamsg.me][rt_site].
 
 ## WHAT'S NEW: ##
 
-See [History](./History.rdoc) for the detailed Changelog.
+See [History](file:History.md) for the detailed Changelog.
 
-See [API-CHANGES](./API-CHANGES.rdoc) for the detailed description of
+See [API-CHANGES](file:API-CHANGES.md) for the detailed description of
 API level changes.
 
 ## GETTING STARTED: ##
@@ -121,15 +115,17 @@ This example can also be found at
 
 
 * Run-time Dependencies:
+
     * [JSON][] for converting to/from the JSON format
 
 
 * Development dependencies (not required for installing the gem):
+
     * [Bundler][] for creating the stable build environment
     * [Rake][] for building the package
     * [Yard][] for the documentation
     * [RSpec][] for additional Ruby Spec test files
-    * [Rubocop][] for linting the code.
+    * [Rubocop][] for linting the code
 
 ## INSTALL: ##
 
@@ -142,7 +138,7 @@ have super-user privileges (root/sudo) to successfully install the gem.
 
 ## DOCUMENTATION: ##
 
-The primary class **RubyTree** is {Tree::TreeNode}. See the class
+The primary class **RubyTree** is [Tree::TreeNode][TreeNode]. See the class
 documentation for an example of using the library.
 
 If the *ri* documentation was generated during install, you can use this
@@ -235,8 +231,6 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 **RubyTree** is licensed under the terms of the [BSD][] license. See
 [LICENSE.md](./LICENSE.md) for details.
 
-{include:file:LICENSE.md}
-
         __       _           _
        /__\_   _| |__  _   _| |_ _ __ ___  ___
       / \// | | | '_ \| | | | __| '__/ _ \/ _ \
@@ -268,5 +262,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
 [RSpec]:                https://relishapp.com/rspec/
 [Rubocop]:              https://rubocop.org
+
+[TreeNode]:             rdoc-ref:Tree::TreeNode
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/evolve75/rubytree/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

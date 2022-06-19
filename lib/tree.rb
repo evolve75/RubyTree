@@ -9,9 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006-2022 Anupam Sengupta
-#
-# All rights reserved.
+# Copyright (c) 2006-2022 Anupam Sengupta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -594,7 +592,6 @@ module Tree
     # The traversal is *depth-first* and from *left-to-right* in pre-ordered
     # sequence.
     #
-    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
@@ -636,7 +633,6 @@ module Tree
 
     # Traverses the (sub)tree rooted at this node in post-ordered sequence.
     #
-    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
@@ -674,7 +670,6 @@ module Tree
     # traversal at a given level is from *left-to-right*. this node itself is
     # the first node to be traversed.
     #
-    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each node.
     #
     # @see #preordered_each
@@ -726,7 +721,6 @@ module Tree
     # May yield this node as well if this is a leaf node.
     # Leaf traversal is *depth-first* and *left-to-right*.
     #
-    # @param [Object] block
     # @yieldparam node [Tree::TreeNode] Each leaf node.
     #
     # @see #each

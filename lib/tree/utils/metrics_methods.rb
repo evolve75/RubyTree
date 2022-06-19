@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2022-06-13 21:23:46 anupam>
+# Time-stamp: <2022-06-19 19:49:58 anupam>
 #
 # Copyright (C) 2013, 2015, 2017, 2021, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -87,10 +87,6 @@ module Tree::Utils
       #
       # Depth:: Length of the node's path to its root. Depth of a root node is
       # zero.
-      #
-      # *Note* that the deprecated method {#depth} was incorrectly computing
-      # this value. Please replace all calls to the old method with
-      # {#node_depth} instead.
       #
       # {#level} is an alias for this method.
       #

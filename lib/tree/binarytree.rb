@@ -8,9 +8,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2007, 2008, 2009, 2010, 2012, 2013, 2014, 2015 Anupam Sengupta
-#
-# All rights reserved.
+# Copyright (c) 2007-2022 Anupam Sengupta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -163,8 +161,6 @@ module Tree
     # @return [Enumerator] An enumerator on this tree, if a block is *not* given
     #
     # @since 0.9.0
-    #
-    # @param [Object] block
     #
     # @see #each
     # @see #preordered_each

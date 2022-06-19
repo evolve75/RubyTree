@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2015-05-30 14:20:20 anupam>
+# Time-stamp: <2022-06-19 19:50:43 anupam>
 #
-# Copyright (C) 2012, 2013, 2014, 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013, 2014, 2015, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -56,7 +56,7 @@ module Tree::Utils::JSONConverter
   # Rails uses JSON in ActiveSupport, and all Rails JSON encoding goes through
   # +as_json+.
   #
-  # @param [Object] options
+  # @param [Object] _options
   #
   # @see #to_json
   # @see http://stackoverflow.com/a/6880638/273808
