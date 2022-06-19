@@ -109,7 +109,7 @@ module TestTree
     def test_root
       setup_test_tree
 
-      # TODO: Should probably change this logic.  Root's root should
+      # @todo: Should probably change this logic.  Root's root should
       # return nil so that the possibility of a recursive error does not exist
       # at all.
       assert_same(@root, @root.root, "Root's root is self")
@@ -370,7 +370,7 @@ module TestTree
     def test_first_sibling
       setup_test_tree
 
-      # TODO: Need to fix the first_sibling method to return nil for nodes with no siblings.
+      # @todo: Need to fix the first_sibling method to return nil for nodes with no siblings.
       assert_same(@root, @root.first_sibling, "Root's first sibling is itself")
       assert_same(@child1, @child1.first_sibling, "Child1's first sibling is itself")
       assert_same(@child1, @child2.first_sibling, "Child2's first sibling should be child1")
@@ -960,8 +960,7 @@ module TestTree
       assert_equal(0, @child4.node_height, 'This should be of height 0')
     end
 
-    # Test the depth computation algorithm.  Note that this is the correct depth computation.  The original
-    # Tree::TreeNode#depth was incorrectly computing the height of the node - instead of its depth.
+    # Test the depth computation algorithm.
     def test_node_depth
       assert_equal(0, @root.node_depth, "A root node's depth is 0")
 

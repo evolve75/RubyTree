@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>=2.6'
 
   s.summary               = 'A generic tree data structure.'
-  # TODO: Check if this can be formatted in Markdown or RD.
+  # @todo: Check if this can be formatted in Markdown or RD.
   s.description           = <<-EOF
 
     RubyTree is a pure Ruby implementation of the generic tree data structure. It
@@ -55,7 +55,7 @@ Gem::Specification.new do |s|
   s.files               += Dir['spec/**/*.rb'] # Rspec Test cases
   s.files               += Dir['examples/**/*.rb'] # Examples
 
-  # TODO: Check if this is really needed.
+  # @todo: Check if this is really needed.
   s.files               += ['.gemtest'] # Support for gem-test
 
   s.require_paths        = ['lib']
@@ -87,6 +87,17 @@ Gem::Specification.new do |s|
 
     - 2.0.0 is a major release with BREAKING API changes.
             See `API-CHANGES.rdoc` for details.
+
+    - `Tree::TreeNode#depth` method has been removed (it was broken).
+
+    - Support for `CamelCase` methods names has bee removed.
+
+    - Use of integers as node names does not require the optional
+      `num_as_name` flag.
+
+    - `structured_warnings` is no longer a dependency.
+
+    - Explicit support for rbx Ruby has been removed.
 
     ========================================================================
   EOF

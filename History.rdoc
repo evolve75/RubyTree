@@ -1,9 +1,25 @@
 = History of Changes
 
+=== 2.0.0 / 2022-06-21
+
+* A major release with significant modernization to the code base and removal of
+  legacy cruft, thanks to {https://github.com/jmortlock jmortlock}.
+
+* The long deprecated {Tree::TreeNode#depth} method has finally been removed.
+  Use {Tree::TreeNode#node_depth} instead.
+
+* Support for CamelCase methods has been dropped.
+
+* RubyTree now supports MRI Ruby versions 2.6.x, 2,7,x, and 3.0,x.
+
+* Explicit support for rbx Ruby has been removed.
+
+* RubyTree now uses Github Actions for its CI pipeline.
+
 === 1.0.2 / 2021-12-29
 
 * A minor maintenance version to address a minor but annoying warning for
-circular dependencies.
+  circular dependencies.
 
 === 1.0.1 / 2021-12-29
 

@@ -199,6 +199,17 @@
    CLOSED: [2014-11-01 Sat 20:11]
 
 
+* R2.0.0
+
+  This is primarily a *modernization* of the library, with removal of deprecated methods, the much-hated dependency on
+  ~structured_warnings~, and cleanup of other cruft.
+
+  In addition, the CI pipeline has been moved from <https://travis.ci> to ~Github Actions~.
+
+- [X] Merge the modernization PR from @jmortlock (multiple changes).
+- [X] Update the documentation to reflect the modernization changes.
+
+
 * Unplanned / Not assigned to any release
 *** STARTED Convert all documentation to markdown mode.
 *** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child     :Partial:

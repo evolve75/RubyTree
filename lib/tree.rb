@@ -552,23 +552,16 @@ module Tree
     #
     # - If the +name+ argument is an _Integer_, then the in-sequence
     #   array of children is accessed using the argument as the
-    #   *index* (zero-based).  However, if the second _optional_
-    #   +num_as_name+ argument is +true+, then the +name+ is used
-    #   literally as a name, and *NOT* as an *index*
+    #   *index* (zero-based).
     #
     # - If the +name+ argument is *NOT* an _Integer_, then it is taken to
     #   be the *name* of the child node to be returned.
     #
-    # If a non-+Integer+ +name+ is passed, and the +num_as_name+
-    # parameter is also +true+, then a warning is thrown (as this is a
-    # redundant use of the +num_as_name+ flag.)
+    # - To use an _Integer_ as the name, convert it to a _String_ first using
+    #   +<integer>.to_s+.
     #
     # @param [String|Number] name_or_index Name of the child, or its
     #   positional index in the array of child nodes.
-    #
-    # @param [Boolean] num_as_name Whether to treat the +Integer+
-    #   +name+ argument as an actual name, and *NOT* as an _index_ to
-    #   the children array.
     #
     # @return [Tree::TreeNode] the requested child node.  If the index
     #   in not in range, or the name is not present, then a +nil+
