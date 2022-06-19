@@ -225,6 +225,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
     `path_as_array` methods.
 11. [John Mortlock](https://github.com/jmortlock) for significant modernization
     of the library code and addition of Github `workflows`.
+12. [Hermann Mayer](https://github.com/jack12816) for adding support for
+    specialized tree nodes (sub-classes of `Tree::TreeNode`).
 
 ## LICENSE: ##
 

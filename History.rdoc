@@ -16,6 +16,9 @@
 
 * RubyTree now uses Github Actions for its CI pipeline.
 
+* RubyTree now allows proper sub-classing of {Tree::TreeNode}. Thanks to
+  {https://github.com/jack12816 jack12816} for this.
+
 === 1.0.2 / 2021-12-29
 
 * A minor maintenance version to address a minor but annoying warning for
