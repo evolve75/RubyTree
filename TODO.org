@@ -183,10 +183,7 @@
     This proposed change does make sense at one level (since the root node does not have any parent), but returning root
     as root's root (no pun intended) makes accessing the root from anywhere in the tree much easier.
 
-
-
-
-* R0.9.5
+* R0.9.5                                                                                   :ARCHIVE:
 ** DONE Add the `#get_path_as_string` method from feature request #48                     :ARCHIVE:
    CLOSED: [2015-05-30 Sat 15:55]
 ** DONE Fix [[Issue:32][Issue #32]] and enable move semantics on the TreeNode#add method.               :ARCHIVE:
@@ -202,11 +199,20 @@
    CLOSED: [2014-11-01 Sat 20:11]
 
 
+* R2.0.0
+
+  This is primarily a *modernization* of the library, with removal of deprecated methods, the much-hated dependency on
+  ~structured_warnings~, and cleanup of other cruft.
+
+  In addition, the CI pipeline has been moved from <https://travis.ci> to ~Github Actions~.
+
+- [X] Merge the modernization PR from @jmortlock (multiple changes).
+- [X] Update the documentation to reflect the modernization changes.
 
 
-* Next Release
-  DEADLINE: <2014-12-01 Mon>
-** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child     :Partial:
+* Unplanned / Not assigned to any release
+*** STARTED Convert all documentation to markdown mode.
+*** STARTED [#A] Resolve the infinite loop bug if a node is added to itself as a child     :Partial:
    [[Issue:5][Issue #5.]]
 
    This is a subtle problem to resolve.  The specific case of a node
@@ -237,15 +243,8 @@
       duplicates).  This needs to be a hash (to allow O(1) access),
       and will sacrifice memory.  There might be a need to
       restructure the internals to make better use of memory.
-** STARTED Convert all documentation to markdown mode.
-** TODO Expand the examples section, and add supporting documentation
+*** TODO Expand the examples section, and add supporting documentation
 
-* Unplanned / Not assigned to any release
-*** DONE [#A] Migrate the website and references from http://rubyforge.org/               :ARCHIVE:
-    CLOSED: [2014-07-04 Fri 22:18]
-*** DONE Revert the forced install of rubygem 2.1.11 from [[file:.travis.yml][.travis.yml]]                     :ARCHIVE:
-    CLOSED: [2014-01-12 Sun 19:06]
-    The issue seems to have been resolved with the 2.2.1 release of Rubygems.
 *** TODO Create a cycle-detection/validation mechanism to prevent cyclic graphs of nodes.
 *** TODO Create a generic validation method to check for various issues in the created tree.
 *** TODO Add a FAQ document to the project.
@@ -258,6 +257,11 @@
 *** TODO Add a YAML export method to the TreeNode class.
 
 *** TODO marshal_load method probably should be a class method.  It currently clobbers self.
+*** DONE Revert the forced install of rubygem 2.1.11 from [[file:.travis.yml][.travis.yml]]                     :ARCHIVE:
+    CLOSED: [2014-01-12 Sun 19:06]
+    The issue seems to have been resolved with the 2.2.1 release of Rubygems.
+*** DONE [#A] Migrate the website and references from http://rubyforge.org/               :ARCHIVE:
+    CLOSED: [2014-07-04 Fri 22:18]
 *** DONE Fix bug # [[http://rubyforge.org/tracker/index.php%3Ffunc%3Ddetail&aid%3D22535&group_id%3D1215&atid%3D4793][22535]]: The method Tree::TreeNode#depth is a misnomer.  The current definition actually provides the height function. :ARCHIVE:
     DEADLINE: <2010-01-09 Sat> CLOSED: [2010-01-03 Sun 22:15]
 

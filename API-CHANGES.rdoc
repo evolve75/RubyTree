@@ -9,6 +9,22 @@ Note: API level changes are expected to reduce dramatically after the 1.x
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+== Release 2.0.0 Changes
+
+- The minimum required Ruby version is now '2.6.x' (and higher).
+
+- The long-broken 'Tree::TreeNode#depth' method has been finally removed. Use
+  {Tree::TreeNode#node_depth}[rdoc-ref:Tree::Utils::TreeMetricsHandler#node_depth] instead.
+
+- Support for 'CamelCase' methods has been removed. This was a legacy shim that
+  has hopefully outlived its usefulness.
+
+- Use of integers as node-names now no longer requires the optional
+  'num_as_name' flag.
+
+- 'structured_warnings' has been removed from the code-base and is no longer a
+  dependency. This was a long-standing point of friction for many users.
+
 == Release 0.9.5 Changes
 
 - The {Tree::TreeNode#add} method now provides 'move' semantics, if a child
@@ -95,5 +111,4 @@ smooth transition to the new APIs.
 
 # Local Variables:
 # mode: rdoc
-# coding: utf-8-unix
 # End:

@@ -1,6 +1,6 @@
 [RubyTree][]  is licensed under the [BSD][] license.
 
-Copyright (c) 2006-2021 Anupam Sengupta (<anupamsg@gmail.com>).
+Copyright (c) 2006-2022 Anupam Sengupta (<anupamsg@gmail.com>).
 
 All rights reserved.
 

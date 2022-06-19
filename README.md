@@ -1,7 +1,7 @@
 <!--
   README.md
 
-  Copyright (C) 2006-2017, 2020, 2021 Anupam Sengupta (anupamsg@gmail.com)
+  Copyright (C) 2006-2022 Anupam Sengupta (anupamsg@gmail.com)
 
 -->
 # **RubyTree** #
@@ -54,7 +54,7 @@ See the [API][rt_doc] documentation for more details.
 #
 # example_basic.rb:: Basic usage of the tree library.
 #
-# Copyright (C) 2013-2021 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2013-2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # The following example implements this tree structure:
 #
@@ -117,11 +117,10 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 2.7.x+
+* [Ruby][] 2.6.x and above.
 
 
 * Run-time Dependencies:
-    * [structured_warnings][]
     * [JSON][] for converting to/from the JSON format
 
 
@@ -130,6 +129,7 @@ This example can also be found at
     * [Rake][] for building the package
     * [Yard][] for the documentation
     * [RSpec][] for additional Ruby Spec test files
+    * [Rubocop][] for linting the code.
 
 ## INSTALL: ##
 
@@ -193,9 +193,9 @@ After checking out the source, run:
 
     $ gem install bundler
     $ bundle install
-    $ rake test
-    $ rake doc:yard
-    $ rake gem:package
+    $ bundle exec rake test:all
+    $ bundle exec rake doc:yard
+    $ bundle exec rake gem:package
 
 These steps will install any missing dependencies, run the tests/specs,
 generate the documentation, and finally generate the gem file.
@@ -223,6 +223,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
    to `is_root?` and `node_depth`.
 10. [Marco Ziccadi](https://github.com/MZic) for adding the `path_as_string` and
     `path_as_array` methods.
+11. [John Mortlock](https://github.com/jmortlock) for significant modernization
+    of the library code and addition of Github `workflows`.
 
 ## LICENSE: ##
 
@@ -259,8 +261,8 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [rt_doc]:               http://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
 [rt_gem]:               http://rubygems.org/gems/rubytree "RubyTree Gem"
 [rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
-[structured_warnings]:  http://github.com/schmidt/structured_warnings "structured_warnings"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
 [RSpec]:                https://relishapp.com/rspec/
+[Rubocop]:              https://rubocop.org
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/evolve75/rubytree/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

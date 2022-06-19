@@ -9,7 +9,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006-2021 Anupam Sengupta
+# Copyright (c) 2006-2022 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -88,7 +88,6 @@ module Tree
     include Comparable
     include Tree::Utils::TreeMetricsHandler
     include Tree::Utils::TreePathHandler
-    include Tree::Utils::CamelCaseMethodHandler
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
     include Tree::Utils::HashConverter
@@ -215,17 +214,10 @@ module Tree
     #
     # @see #[]
     def initialize(name, content = nil)
-      raise ArgumentError, 'Node name HAS to be provided!' if name.nil?
+      raise ArgumentError, 'Node name HAS to be provided!' if name == nil
 
-      @name = name
-      @content = content
-
-      if name.is_a?(Integer)
-        warn StructuredWarnings::StandardWarning,
-             'Using integer as node name.'\
-             ' Semantics of TreeNode[] may not be what you expect!'\
-             " #{name} #{content}"
-      end
+      name = name.to_s if name.kind_of?(Integer)
+      @name, @content = name, content
 
       set_as_root!
       @children_hash = {}
@@ -560,45 +552,32 @@ module Tree
     #
     # - If the +name+ argument is an _Integer_, then the in-sequence
     #   array of children is accessed using the argument as the
-    #   *index* (zero-based).  However, if the second _optional_
-    #   +num_as_name+ argument is +true+, then the +name+ is used
-    #   literally as a name, and *NOT* as an *index*
+    #   *index* (zero-based).
     #
     # - If the +name+ argument is *NOT* an _Integer_, then it is taken to
     #   be the *name* of the child node to be returned.
     #
-    # If a non-+Integer+ +name+ is passed, and the +num_as_name+
-    # parameter is also +true+, then a warning is thrown (as this is a
-    # redundant use of the +num_as_name+ flag.)
+    # - To use an _Integer_ as the name, convert it to a _String_ first using
+    #   +<integer>.to_s+.
     #
     # @param [String|Number] name_or_index Name of the child, or its
     #   positional index in the array of child nodes.
-    #
-    # @param [Boolean] num_as_name Whether to treat the +Integer+
-    #   +name+ argument as an actual name, and *NOT* as an _index_ to
-    #   the children array.
     #
     # @return [Tree::TreeNode] the requested child node.  If the index
     #   in not in range, or the name is not present, then a +nil+
     #   is returned.
     #
-    # @note The use of +Integer+ names is allowed by using the optional
-    #       +num_as_name+ flag.
-    #
     # @raise [ArgumentError] Raised if the +name_or_index+ argument is +nil+.
     #
     # @see #add
     # @see #initialize
-    def [](name_or_index, num_as_name = false)
-      raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
+    def [](name_or_index)
+      raise ArgumentError,
+            'Name_or_index needs to be provided!' if name_or_index == nil
 
-      if name_or_index.is_a?(Integer) && !num_as_name
+      if name_or_index.kind_of?(Integer)
         @children[name_or_index]
       else
-        if num_as_name && !name_or_index.is_a?(Integer)
-          warn StructuredWarnings::StandardWarning,
-               'Redundant use of the `num_as_name` flag for non-integer node name'
-        end
         @children_hash[name_or_index]
       end
     end

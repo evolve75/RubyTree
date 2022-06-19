@@ -37,13 +37,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-require 'structured_warnings'
 require 'json'
 
 require_relative '../tree/version'
 require_relative '../tree/utils/metrics_methods'
 require_relative '../tree/utils/path_methods'
-require_relative '../tree/utils/camel_case_method_handler'
 require_relative '../tree/utils/json_converter'
 require_relative '../tree/utils/tree_merge_handler'
 require_relative '../tree/utils/hash_converter'

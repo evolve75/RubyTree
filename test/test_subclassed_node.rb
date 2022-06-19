@@ -2,7 +2,7 @@
 
 # test_subclassed_node.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2012, 2017 Anupam Sengupta
+# Copyright (c) 2012, 2017, 2022 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -41,25 +41,6 @@ module TestTree
   class TestSubclassedTreeNode < Test::Unit::TestCase
     # A subclassed node to test various inheritance related features.
     class MyNode < Tree::TreeNode
-      # A dummy method to test the camelCasedMethod resolution
-      def my_dummy_method
-        'Hello'
-      end
-    end
-
-    def test_camelcase_methods
-      root = MyNode.new('Root')
-
-      assert_equal('Hello', root.my_dummy_method)
-
-      # We should get a warning as we are invoking the camelCase version of the dummy method.
-      assert_warn(StructuredWarnings::DeprecatedMethodWarning) { root.send('MyDummyMethod') }
-
-      # Test if the structured_warnings can be disabled to call the CamelCase methods.
-      StructuredWarnings::DeprecatedMethodWarning.disable do
-        # noinspection RubyResolve
-        assert_equal('Hello', root.myDummyMethod)
-      end
     end
 
     def test_detached_copy_same_clz

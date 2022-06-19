@@ -3,14 +3,13 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012, 2013, 2014, 2015, 2017, 2020, 2021 Anupam Sengupta
-# All rights reserved.
+# Copyright (c) 2012-2022 Anupam Sengupta. All rights reserved.
 
 require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2021-12-29'
+  s.date                  = '2022-06-21'
   s.version               = Tree::VERSION
   s.license               = 'BSD-3-Clause-Clear'
 
@@ -19,10 +18,11 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.7'
+  s.required_ruby_version = '>=2.6'
 
   s.summary               = 'A generic tree data structure.'
-  s.description           = <<-END_OF_TEXT
+  # @todo: Check if this can be formatted in Markdown or RD.
+  s.description           = <<-EOF
 
     RubyTree is a pure Ruby implementation of the generic tree data structure. It
     provides a node-based model to store named nodes in the tree, and provides
@@ -47,7 +47,7 @@ Gem::Specification.new do |s|
 
     The home page for RubyTree is at http://rubytree.anupamsg.me.
 
-  END_OF_TEXT
+  EOF
 
   s.files                = Dir['lib/**/*.rb']  # The actual code
   s.files               += Dir['[A-Z]*']       # Various documentation files
@@ -55,6 +55,7 @@ Gem::Specification.new do |s|
   s.files               += Dir['spec/**/*.rb'] # Rspec Test cases
   s.files               += Dir['examples/**/*.rb'] # Examples
 
+  # @todo: Check if this is really needed.
   s.files               += ['.gemtest'] # Support for gem-test
 
   s.require_paths        = ['lib']
@@ -64,27 +65,40 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files     = %w[README.md LICENSE.md API-CHANGES.rdoc History.rdoc]
   s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
 
-  s.add_runtime_dependency 'json', '~> 2.6.1'
-  s.add_runtime_dependency 'structured_warnings', '~> 0.4.0'
+  s.add_runtime_dependency 'json', '> 2.3.1'
 
-  # Development dependencies.
-  s.add_development_dependency 'bundler', '~> 2.3.4'
-  s.add_development_dependency 'coveralls', '>= 0.8.23'
-  s.add_development_dependency 'rake', '>= 13.0.6'
-  s.add_development_dependency 'rdoc', '>= 6.4.0'
-  s.add_development_dependency 'rspec', '~> 3.10.0'
-  s.add_development_dependency 'rtagstask', '~> 0.0.4'
-  s.add_development_dependency 'rubocop', '>= 1.24.0'
-  s.add_development_dependency 'test-unit', '>= 3.5.3'
-  s.add_development_dependency 'yard', '~> 0.9.27'
+  # Note: Rake is added as a development and test dependency in the Gemfile.
+  s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rdoc'
+  s.add_development_dependency 'yard'
+  s.add_development_dependency 'rtagstask'
+  s.add_development_dependency 'rspec'
+  s.add_development_dependency "rake"
+  s.add_development_dependency "test-unit"
+  s.add_development_dependency "rubocop"
+  s.add_development_dependency "rubocop-rake"
+  s.add_development_dependency "rubocop-rspec"
 
-  s.post_install_message = <<-END_OF_TEXT
+  s.post_install_message = <<-EOF
     ========================================================================
                     Thank you for installing RubyTree.
 
-    Note:: As of 1.0.1, RubyTree can only support MRI Ruby >= 2.7.x
+    Note::
 
-    Details of the API changes are documented in the API-CHANGES file.
+    - 2.0.0 is a major release with BREAKING API changes.
+            See `API-CHANGES.rdoc` for details.
+
+    - `Tree::TreeNode#depth` method has been removed (it was broken).
+
+    - Support for `CamelCase` methods names has bee removed.
+
+    - Use of integers as node names does not require the optional
+      `num_as_name` flag.
+
+    - `structured_warnings` is no longer a dependency.
+
+    - Explicit support for rbx Ruby has been removed.
+
     ========================================================================
-  END_OF_TEXT
+  EOF
 end
