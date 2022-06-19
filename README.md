@@ -264,5 +264,3 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Rubocop]:              https://rubocop.org
 
 [TreeNode]:             rdoc-ref:Tree::TreeNode
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/evolve75/rubytree/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
