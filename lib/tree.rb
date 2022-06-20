@@ -36,6 +36,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'tree/tree_deps'
 
@@ -188,7 +189,7 @@ module Tree
     #
     # @see #is_leaf?
     def has_children?
-      @children.length != 0
+      !@children.empty?
     end
 
     # @!group Node Creation
@@ -212,10 +213,11 @@ module Tree
     #
     # @see #[]
     def initialize(name, content = nil)
-      raise ArgumentError, 'Node name HAS to be provided!' if name == nil
+      raise ArgumentError, 'Node name HAS to be provided!' if name.nil?
 
-      name = name.to_s if name.kind_of?(Integer)
-      @name, @content = name, content
+      name = name.to_s if name.is_a?(Integer)
+      @name = name
+      @content = content
 
       set_as_root!
       @children_hash = {}
@@ -229,7 +231,7 @@ module Tree
     def detached_copy
       cloned_content =
         begin
-          @content && @content.clone
+          @content&.clone
         rescue TypeError
           @content
         end
@@ -257,7 +259,7 @@ module Tree
     # representation of the (sub)tree rooted at this node.
     #
     def marshal_dump
-      collect { |node| node.create_dump_rep }
+      collect(&:create_dump_rep)
     end
 
     # Creates a dump representation of this node and returns the same as
@@ -275,6 +277,9 @@ module Tree
     # {Marshal}[http://ruby-doc.org/core-1.8.7/Marshal.html] class for
     # additional details.
     #
+    # NOTE: This is a potentially *unsafe* method with similar concerns as with
+    # the Marshal#load method, and should *not* be used with untrusted user
+    # provided data.
     #
     # @todo This method probably should be a class method. It currently clobbers
     #       self and makes itself the root.
@@ -305,7 +310,9 @@ module Tree
     #
     # @return [String] A string representation of the node.
     def to_s
-      "Node Name: #{@name} Content: #{@content.to_s || '<Empty>'} Parent: #{is_root? ? '<None>' : @parent.name.to_s} Children: #{@children.length} Total Nodes: #{size}"
+      "Node Name: #{@name} Content: #{@content.to_s || '<Empty>'} " \
+        "Parent: #{is_root? ? '<None>' : @parent.name.to_s} "       \
+        "Children: #{@children.length} Total Nodes: #{size}"
     end
 
     # @!group Structure Modification
@@ -524,7 +531,7 @@ module Tree
     # @see #remove!
     # @see #remove_from_parent!
     def remove_all!
-      @children.each { |child| child.set_as_root! }
+      @children.each(&:remove_all!)
 
       @children_hash.clear
       @children.clear
@@ -545,7 +552,7 @@ module Tree
     # The nodes become immutable after this operation.  In effect, the entire tree's
     # structure and contents become _read-only_ and cannot be changed.
     def freeze_tree!
-      each { |node| node.freeze }
+      each(&:freeze)
     end
 
     # @!endgroup
@@ -576,10 +583,9 @@ module Tree
     # @see #add
     # @see #initialize
     def [](name_or_index)
-      raise ArgumentError,
-            'Name_or_index needs to be provided!' if name_or_index == nil
+      raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
 
-      if name_or_index.kind_of?(Integer)
+      if name_or_index.is_a?(Integer)
         @children[name_or_index]
       else
         @children_hash[name_or_index]
@@ -734,7 +740,7 @@ module Tree
         each { |node| yield(node) if node.is_leaf? }
         self
       else
-        self.select { |node| node.is_leaf? }
+        self.select(&:is_leaf?)
       end
     end
 
@@ -905,7 +911,7 @@ module Tree
       return nil if is_root?
 
       idx = parent.children.index(self)
-      parent.children.at(idx - 1) if idx && idx > 0
+      parent.children.at(idx - 1) if idx&.positive?
     end
 
     # @!endgroup
@@ -920,8 +926,9 @@ module Tree
     #                   this node is a 'predecessor'. Returns 'nil' if the other
     #                   object is not a 'Tree::TreeNode'.
     def <=>(other)
-      return nil if other == nil || !other.is_a?(Tree::TreeNode)
-      self.name <=> other.name
+      return nil if other.nil? || !other.is_a?(Tree::TreeNode)
+
+      name <=> other.name
     end
 
     # Pretty prints the (sub)tree rooted at this node.
@@ -934,7 +941,7 @@ module Tree
                    block = lambda { |node, prefix|
                              puts "#{prefix} #{node.name}"
                            })
-      prefix = ''
+      prefix = ''.dup # dup NEEDs to be invoked to make this mutable.
 
       if is_root?
         prefix << '*'
@@ -953,8 +960,7 @@ module Tree
 
       # Child might be 'nil'
       children do |child|
-        child&.print_tree(level + 1,
-                          max_depth, block)
+        child&.print_tree(level + 1, max_depth, block)
       end
     end
   end

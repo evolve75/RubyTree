@@ -2,7 +2,7 @@
 
 # test_thread_and_fiber.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2012, 2013 Anupam Sengupta
+# Copyright (c) 2012, 2013, 2022 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -31,6 +31,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'test/unit'
 require 'json'
@@ -49,7 +50,6 @@ module TestTree
         current = new_node
       end
 
-      tree.each { |_| nil }
       tree
     end
 
@@ -65,7 +65,7 @@ module TestTree
           assert_equal(depth + 1, root.size)
         end.resume
       end
-    end # test_fiber
+    end
 
     # Test the recursive methods with a thread. The stack usage is causing
     # failure for very large depths on unbalanced nodes.
@@ -78,7 +78,7 @@ module TestTree
           assert_equal(depth + 1, root.size)
         end
       end
-    end # test_thread
+    end
   end
 end
 

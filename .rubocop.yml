@@ -1,1 +1,12 @@
 # Local configuration for the rubocop linter.
+
+# Inherit from the working file.
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.6
+
+Lint/UselessAssignment:
+  Exclude:
+    - 'examples/example_basic.rb'

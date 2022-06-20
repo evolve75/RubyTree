@@ -31,8 +31,9 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 module Tree
   # Rubytree Package Version
-  VERSION = '2.0.0.pre'.freeze
+  VERSION = '2.0.0.pre'
 end

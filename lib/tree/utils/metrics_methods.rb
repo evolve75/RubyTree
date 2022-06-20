@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2022-06-19 19:49:58 anupam>
+# Time-stamp: <2022-06-20 01:16:17 anupam>
 #
 # Copyright (C) 2013, 2015, 2017, 2021, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -35,12 +35,12 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
-module Tree::Utils
-  # Provides utility functions to measure various tree metrics.
-  module TreeMetricsHandler
-    # noinspection RubyUnusedLocalVariable
-    def self.included(_base)
+module Tree
+  module Utils
+    # Provides utility functions to measure various tree metrics.
+    module TreeMetricsHandler
       # @!group Metrics and Measures
 
       # @!attribute [r] size
@@ -79,7 +79,7 @@ module Tree::Utils
       def node_height
         return 0 if is_leaf?
 
-        1 + @children.collect { |child| child.node_height }.max
+        1 + @children.collect(&:node_height).max
       end
 
       # @!attribute [r] node_depth
@@ -145,6 +145,6 @@ module Tree::Utils
       end
 
       # @!endgroup
-    end # self.included
+    end
   end
 end

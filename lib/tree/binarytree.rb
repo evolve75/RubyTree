@@ -35,6 +35,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require_relative '../tree'
 
@@ -172,7 +173,7 @@ module Tree
       node_stack = []
       current_node = self
 
-      until node_stack.empty? and current_node.nil?
+      until node_stack.empty? && current_node.nil?
         if current_node
           node_stack.push(current_node)
           current_node = current_node.left_child

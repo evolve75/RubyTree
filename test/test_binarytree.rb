@@ -32,6 +32,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'test/unit'
 require_relative '../lib/tree/binarytree'
@@ -191,9 +192,8 @@ module TestTree
       end
 
       assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerator.class) # Without a block
-      if defined?(Enumerable::Enumerator.class)
-        assert_equal(Enumerable::Enumerator, f.inordered_each.class)
-      end # Without a block
+
+      assert_equal(Enumerable::Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class)
     end
 
     # Test the left_child method.

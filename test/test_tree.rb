@@ -2,9 +2,7 @@
 
 # test_tree.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2017, 2020, 2020, 2022 Anupam Sengupta
-#
-# All rights reserved.
+# Copyright (c) 2006-2022 Anupam Sengupta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -31,6 +29,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'test/unit'
 require 'json'
@@ -330,7 +329,7 @@ module TestTree
       assert(node_b >  node_a, "Node B is lexically 'greater than' node A")
       assert(node_b >= node_a, "Node B is lexically 'greater than' node A")
 
-      assert(!(node_a == node_b), 'Node A and Node B are not equal')
+      assert(node_a != node_b, 'Node A and Node B are not equal')
       assert(node_b.between?(node_a, node_c), 'Node B is lexically between node A and node C')
     end
 
@@ -521,7 +520,8 @@ module TestTree
       begin
         root << two << deep
       rescue RuntimeError => e
-        raise("Error! The RuntimeError #{e} should not have been thrown. The same node can be added to different branches.")
+        raise("Error! The RuntimeError #{e} should not have been thrown. " \
+              'The same node can be added to different branches.')
       end
 
       assert_raise(ArgumentError) { root << three << three }
@@ -567,7 +567,9 @@ module TestTree
 
       # Now, a negative test.  We are preventing addition to a position that does not exist.
       assert_raise(RuntimeError) do
-        @root.add(@child5, @root.children.size + 1) # Fifth child inserted beyond the last position that is valid (at 5th pos).
+        # Fifth child inserted beyond the last position that is valid (at 5th
+        # pos).
+        @root.add(@child5, @root.children.size + 1)
       end
       # Validate that we still have children = [@child1, @child3, @child2, @child4]
       assert_equal(@child1, @root[0])
@@ -577,9 +579,12 @@ module TestTree
       assert_nil(@root[4])
       assert_equal(4, @root.children.size, 'Should have four child nodes')
 
-      # Another negative test.  Lets attempt to add from the end at a position that is not available
+      # Another negative test. Lets attempt to add from the end at a position
+      # that is not available
       assert_raise(RuntimeError) do
-        @root.add(@child5, -(@root.children.size + 2)) # Fifth child inserted beyond the first position that is valid; i.e. at -6
+        # Fifth child inserted beyond the first position that is valid; i.e. at
+        # -6
+        @root.add(@child5, -(@root.children.size + 2))
       end
       assert_nil(@root[-5])
       assert_equal(@child1, @root[-4])
@@ -588,8 +593,11 @@ module TestTree
       assert_equal(@child4, @root[-1])
       assert_equal(4, @root.children.size, 'Should have four child nodes')
 
-      # Lets correctly add the fifth child from the end to effectively prepend the node.
-      @root.add(@child5, -(@root.children.size + 1)) # Fifth child inserted beyond the first position; i.e. at -5
+      # Lets correctly add the fifth child from the end to effectively prepend
+      # the node.
+
+      # Fifth child inserted beyond the first position; i.e. at -5
+      @root.add(@child5, -(@root.children.size + 1))
       assert_nil(@root[-6])
       assert_equal(@child5, @root[-5])
       assert_equal(@child1, @root[-4])
@@ -1049,9 +1057,8 @@ module TestTree
       end
 
       assert_equal(Enumerator, j.breadth_each.class) if defined?(Enumerator.class) # Without a block
-      if defined?(Enumerable::Enumerator.class)
-        assert_equal(Enumerable::Enumerator, j.breadth_each.class)
-      end # Without a block
+      # Without a block
+      assert_equal(Enumerable::Enumerator, j.breadth_each.class) if defined?(Enumerable::Enumerator.class)
 
       # Now test without a block
       result_array = j.breadth_each.collect { |node| node }
@@ -1095,10 +1102,11 @@ module TestTree
         assert_equal(expected_array[i].name, result_array[i].name)
       end
 
-      assert_equal(Enumerator, j.preordered_each.class) if defined?(Enumerator.class) # Without a block
-      if defined?(Enumerable::Enumerator.class)
-        assert_equal(Enumerable::Enumerator, j.preordered_each.class)
-      end # Without a block
+      assert_equal(Enumerator, j.preordered_each.class) \
+        if defined?(Enumerator.class) # Without a block
+
+      assert_equal(Enumerable::Enumerator, j.preordered_each.class) \
+        if defined?(Enumerable::Enumerator.class)
     end
 
     # Test the postordered_each method.
@@ -1138,9 +1146,9 @@ module TestTree
       end
 
       assert_equal(Enumerator, j.postordered_each.class) if defined?(Enumerator.class) # Without a block
-      if defined?(Enumerable::Enumerator.class)
-        assert_equal(Enumerable::Enumerator, j.postordered_each.class)
-      end # Without a block
+
+      assert_equal(Enumerable::Enumerator, j.postordered_each.class) \
+        if defined?(Enumerable::Enumerator.class)
 
       # Now test without a block
       result_array = j.postordered_each.collect { |node| node }
@@ -1244,7 +1252,7 @@ module TestTree
     end
 
     # Test the << method.
-    def test_lt2 # Test the << method
+    def test_lt2
       @root << @child1
       @root << @child2
       @root << @child3 << @child4
@@ -1255,7 +1263,7 @@ module TestTree
     end
 
     # Test the [] method.
-    def test_index #  Test the [] method
+    def test_index
       assert_raise(ArgumentError) { @root[nil] }
 
       @root << @child1
@@ -1263,7 +1271,8 @@ module TestTree
       assert_equal(@child1.name, @root['Child1'].name, 'Child 1 should be returned')
       assert_equal(@child1.name, @root[0].name, 'Child 1 should be returned')
       assert_equal(@child1.name, @root[-2].name, 'Child 1 should be returned') # Negative access also works
-      assert_equal(@child1.name, @root[-@root.children.size].name, 'Child 1 should be returned') # Negative access also works
+      assert_equal(@child1.name,
+                   @root[-@root.children.size].name, 'Child 1 should be returned') # Negative access also works
 
       assert_equal(@child2.name, @root['Child2'].name, 'Child 2 should be returned')
       assert_equal(@child2.name, @root[1].name, 'Child 2 should be returned')
@@ -1368,7 +1377,6 @@ module TestTree
 
     # Test usage of integers as node names
     def test_integer_node_names
-
       @n_root = Tree::TreeNode.new(0, 'Root Node')
       @n_child1 = Tree::TreeNode.new(1, 'Child Node 1')
       @n_child2 = Tree::TreeNode.new(2, 'Child Node 2')
@@ -1380,8 +1388,8 @@ module TestTree
 
       # Node[n] is really accessing the nth child with a zero-base
       assert_not_equal(@n_root[1].name, 1) # This is really the second child
-      assert_equal(@n_root[0].name, "1")     # This will work, as it is the first child
-      assert_equal(@n_root[1].name, "2")     # This will work, as the flag is now enabled
+      assert_equal(@n_root[0].name, '1')     # This will work, as it is the first child
+      assert_equal(@n_root[1].name, '2')     # This will work, as the flag is now enabled
 
       # Sanity check for the "normal" string name cases. Both cases should work.
       assert_equal(@n_root['three'].name, 'three')
@@ -1404,8 +1412,8 @@ module TestTree
       setup_test_tree
 
       leafs = @root.each_leaf
-      parents = leafs.collect { |leaf| leaf.parent }
-      leafs.each { |leaf| leaf.remove_from_parent! }
+      parents = leafs.collect(&:parent)
+      leafs.each(&:remove_from_parent!)
       parents.each do |parent|
         assert(parent.is_leaf?) unless parent.has_children?
       end
