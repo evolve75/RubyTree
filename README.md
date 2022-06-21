@@ -1,7 +1,6 @@
 # **RubyTree** #
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
-[![Travis Build Status](https://secure.travis-ci.org/evolve75/RubyTree.png)](http://travis-ci.org/evolve75/rubytree)
 [![Code Climate](https://codeclimate.com/github/evolve75/RubyTree.png)](https://codeclimate.com/github/evolve75/RubyTree)
 [![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
 
@@ -174,11 +173,11 @@ The git repository is available at [github.com/evolve75/RubyTree][rt@github].
 
 For cloning the git repository, use one of the following commands:
 
-    $ git clone git://github.com/evolve75/RubyTree.git
+    $ git clone git://github.com/evolve75/RubyTree.git    # using ssh
 
 or
 
-    $ git clone http://github.com/evolve75/RubyTree.git
+    $ git clone https://github.com/evolve75/RubyTree.git  # using https
 
 ### Setting up the Development Environment ###
 

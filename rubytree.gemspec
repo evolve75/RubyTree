@@ -71,19 +71,19 @@ Gem::Specification.new do |s|
                             '--main', 'README.md',
                             '--quiet']
 
-  s.add_runtime_dependency 'json', '> 2.3.1'
+  s.add_runtime_dependency 'json', '~> 2.0', '> 2.3.1'
 
   # NOTE: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rdoc'
-  s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rtagstask'
-  s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'rubocop-rake'
-  s.add_development_dependency 'rubocop-rspec'
-  s.add_development_dependency 'test-unit'
-  s.add_development_dependency 'yard'
+  s.add_development_dependency 'rake', '~> 13.0'
+  s.add_development_dependency 'rdoc', '~> 6.0'
+  s.add_development_dependency 'rspec', '~> 3.0', '> 3.10'
+  s.add_development_dependency 'rtagstask', '~> 0.0.4'
+  s.add_development_dependency 'rubocop', '~> 1.0'
+  s.add_development_dependency 'rubocop-rake', '~> 0.0'
+  s.add_development_dependency 'rubocop-rspec', '~> 2.0'
+  s.add_development_dependency 'test-unit', '~> 3.0'
+  s.add_development_dependency 'yard', '~> 0.0', '> 0.9'
 
   s.post_install_message = <<-END_MESSAGE
     ========================================================================
