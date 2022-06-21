@@ -76,7 +76,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.0)
   rubytree!
   test-unit (~> 3.0)
-  yard (~> 0.0, > 0.9)
+  yard (~> 0.0, >= 0.9.20)
 
 BUNDLED WITH
    2.3.4
