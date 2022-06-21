@@ -98,6 +98,9 @@ Gem::Specification.new do |s|
 
     - Support for `CamelCase` methods names has bee removed.
 
+    - The predicate methods no longer have `is_` or `has_` prefixes. However,
+      aliases with these prefixes exist to support existing client code.
+
     - Use of integers as node names does not require the optional
       `num_as_name` flag.
 
