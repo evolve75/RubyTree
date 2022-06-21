@@ -3,7 +3,7 @@
 # tree_spec.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2022-06-20 01:56:49 anupam>
+# Time-stamp: <2022-06-20 22:16:11 anupam>
 # Copyright (C) 2015-2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # frozen_string_literal: true
@@ -24,7 +24,7 @@ describe Tree do
     end
 
     it 'identifies itself as a root node' do
-      expect(tree.is_root?).to be(true)
+      expect(tree.root?).to be(true)
     end
 
     it 'does not have a parent node' do

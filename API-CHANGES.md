@@ -20,6 +20,14 @@ smooth transition to the new APIs.
 * Use of integers as node-names now no longer requires the optional
   `num_as_name` method argument.
 
+* The predicate methods beginning with `is_` or `has_` are now aliases to the
+  real methods **without** these prefixes. For example,
+  `Tree::TreeNode#is_root?` is now aliased to `Tree::TreeNode#root?`. This is to
+  comply with the Ruby standard. These original prefixed method names should be
+  considered as deprecated and the corresponding non-prefixed method names
+  should be used instead. it is possible that the old prefixed method names
+  might be removed in the future.
+
 * [structured_warnings][] has been **removed** from the code-base and is no
   longer a dependency. This was a long-standing point of friction for many
   users.

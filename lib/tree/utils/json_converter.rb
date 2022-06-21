@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2022-06-20 01:18:54 anupam>
+# Time-stamp: <2022-06-20 22:16:46 anupam>
 #
 # Copyright (C) 2012, 2013, 2014, 2015, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -72,7 +72,7 @@ module Tree
           JSON.create_id => self.class.name
         }
 
-        json_hash['children'] = children if has_children?
+        json_hash['children'] = children if children?
 
         json_hash
       end

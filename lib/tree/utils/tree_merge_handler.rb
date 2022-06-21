@@ -3,7 +3,7 @@
 # tree_merge_handler.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2022-06-20 01:21:05 anupam>
+# Time-stamp: <2022-06-20 22:17:12 anupam>
 #
 # Copyright (C) 2013, 2015, 2022 Anupam Sengupta (anupamsg@gmail.com)
 #
@@ -109,8 +109,8 @@ module Tree
       #                               into target).
       # @raise [Tree::TreeNode] The merged tree.
       def merge_trees(tree1, tree2)
-        names1 = tree1.has_children? ? tree1.children.map(&:name) : []
-        names2 = tree2.has_children? ? tree2.children.map(&:name) : []
+        names1 = tree1.children? ? tree1.children.map(&:name) : []
+        names2 = tree2.children? ? tree2.children.map(&:name) : []
 
         names_to_merge = names2 - names1
         names_to_merge.each do |name|

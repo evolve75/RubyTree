@@ -5,7 +5,7 @@
 #
 # Author::  Jen Hamon (http://www.github.com/jhamon)
 #
-# Time-stamp: <2022-06-20 01:20:34 anupam>
+# Time-stamp: <2022-06-20 22:16:39 anupam>
 #
 # Copyright (C) 2014, 2015, 2022, 2022 Jen Hamon (http://www.github.com/jhamon) and
 #                    Anupam Sengupta <anupamsg@gmail.com>
@@ -167,7 +167,7 @@ module Tree
       # @author Jen Hamon (http://www.github.com/jhamon)
       # @return [Hash] Hash representation of tree.
       def to_h
-        key = has_content? ? [name, content] : name
+        key = content? ? [name, content] : name
 
         children_hash = {}
         children do |child|

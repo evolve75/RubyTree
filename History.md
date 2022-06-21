@@ -10,6 +10,14 @@
 
 * Support for `CamelCase` methods has been dropped.
 
+* The predicate methods beginning with `is_` or `has_` are now aliases to real
+  methods **without** these prefixes. For example, `Tree::TreeNode#is_root?` is
+  now aliased to `Tree::TreeNode#root?`. This is to comply with the Ruby
+  standard. The original prefixed method names should be considered as
+  deprecated and the corresponding non-prefixed method names should be used
+  instead. it is possible that the old prefixed method names might be removed in
+  the future.
+
 * RubyTree now supports MRI Ruby versions `2.6.x`, `2.7.x`, and `3.0.x`.
 
 * Explicit support for `rbx` Ruby has been removed (_might_ still work, but not

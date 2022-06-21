@@ -130,37 +130,43 @@ module Tree
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
       root = self
-      root = root.parent until root.is_root?
+      root = root.parent until root.root?
       root
     end
 
-    # @!attribute [r] is_root?
+    # @!attribute [r] root?
     # Returns +true+ if this is a root node.  Note that
     # orphaned children will also be reported as root nodes.
     #
     # @return [Boolean] +true+ if this is a root node.
-    def is_root?
+    def root?
       @parent.nil?
     end
 
-    # @!attribute [r] has_content?
+    alias is_root? root? # @todo: Aliased for eventual replacement
+
+    # @!attribute [r] content?
     # +true+ if this node has content.
     #
     # @return [Boolean] +true+ if the node has content.
-    def has_content?
+    def content?
       @content != nil
     end
 
-    # @!attribute [r] is_leaf?
+    alias has_content? content? # @todo: Aliased for eventual replacement
+
+    # @!attribute [r] leaf?
     # +true+ if this node is a _leaf_ - i.e., one without
     # any children.
     #
     # @return [Boolean] +true+ if this is a leaf node.
     #
-    # @see #has_children?
-    def is_leaf?
-      !has_children?
+    # @see #children?
+    def leaf?
+      !children?
     end
+
+    alias is_leaf? leaf? # @todo: Aliased for eventual replacement
 
     # @!attribute [r] parentage
     # An array of ancestors of this node in reversed order
@@ -171,7 +177,7 @@ module Tree
     # @return [Array<Tree::TreeNode>] An array of ancestors of this node
     # @return [nil] if this is a root node.
     def parentage
-      return nil if is_root?
+      return nil if root?
 
       parentage_array = []
       prev_parent = parent
@@ -182,15 +188,17 @@ module Tree
       parentage_array
     end
 
-    # @!attribute [r] has_children?
+    # @!attribute [r] children?
     # +true+ if the this node has any child node.
     #
     # @return [Boolean] +true+ if child nodes exist.
     #
-    # @see #is_leaf?
-    def has_children?
+    # @see #leaf?
+    def children?
       !@children.empty?
     end
+
+    alias has_children? children? # @todo: Aliased for eventual replacement
 
     # @!group Node Creation
 
@@ -266,7 +274,7 @@ module Tree
     # a hash.
     def create_dump_rep # :nodoc:
       { name: @name,
-        parent: (is_root? ? nil : @parent.name),
+        parent: (root? ? nil : @parent.name),
         content: Marshal.dump(@content) }
     end
 
@@ -311,7 +319,7 @@ module Tree
     # @return [String] A string representation of the node.
     def to_s
       "Node Name: #{@name} Content: #{@content.to_s || '<Empty>'} " \
-        "Parent: #{is_root? ? '<None>' : @parent.name.to_s} "       \
+        "Parent: #{root? ? '<None>' : @parent.name.to_s} "       \
         "Children: #{@children.length} Total Nodes: #{size}"
     end
 
@@ -425,7 +433,7 @@ module Tree
     def rename(new_name)
       old_name = @name
 
-      if is_root?
+      if root?
         self.name = new_name
       else
         @parent.rename_child old_name, new_name
@@ -519,7 +527,7 @@ module Tree
     #
     # @see #remove_all!
     def remove_from_parent!
-      @parent.remove!(self) unless is_root?
+      @parent.remove!(self) unless root?
     end
 
     # Removes all children from this node. If an independent reference exists to
@@ -657,7 +665,7 @@ module Tree
 
       until node_stack.empty?
         peek_node = node_stack[0]
-        if peek_node.node.has_children? && !peek_node.visited
+        if peek_node.node.children? && !peek_node.visited
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
@@ -737,10 +745,10 @@ module Tree
     # noinspection RubyUnusedLocalVariable
     def each_leaf
       if block_given?
-        each { |node| yield(node) if node.is_leaf? }
+        each { |node| yield(node) if node.leaf? }
         self
       else
-        self.select(&:is_leaf?)
+        self.select(&:leaf?)
       end
     end
 
@@ -798,21 +806,23 @@ module Tree
     #
     # @return [Tree::TreeNode] The first sibling node.
     #
-    # @see #is_first_sibling?
+    # @see #first_sibling?
     # @see #last_sibling
     def first_sibling
-      is_root? ? self : parent.children.first
+      root? ? self : parent.children.first
     end
 
     # Returns +true+ if this node is the first sibling at its level.
     #
     # @return [Boolean] +true+ if this is the first sibling.
     #
-    # @see #is_last_sibling?
+    # @see #last_sibling?
     # @see #first_sibling
-    def is_first_sibling?
+    def first_sibling?
       first_sibling == self
     end
+
+    alias is_first_sibling? first_sibling? # @todo: Aliased for eventual replacement
 
     # Last sibling of this node.  If this is the root node, then returns
     # itself.
@@ -824,21 +834,23 @@ module Tree
     #
     # @return [Tree::TreeNode] The last sibling node.
     #
-    # @see #is_last_sibling?
+    # @see #last_sibling?
     # @see #first_sibling
     def last_sibling
-      is_root? ? self : parent.children.last
+      root? ? self : parent.children.last
     end
 
     # Returns +true+ if this node is the last sibling at its level.
     #
     # @return [Boolean] +true+ if this is the last sibling.
     #
-    # @see #is_first_sibling?
+    # @see #first_sibling?
     # @see #last_sibling
-    def is_last_sibling?
+    def last_sibling?
       last_sibling == self
     end
+
+    alias is_last_sibling? last_sibling? # @todo: Aliased for eventual replacement
 
     # An array of siblings for this node. This node is excluded.
     #
@@ -859,7 +871,7 @@ module Tree
         parent.children.each { |sibling| yield sibling if sibling != self }
         self
       else
-        return [] if is_root?
+        return [] if root?
 
         siblings = []
         parent.children do |my_sibling|
@@ -876,9 +888,11 @@ module Tree
     # @return [Boolean] +true+ if this is the only child of its parent.
     #
     # @see #siblings
-    def is_only_child?
-      is_root? ? true : parent.children.size == 1
+    def only_child?
+      root? ? true : parent.children.size == 1
     end
+
+    alias is_only_child? only_child? # @todo: Aliased for eventual replacement
 
     # Next sibling for this node.
     # The _next_ node is defined as the node to right of this node.
@@ -891,7 +905,7 @@ module Tree
     # @see #previous_sibling
     # @see #siblings
     def next_sibling
-      return nil if is_root?
+      return nil if root?
 
       idx = parent.children.index(self)
       parent.children.at(idx + 1) if idx
@@ -908,7 +922,7 @@ module Tree
     # @see #next_sibling
     # @see #siblings
     def previous_sibling
-      return nil if is_root?
+      return nil if root?
 
       idx = parent.children.index(self)
       parent.children.at(idx - 1) if idx&.positive?
@@ -943,14 +957,14 @@ module Tree
                            })
       prefix = ''.dup # dup NEEDs to be invoked to make this mutable.
 
-      if is_root?
+      if root?
         prefix << '*'
       else
-        prefix << '|' unless parent.is_last_sibling?
+        prefix << '|' unless parent.last_sibling?
         prefix << (' ' * (level - 1) * 4)
-        prefix << (is_last_sibling? ? '+' : '|')
+        prefix << (last_sibling? ? '+' : '|')
         prefix << '---'
-        prefix << (has_children? ? '+' : '>')
+        prefix << (children? ? '+' : '>')
       end
 
       block.call(self, prefix)

@@ -75,27 +75,31 @@ module Tree
       children[1]
     end
 
-    # @!attribute is_left_child?
+    # @!attribute left_child?
     # +true+ if the receiver node is the left child of its parent.
     # Always returns +false+ if it is a root node.
     #
     # @return [Boolean] +true+ if this is the left child of its parent.
-    def is_left_child?
-      return false if is_root?
+    def left_child?
+      return false if root?
 
       self == parent.left_child
     end
 
-    # @!attribute [r] is_right_child?
+    alias is_left_child? left_child? # @todo: Aliased for eventual replacement
+
+    # @!attribute [r] right_child?
     # +true+ if the receiver node is the right child of its parent.
     # Always returns +false+ if it is a root node.
     #
     # @return [Boolean] +true+ if this is the right child of its parent.
-    def is_right_child?
-      return false if is_root?
+    def right_child?
+      return false if root?
 
       self == parent.right_child
     end
+
+    alias is_right_child? right_child? # @todo: Aliased for eventual replacement
 
     # @!group Structure Modification
 

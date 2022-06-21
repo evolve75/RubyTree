@@ -4,7 +4,7 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2022-06-20 01:16:17 anupam>
+# Time-stamp: <2022-06-20 22:17:00 anupam>
 #
 # Copyright (C) 2013, 2015, 2017, 2021, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
@@ -77,7 +77,7 @@ module Tree
       #
       # @return [Integer] Height of the node.
       def node_height
-        return 0 if is_leaf?
+        return 0 if leaf?
 
         1 + @children.collect(&:node_height).max
       end
@@ -92,7 +92,7 @@ module Tree
       #
       # @return [Integer] Depth of this node.
       def node_depth
-        return 0 if is_root?
+        return 0 if root?
 
         1 + parent.node_depth
       end
@@ -115,7 +115,7 @@ module Tree
       #
       # @return [Integer] breadth of the node's level.
       def breadth
-        is_root? ? 1 : parent.children.size
+        root? ? 1 : parent.children.size
       end
 
       # @!attribute [r] in_degree
@@ -130,7 +130,7 @@ module Tree
       #
       # @return [Integer] The in-degree of this node.
       def in_degree
-        is_root? ? 0 : 1
+        root? ? 0 : 1
       end
 
       # @!attribute [r] out_degree
@@ -141,7 +141,7 @@ module Tree
       #
       # @return [Integer] The out-degree of this node.
       def out_degree
-        is_leaf? ? 0 : children.size
+        leaf? ? 0 : children.size
       end
 
       # @!endgroup
