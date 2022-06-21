@@ -4,11 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2021-12-29 13:02:08 anupam>
+# Time-stamp: <2022-06-20 01:21:38 anupam>
 #
-# Copyright (C) 2012, 2015, 2021 Anupam Sengupta <anupamsg@gmail.com>
-#
-# All rights reserved.
+# Copyright (C) 2012-2022 Anupam Sengupta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -34,9 +32,13 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+# frozen_string_literal: true
 
 # Provides utilities and mixin modules for RubyTree.
-
-module Tree::Utils
-  # Empty module.  Being used as a namespace.
+module Tree
+  # Provides various utilities for the TreeNode class.
+  module Utils
+    # Empty module.  Being used as a namespace.
+  end
 end

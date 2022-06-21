@@ -3,8 +3,8 @@
 # run_test.rb:: Run all the tests from the Ruby command line.
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2014-01-03 21:15:37 anupam>
-# Copyright (C) 2014 Anupam Sengupta <anupamsg@gmail.com>
+# Time-stamp: <2022-06-19 22:44:56 anupam>
+# Copyright (C) 2014, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -31,6 +31,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 base_dir = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 lib_dir  = File.join(base_dir, 'lib')
@@ -51,7 +52,7 @@ if ENV['COVERAGE']
       add_group 'Internal Utilities', '/lib/tree/utils/.*.rb'
     end
   rescue LoadError => e
-    puts 'Could not load simplecov; continuing without code coverage' + e.cause
+    puts "Could not load simplecov; continuing without code coverage #{e.cause}"
   end
 end
 

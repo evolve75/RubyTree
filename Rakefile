@@ -31,9 +31,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+#
+# frozen_string_literal: true
 
 require 'rubygems'
-GEM_SPEC = eval(File.read('./rubytree.gemspec')) # Load the gemspec.
+
+# @todo: Check if Bundler needs to be `require`d.
+GEM_SPEC = Bundler.load_gemspec(File.join(__dir__, 'rubytree.gemspec'))
 
 PKG_NAME = GEM_SPEC.name
 PKG_VER  = GEM_SPEC.version
@@ -55,6 +59,7 @@ task :version do
 end
 
 require 'rake/clean'
+desc 'Remove all generated files.'
 task clean: 'gem:clobber_package'
 CLEAN.include('coverage')
 task clobber: [:clean, 'doc:clobber_rdoc', 'doc:clobber_yard']
@@ -70,8 +75,8 @@ namespace :doc do # ................................ Documentation
     require 'rdoc/task'
     Rake::RDocTask.new do |rdoc|
       rdoc.rdoc_dir = 'rdoc'
-      rdoc.title    = "#{PKG_NAME}-#{PKG_VER}"
-      rdoc.main     = 'README.rdoc'
+      rdoc.title    = "RubyTree Documenation: #{PKG_NAME}-#{PKG_VER}"
+      rdoc.main     = 'README.md'
       rdoc.rdoc_files.include(GEM_SPEC.extra_rdoc_files)
       rdoc.rdoc_files.include('./lib/**/*.rb')
     end
@@ -98,7 +103,8 @@ end
 desc 'Run the unit tests'
 task test: %w[test:unit]
 
-namespace :test do # ................................ Test related
+# ................................ Test related
+namespace :test do
   desc 'Run all the tests'
   task all: %w[test:unit test:spec test:examples]
 
@@ -109,7 +115,8 @@ namespace :test do # ................................ Test related
     test.verbose = false
   end
 
-  begin # ................................ rspec tests
+  # ................................ rspec tests
+  begin
     require 'rspec/core/rake_task'
 
     RSpec::Core::RakeTask.new(:spec) do |t|
@@ -146,7 +153,8 @@ namespace :test do # ................................ Test related
   end
 end
 
-namespace :tag do # ................................ Emacs Tags
+# ................................ Emacs Tags
+namespace :tag do
   require 'rtagstask'
   RTagsTask.new(:tags) do |rd|
     rd.vi = false
@@ -156,7 +164,8 @@ rescue LoadError
   # Oh well. Can't have everything.
 end
 
-namespace :gem do               # ................................ Gem related
+# ................................ Gem related
+namespace :gem do
   require 'rubygems/package_task'
   Gem::PackageTask.new(GEM_SPEC) do |pkg|
     pkg.need_zip = true
@@ -169,7 +178,8 @@ namespace :gem do               # ................................ Gem related
   end
 end
 
-require 'rubocop/rake_task'     # ................................ Ruby linting
+# ................................ Ruby linting
+require 'rubocop/rake_task'
 
 RuboCop::RakeTask.new(:rubocop) do |t|
   t.options = ['--display-cop-names']

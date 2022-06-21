@@ -32,6 +32,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'test/unit'
 require_relative '../lib/tree/binarytree'
@@ -82,8 +83,8 @@ module TestTree
 
       assert_same(tree.class, Tree::BinaryTreeNode)
       assert_same(:A, tree.name)
-      assert_equal(true, tree.is_root?)
-      assert_equal(false, tree.is_leaf?)
+      assert_equal(true, tree.root?)
+      assert_equal(false, tree.leaf?)
       assert_equal(2, tree.children.count) # B, C, D
       assert_equal(4, tree.size)
 
@@ -130,13 +131,13 @@ module TestTree
     # Test the add method.
     def test_add
       @root.add @left_child1
-      assert(!@left_child1.is_root?, 'Left child1 cannot be a root after addition to the ROOT node')
+      assert(!@left_child1.root?, 'Left child1 cannot be a root after addition to the ROOT node')
 
       assert_same(@left_child1, @root.left_child, 'The left node should be left_child1')
       assert_same(@left_child1, @root.first_child, 'The first node should be left_child1')
 
       @root.add @right_child1
-      assert(!@right_child1.is_root?, 'Right child1 cannot be a root after addition to the ROOT node')
+      assert(!@right_child1.root?, 'Right child1 cannot be a root after addition to the ROOT node')
 
       assert_same(@right_child1, @root.right_child, 'The right node should be right_child1')
       assert_same(@right_child1, @root.last_child, 'The first node should be right_child1')
@@ -191,9 +192,8 @@ module TestTree
       end
 
       assert_equal(Enumerator, f.inordered_each.class) if defined?(Enumerator.class) # Without a block
-      if defined?(Enumerable::Enumerator.class)
-        assert_equal(Enumerable::Enumerator, f.inordered_each.class)
-      end # Without a block
+
+      assert_equal(Enumerable::Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class)
     end
 
     # Test the left_child method.
@@ -217,10 +217,10 @@ module TestTree
       @root << @left_child1
       @root << @right_child1
       assert_same(@left_child1, @root.left_child, "The left child should be 'left_child1")
-      assert(!@left_child1.is_root?, 'The left child now cannot be a root.')
+      assert(!@left_child1.root?, 'The left child now cannot be a root.')
 
       @root.left_child = Tree::BinaryTreeNode.new('New Left Child')
-      assert(!@root.left_child.is_root?, 'The left child now cannot be a root.')
+      assert(!@root.left_child.root?, 'The left child now cannot be a root.')
       assert_equal('New Left Child', @root.left_child.name, 'The left child should now be the new child')
       assert_equal('B Child at Right', @root.last_child.name, 'The last child should now be the right child')
 
@@ -236,10 +236,10 @@ module TestTree
       @root << @left_child1
       @root << @right_child1
       assert_same(@right_child1, @root.right_child, "The right child should be 'right_child1")
-      assert(!@right_child1.is_root?, 'The right child now cannot be a root.')
+      assert(!@right_child1.root?, 'The right child now cannot be a root.')
 
       @root.right_child = Tree::BinaryTreeNode.new('New Right Child')
-      assert(!@root.right_child.is_root?, 'The right child now cannot be a root.')
+      assert(!@root.right_child.root?, 'The right child now cannot be a root.')
       assert_equal('New Right Child', @root.right_child.name, 'The right child should now be the new child')
       assert_equal('A Child at Left', @root.first_child.name, 'The first child should now be the left child')
       assert_equal('New Right Child', @root.last_child.name, 'The last child should now be the right child')
@@ -256,28 +256,28 @@ module TestTree
       @root << @left_child1
       @root << @right_child1
 
-      assert(@left_child1.is_left_child?, 'left_child1 should be the left child')
-      assert(!@right_child1.is_left_child?, 'left_child1 should be the left child')
+      assert(@left_child1.left_child?, 'left_child1 should be the left child')
+      assert(!@right_child1.left_child?, 'left_child1 should be the left child')
 
       # Now set the right child as nil, and retest
       @root.right_child = nil
-      assert(@left_child1.is_left_child?, 'left_child1 should be the left child')
+      assert(@left_child1.left_child?, 'left_child1 should be the left child')
 
-      assert(!@root.is_left_child?, 'Root is neither left child nor right')
+      assert(!@root.left_child?, 'Root is neither left child nor right')
     end
 
-    # Test is_right_child? method.
+    # Test right_child? method.
     def test_is_right_child_eh
       @root << @left_child1
       @root << @right_child1
 
-      assert(@right_child1.is_right_child?, 'right_child1 should be the right child')
-      assert(!@left_child1.is_right_child?, 'right_child1 should be the right child')
+      assert(@right_child1.right_child?, 'right_child1 should be the right child')
+      assert(!@left_child1.right_child?, 'right_child1 should be the right child')
 
       # Now set the left child as nil, and retest
       @root.left_child = nil
-      assert(@right_child1.is_right_child?, 'right_child1 should be the right child')
-      assert(!@root.is_right_child?, 'Root is neither left child nor right')
+      assert(@right_child1.right_child?, 'right_child1 should be the right child')
+      assert(!@root.right_child?, 'Root is neither left child nor right')
     end
 
     # Test swap_children method.
@@ -285,13 +285,13 @@ module TestTree
       @root << @left_child1
       @root << @right_child1
 
-      assert(@right_child1.is_right_child?, 'right_child1 should be the right child')
-      assert(!@left_child1.is_right_child?, 'right_child1 should be the right child')
+      assert(@right_child1.right_child?, 'right_child1 should be the right child')
+      assert(!@left_child1.right_child?, 'right_child1 should be the right child')
 
       @root.swap_children
 
-      assert(@right_child1.is_left_child?, 'right_child1 should now be the left child')
-      assert(@left_child1.is_right_child?, 'left_child1 should now be the right child')
+      assert(@right_child1.left_child?, 'right_child1 should now be the left child')
+      assert(@left_child1.right_child?, 'left_child1 should now be the right child')
       assert_equal(@right_child1, @root.first_child, 'right_child1 should now be the first child')
       assert_equal(@left_child1, @root.last_child, 'left_child1 should now be the last child')
       assert_equal(@right_child1, @root[0], 'right_child1 should now be the first child')

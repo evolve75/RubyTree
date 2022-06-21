@@ -3,70 +3,73 @@
 # tree_spec.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2022-06-19 16:47:33 anupam>
+# Time-stamp: <2022-06-20 22:16:11 anupam>
 # Copyright (C) 2015-2022 Anupam Sengupta <anupamsg@gmail.com>
 #
+# frozen_string_literal: true
 
 require 'rspec'
 require 'spec_helper'
 
+class SpecializedTreeNode < Tree::TreeNode; end
+
 describe Tree do
-  class SpecializedTreeNode < Tree::TreeNode; end
-
   shared_examples_for 'any detached node' do
-    it 'should not equal "Object.new"' do
-      expect(@tree).not_to eq(Object.new)
+    it 'does not equal "Object.new"' do
+      expect(tree).not_to eq(Object.new)
     end
-    it 'should not equal 1 or any other fixnum' do
-      expect(@tree).not_to eq(1)
+
+    it 'does not equal 1 or any other fixnum' do
+      expect(tree).not_to eq(1)
     end
+
     it 'identifies itself as a root node' do
-      expect(@tree.is_root?).to eq(true)
+      expect(tree.root?).to be(true)
     end
+
     it 'does not have a parent node' do
-      expect(@tree.parent).to eq(nil)
+      expect(tree.parent).to be_nil
     end
   end
-  context '#initialize', 'with empty name and nil content' do
-    before(:each) do
-      @tree = Tree::TreeNode.new('')
-    end
+
+  describe '#initialize with empty name and nil content' do
+    let(:tree) { Tree::TreeNode.new('') }
+
     it 'creates the tree node with name as ""' do
-      expect(@tree.name).to eq('')
+      expect(tree.name).to eq('')
     end
+
     it "has 'nil' content" do
-      expect(@tree.content).to eq(nil)
+      expect(tree.content).to be_nil
     end
 
     it_behaves_like 'any detached node'
   end
 
-  context '#initialize', "with name 'A' and nil content" do
-    before(:each) do
-      @tree = Tree::TreeNode.new('A')
-    end
+  describe "#initialize with name 'A' and nil content" do
+    let(:tree) { Tree::TreeNode.new('A') }
 
     it 'creates the tree node with name as "A"' do
-      expect(@tree.name).to eq('A')
+      expect(tree.name).to eq('A')
     end
+
     it "has 'nil' content" do
-      expect(@tree.content).to eq(nil)
+      expect(tree.content).to be_nil
     end
 
     it_behaves_like 'any detached node'
   end
 
-  context '#initialize', "with node name 'A' and some content" do
-    before(:each) do
-      @sample = 'sample'
-      @tree = Tree::TreeNode.new('A', @sample)
-    end
+  describe "#initialize with node name 'A' and some content" do
+    sample = 'some content'
+    let(:tree) { Tree::TreeNode.new('A', sample) }
 
     it 'creates the tree node with name as "A"' do
-      expect(@tree.name).to eq('A')
+      expect(tree.name).to eq('A')
     end
-    it "has some content #{@sample}" do
-      expect(@tree.content).to eq(@sample)
+
+    it "has some content #{sample}" do
+      expect(tree.content).to eq(sample)
     end
 
     it_behaves_like 'any detached node'
@@ -81,23 +84,21 @@ describe Tree do
     end
 
     it 'does not allow comparison with nil' do
-      expect(node1 <=> nil).to be(nil)
+      expect(node1 <=> nil).to be_nil
     end
 
     it 'does not allow comparison with other objects' do
-      expect(node1 <=> 'c').to be(nil)
+      expect(node1 <=> 'c').to be_nil
     end
   end
 
   describe 'serialization' do
-    let(:node1) { SpecializedTreeNode.new('a') }
-    let(:serialized_node1) { Marshal.dump(node1) }
-    let(:node2) { Tree::TreeNode.new('b') }
-    let(:serialized_node2) { Marshal.dump(node2) }
+    let(:serialized_node1) { Marshal.dump(SpecializedTreeNode.new('a')) }
+    let(:serialized_node2) { Marshal.dump(Tree::TreeNode.new('b')) }
     let(:tree) do
       SpecializedTreeNode.new('root').tap do |root|
-        root << node1
-        root << node2
+        root << SpecializedTreeNode.new('a')
+        root << Tree::TreeNode.new('b')
       end
     end
     let(:serialized_tree) { Marshal.dump(tree) }
@@ -116,61 +117,57 @@ describe Tree do
     end
   end
 
-  shared_examples_for "any cloned node" do
-    it "is equal to the original" do
-      expect(@clone).to eq @tree
+  shared_examples_for 'any cloned node' do
+    it 'is equal to the original' do
+      expect(clone).to eq tree
     end
-    it "is not identical to the original" do
-      expect(clone).not_to be @tree
+
+    it 'is not identical to the original' do
+      expect(clone).not_to be tree
     end
   end
 
-  context "#detached_copy", "without content" do
-    before(:each) do
-      @tree = Tree::TreeNode.new("A", nil)
-      @clone = @tree.detached_copy
-    end
+  describe '#detached_copy', 'Without content' do
+    let(:tree) { Tree::TreeNode.new('A', nil) }
+    let(:clone) { tree.detached_copy }
 
-    it_behaves_like "any cloned node"
+    it_behaves_like 'any cloned node'
   end
 
-  context "#detached_copy", "with clonable content" do
-    before(:each) do
-      @tree = Tree::TreeNode.new("A", "clonable content")
-      @clone = @tree.detached_copy
+  describe '#detached_copy with clonable content' do
+    let(:tree) { Tree::TreeNode.new('A', 'clonable content') }
+    let(:clone) { tree.detached_copy }
+
+    it 'makes a clone of the content' do
+      expect(clone.content).to eq tree.content
     end
 
-    it "makes a clone of the content" do
-      expect(@clone.content).to eq @tree.content
-      expect(@clone.content).not_to be @tree.content
+    it 'is not the same as the original content' do
+      expect(clone.content).not_to be tree.content
     end
 
-    it_behaves_like "any cloned node"
+    it_behaves_like 'any cloned node'
   end
 
-  context "#detached_copy", "with unclonable content" do
-    before(:each) do
-      @tree = Tree::TreeNode.new("A", :unclonable_content)
-      @clone = @tree.detached_copy
+  describe '#detached_copy with unclonable content' do
+    let(:tree) { Tree::TreeNode.new('A', :unclonable_content) }
+    let(:clone) { tree.detached_copy }
+
+    it 'retains the original content' do
+      expect(clone.content).to be tree.content
     end
 
-    it "keeps the content" do
-      expect(@clone.content).to be @tree.content
-    end
-
-    it_behaves_like "any cloned node"
+    it_behaves_like 'any cloned node'
   end
 
-  context "#detached_copy", "with false as content" do
-    before(:each) do
-      @tree = Tree::TreeNode.new("A", false)
-      @clone = @tree.detached_copy
+  describe '#detached_copy with false as content' do
+    let(:tree) { Tree::TreeNode.new('A', false) }
+    let(:clone) { tree.detached_copy }
+
+    it 'retains the original content' do
+      expect(clone.content).to be tree.content
     end
 
-    it "keeps the content" do
-      expect(@clone.content).to be @tree.content
-    end
-
-    it_behaves_like "any cloned node"
+    it_behaves_like 'any cloned node'
   end
 end

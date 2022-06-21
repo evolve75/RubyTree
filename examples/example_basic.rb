@@ -3,8 +3,8 @@
 # example_basic.rb:: Basic usage of the tree library.
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2015-12-31 22:17:30 anupam>
-# Copyright (C) 2013, 2015 Anupam Sengupta <anupamsg@gmail.com>
+# Time-stamp: <2022-06-19 22:52:29 anupam>
+# Copyright (C) 2013, 2015, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # The following example implements this tree structure:
 #
@@ -21,22 +21,29 @@
 #    +-------+-------+
 #    | GRANDCHILD 1  |
 #    +---------------+
+#
+# frozen_string_literal: true
 
 # ..... Example starts.
 require 'tree' # Load the library
 
-# ..... Create the root node first.  Note that every node has a name and an optional content payload.
+# ..... Create the root node first. Note that every node has a name and an
+# ..... optional content payload.
 root_node = Tree::TreeNode.new('ROOT', 'Root Content')
 root_node.print_tree
 
-# ..... Now insert the child nodes.  Note that you can "chain" the child insertions for a given path to any depth.
-root_node << Tree::TreeNode.new('CHILD1', 'Child1 Content') << Tree::TreeNode.new('GRANDCHILD1', 'GrandChild1 Content')
+# ..... Now insert the child nodes. Note that you can "chain" the child
+# ..... insertions for a given path to any depth.
+root_node << Tree::TreeNode.new('CHILD1', 'Child1 Content') \
+          << Tree::TreeNode.new('GRANDCHILD1', 'GrandChild1 Content')
 root_node << Tree::TreeNode.new('CHILD2', 'Child2 Content')
 
-# ..... Lets print the representation to stdout.  This is primarily used for debugging purposes.
+# ..... Lets print the representation to stdout. This is primarily used for
+# ..... debugging purposes.
 root_node.print_tree
 
-# ..... Lets directly access children and grandchildren of the root.  The can be "chained" for a given path to any depth.
+# ..... Lets directly access children and grandchildren of the root. The can be
+# ..... "chained" for a given path to any depth.
 child1       = root_node['CHILD1']
 grand_child1 = root_node['CHILD1']['GRANDCHILD1']
 

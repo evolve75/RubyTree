@@ -7,9 +7,7 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 
-# Copyright (c) 2006-2015 Anupam Sengupta
-#
-# All rights reserved.
+# Copyright (c) 2006-2022 Anupam Sengupta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -36,6 +34,7 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'json'
 

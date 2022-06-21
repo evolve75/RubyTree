@@ -4,15 +4,16 @@
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
 # Copyright (c) 2012-2022 Anupam Sengupta. All rights reserved.
+#
+# frozen_string_literal: true
 
 require './lib/tree/version'
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
-  s.date                  = '2022-06-21'
   s.version               = Tree::VERSION
   s.license               = 'BSD-3-Clause-Clear'
-
+  # NOTE: s.date should NOT be assigned. It is automatically set to pkg date.
   s.platform              = Gem::Platform::RUBY
   s.author                = 'Anupam Sengupta'
   s.email                 = 'anupamsg@gmail.com'
@@ -22,7 +23,7 @@ Gem::Specification.new do |s|
 
   s.summary               = 'A generic tree data structure for Ruby.'
 
-  s.description           = <<-EOF
+  s.description           = <<-END_DESC
     RubyTree is a pure Ruby implementation of the generic tree data
     structure. It provides a node-based model to store named nodes in the tree,
     and provides simple APIs to access, modify and traverse the structure.
@@ -45,7 +46,12 @@ Gem::Specification.new do |s|
     from <https://rubygems.org/gems/rubytree>.
 
     The home page for RubyTree is at <http://rubytree.anupamsg.me>.
-  EOF
+
+  END_DESC
+
+  s.metadata = {
+    'rubygems_mfa_required' => 'true'
+  }
 
   s.files                = Dir['lib/**/*.rb']  # The actual code
   s.files               += Dir['[A-Z]*']       # Various documentation files
@@ -61,23 +67,25 @@ Gem::Specification.new do |s|
   s.test_files           = Dir.glob('test/**/test_*.rb')
 
   s.extra_rdoc_files     = %w[README.md LICENSE.md API-CHANGES.md History.md]
-  s.rdoc_options         = ['--title', 'Rubytree Documentation', '--quiet']
+  s.rdoc_options         = ['--title', "Rubytree Documentation: #{s.name}-#{s.version}",
+                            '--main', 'README.md',
+                            '--quiet']
 
   s.add_runtime_dependency 'json', '> 2.3.1'
 
-  # Note: Rake is added as a development and test dependency in the Gemfile.
+  # NOTE: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler'
+  s.add_development_dependency 'rake'
   s.add_development_dependency 'rdoc'
-  s.add_development_dependency 'yard'
-  s.add_development_dependency 'rtagstask'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency "rake"
-  s.add_development_dependency "test-unit"
-  s.add_development_dependency "rubocop"
-  s.add_development_dependency "rubocop-rake"
-  s.add_development_dependency "rubocop-rspec"
+  s.add_development_dependency 'rtagstask'
+  s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'rubocop-rake'
+  s.add_development_dependency 'rubocop-rspec'
+  s.add_development_dependency 'test-unit'
+  s.add_development_dependency 'yard'
 
-  s.post_install_message = <<-EOF
+  s.post_install_message = <<-END_MESSAGE
     ========================================================================
                     Thank you for installing RubyTree.
 
@@ -98,5 +106,5 @@ Gem::Specification.new do |s|
     - Explicit support for rbx Ruby has been removed.
 
     ========================================================================
-  EOF
+  END_MESSAGE
 end

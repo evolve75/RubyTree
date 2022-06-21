@@ -4,9 +4,9 @@
 #
 # Author::  Marco Ziccardi and Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2021-12-29 13:01:58 anupam>
+# Time-stamp: <2022-06-20 02:00:11 anupam>
 #
-# Copyright (C) 2015, 2021 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2015, 2021, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -35,12 +35,12 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
-module Tree::Utils
-  # Provides utility methods for path extraction
-  module TreePathHandler
-    # noinspection RubyUnusedLocalVariable
-    def self.included(_base)
+module Tree
+  module Utils
+    # Provides utility methods for path extraction
+    module TreePathHandler
       # @!group Node Path
 
       # Returns the path of this node from the root as a string, with the node
@@ -75,16 +75,16 @@ module Tree::Utils
       def get_path_name_array(current_array_path = [])
         path_array = current_array_path + [name]
 
-        if !parent              # If detached node or root node.
+        if parent               # Recurse to parent node.
+          parent.get_path_name_array(path_array)
+        else                    # else If detached node or root node.
           path_array
-        else                    # Else recurse to parent node.
-          path_array = parent.get_path_name_array(path_array)
         end
       end
 
       protected :get_path_name_array
 
       # @!endgroup
-    end # self.included
+    end
   end
 end

@@ -2,7 +2,7 @@
 
 # test_rubytree_require.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2012 Anupam Sengupta
+# Copyright (c) 2012, 2022 Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -31,6 +31,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 require 'test/unit'
 require_relative '../lib/rubytree'

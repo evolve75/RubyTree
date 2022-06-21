@@ -3,9 +3,9 @@
 # tree_merge_handler.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2015-05-30 16:06:18 anupam>
+# Time-stamp: <2022-06-20 22:17:12 anupam>
 #
-# Copyright (C) 2013, 2015 Anupam Sengupta (anupamsg@gmail.com)
+# Copyright (C) 2013, 2015, 2022 Anupam Sengupta (anupamsg@gmail.com)
 #
 # All rights reserved.
 #
@@ -34,93 +34,95 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+# frozen_string_literal: true
 
 # Provides utility methods to merge two {Tree::TreeNode} based trees.
 # @since 0.9.0
-module Tree::Utils::TreeMergeHandler
-  # @!group Merging Trees
+module Tree
+  module Utils
+    # Handles merging of two trees.
+    module TreeMergeHandler
+      # @!group Merging Trees
 
-  # Merge two trees that share the same root node and returns <em>a new
-  # tree</em>.
-  #
-  # The new tree contains the contents of the merge between _other_tree_ and
-  # self. Duplicate nodes (coming from _other_tree_) will *NOT* be overwritten
-  # in self.
-  #
-  # @author Darren Oakley (https://github.com/dazoakley)
-  #
-  # @param [Tree::TreeNode] other_tree The other tree to merge with.
-  # @return [Tree::TreeNode] the resulting tree following the merge.
-  #
-  # @raise [TypeError] This exception is raised if _other_tree_ is not a
-  #                    {Tree::TreeNode}.
-  #
-  # @raise [ArgumentError] This exception is raised if _other_tree_ does not
-  #                        have the same root node as self.
-  def merge(other_tree)
-    check_merge_prerequisites(other_tree)
-    merge_trees(root.dup, other_tree.root)
-  end
+      # Merge two trees that share the same root node and returns <em>a new
+      # tree</em>.
+      #
+      # The new tree contains the contents of the merge between _other_tree_ and
+      # self. Duplicate nodes (coming from _other_tree_) will *NOT* be overwritten
+      # in self.
+      #
+      # @author Darren Oakley (https://github.com/dazoakley)
+      #
+      # @param [Tree::TreeNode] other_tree The other tree to merge with.
+      # @return [Tree::TreeNode] the resulting tree following the merge.
+      #
+      # @raise [TypeError] This exception is raised if _other_tree_ is not a
+      #                    {Tree::TreeNode}.
+      #
+      # @raise [ArgumentError] This exception is raised if _other_tree_ does not
+      #                        have the same root node as self.
+      def merge(other_tree)
+        check_merge_prerequisites(other_tree)
+        merge_trees(root.dup, other_tree.root)
+      end
 
-  # Merge in another tree (that shares the same root node) into +this+ tree.
-  # Duplicate nodes (coming from _other_tree_) will NOT be overwritten in
-  # self.
-  #
-  # @author Darren Oakley (https://github.com/dazoakley)
-  #
-  # @param [Tree::TreeNode] other_tree The other tree to merge with.
-  #
-  # @raise [TypeError] This exception is raised if _other_tree_ is not a
-  #                    {Tree::TreeNode}.
-  #
-  # @raise [ArgumentError] This exception is raised if _other_tree_ does not
-  #                        have the same root node as self.
-  def merge!(other_tree)
-    check_merge_prerequisites(other_tree)
-    merge_trees(root, other_tree.root)
-  end
+      # Merge in another tree (that shares the same root node) into +this+ tree.
+      # Duplicate nodes (coming from _other_tree_) will NOT be overwritten in
+      # self.
+      #
+      # @author Darren Oakley (https://github.com/dazoakley)
+      #
+      # @param [Tree::TreeNode] other_tree The other tree to merge with.
+      #
+      # @raise [TypeError] This exception is raised if _other_tree_ is not a
+      #                    {Tree::TreeNode}.
+      #
+      # @raise [ArgumentError] This exception is raised if _other_tree_ does not
+      #                        have the same root node as self.
+      def merge!(other_tree)
+        check_merge_prerequisites(other_tree)
+        merge_trees(root, other_tree.root)
+      end
 
-  private
+      private
 
-  # Utility function to check that the conditions for a tree merge are met.
-  #
-  # @author Darren Oakley (https://github.com/dazoakley)
-  #
-  # @see #merge
-  # @see #merge!
-  def check_merge_prerequisites(other_tree)
-    unless other_tree.is_a?(Tree::TreeNode)
-      raise TypeError,
-            'You can only merge in another instance of Tree::TreeNode'
+      # Utility function to check that the conditions for a tree merge are met.
+      #
+      # @author Darren Oakley (https://github.com/dazoakley)
+      #
+      # @see #merge
+      # @see #merge!
+      def check_merge_prerequisites(other_tree)
+        raise TypeError, 'You can only merge in another instance of Tree::TreeNode' \
+          unless other_tree.is_a?(Tree::TreeNode)
+
+        raise ArgumentError, 'Unable to merge trees as they do not share the same root' \
+          unless root.name == other_tree.root.name
+      end
+
+      # Utility function to recursively merge two subtrees.
+      #
+      # @author Darren Oakley (https://github.com/dazoakley)
+      #
+      # @param [Tree::TreeNode] tree1 The target tree to merge into.
+      # @param [Tree::TreeNode] tree2 The donor tree (that will be merged
+      #                               into target).
+      # @raise [Tree::TreeNode] The merged tree.
+      def merge_trees(tree1, tree2)
+        names1 = tree1.children? ? tree1.children.map(&:name) : []
+        names2 = tree2.children? ? tree2.children.map(&:name) : []
+
+        names_to_merge = names2 - names1
+        names_to_merge.each do |name|
+          tree1 << tree2[name].detached_subtree_copy
+        end
+
+        tree1.children.each do |child|
+          merge_trees(child, tree2[child.name]) unless tree2[child.name].nil?
+        end
+
+        tree1
+      end
     end
-
-    unless root.name == other_tree.root.name
-      raise ArgumentError,
-            'Unable to merge trees as they do not share the same root'
-    end
-  end
-
-  # Utility function to recursively merge two subtrees.
-  #
-  # @author Darren Oakley (https://github.com/dazoakley)
-  #
-  # @param [Tree::TreeNode] tree1 The target tree to merge into.
-  # @param [Tree::TreeNode] tree2 The donor tree (that will be merged
-  #                               into target).
-  # @raise [Tree::TreeNode] The merged tree.
-  def merge_trees(tree1, tree2)
-    names1 = tree1.has_children? ? tree1.children.map { |child| child.name } : []
-    names2 = tree2.has_children? ? tree2.children.map { |child| child.name } : []
-
-    names_to_merge = names2 - names1
-    names_to_merge.each do |name|
-      tree1 << tree2[name].detached_subtree_copy
-    end
-
-    tree1.children.each do |child|
-      merge_trees(child, tree2[child.name]) unless tree2[child.name].nil?
-    end
-
-    tree1
   end
 end
