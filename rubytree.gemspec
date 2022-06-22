@@ -58,8 +58,6 @@ Gem::Specification.new do |s|
 
   s.require_paths        = ['lib']
 
-  s.test_files           = Dir.glob('test/**/test_*.rb')
-
   s.extra_rdoc_files     = %w[README.md LICENSE.md API-CHANGES.md History.md]
   s.rdoc_options         = ['--title', "Rubytree Documentation: #{s.name}-#{s.version}",
                             '--main', 'README.md',
@@ -76,6 +74,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rubocop', '~> 1.0'
   s.add_development_dependency 'rubocop-rake', '~> 0.0'
   s.add_development_dependency 'rubocop-rspec', '~> 2.0'
+  s.add_development_dependency 'simplecov', '~> 0.21'
+  s.add_development_dependency 'simplecov-lcov', '~> 0.8'
   s.add_development_dependency 'test-unit', '~> 3.0'
   s.add_development_dependency 'yard', '~> 0.0', '>= 0.9.20'
 

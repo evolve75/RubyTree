@@ -139,18 +139,6 @@ namespace :test do
   task :coverage do
     ruby 'test/run_test.rb'
   end
-
-  begin
-    require 'rcov/rcovtask'
-    Rcov::RcovTask.new(:rcov) do |t|
-      t.libs << 'test'
-      t.test_files = FileList['test/**/test_*.rb']
-      t.verbose = true
-      t.rcov_opts << '--exclude /gems/,/Library/,/usr/,spec,lib/tasks'
-    end
-  rescue LoadError
-    # Oh well. Can't have everything.
-  end
 end
 
 # ................................ Emacs Tags

@@ -1,0 +1,51 @@
+# Check the test coverage of the code.
+#
+# This runs as a Github Action.
+#
+# See https://github.com/marketplace/actions/coveralls-github-action
+
+name: Test Coveralls
+on: ["push", "pull_request"]
+
+env:
+  COVERAGE: true
+
+jobs:
+  test:
+    name: Ruby ${{ matrix.ruby }}
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ["2.6", "2.7", "3.0"]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Run Ruby Tests
+        run: bundle exec rake clobber test:coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          flag-name: ruby-${{ matrix.ruby }}
+          parallel: true
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          parallel-finished: true
