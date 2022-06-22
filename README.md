@@ -1,8 +1,16 @@
 # **RubyTree** #
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
+![Build State](https://github.com/evolve75/rubytree/actions/workflows/ruby.yml/badge.svg)
 [![Code Climate](https://codeclimate.com/github/evolve75/RubyTree.png)](https://codeclimate.com/github/evolve75/RubyTree)
 [![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
+
+        __       _           _
+       /__\_   _| |__  _   _| |_ _ __ ___  ___
+      / \// | | | '_ \| | | | __| '__/ _ \/ _ \
+     / _  \ |_| | |_) | |_| | |_| | |  __/  __/
+     \/ \_/\__,_|_.__/ \__, |\__|_|  \___|\___|
+                      |___/
 
 ## DESCRIPTION: ##
 
@@ -202,8 +210,7 @@ downloaded and installed automatically by [Bundler][].
 
 A big thanks to the following contributors for helping improve **RubyTree**:
 
-1. [Dirk Breuer](http://github.com/railsbros-dirk) for contributing the JSON
-   conversion code.
+1. Dirk Breuer for contributing the JSON conversion code.
 2. Vincenzo Farruggia for contributing the (sub)tree cloning code.
 3. [Eric Cline](https://github.com/escline) for the Rails JSON encoding fix.
 4. [Darren Oakley](https://github.com/dazoakley) for the tree merge methods.
@@ -230,19 +237,13 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 **RubyTree** is licensed under the terms of the [BSD][] license. See
 [LICENSE.md](./LICENSE.md) for details.
 
-        __       _           _
-       /__\_   _| |__  _   _| |_ _ __ ___  ___
-      / \// | | | '_ \| | | | __| '__/ _ \/ _ \
-     / _  \ |_| | |_) | |_| | |_| | |  __/  __/
-     \/ \_/\__,_|_.__/ \__, |\__|_|  \___|\___|
-                      |___/
 
 [BSD]:                  http://opensource.org/licenses/bsd-license.php "BSD License"
 [Binary tree]:          http://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
 [Bundler]:              http://bundler.io "Bundler"
-[Comparable]:           http://ruby-doc.org/core-2.4.2/Comparable.html "Comparable mix-in"
-[Enumerable]:           http://ruby-doc.org/core-2.4.2/Enumerable.html "Enumerable mix-in"
-[JSON]:                 http://flori.github.com/json "JSON"
+[Comparable]:           http://ruby-doc.org/core/Comparable.html "Comparable mix-in"
+[Enumerable]:           http://ruby-doc.org/core/Enumerable.html "Enumerable mix-in"
+[JSON]:                 https://rubygems.org/gems/json "JSON"
 [Rake]:                 https://rubygems.org/gems/rake "Rake"
 [Ruby]:                 http://www.ruby-lang.org "Ruby Programming Language"
 [SCM]:                  http://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
@@ -250,7 +251,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [breadth-first]:        http://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
 [git]:                  http://git-scm.com "Git SCM"
 [in-order]:             http://en.wikipedia.org/wiki/Tree_traversal#In-order "In-order (symmetric) Traversal"
-[marshaling]:           http://ruby-doc.org/core-2.4.2/Marshal.html "Marshaling in Ruby"
+[marshaling]:           http://ruby-doc.org/core/Marshal.html "Marshaling in Ruby"
 [post-order]:           http://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
 [pre-order]:            http://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
 [rt@github]:            http://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
@@ -260,6 +261,6 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
 [RSpec]:                https://relishapp.com/rspec/
-[Rubocop]:              https://rubocop.org
+[Rubocop]:              https://rubocop.org/
 
 [TreeNode]:             rdoc-ref:Tree::TreeNode
