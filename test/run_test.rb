@@ -3,7 +3,7 @@
 # run_test.rb:: Run all the tests from the Ruby command line.
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2022-06-19 22:44:56 anupam>
+# Time-stamp: <2022-06-22 13:54:25 anupam>
 # Copyright (C) 2014, 2022 Anupam Sengupta <anupamsg@gmail.com>
 #
 # Redistribution and use in source and binary forms, with or without modification,
@@ -42,14 +42,25 @@ $LOAD_PATH.unshift(lib_dir)
 if ENV['COVERAGE']
   begin
     require 'simplecov'
-    require 'coveralls'
+    require 'simplecov-lcov'
 
-    SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+    SimpleCov::Formatter::LcovFormatter.config do |cfg|
+      cfg.report_with_single_file = true
+      cfg.lcov_file_name = 'lcov.info'
+      cfg.single_report_path = "#{base_dir}/coverage/lcov.info"
+    end
+
+    SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+      [
+        SimpleCov::Formatter::HTMLFormatter,
+        SimpleCov::Formatter::LcovFormatter
+      ]
+    )
 
     SimpleCov.start do
-      add_filter '/test/'
-      add_group 'Core Classes', '/lib/.*tree.rb'
-      add_group 'Internal Utilities', '/lib/tree/utils/.*.rb'
+      add_filter '/test'
+      add_filter '/spec'
+      enable_coverage :branch
     end
   rescue LoadError => e
     puts "Could not load simplecov; continuing without code coverage #{e.cause}"
