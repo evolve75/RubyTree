@@ -7,7 +7,7 @@
 #
 # frozen_string_literal: true
 
-require './lib/tree/version'
+require File.join(__dir__, '/lib/tree/version')
 
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
@@ -24,29 +24,23 @@ Gem::Specification.new do |s|
   s.summary               = 'A generic tree data structure for Ruby.'
 
   s.description           = <<-END_DESC
-    RubyTree is a pure Ruby implementation of the generic tree data
-    structure. It provides a node-based model to store named nodes in the tree,
-    and provides simple APIs to access, modify and traverse the structure.
 
-    The implementation is node-centric, where individual nodes in the tree are
-    the primary structural elements. All common tree-traversal methods
-    (pre-order, post-order, and breadth-first) are supported.
+    RubyTree is a Ruby implementation of the generic tree data structure. It
+    provides simple APIs to store named nodes, and to access, modify, and
+    traverse the tree.
 
-    The library mixes in the Enumerable and Comparable modules to allow access
-    to the tree as a standard collection (iteration, comparison, etc.).
+    The data model is node-centric, where nodes in the tree are the primary
+    structural elements. It supports all common tree-traversal methods (pre-order,
+    post-order, and breadth first).
 
-    A Binary tree is also provided, which provides the in-order traversal in
-    addition to the other methods.
+    RubyTree mixes in the Enumerable and Comparable modules and behaves like a
+    standard Ruby collection (iteration, comparison, etc.).
 
-    RubyTree supports importing from, and exporting to JSON, and also supports
-    the Ruby's standard object marshaling.
+    RubyTree also includes a binary tree implementation, which provides in-order
+    node traversal besides the other methods.
 
-    This is a BSD licensed open source project, and is hosted at
-    <https://github.com/evolve75/RubyTree>, and is available as a standard gem
-    from <https://rubygems.org/gems/rubytree>.
-
-    The home page for RubyTree is at <http://rubytree.anupamsg.me>.
-
+    RubyTree can import from and export to JSON, and supports Ruby’s object
+    marshaling.
   END_DESC
 
   s.metadata = {
