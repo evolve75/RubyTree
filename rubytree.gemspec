@@ -3,7 +3,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012-2022 Anupam Sengupta. All rights reserved.
+# Copyright (c) 2012-2023 Anupam Sengupta. All rights reserved.
 #
 # frozen_string_literal: true
 
@@ -12,7 +12,7 @@ require File.join(__dir__, '/lib/tree/version')
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
   s.version               = Tree::VERSION
-  s.license               = 'BSD-3-Clause-Clear'
+  s.license               = 'BSD-2-Clause'
   # NOTE: s.date should NOT be assigned. It is automatically set to pkg date.
   s.platform              = Gem::Platform::RUBY
   s.author                = 'Anupam Sengupta'
