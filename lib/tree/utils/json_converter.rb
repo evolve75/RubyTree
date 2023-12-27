@@ -4,9 +4,9 @@
 #
 # Author::  Anupam Sengupta (anupamsg@gmail.com)
 #
-# Time-stamp: <2022-06-20 22:16:46 anupam>
+# Time-stamp: <2023-12-27 12:46:07 anupam>
 #
-# Copyright (C) 2012, 2013, 2014, 2015, 2022 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012, 2013, 2014, 2015, 2022, 2023 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -100,10 +100,13 @@ module Tree
         # representation.  Note that this method should *NOT* be called directly.
         # Instead, to convert the JSON hash back to a tree, do:
         #
-        #   tree = JSON.parse(the_json_hash)
+        #   tree = JSON.parse(the_json_hash, create_additions: true)
         #
         # This operation requires the {JSON gem}[http://flori.github.com/json/] to
         # be available, or else the operation fails with a warning message.
+        #
+        # Note the +create_additions: true+ option, which is *required* for
+        # successfully parsing the string or hash.
         #
         # @author Dirk Breuer (http://github.com/railsbros-dirk)
         # @since 0.7.0
