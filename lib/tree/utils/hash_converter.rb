@@ -106,7 +106,8 @@ module Tree
 
           root, children = hash.first
 
-          raise ArgumentError, 'Invalid child. Must be nil or hash.' unless [Hash, NilClass].include?(children.class)
+          raise ArgumentError, 'Invalid child. Must be nil or hash.'\
+                                unless [Hash, NilClass].any? { |c| children.is_a? c }
 
           node = new(*root)
           node.add_from_hash(children) unless children.nil?
