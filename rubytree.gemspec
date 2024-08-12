@@ -3,7 +3,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012-2023 Anupam Sengupta. All rights reserved.
+# Copyright (c) 2012-2024 Anupam Sengupta. All rights reserved.
 #
 # frozen_string_literal: true
 
@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.6'
+  s.required_ruby_version = '>=2.7'
 
   s.summary               = 'A generic tree data structure for Ruby.'
 
@@ -67,16 +67,16 @@ Gem::Specification.new do |s|
 
   # NOTE: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler', '~> 2.3'
-  s.add_development_dependency 'rake', '~> 13.0'
-  s.add_development_dependency 'rdoc', '~> 6.0'
+  s.add_development_dependency 'rake', '~> 13.2'
+  s.add_development_dependency 'rdoc', '~> 6.7'
   s.add_development_dependency 'rspec', '~> 3.0', '> 3.10'
   s.add_development_dependency 'rtagstask', '~> 0.0.4'
-  s.add_development_dependency 'rubocop', '~> 1.0'
-  s.add_development_dependency 'rubocop-rake', '~> 0.0'
-  s.add_development_dependency 'rubocop-rspec', '~> 2.0'
-  s.add_development_dependency 'simplecov', '~> 0.21'
+  s.add_development_dependency 'rubocop', '~> 1.65'
+  s.add_development_dependency 'rubocop-rake', '~> 0.6'
+  s.add_development_dependency 'rubocop-rspec', '~> 3.0'
+  s.add_development_dependency 'simplecov', '~> 0.22'
   s.add_development_dependency 'simplecov-lcov', '~> 0.8'
-  s.add_development_dependency 'test-unit', '~> 3.0'
+  s.add_development_dependency 'test-unit', '~> 3.6'
   s.add_development_dependency 'yard', '~> 0.0', '>= 0.9.36'
 
   s.post_install_message = <<-END_MESSAGE
