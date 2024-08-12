@@ -4,7 +4,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012-2023 Anupam Sengupta. All rights reserved.
+# Copyright (c) 2012-2024 Anupam Sengupta. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -35,5 +35,5 @@
 
 module Tree
   # Rubytree Package Version
-  VERSION = '2.0.3'
+  VERSION = '2.1.0'
 end

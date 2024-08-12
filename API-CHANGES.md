@@ -7,6 +7,12 @@ _Note_: API changes are expected to reduce significantly after the `1.x`
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+## Release 2.1.0 Changes
+
+* Minimum Ruby version has been bumped to 2.7 and above
+
+* Updated all upstream dependencies to their latest stable versions
+
 ## Release 2.0.0 Changes
 
 * The _minimum_ required Ruby version is now `2.6` (or higher).

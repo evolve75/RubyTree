@@ -118,7 +118,7 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 2.6.x and above.
+* [Ruby][] 2.7.x and above.
 
 
 * Run-time Dependencies:

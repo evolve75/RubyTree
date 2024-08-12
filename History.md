@@ -1,5 +1,12 @@
 # History of Changes
 
+### 2.1.0 / 2024-08-12
+
+* Minimum Ruby version has been bumped to 2.7. This is needed to use the
+  upstream gems, many of which no longer support 2.6.
+
+* Updated all dependencies to their latest stable versions.
+
 ### 2.0.0 / 2022-06-21
 
 * A major release with significant modernization to the code base and removal of
