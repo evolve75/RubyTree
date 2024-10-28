@@ -25,8 +25,7 @@ GEM
     rdoc (6.7.0)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
-    rexml (3.3.5)
-      strscan
+    rexml (3.3.9)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -69,7 +68,6 @@ GEM
     simplecov-lcov (0.8.0)
     simplecov_json_formatter (0.1.4)
     stringio (3.1.1)
-    strscan (3.1.0)
     test-unit (3.6.2)
       power_assert
     unicode-display_width (2.5.0)
