@@ -1,14 +1,19 @@
 # Check the test coverage of the code.
 #
-# This runs as a Github Action.
+# This runs as a Github Action. Note that the Coverall repository token is
+# injected as an environment variable, instead of being read from
+#`.coveralls.yaml` config file.
 #
 # See https://github.com/marketplace/actions/coveralls-github-action
+#
+# Also see
 
 name: Test Coveralls
 on: ["push", "pull_request"]
 
 env:
   COVERAGE: true
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
 jobs:
   test:
