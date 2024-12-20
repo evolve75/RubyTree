@@ -5,18 +5,18 @@
 # Required
 version: 2
 
-# Set the version of Python and other tools you might need
+# Set the version of Ruby and other tools you might need
 build:
   os: ubuntu-22.04
   tools:
-    python: "3.11"
+    ruby: "3.3"
 
-# Build documentation in the docs/ directory with Sphinx
-sphinx:
-  configuration: doc/conf.py
-
-# We recommend specifying your dependencies to enable reproducible builds:
-# https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
-# python:
-#   install:
-#   - requirements: docs/requirements.txt
+ruby:
+  install:
+    - gemfile: Gemfile
+    
+commands:
+  - gem install bundler
+  - bundle install
+  - rake doc:yard
+  - cp -r doc $READTHEDOCS_OUTPUT/html
