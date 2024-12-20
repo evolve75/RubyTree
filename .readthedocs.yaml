@@ -10,10 +10,6 @@ build:
   os: ubuntu-22.04
   tools:
     ruby: "3.3"
-
-ruby:
-  install:
-    - gemfile: Gemfile
     
 commands:
   - gem install bundler
