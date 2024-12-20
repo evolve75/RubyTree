@@ -15,5 +15,5 @@ build:
     - bundle install
     - bundle exec rake doc:yard
     - mkdir -p $READTHEDOCS_OUTPUT/html
-    - cp -r doc/ $READTHEDOCS_OUTPUT/html/
+    - cp -r doc/. $READTHEDOCS_OUTPUT/html/
     - ls -l $READTHEDOCS_OUTPUT/html
