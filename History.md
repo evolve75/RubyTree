@@ -1,5 +1,10 @@
 # History of Changes
 
+### 2.1.1 / 2024-12-19
+
+* 2.1.1 is a minor update that updates all dependencies and updates the guard
+  clause for creating a tree from a hash.
+
 ### 2.1.0 / 2024-08-12
 
 * Minimum Ruby version has been bumped to 2.7. This is needed to use the
