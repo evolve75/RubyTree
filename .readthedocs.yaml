@@ -1,0 +1,19 @@
+# .readthedocs.yaml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+
+# Set the version of Ruby and other tools you might need
+build:
+  os: ubuntu-22.04
+  tools:
+    ruby: "3.3"    
+  commands:
+    - gem install bundler -v 2.3
+    - bundle install
+    - bundle exec rake doc:yard
+    - mkdir -p $READTHEDOCS_OUTPUT/html
+    - cp -r doc/. $READTHEDOCS_OUTPUT/html/
+    
