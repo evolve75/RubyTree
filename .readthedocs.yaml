@@ -11,7 +11,7 @@ build:
   tools:
     ruby: "3.3"    
   commands:
-    - gem install bundler
+    - gem install bundler -v 2.3
     - bundle install
     - rake doc:yard
     - cp -r doc $READTHEDOCS_OUTPUT/html
