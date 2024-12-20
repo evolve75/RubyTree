@@ -84,6 +84,9 @@ Gem::Specification.new do |s|
                     Thank you for installing RubyTree.
 
     Note::
+    - 2.1.1 is a minor update that updates all dependencies and
+            Updates the guard clause for creating a tree from a hash.
+
     - 2.1.0 is a minor update that brings all libraries to their
             latest stable versions. This version no longer supports
             Ruby 2.6 (minimum requirement is now >= 2.7).
