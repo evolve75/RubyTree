@@ -2,7 +2,7 @@
 #
 # Rakefile - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006-2022  Anupam Sengupta
+# Copyright (c) 2006-2024  Anupam Sengupta
 #
 # All rights reserved.
 #
@@ -160,9 +160,16 @@ namespace :gem do
     pkg.need_tar = true
   end
 
-  desc 'Push the gem into the Rubygems repository'
+  desc 'Push the gem into the Rubygems and Github repositories'
   task push: :gem do
+    github_repo = 'https://rubygems.pkg.github.com/evolve75'
+
+    # This pushes to the standard RubyGems registry
     sh "gem push pkg/#{GEM_NAME}"
+
+    # For github, the credentials key is assumed to be github
+    # See: https://docs.github.com/en/packages/working-with-a-github-packages-registry/
+    sh "gem push --key github --host #{github_repo} pkg/#{GEM_NAME}"
   end
 end
 
