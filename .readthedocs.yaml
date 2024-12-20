@@ -9,7 +9,7 @@ version: 2
 build:
   os: ubuntu-22.04
   tools:
-    ruby: "2.7"    
+    ruby: "3.3"    
   commands:
     - gem install bundler
     - bundle install
