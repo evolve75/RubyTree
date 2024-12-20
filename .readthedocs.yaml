@@ -14,4 +14,5 @@ build:
     - gem install bundler -v 2.3
     - bundle install
     - bundle exec rake doc:yard
+    - mkdir -p $READTHEDOCS_OUTPUT/html
     - cp -r doc $READTHEDOCS_OUTPUT/html
