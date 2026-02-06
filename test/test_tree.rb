@@ -846,6 +846,18 @@ module TestTree
       assert(result_array.include?(@child4), 'Should have child 4')
     end
 
+    # Test the each_level method without a block (Enumerator).
+    def test_each_level
+      setup_test_tree
+
+      levels = @root.each_level.to_a
+
+      assert_equal(3, levels.length, 'Should have three levels')
+      assert_equal([@root], levels[0])
+      assert_equal([@child1, @child2, @child3], levels[1])
+      assert_equal([@child4], levels[2])
+    end
+
     # Test the parent method.
     def test_parent
       setup_test_tree

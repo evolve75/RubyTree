@@ -782,7 +782,7 @@ module Tree
         end
         self
       else
-        each
+        to_enum(:each_level)
       end
     end
 
