@@ -1545,6 +1545,9 @@ module TestTree
 
       assert_raise(ArgumentError) { @root.rename_child('Not_Present_Child1', 'ALT_Child1') }
 
+      error = assert_raise(ArgumentError) { @root.rename_child('Child1', 'Child2') }
+      assert_match(/Child name already exists: Child2/, error.message)
+
       @root.rename_child('Child1', 'ALT_Child1')
       assert_equal('ALT_Child1', @child1.name, "Name should be 'ALT_Child1'")
       assert_equal(@child1, @root['ALT_Child1'], 'Should be able to access from parent using new name')

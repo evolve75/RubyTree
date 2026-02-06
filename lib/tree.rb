@@ -457,6 +457,9 @@ module Tree
       raise ArgumentError, "Invalid child name specified: #{old_name}"\
             unless @children_hash.key?(old_name)
 
+      raise ArgumentError, "Child name already exists: #{new_name}"\
+            if @children_hash.key?(new_name)
+
       @children_hash[new_name] = @children_hash.delete(old_name)
       @children_hash[new_name].name = new_name
     end
