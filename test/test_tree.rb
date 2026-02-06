@@ -693,6 +693,16 @@ module TestTree
 
       assert(!@root.children?, 'Should have no children')
       assert_equal(1, @root.size, 'Should have one node')
+
+      # Removed children should be detached (root? == true).
+      assert(@child1.root?, 'Child1 should be a root after remove_all!')
+      assert(@child2.root?, 'Child2 should be a root after remove_all!')
+      assert(@child3.root?, 'Child3 should be a root after remove_all!')
+      assert(@child4.root?, 'Child4 should be a root after remove_all!')
+      assert_nil(@child1.parent, 'Child1 parent should be nil after remove_all!')
+      assert_nil(@child2.parent, 'Child2 parent should be nil after remove_all!')
+      assert_nil(@child3.parent, 'Child3 parent should be nil after remove_all!')
+      assert_nil(@child4.parent, 'Child4 parent should be nil after remove_all!')
     end
 
     # Test the remove_from_parent! method.

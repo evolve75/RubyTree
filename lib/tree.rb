@@ -543,7 +543,10 @@ module Tree
     # @see #remove!
     # @see #remove_from_parent!
     def remove_all!
-      @children.each(&:remove_all!)
+      @children.each do |child|
+        child.remove_all!
+        child.set_as_root!
+      end
 
       @children_hash.clear
       @children.clear
