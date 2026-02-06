@@ -679,7 +679,7 @@ module Tree
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
-            peek_node.node.children.map { |node| marked_node.new(node, false) }
+            peek_node.node.children.compact.map { |node| marked_node.new(node, false) }
           node_stack = marked_children.concat(node_stack)
           next
         else
@@ -710,9 +710,11 @@ module Tree
       # Use a queue to do breadth traversal
       until node_queue.empty?
         node_to_traverse = node_queue.shift
+        next unless node_to_traverse
+
         yield node_to_traverse
         # Enqueue the children from left to right.
-        node_to_traverse.children { |child| node_queue.push child }
+        node_to_traverse.children { |child| node_queue.push child if child }
       end
 
       self if block_given?

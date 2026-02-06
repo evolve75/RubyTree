@@ -309,5 +309,27 @@ module TestTree
       assert_equal(@right_child1, @root[0], 'right_child1 should now be the first child')
       assert_equal(@left_child1, @root[1], 'left_child1 should now be the last child')
     end
+
+    # Test traversals when nil children exist.
+    def test_traversal_with_nil_children
+      @root << @left_child1
+      @root << @right_child1
+
+      @root.right_child = nil
+
+      breadth_nodes = []
+      post_nodes = []
+
+      assert_nothing_raised do
+        @root.breadth_each { |node| breadth_nodes << node }
+      end
+
+      assert_nothing_raised do
+        @root.postordered_each { |node| post_nodes << node }
+      end
+
+      assert_equal([@root, @left_child1], breadth_nodes)
+      assert_equal([@left_child1, @root], post_nodes)
+    end
   end
 end
