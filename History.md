@@ -1,5 +1,23 @@
 # History of Changes
 
+### 2.2.0 / 2026-02-06
+
+* Prevent cycles by rejecting attempts to add an ancestor as a child.
+
+* Ensure `remove_all!` detaches children by clearing their parent links.
+
+* Raise on sibling name collisions in `rename_child`.
+
+* Harden binary tree child assignment (`set_child_at`) with proper index errors
+  and cleanup of parent/hash references.
+
+* Make traversals resilient to missing children by skipping `nil` nodes in
+  `postordered_each` and `breadth_each`.
+
+* Return a level-wise enumerator from `each_level` when no block is given.
+
+* Improve `to_s` formatting to show `<Empty>` for nil content.
+
 ### 2.1.1 / 2024-12-19
 
 * 2.1.1 is a minor update that updates all dependencies and updates the guard
