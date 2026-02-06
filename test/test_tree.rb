@@ -94,6 +94,7 @@ module TestTree
       assert_not_nil(@root.name, 'Name should not be nil')
       assert_equal('ROOT', @root.name, "Name should be 'ROOT'")
       assert_equal('Root Node', @root.content, "Content should be 'Root Node'")
+      assert(@root.to_s.include?('Content: Root Node'), 'to_s should include content value')
       assert(@root.root?, 'Should identify as root')
       assert(!@root.children?, 'Cannot have any children')
       assert(@root.content?, 'This root should have content')
@@ -115,6 +116,11 @@ module TestTree
       assert_same(@root, @child1.root, 'Root should be ROOT')
       assert_same(@root, @child4.root, 'Root should be ROOT')
       assert_equal(2, @root.node_height, "Root's height after adding the children should be 2")
+    end
+
+    def test_to_s_empty_content
+      empty = Tree::TreeNode.new('EMPTY')
+      assert_match(/Content: <Empty>/, empty.to_s)
     end
 
     def test_from_hash
