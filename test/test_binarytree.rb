@@ -229,6 +229,9 @@ module TestTree
       assert_nil(@root.left_child, 'The left child should now be nil')
       assert_nil(@root.first_child, 'The first child is now nil')
       assert_equal('B Child at Right', @root.last_child.name, 'The last child should now be the right child')
+      assert(@left_child1.root?, 'The old left child should now be a root')
+      assert_nil(@left_child1.parent, 'The old left child should not have a parent')
+      assert_nil(@root['A Child at Left'], 'Lookup by old left name should be nil')
     end
 
     # Test right_child= method.
@@ -249,6 +252,15 @@ module TestTree
       assert_nil(@root.right_child, 'The right child should now be nil')
       assert_equal('A Child at Left', @root.first_child.name, 'The first child should now be the left child')
       assert_nil(@root.last_child, 'The first child is now nil')
+      assert(@right_child1.root?, 'The old right child should now be a root')
+      assert_nil(@right_child1.parent, 'The old right child should not have a parent')
+      assert_nil(@root['B Child at Right'], 'Lookup by old right name should be nil')
+    end
+
+    # Test invalid index error for set_child_at.
+    def test_set_child_at_invalid_index
+      error = assert_raise(ArgumentError) { @root.send(:set_child_at, @left_child1, 2) }
+      assert_match(/cannot have more than two children/i, error.message)
     end
 
     # Test isLeft_child? method.
