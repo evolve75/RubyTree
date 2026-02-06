@@ -318,7 +318,8 @@ module Tree
     #
     # @return [String] A string representation of the node.
     def to_s
-      "Node Name: #{@name} Content: #{@content.to_s || '<Empty>'} " \
+      content_str = @content.nil? ? '<Empty>' : @content.to_s
+      "Node Name: #{@name} Content: #{content_str} " \
         "Parent: #{root? ? '<None>' : @parent.name.to_s} "       \
         "Children: #{@children.length} Total Nodes: #{size}"
     end
@@ -394,6 +395,10 @@ module Tree
 
       raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
 
+      if (ancestors = parentage) && ancestors.include?(child)
+        raise ArgumentError, 'Attempting add ancestor as a child'
+      end
+
       # Lazy man's unique test, won't test if children of child are unique in
       # this tree too.
       raise "Child #{child.name} already added!"\
@@ -452,6 +457,9 @@ module Tree
     def rename_child(old_name, new_name)
       raise ArgumentError, "Invalid child name specified: #{old_name}"\
             unless @children_hash.key?(old_name)
+
+      raise ArgumentError, "Child name already exists: #{new_name}"\
+            if @children_hash.key?(new_name)
 
       @children_hash[new_name] = @children_hash.delete(old_name)
       @children_hash[new_name].name = new_name
@@ -539,7 +547,10 @@ module Tree
     # @see #remove!
     # @see #remove_from_parent!
     def remove_all!
-      @children.each(&:remove_all!)
+      @children.each do |child|
+        child.remove_all!
+        child.set_as_root!
+      end
 
       @children_hash.clear
       @children.clear
@@ -669,7 +680,7 @@ module Tree
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
-            peek_node.node.children.map { |node| marked_node.new(node, false) }
+            peek_node.node.children.compact.map { |node| marked_node.new(node, false) }
           node_stack = marked_children.concat(node_stack)
           next
         else
@@ -700,9 +711,11 @@ module Tree
       # Use a queue to do breadth traversal
       until node_queue.empty?
         node_to_traverse = node_queue.shift
+        next unless node_to_traverse
+
         yield node_to_traverse
         # Enqueue the children from left to right.
-        node_to_traverse.children { |child| node_queue.push child }
+        node_to_traverse.children { |child| node_queue.push child if child }
       end
 
       self if block_given?
@@ -770,7 +783,7 @@ module Tree
         end
         self
       else
-        each
+        to_enum(:each_level)
       end
     end
 

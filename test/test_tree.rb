@@ -94,6 +94,7 @@ module TestTree
       assert_not_nil(@root.name, 'Name should not be nil')
       assert_equal('ROOT', @root.name, "Name should be 'ROOT'")
       assert_equal('Root Node', @root.content, "Content should be 'Root Node'")
+      assert(@root.to_s.include?('Content: Root Node'), 'to_s should include content value')
       assert(@root.root?, 'Should identify as root')
       assert(!@root.children?, 'Cannot have any children')
       assert(@root.content?, 'This root should have content')
@@ -115,6 +116,11 @@ module TestTree
       assert_same(@root, @child1.root, 'Root should be ROOT')
       assert_same(@root, @child4.root, 'Root should be ROOT')
       assert_equal(2, @root.node_height, "Root's height after adding the children should be 2")
+    end
+
+    def test_to_s_empty_content
+      empty = Tree::TreeNode.new('EMPTY')
+      assert_match(/Content: <Empty>/, empty.to_s)
     end
 
     def test_from_hash
@@ -491,6 +497,10 @@ module TestTree
 
       # Test the addition of a nil node.
       assert_raise(ArgumentError) { @root.add(nil) }
+
+      # Test adding an ancestor as a child (cycle prevention).
+      error = assert_raise(ArgumentError) { @child4.add(@child3) }
+      assert_match(/Attempting add ancestor as a child/, error.message)
     end
 
     # Test the addition of a duplicate node (duplicate being defined as a node with the same name).
@@ -689,6 +699,16 @@ module TestTree
 
       assert(!@root.children?, 'Should have no children')
       assert_equal(1, @root.size, 'Should have one node')
+
+      # Removed children should be detached (root? == true).
+      assert(@child1.root?, 'Child1 should be a root after remove_all!')
+      assert(@child2.root?, 'Child2 should be a root after remove_all!')
+      assert(@child3.root?, 'Child3 should be a root after remove_all!')
+      assert(@child4.root?, 'Child4 should be a root after remove_all!')
+      assert_nil(@child1.parent, 'Child1 parent should be nil after remove_all!')
+      assert_nil(@child2.parent, 'Child2 parent should be nil after remove_all!')
+      assert_nil(@child3.parent, 'Child3 parent should be nil after remove_all!')
+      assert_nil(@child4.parent, 'Child4 parent should be nil after remove_all!')
     end
 
     # Test the remove_from_parent! method.
@@ -830,6 +850,18 @@ module TestTree
       assert(result_array.include?(@child2), 'Should have child 2')
       assert(!result_array.include?(@child3), 'Should not have child 3')
       assert(result_array.include?(@child4), 'Should have child 4')
+    end
+
+    # Test the each_level method without a block (Enumerator).
+    def test_each_level
+      setup_test_tree
+
+      levels = @root.each_level.to_a
+
+      assert_equal(3, levels.length, 'Should have three levels')
+      assert_equal([@root], levels[0])
+      assert_equal([@child1, @child2, @child3], levels[1])
+      assert_equal([@child4], levels[2])
     end
 
     # Test the parent method.
@@ -1530,6 +1562,9 @@ module TestTree
       setup_test_tree
 
       assert_raise(ArgumentError) { @root.rename_child('Not_Present_Child1', 'ALT_Child1') }
+
+      error = assert_raise(ArgumentError) { @root.rename_child('Child1', 'Child2') }
+      assert_match(/Child name already exists: Child2/, error.message)
 
       @root.rename_child('Child1', 'ALT_Child1')
       assert_equal('ALT_Child1', @child1.name, "Name should be 'ALT_Child1'")

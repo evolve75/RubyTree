@@ -203,12 +203,29 @@ module Tree
     #
     # @raise [ArgumentError] If the index is out of limits.
     def set_child_at(child, at_index)
-      raise ArgumentError 'A binary tree cannot have more than two children.'\
-                          unless (0..1).include? at_index
+      raise ArgumentError, 'A binary tree cannot have more than two children.'\
+                           unless (0..1).include? at_index
 
-      @children[at_index]        = child
-      @children_hash[child.name] = child if child # Assign the name mapping
-      child.parent               = self if child
+      old_child = @children[at_index]
+      if old_child && old_child != child
+        still_present = @children.each_with_index.any? do |existing, idx|
+          idx != at_index && existing.equal?(old_child)
+        end
+
+        unless still_present
+          @children_hash.delete(old_child.name)
+          old_child.set_as_root!
+        end
+      end
+
+      if child
+        child.parent&.remove!(child) unless child.parent == self
+        @children[at_index]        = child
+        @children_hash[child.name] = child # Assign the name mapping
+        child.parent               = self
+      else
+        @children[at_index] = nil
+      end
       child
     end
 

@@ -44,7 +44,8 @@ Gem::Specification.new do |s|
   END_DESC
 
   s.metadata = {
-    'rubygems_mfa_required' => 'true'
+    'rubygems_mfa_required' => 'true',
+    'github_repo' => 'ssh://github.com/evolve75/rubytree'
   }
 
   s.files                = Dir['lib/**/*.rb']  # The actual code

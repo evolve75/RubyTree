@@ -7,6 +7,28 @@ _Note_: API changes are expected to reduce significantly after the `1.x`
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+## Release 2.2.0 Changes
+
+* [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add
+  an ancestor node as a child, preventing cycles.
+
+* [Tree::TreeNode#remove_all!][remove_all] now detaches children by clearing
+  their parent links.
+
+* [Tree::TreeNode#rename_child][rename_child] now raises `ArgumentError` if the
+  new name collides with an existing sibling.
+
+* [Tree::BinaryTreeNode#set_child_at][set_child_at] now raises `ArgumentError`
+  for invalid indices and cleans up parent/hash references when replacing or
+  clearing a child.
+
+* [Tree::TreeNode#postordered_each][postordered_each] and
+  [Tree::TreeNode#breadth_each][breadth_each] now skip `nil` children to
+  support binary trees with missing children.
+
+* [Tree::TreeNode#each_level][each_level] now returns a level-wise enumerator
+  when called without a block.
+
 ## Release 2.1.0 Changes
 
 * Minimum Ruby version has been bumped to 2.7 and above
@@ -143,6 +165,7 @@ smooth transition to the new APIs.
 [detached_subtree_copy]: rdoc-ref:Tree::TreeNode#detached_subtree_copy
 [dup]: rdoc-ref:Tree::TreeNode#dup
 [each]: rdoc-ref:Tree::TreeNode#each
+[each_level]: rdoc-ref:Tree::TreeNode#each_level
 [in_degree]: rdoc-ref:Tree::Utils::TreeMetricsHandler#in_degree
 [initialize]: rdoc-ref:Tree::TreeNode#initialize
 [inordered_each]: rdoc-ref:Tree::BinaryTreeNode#inordered_each
@@ -155,5 +178,8 @@ smooth transition to the new APIs.
 [postordered_each]: rdoc-ref:Tree::TreeNode#postordered_each
 [preordered_each]: rdoc-ref:Tree::TreeNode#preordered_each
 [previous_sibling]: rdoc-ref:Tree::TreeNode#previous_sibling
+[remove_all]: rdoc-ref:Tree::TreeNode#remove_all!
+[rename_child]: rdoc-ref:Tree::TreeNode#rename_child
+[set_child_at]: rdoc-ref:Tree::BinaryTreeNode#set_child_at
 [siblings]: rdoc-ref:Tree::TreeNode#siblings
 [to_json]: rdoc-ref:Tree::Utils::JSONConverter#to_json
