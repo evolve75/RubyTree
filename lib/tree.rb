@@ -394,6 +394,10 @@ module Tree
 
       raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
 
+      if (ancestors = parentage) && ancestors.include?(child)
+        raise ArgumentError, 'Attempting add ancestor as a child'
+      end
+
       # Lazy man's unique test, won't test if children of child are unique in
       # this tree too.
       raise "Child #{child.name} already added!"\

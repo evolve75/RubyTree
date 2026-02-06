@@ -491,6 +491,10 @@ module TestTree
 
       # Test the addition of a nil node.
       assert_raise(ArgumentError) { @root.add(nil) }
+
+      # Test adding an ancestor as a child (cycle prevention).
+      error = assert_raise(ArgumentError) { @child4.add(@child3) }
+      assert_match(/Attempting add ancestor as a child/, error.message)
     end
 
     # Test the addition of a duplicate node (duplicate being defined as a node with the same name).
