@@ -1,5 +1,11 @@
 # History of Changes
 
+### 2.2.1pre / 2026-02-07
+
+* Simplified development dependency constraints while maintaining Ruby 2.7+
+  compatibility. Some upstream updates (e.g., `diff-lcs` 2.x, `erb` 6.x) remain
+  on current versions due to Ruby 2.7 support.
+
 ### 2.2.0 / 2026-02-06
 
 * Prevent cycles by rejecting attempts to add an ancestor as a child.
