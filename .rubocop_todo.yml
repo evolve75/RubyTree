@@ -41,5 +41,6 @@ Metrics/PerceivedComplexity:
 Security/MarshalLoad:
   Exclude:
     - 'lib/tree.rb'
-    - 'spec/tree_spec.rb'
+    - 'spec/tree_initialize_spec.rb'
+    - 'spec/tree_detached_copy_spec.rb'
     - 'test/test_tree.rb'

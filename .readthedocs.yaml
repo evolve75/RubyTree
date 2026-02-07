@@ -9,9 +9,9 @@ version: 2
 build:
   os: ubuntu-22.04
   tools:
-    ruby: "3.3"    
+    ruby: "3.1"
   commands:
-    - gem install bundler -v 2.3
+    - gem install bundler -v 2.6.9
     - bundle install
     - bundle exec rake doc:yard
     - mkdir -p $READTHEDOCS_OUTPUT/html
