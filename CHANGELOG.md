@@ -37,6 +37,9 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Treap implementation (`Tree::TreapNode`) with ordered
   insert/search/delete operations.
 
+* Add a Binary Heap implementation (`Tree::BinaryHeapNode`) with ordered
+  insert/extract operations.
+
 * Add a Trie implementation (`Tree::TrieNode`) for prefix-based lookup.
 
 * Add a Splay Tree implementation (`Tree::SplayTreeNode`) with ordered
