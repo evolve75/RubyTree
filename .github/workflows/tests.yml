@@ -12,10 +12,14 @@ jobs:
         ruby: ["3.1", "3.2", "3.3", "3.4"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - run: rm -rf pkg
-      - run: bundle exec rake clobber test:all doc:yard gem:package gemspec
+      - run: bundle exec rake clobber
+      - run: bundle exec rake test:all
+      - run: bundle exec rake doc:yard
+      - run: bundle exec rake gemspec
+      - run: bundle exec rake gem:package

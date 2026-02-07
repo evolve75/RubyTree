@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   }
 
   s.files                = Dir['lib/**/*.rb']  # The actual code
-  s.files               += Dir['[A-Z]*']       # Various documentation files
+  s.files               += Dir['[A-Z]*'].select { |path| File.file?(path) } # Various documentation files
   s.files               += Dir['test/**/*.rb'] # Test cases
   s.files               += Dir['spec/**/*.rb'] # Rspec Test cases
   s.files               += Dir['examples/**/*.rb'] # Examples
