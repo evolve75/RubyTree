@@ -36,16 +36,18 @@
 
 require 'test/unit'
 require_relative '../lib/tree/binarytree'
+require_relative 'support/fixtures_shared'
 
 module TestTree
   # Test class for the binary tree node.
   class TestBinaryTreeNode < Test::Unit::TestCase
+    include TreeTestFixtures
     # Setup the test data scaffolding.
     def setup
-      @root = Tree::BinaryTreeNode.new('ROOT', 'Root Node')
-
-      @left_child1  = Tree::BinaryTreeNode.new('A Child at Left', 'Child Node @ left')
-      @right_child1 = Tree::BinaryTreeNode.new('B Child at Right', 'Child Node @ right')
+      nodes = build_binary_tree_nodes
+      @root = nodes[:root]
+      @left_child1 = nodes[:left_child1]
+      @right_child1 = nodes[:right_child1]
     end
 
     # Tear down the test data scaffolding.

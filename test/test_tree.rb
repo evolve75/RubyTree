@@ -34,11 +34,13 @@
 require 'test/unit'
 require 'json'
 require_relative '../lib/tree/tree_deps'
+require_relative 'support/fixtures_shared'
 
 module TestTree
   # Test class for the Tree node.
   # noinspection RubyTooManyInstanceVariablesInspection
   class TestTreeNode < Test::Unit::TestCase
+    include TreeTestFixtures
     Person = Struct.new(:First, :last) # A simple structure to use as the content for the nodes.
 
     # Create this structure for the tests
@@ -61,20 +63,25 @@ module TestTree
     #
     # Some basic setup to create the nodes for the test tree.
     def setup
-      @root = Tree::TreeNode.new('ROOT', 'Root Node')
-
-      @child1 = Tree::TreeNode.new('Child1', 'Child Node 1')
-      @child2 = Tree::TreeNode.new('Child2', 'Child Node 2')
-      @child3 = Tree::TreeNode.new('Child3', 'Child Node 3')
-      @child4 = Tree::TreeNode.new('Child4', 'Grand Child 1')
-      @child5 = Tree::TreeNode.new('Child5', 'Child Node 4')
+      nodes = build_basic_tree_nodes
+      @root = nodes[:root]
+      @child1 = nodes[:child1]
+      @child2 = nodes[:child2]
+      @child3 = nodes[:child3]
+      @child4 = nodes[:child4]
+      @child5 = nodes[:child5]
     end
 
     # Create the actual test tree.
     def setup_test_tree
-      @root << @child1
-      @root << @child2
-      @root << @child3 << @child4
+      attach_basic_tree(
+        root: @root,
+        child1: @child1,
+        child2: @child2,
+        child3: @child3,
+        child4: @child4,
+        child5: @child5
+      )
     end
 
     # Tear down the entire structure

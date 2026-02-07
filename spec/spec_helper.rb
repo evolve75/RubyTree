@@ -10,6 +10,7 @@
 # frozen_string_literal: true
 
 require 'tree'
+require_relative 'support/fixtures'
 
 if ENV['COVERAGE']
   begin
