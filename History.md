@@ -13,6 +13,9 @@
 * Cycle prevention in `add` eliminates the earlier `to_s`/`size` infinite-loop
   risk caused by cyclic graphs.
 
+* Add `cmp` for traversal/relationship-based comparison without changing the
+  name-based `<=>` semantics.
+
 ### 2.2.1pre / 2026-02-07
 
 * Simplified development dependency constraints while maintaining Ruby 2.7+

@@ -126,6 +126,35 @@ module TestTree
       assert_equal(0, first_node <=> second_node)
     end
 
+    def test_cmp_policies
+      setup_test_tree
+
+      assert_equal(-1, @child1.cmp(@child2, policy: :name))
+      assert_equal(0, @child1.cmp(@child1, policy: :name))
+      assert_nil(@child1.cmp('nope', policy: :name))
+
+      assert_equal(-1, @root.cmp(@child1, policy: :each))
+      assert_equal(-1, @child1.cmp(@child2, policy: :each))
+      assert_equal(1, @child3.cmp(@child2, policy: :each))
+
+      assert_equal(-1, @root.cmp(@child1, policy: :breadth_each))
+      assert_equal(-1, @child1.cmp(@child2, policy: :breadth_each))
+      assert_equal(1, @child3.cmp(@child2, policy: :breadth_each))
+
+      assert_equal(-1, @root.cmp(@child4, policy: :direct_only))
+      assert_equal(1, @child4.cmp(@root, policy: :direct_only))
+      assert_nil(@child1.cmp(@child2, policy: :direct_only))
+
+      assert_equal(-1, @child1.cmp(@child2, policy: :direct_or_sibling))
+      assert_equal(1, @child2.cmp(@child1, policy: :direct_or_sibling))
+      assert_equal(-1, @root.cmp(@child4, policy: :direct_or_sibling))
+      assert_nil(@child1.cmp(@child4, policy: :direct_or_sibling))
+
+      other_root = Tree::TreeNode.new('OTHER')
+      assert_nil(@root.cmp(other_root, policy: :each))
+      assert_nil(@root.cmp(other_root, policy: :breadth_each))
+    end
+
     def test_is_comparable
       node_a = Tree::TreeNode.new('NodeA', 'Some Content')
       node_b = Tree::TreeNode.new('NodeB', 'Some Content')

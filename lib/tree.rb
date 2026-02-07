@@ -410,13 +410,91 @@ module Tree
     #
     # @param [Tree::TreeNode] other The other node to compare against.
     #
-    # @return [Integer] +1 if this node is a 'successor', 0 if equal and -1 if
-    #                   this node is a 'predecessor'. Returns 'nil' if the other
-    #                   object is not a 'Tree::TreeNode'.
+    # @return [Integer] +1 if this node's name is greater, 0 if equal, and -1 if
+    #   this node's name is smaller. Returns 'nil' if the other object is not a
+    #   'Tree::TreeNode'.
     def <=>(other)
       return nil if other.nil? || !other.is_a?(Tree::TreeNode)
 
       name <=> other.name
+    end
+
+    # Compare this node against another, using the requested policy.
+    #
+    # @param [Tree::TreeNode] other The other node to compare against.
+    # @param [Symbol] policy The comparison policy.
+    #   :each (default) uses pre-order traversal order,
+    #   :breadth_each uses breadth-first order,
+    #   :direct_or_sibling only allows ancestor/descendant or siblings,
+    #   :direct_only only allows ancestor/descendant,
+    #   :name compares by node name (same as {#<=>}).
+    #
+    # @return [Integer, nil] +1, 0, -1 when comparable; +nil+ when not comparable.
+    def cmp(other, policy: :each)
+      return nil unless comparable_node?(other)
+      return 0 if equal?(other)
+
+      comparator = {
+        name: -> { name <=> other.name },
+        each: -> { compare_by_traversal(other, :each) },
+        breadth_each: -> { compare_by_traversal(other, :breadth_each) },
+        direct_or_sibling: -> { compare_direct_or_sibling(other) },
+        direct_only: -> { compare_direct_only(other) }
+      }[policy]
+
+      raise ArgumentError, "Unknown comparison policy: #{policy}" unless comparator
+
+      comparator.call
+    end
+
+    private
+
+    def comparable_node?(other)
+      other&.is_a?(Tree::TreeNode)
+    end
+
+    def compare_by_traversal(other, method_name)
+      return nil unless root.equal?(other.root)
+
+      seen_self = false
+      seen_other = false
+
+      root.public_send(method_name) do |node|
+        if node.equal?(self)
+          return -1 unless seen_other
+
+          seen_self = true
+        elsif node.equal?(other)
+          return 1 unless seen_self
+
+          seen_other = true
+        end
+        return 0 if seen_self && seen_other
+      end
+
+      nil
+    end
+
+    def compare_direct_only(other)
+      return 1 if (ancestors = parentage) && ancestors.include?(other)
+      return -1 if (other_ancestors = other.parentage) && other_ancestors.include?(self)
+
+      nil
+    end
+
+    def compare_direct_or_sibling(other)
+      direct = compare_direct_only(other)
+      return direct unless direct.nil?
+
+      return nil unless parent && other.parent
+      return nil unless parent.equal?(other.parent)
+
+      siblings = parent.children
+      index_self = siblings.index(self)
+      index_other = siblings.index(other)
+      return nil unless index_self && index_other
+
+      index_self <=> index_other
     end
   end
 end

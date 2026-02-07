@@ -18,6 +18,9 @@ smooth transition to the new APIs.
 * Added [Tree::TreeNode#validate_acyclic!][validate_acyclic] and
   [Tree::TreeNode#acyclic?][acyclic] to detect cycles in untrusted trees.
 
+* Added [Tree::TreeNode#cmp][cmp] to compare nodes using traversal or
+  relationship policies without changing the name-based `<=>` behavior.
+
 ## Release 2.2.0 Changes
 
 * [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add
@@ -174,6 +177,7 @@ smooth transition to the new APIs.
 [breadth_each]: rdoc-ref:Tree::TreeNode#breadth_each
 [btree_add]: rdoc-ref:Tree::BinaryTreeNode#add
 [children]: rdoc-ref:Tree::TreeNode#children?
+[cmp]: rdoc-ref:Tree::TreeNode#cmp
 [depth]: rdoc-ref:Tree::Utils::TreeMetricsHandler#depth
 [detached_subtree_copy]: rdoc-ref:Tree::TreeNode#detached_subtree_copy
 [dup]: rdoc-ref:Tree::TreeNode#dup
