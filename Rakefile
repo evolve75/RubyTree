@@ -36,6 +36,7 @@
 
 require 'rubygems'
 require 'bundler'
+require 'rubygems/package_task'
 
 GEM_SPEC = Bundler.load_gemspec(File.join(__dir__, 'rubytree.gemspec'))
 
@@ -147,6 +148,19 @@ end
 # ................................ Gem related
 require 'bundler/gem_helper'
 Bundler::GemHelper.install_tasks
+
+Gem::PackageTask.new(GEM_SPEC) do |pkg|
+  pkg.package_dir = 'pkg'
+  pkg.need_tar = true
+  pkg.need_zip = true
+end
+
+namespace :gem do
+  desc 'Build the gem package (alias of package)'
+  task package: :package
+  desc 'Remove built gem package artifacts (alias of clobber_package)'
+  task clobber_package: :clobber_package
+end
 
 # ................................ Ruby linting
 begin
