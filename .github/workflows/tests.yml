@@ -21,5 +21,6 @@ jobs:
       - run: bundle exec rake clobber
       - run: bundle exec rake test:all
       - run: bundle exec rake doc:yard
+        if: matrix.ruby == '3.4'
       - run: bundle exec rake gemspec
       - run: bundle exec rake gem:package
