@@ -16,6 +16,9 @@
 * Add `cmp` for traversal/relationship-based comparison without changing the
   name-based `<=>` semantics.
 
+* Allow `print_tree` to write to a custom IO and add `print_tree_to_s` for
+  string output.
+
 ### 2.2.1pre / 2026-02-07
 
 * Simplified development dependency constraints while maintaining Ruby 2.7+

@@ -243,8 +243,14 @@ module TestTree
     def test_print_tree
       setup_test_tree
       buffer = StringIO.new
-      @root.print_tree(0, nil, ->(node, prefix) { buffer.puts "#{prefix} #{node.name}" })
+      @root.print_tree(0, nil, nil, io: buffer)
       assert(buffer.string.include?('ROOT'))
+    end
+
+    def test_print_tree_to_s
+      setup_test_tree
+      output = @root.print_tree_to_s
+      assert(output.include?('ROOT'))
     end
   end
 end
