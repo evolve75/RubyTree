@@ -32,7 +32,9 @@
 module Tree
   module Utils
     # Provides traversal helpers for TreeNode.
+    # rubocop:disable Metrics/ModuleLength
     module TreeTraversalHandler
+      require 'stringio'
       # Traverses each node (including this node) of the (sub)tree rooted at this
       # node by yielding the nodes to the specified block.
       def each # :yields: node
@@ -133,10 +135,29 @@ module Tree
       end
 
       # Pretty prints the (sub)tree rooted at this node.
+      # Output defaults to +$stdout+ unless an +io:+ is provided.
       def print_tree(level = node_depth, max_depth = nil,
-                     block = lambda { |node, prefix|
-                               puts "#{prefix} #{node.name}"
-                             })
+                     block = nil, io: $stdout, &custom_block)
+        block = resolve_print_block(block, custom_block, io)
+        block.call(self, tree_prefix(level))
+
+        # Exit if the max level is defined, and reached.
+        return unless max_depth.nil? || level < max_depth
+
+        # Child might be 'nil'
+        children do |child|
+          child&.print_tree(level + 1, max_depth, block, io: io)
+        end
+      end
+
+      # Returns the pretty-printed tree output as a string.
+      def print_tree_to_s(level = node_depth, max_depth = nil)
+        buffer = StringIO.new
+        print_tree(level, max_depth, io: buffer)
+        buffer.string
+      end
+
+      def tree_prefix(level)
         prefix = ''.dup # dup must be invoked to make this mutable.
 
         if root?
@@ -149,16 +170,19 @@ module Tree
           prefix << (children? ? '+' : '>')
         end
 
-        block.call(self, prefix)
-
-        # Exit if the max level is defined, and reached.
-        return unless max_depth.nil? || level < max_depth
-
-        # Child might be 'nil'
-        children do |child|
-          child&.print_tree(level + 1, max_depth, block)
-        end
+        prefix
       end
+
+      def resolve_print_block(block, custom_block, io)
+        return block if block
+        return custom_block if custom_block
+
+        lambda { |node, prefix|
+          io.puts "#{prefix} #{node.name}"
+        }
+      end
+      private :tree_prefix, :resolve_print_block
     end
+    # rubocop:enable Metrics/ModuleLength
   end
 end

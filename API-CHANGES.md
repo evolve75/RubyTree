@@ -21,6 +21,11 @@ smooth transition to the new APIs.
 * Added [Tree::TreeNode#cmp][cmp] to compare nodes using traversal or
   relationship policies without changing the name-based `<=>` behavior.
 
+* [Tree::TreeNode#print_tree][print_tree] now accepts an `io:` keyword to
+  redirect output (defaults to `$stdout`), and
+  [Tree::TreeNode#print_tree_to_s][print_tree_to_s] returns the formatted
+  output as a string.
+
 ## Release 2.2.0 Changes
 
 * [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add
@@ -194,6 +199,8 @@ smooth transition to the new APIs.
 [out_degree]: rdoc-ref:Tree::Utils::TreeMetricsHandler#out_degree
 [postordered_each]: rdoc-ref:Tree::TreeNode#postordered_each
 [preordered_each]: rdoc-ref:Tree::TreeNode#preordered_each
+[print_tree]: rdoc-ref:Tree::TreeNode#print_tree
+[print_tree_to_s]: rdoc-ref:Tree::TreeNode#print_tree_to_s
 [previous_sibling]: rdoc-ref:Tree::TreeNode#previous_sibling
 [remove_all]: rdoc-ref:Tree::TreeNode#remove_all!
 [rename_child]: rdoc-ref:Tree::TreeNode#rename_child
