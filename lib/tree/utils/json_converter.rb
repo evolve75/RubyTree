@@ -44,6 +44,7 @@ module Tree
     # Provides utility methods to convert a {Tree::TreeNode} to and from
     # JSON[http://flori.github.com/json/].
     module JSONConverter
+      # Extend the base class with the converter class methods.
       def self.included(base)
         base.extend(ClassMethods)
       end

@@ -46,6 +46,7 @@ module Tree
     #
     # @author Jen Hamon (https://www.github.com/jhamon)
     module HashConverter
+      # Extend the base class with the converter class methods.
       def self.included(base)
         base.extend(ClassMethods)
       end
@@ -54,6 +55,13 @@ module Tree
       # class methods on any class mixing in the {Tree::Utils::HashConverter}
       # module.
       module ClassMethods
+        # Normalize values to a Ruby Hash when possible.
+        #
+        # This accepts hash-like inputs such as ActiveSupport::HashWithIndifferentAccess
+        # by converting any object that responds to +to_hash+.
+        #
+        # @param [Object] value Candidate hash-like input.
+        # @return [Object] A normalized hash, or the original value.
         def normalize_hash_input(value)
           return value.to_hash if value.respond_to?(:to_hash)
 
