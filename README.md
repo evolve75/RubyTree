@@ -1,35 +1,39 @@
-# **RubyTree** #
+# RubyTree
 
-[![Gem Version](https://badge.fury.io/rb/rubytree.png)](https://badge.fury.io/rb/rubytree)
-![Build State](https://github.com/evolve75/RubyTree/actions/workflows/ruby.yml/badge.svg)
-[![Coverage](https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml/badge.svg)](https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml)
+[![Gem Version][gem_version_badge]][gem_version_link]
+![Build State][bb]
+[![Coverage][c]][cl]
 
+```text
         __       _           _
        /__\_   _| |__  _   _| |_ _ __ ___  ___
       / \// | | | '_ \| | | | __| '__/ _ \/ _ \
      / _  \ |_| | |_) | |_| | |_| | |  __/  __/
      \/ \_/\__,_|_.__/ \__, |\__|_|  \___|\___|
                       |___/
+```
 
-## DESCRIPTION: ##
+## Description
 
 **RubyTree** is a pure Ruby implementation of the generic
 [tree data structure][tree_data_structure]. It provides a node-based model to
 store named nodes in the tree, and provides simple APIs to access, modify and
 traverse the structure.
 
-The implementation is *node-centric*, where individual nodes in the tree are the
-primary structural elements. All common tree-traversal methods ([pre-order][],
-[post-order][], and [breadth-first][]) are supported.
+The implementation is *node-centric*, where individual nodes in the tree are
+the primary structural elements. All common tree-traversal methods
+([pre-order][], [post-order][], and [breadth-first][]) are supported.
 
 The library mixes in the [Enumerable][] and [Comparable][] modules to allow
 access to the tree as a standard collection (iteration, comparison, etc.).
 
-A [Binary tree][] is also provided, which provides the [in-order][] traversal in
-addition to the other methods. A [Binary Search Tree][] implementation is
-available under `Tree::BinarySearchTreeNode` (require `tree/binarysearchtree`).
-A [Red-Black Tree][] implementation is available under
-`Tree::RedBlackTreeNode` (require `tree/redblacktree`).
+Available tree types include:
+
+* [Binary tree][] with [in-order][] traversal support.
+* [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
+  `tree/binarysearchtree`).
+* [Red-Black Tree][] under `Tree::RedBlackTreeNode` (require
+  `tree/redblacktree`).
 
 **RubyTree** supports importing from, and exporting to [JSON][], and also
 supports the Ruby's standard object [marshaling][].
@@ -40,7 +44,7 @@ from [rubygems.org/gems/rubytree][rt_gem].
 
 The home page for **RubyTree** is at [rubytree.anupamsg.me][rt_site].
 
-## WHAT'S NEW: ##
+## What's New
 
 See [CHANGELOG](./CHANGELOG.md) for the detailed release history and API
 change notes.
@@ -48,7 +52,7 @@ change notes.
 Cycle creation via `add` is prevented, and explicit cycle validation helpers
 are available for untrusted input (see `validate_acyclic!` and `acyclic?`).
 
-## GETTING STARTED: ##
+## Getting Started
 
 This is a basic usage example of the library to create and manipulate a tree.
 See the [API][rt_doc] documentation for more details.
@@ -58,7 +62,7 @@ See the [API][rt_doc] documentation for more details.
 #
 # example_basic.rb:: Basic usage of the tree library.
 #
-# Copyright (C) 2013-2022 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2013-2022 Anupam Sengupta <https://github.com/evolve75>
 #
 # The following example implements this tree structure:
 #
@@ -87,7 +91,8 @@ root_node.print_tree
 
 # ..... Now insert the child nodes.
 #       Note that you can "chain" the child insertions to any depth.
-root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") << Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
+root_node << Tree::TreeNode.new("CHILD1", "Child1 Content") <<
+  Tree::TreeNode.new("GRANDCHILD1", "GrandChild1 Content")
 root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
 
 # ..... Lets print the representation to stdout.
@@ -125,38 +130,39 @@ root_node.remove!(child1)
 This example can also be found at
 [examples/example_basic.rb](examples/example_basic.rb).
 
-## REQUIREMENTS: ##
+## Requirements
 
 * [Ruby][] 3.1.x and above. RubyTree 2.2.0 is the last release that supports
   Ruby 2.7 and 3.0.
 
-* Run-time Dependencies:
+Run-time dependencies:
 
-    * [JSON][] for converting to/from the JSON format
+* [JSON][] for converting to/from the JSON format
 
+Development dependencies (not required for installing the gem):
 
-* Development dependencies (not required for installing the gem):
-
-    * [Bundler][] for creating the stable build environment
-    * [Rake][] for building the package
-    * [Yard][] for the documentation
-    * [RSpec][] for additional Ruby Spec test files
-    * [RuboCop][] for linting the code
+* [Bundler][] for creating the stable build environment
+* [Rake][] for building the package
+* [Yard][] for the documentation
+* [RSpec][] for additional Ruby Spec test files
+* [RuboCop][] for linting the code
 
 Note: `Tree::TreeNode.new` accepts `{ checks: false }` to disable validation
 guards in performance-critical code paths. This is risky and should only be
 used when benchmark data clearly justifies the risk.
 
-## INSTALL: ##
+## Install
 
 To install the [gem][rt_gem], run this command from a terminal/shell:
 
-    $ gem install rubytree
+```bash
+gem install rubytree
+```
 
 This should install the gem file for **RubyTree**. Note that you might need to
 have super-user privileges (root/sudo) to successfully install the gem.
 
-## DOCUMENTATION: ##
+## Documentation
 
 The primary class **RubyTree** is [Tree::TreeNode][TreeNode]. See the class
 documentation for an example of using the library.
@@ -164,7 +170,9 @@ documentation for an example of using the library.
 If the *ri* documentation was generated during install, you can use this
 command at the terminal to view the text mode ri documentation:
 
-    $ ri Tree::TreeNode
+```bash
+ri Tree::TreeNode
+```
 
 Documentation for the latest released version is available at:
 
@@ -172,52 +180,10 @@ Documentation for the latest released version is available at:
 
 Note that the documentation is formatted using [Yard][].
 
-## DEVELOPERS: ##
+Contributor setup and workflows are documented in
+[CONTRIBUTING.md](./CONTRIBUTING.md).
 
-This section is only for modifying **RubyTree** itself. It is not required for
-using the library!
-
-You can download the latest released source code as a tar or zip file, as
-mentioned above in the installation section.
-
-Alternatively, you can checkout the latest commit/revision from the Version
-Control System. Note that **RubyTree**'s primary [SCM][] is [git][] and is
-hosted on [github.com][rt@github].
-
-### Using the git Repository ###
-
-The git repository is available at [github.com/evolve75/RubyTree][rt@github].
-
-For cloning the git repository, use one of the following commands:
-
-    $ git clone https://github.com/evolve75/RubyTree.git  # using https
-
-### Setting up the Development Environment ###
-
-**RubyTree** uses [Bundler][] to manage its dependencies. This allows for a
-simplified dependency management, for both run-time as well as during build.
-
-After checking out the source, run:
-
-    $ gem install bundler
-    $ bundle install
-    $ bundle exec rake test:all
-    $ bundle exec rake doc:yard
-    $ bundle exec rake gem:package
-
-These steps will install any missing dependencies, run the tests/specs,
-generate the documentation, and finally generate the gem file.
-
-Note that the documentation uses [Yard][], which will be
-downloaded and installed automatically by [Bundler][].
-
-### Running Benchmarks ###
-
-You can run the bundled benchmarks with:
-
-    $ bundle exec rake bench
-
-## ACKNOWLEDGMENTS: ##
+## Acknowledgments
 
 A big thanks to the following contributors for helping improve **RubyTree**:
 
@@ -235,48 +201,48 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 9. [Aidan Steele](https://github.com/aidansteele) for performance improvements
    to `is_root?` and `node_depth`.
 10. [Marco Ziccadi](https://github.com/MZic) for adding the `path_as_string` and
-    `path_as_array` methods.
+   `path_as_array` methods.
 11. [John Mortlock](https://github.com/jmortlock) for significant modernization
-    of the library code and addition of Github `workflows`.
+   of the library code and addition of Github `workflows`.
 12. [Hermann Mayer](https://github.com/jack12816) for adding support for
-    specialized tree nodes (sub-classes of `Tree::TreeNode`).
+   specialized tree nodes (sub-classes of `Tree::TreeNode`).
 13. [Jakub Pavlik](https://github.com/igneus) for fixing the creation of
-    detached copies of unclonable objects such as `:symbol`, `true|false`, etc.
+   detached copies of unclonable objects such as `:symbol`, `true|false`, etc.
 14. [bghalami-rc](https://github.com/bghalami-rc) for updating the guard clause
-    in the `from_hash` method.
+   in the `from_hash` method.
 
-
-## LICENSE: ##
+## License
 
 **RubyTree** is licensed under the terms of the [BSD][] license. See
 [LICENSE.md](./LICENSE.md) for details.
 
-
-[BSD]:                  https://opensource.org/licenses/bsd-license.php "BSD License"
-[Binary tree]:          https://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
-[Binary Search Tree]:   https://en.wikipedia.org/wiki/Binary_search_tree "Binary Search Tree Data Structure"
-[Red-Black Tree]:       https://en.wikipedia.org/wiki/Red%E2%80%93black_tree "Red-Black Tree Data Structure"
-[Bundler]:              https://bundler.io "Bundler"
-[Comparable]:           https://ruby-doc.org/core/Comparable.html "Comparable mix-in"
-[Enumerable]:           https://ruby-doc.org/core/Enumerable.html "Enumerable mix-in"
-[JSON]:                 https://rubygems.org/gems/json "JSON"
-[Rake]:                 https://rubygems.org/gems/rake "Rake"
-[Ruby]:                 https://www.ruby-lang.org "Ruby Programming Language"
-[SCM]:                  https://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
-[Yard]:                 https://yardoc.org "Yard Document Generator"
-[breadth-first]:        https://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
-[git]:                  https://git-scm.com "Git SCM"
-[in-order]:             https://en.wikipedia.org/wiki/Tree_traversal#In-order "In-order (symmetric) Traversal"
-[marshaling]:           https://ruby-doc.org/core/Marshal.html "Marshaling in Ruby"
-[post-order]:           https://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
-[pre-order]:            https://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
-[rt@github]:            https://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
-[rt_doc@head]:          https://rdoc.info/projects/evolve75/RubyTree "RubyTree Documentation for VCS Head"
-[rt_doc]:               https://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
-[rt_gem]:               https://rubygems.org/gems/rubytree "RubyTree Gem"
-[rt_site]:              https://rubytree.anupamsg.me "RubyTree Site"
-[tree_data_structure]:  https://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
-[RSpec]:                https://rspec.info/
-[RuboCop]:              https://rubocop.org/
-
-[TreeNode]:             rdoc-ref:Tree::TreeNode
+[BSD]:https://opensource.org/licenses/bsd-license.php
+[Binary tree]:https://en.wikipedia.org/wiki/Binary_tree
+[Binary Search Tree]:https://en.wikipedia.org/wiki/Binary_search_tree
+[Red-Black Tree]:https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
+[Bundler]:https://bundler.io
+[Comparable]:https://ruby-doc.org/core/Comparable.html
+[Enumerable]:https://ruby-doc.org/core/Enumerable.html
+[JSON]:https://rubygems.org/gems/json
+[Rake]:https://rubygems.org/gems/rake
+[Ruby]:https://www.ruby-lang.org
+[Yard]:https://yardoc.org
+[breadth-first]:https://en.wikipedia.org/wiki/Breadth-first_search
+[git]:https://git-scm.com
+[in-order]:https://en.wikipedia.org/wiki/Tree_traversal#In-order
+[marshaling]:https://ruby-doc.org/core/Marshal.html
+[post-order]:https://en.wikipedia.org/wiki/Tree_traversal#Post-order
+[pre-order]:https://en.wikipedia.org/wiki/Tree_traversal#Pre-order
+[rt@github]:https://github.com/evolve75/RubyTree
+[rt_doc]:https://rubytree.anupamsg.me/rdoc
+[rt_gem]:https://rubygems.org/gems/rubytree
+[rt_site]:https://rubytree.anupamsg.me
+[tree_data_structure]:https://en.wikipedia.org/wiki/Tree_data_structure
+[RSpec]:https://rspec.info/
+[RuboCop]:https://rubocop.org/
+[TreeNode]:rdoc-ref:Tree::TreeNode
+[bb]:https://github.com/evolve75/RubyTree/actions/workflows/ruby.yml/badge.svg
+[c]:http://github.com/evolve75/RubyTree/actions/workflows/coverage.yml/badge.svg
+[cl]:https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml
+[gem_version_badge]:https://badge.fury.io/rb/rubytree.png
+[gem_version_link]:https://badge.fury.io/rb/rubytree

@@ -26,6 +26,8 @@ Changes section to scan for breaking or behavioral changes.
 * Allow `print_tree` to write to a custom IO and add `print_tree_to_s` for
   string output.
 
+* Add markdown lint and link checks via `rake doc:lint` and `rake doc:links`.
+
 * Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
   `HashWithIndifferentAccess` data (see #104).
 
@@ -103,11 +105,11 @@ Changes section to scan for breaking or behavioral changes.
 
 * RubyTree now uses [Github Workflows][workflow] for its CI pipeline.
 
-* RubyTree now allows proper sub-classing of [Tree::TreeNode][TreeNode]. Thanks to
-  [jack12816][] for this.
+* RubyTree now allows proper sub-classing of [Tree::TreeNode][TreeNode]. Thanks
+  to [jack12816][] for this.
 
-* RubyTree now correctly handles creating detached copies of un-clonable objects
-  such as `:symbol`, `true|false`, etc. Thanks to [igneus][] for this.
+* RubyTree now correctly handles creating detached copies of un-clonable
+  objects such as `:symbol`, `true|false`, etc. Thanks to [igneus][] for this.
 
 ### 1.0.2 / 2021-12-29
 
@@ -164,12 +166,14 @@ Changes section to scan for breaking or behavioral changes.
 
 * Fixed [bug-32][] and enabled _move_ semantics on the [Tree::TreeNode#add][add]
   method, so that if a child is added, which has an existing parent, then it
-  will be _removed_ from its old parent, prior to being added to the new location.
+  will be _removed_ from its old parent, prior to being added to the new
+  location.
 
 ### 0.9.5pre4 / 2014-12-17
 
 * Added performance improvements to [Tree::TreeNode#is_root?][is_root] and
-  [Tree::Utils::TreeMetricsHandler#node_depth][mnode_depth]. Thanks to [Aidan Steel][Aidan].
+  [Tree::Utils::TreeMetricsHandler#node_depth][mnode_depth]. Thanks to
+  [Aidan Steel][Aidan].
 
 ### 0.9.5pre3 / 2014-12-16
 
@@ -196,7 +200,9 @@ Changes section to scan for breaking or behavioral changes.
 
 ### 0.9.4 / 2014-07-04
 
-* Changed all references to <http://rubyforge.org>.
+* Changed all references to RubyForge (now offline).
+* Legacy RubyForge tracker links were removed since the service is no longer
+  available.
 
 ### 0.9.3 / 2014-02-01
 
@@ -238,8 +244,8 @@ This is a feature and bug-fix release.
 
 * (_Partial_) fix for preventing cyclic graphs in the tree.
 
-* Refactored the [Tree::TreeNode#each][each] method to prevent stack errors while
-  navigating deep trees ([bug-12][]).
+* Refactored the [Tree::TreeNode#each][each] method to prevent stack errors
+  while navigating deep trees ([bug-12][]).
 
 * Check to ensure that the added node's name is unique to the destination tree
   ([pr-9][]). Thanks to [Youssef Rebahi-Gilbert][Youssef] for the idea and the
@@ -253,10 +259,10 @@ This is a feature and bug-fix release.
   return the _receiver node_ if a block was provided. This is consistent with
   how the standard Ruby collections work.
 
-  * [Tree::TreeNode#each][each],
-  * [Tree::TreeNode#preordered_each][preordered_each],
-  * [Tree::TreeNode#postordered_each][postordered_each] and
-  * [Tree::TreeNode#breadth_each][breadth_each].
+* [Tree::TreeNode#each][each],
+* [Tree::TreeNode#preordered_each][preordered_each],
+* [Tree::TreeNode#postordered_each][postordered_each] and
+* [Tree::TreeNode#breadth_each][breadth_each].
 
 #### Other Changes
 
@@ -284,7 +290,8 @@ This is a primarily a bug-fix release, with some packaging changes.
 * Included support for [Bundler][].
 
 * Implemented the [Tree::Utils::JSONConverter#as_json][as_json] method to
-  support Rails' `JSON` encoding, by pulling in the changes from [Eric Cline][Eric].
+  support Rails' `JSON` encoding, by pulling in the changes from
+  [Eric Cline][Eric].
 
 * Partial fix for [bug-5][]. This is to prevent infinite looping if an existing
   node is added again elsewhere in the tree.
@@ -292,14 +299,16 @@ This is a primarily a bug-fix release, with some packaging changes.
 * Fixed the issue with using `integers` as node names, and its interaction
   with the `Tree::TreeNode#[]` access method as documented in [bug-6][].
 
-* Clarified the need to have _unique_ node names in the documentation ([bug-7][]).
+* Clarified the need to have _unique_ node names in the documentation
+  ([bug-7][]).
 
 * Fixed [Tree::TreeNode#siblings][siblings] method to return an _empty_ array
   for the root node as well (it returned `nil` earlier).
 
 ### 0.8.2 / 2011-12-15
 
-* Minor bug-fix release to address [bug-1215][] ([Tree::TreeNode#to_s][to_s]
+* Minor bug-fix release to address bug 1215 (RubyForge tracker, offline)
+  ([Tree::TreeNode#to_s][to_s]
   breaks if `@content` or `@parent.name` is not a string).
 
 ### 0.8.1 / 2010-10-02
@@ -318,7 +327,8 @@ This is a primarily a bug-fix release, with some packaging changes.
 * The sub-tree from the current node can now be cloned in its _entirety_ using
   the [Tree::TreeNode#detached_subtree_copy][detached_subtree_copy] method.
 
-* A major bug-fix for [bug-28613][] which impacted the `Binarytree`
+* A major bug-fix for bug 28613 (RubyForge tracker, offline) which impacted
+  the `Binarytree`
   implementation.
 
 * Minor code re-factoring driven by the code-smell checks using
@@ -359,10 +369,10 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 * Added fixes for root related edge conditions to the:
 
-  * [Tree::TreeNode#is_only_child?][is_only_child],
-  * [Tree::TreeNode#next_sibling][next_sibling],
-  * [Tree::TreeNode#previous_sibling][previous_sibling] and
-  * [Tree::TreeNode#remove!][remove] methods.
+* [Tree::TreeNode#is_only_child?][is_only_child],
+* [Tree::TreeNode#next_sibling][next_sibling],
+* [Tree::TreeNode#previous_sibling][previous_sibling] and
+* [Tree::TreeNode#remove!][remove] methods.
 
 * Removed the `ChangeLog` file as this can now be generated from the git logs.
 
@@ -383,7 +393,8 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 ### 0.6.0 / 2010-01-03
 
-* Fixed [bug-22535][] where the `Tree::TreeNode#depth` method was actually
+* Fixed bug 22535 (RubyForge tracker, offline) where the
+  `Tree::TreeNode#depth` method was actually
   returning `height+1` (**not** the `depth`).
 
 * Marked the `Tree::TreeNode#depth` method as **deprecated** (and introduced the
@@ -425,10 +436,6 @@ This is a primarily a bug-fix release, with some packaging changes.
 [bug-24]: https://github.com/evolve75/RubyTree/issues/24
 [bug-31]: https://github.com/evolve75/RubyTree/issues/31
 [bug-32]: https://github.com/evolve75/RubyTree/issues/32
-[bug-1215]: http://rubyforge.org/tracker/index.php?func=detail&aid=1215&group_id=1215&atid=4793
-[bug-28613]: http://rubyforge.org/tracker/index.php?func=detail&aid=28613&group_id=1215&atid=4793
-[bug-22535]: http://rubyforge.org/tracker/index.php?func=detail&aid=22535&group_id=1215&atid=4793
-
 [pr-2]: https://github.com/evolve75/RubyTree/pull/2
 [pr-9]: https://github.com/evolve75/RubyTree/pull/9
 [pr-35]: https://github.com/evolve75/RubyTree/pull/35
@@ -442,8 +449,8 @@ This is a primarily a bug-fix release, with some packaging changes.
 [RuntimeError]: http://www.ruby-doc.org/core-2.0.0/RuntimeError.html
 [Yard]: http://yardoc.org
 [ZenTest]: https://github.com/seattlerb/zentest
-[dep-warning]: http://rug-b.rubyforge.org/structured_warnings/rdoc/
-[gem-testers]: https://test.rubygems.org/
+[dep-warning]: https://github.com/schmidt/structured_warnings
+[gem-testers]: https://github.com/rubygems/gem-testers
 [gemspec]: https://guides.rubygems.org/specification-reference/
 [reek]: https://github.com/troessner/reek
 [structured-warnings]: http://github.com/schmidt/structured_warnings
@@ -647,12 +654,10 @@ smooth transition to the new APIs.
 * Converted all exceptions thrown on invalid method arguments to from
   `RuntimeError` to `ArgumentError`. This impacts the following methods:
 
-    * [Tree::TreeNode#initialize][initialize]
-    * [Tree::TreeNode#add][add]
-    * [Tree::TreeNode#[]][access]
-    * [Tree::BinaryTreeNode#add][btree_add]
-
-
+* [Tree::TreeNode#initialize][initialize]
+* [Tree::TreeNode#add][add]
+* [Tree::TreeNode#[]][access]
+* [Tree::BinaryTreeNode#add][btree_add]
 * Added [Tree::TreeNode#level][level] as an alias for
   [Tree::TreeNode#node_depth][node_depth]
 
@@ -669,11 +674,9 @@ smooth transition to the new APIs.
 * [Tree::TreeNode#add][add] and [Tree::TreeNode#<<][append] now throw an
   `ArgumentError` exception if a `nil` node is passed as an argument.
 
-* Added new methods
-    [Tree::TreeNode#to_json][to_json] and
-    [Tree::TreeNode#json_create][json_create]
-    to convert to/from the JSON format. Thanks to
-    [Dirk](http://github.com/railsbros-dirk) for this change.
+* Added new methods [Tree::TreeNode#to_json][to_json] and
+  [Tree::TreeNode#json_create][json_create] to convert to/from the JSON format.
+  Thanks to [Dirk](http://github.com/railsbros-dirk) for this change.
 
 ## Release 0.6.1 Changes
 
@@ -682,8 +685,7 @@ smooth transition to the new APIs.
   [Tree::Utils::TreeMetricsHandler#node_depth][node_depth] which returns the
   correct result.
 
-
-[structured_warnings]: https://github.com/schmidt/structured_warnings
+[structured_warnings]:https://github.com/schmidt/structured_warnings
 
 [access]: rdoc-ref:Tree::TreeNode#[]
 [add]: rdoc-ref:Tree::TreeNode#add

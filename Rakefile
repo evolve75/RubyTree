@@ -43,6 +43,9 @@ GEM_SPEC = Bundler.load_gemspec(File.join(__dir__, 'rubytree.gemspec'))
 PKG_NAME = GEM_SPEC.name
 PKG_VER  = GEM_SPEC.version
 GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem".freeze
+MARKDOWN_FILES = Dir['**/*.md'].reject do |path|
+  path.start_with?('vendor/', 'pkg/')
+end.sort
 
 desc 'Default Task (Run the tests)'
 task default: 'test:all'
@@ -106,6 +109,19 @@ namespace :doc do # ................................ Documentation
   task :clobber_yard do
     rm_rf 'doc'
   end
+
+  desc 'Run markdown lint checks'
+  task :lint do
+    sh('mdl', '--config', '.mdlrc', *MARKDOWN_FILES)
+  end
+
+  desc 'Validate http(s) links in markdown files'
+  task :links do
+    sh('awesome_bot', *MARKDOWN_FILES, '--allow-redirect', '--allow-dupe')
+  end
+
+  desc 'Run markdown lint and link checks'
+  task check: %i[lint links]
 end
 
 desc 'Run the unit tests'
