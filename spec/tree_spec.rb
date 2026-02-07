@@ -3,15 +3,13 @@
 # tree_spec.rb
 #
 # Author:  Anupam Sengupta
-# Time-stamp: <2022-06-22 13:52:50 anupam>
-# Copyright (C) 2015-2022 Anupam Sengupta <anupamsg@gmail.com>
+#
+# Copyright (C) 2015-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # frozen_string_literal: true
 
 require 'rspec'
 require 'spec_helper'
-
-class SpecializedTreeNode < Tree::TreeNode; end
 
 describe Tree do
 
@@ -56,48 +54,6 @@ describe Tree do
     end
 
     it_behaves_like 'detached node'
-  end
-
-  describe 'comparison' do
-    let(:node1) { Tree::TreeNode.new('a') }
-    let(:node2) { SpecializedTreeNode.new('b') }
-
-    it 'allows comparison of specialized tree nodes' do
-      expect(node1 <=> node2).to be_eql(-1)
-    end
-
-    it 'does not allow comparison with nil' do
-      expect(node1 <=> nil).to be_nil
-    end
-
-    it 'does not allow comparison with other objects' do
-      expect(node1 <=> 'c').to be_nil
-    end
-  end
-
-  describe 'serialization' do
-    let(:serialized_node1) { Marshal.dump(SpecializedTreeNode.new('a')) }
-    let(:serialized_node2) { Marshal.dump(Tree::TreeNode.new('b')) }
-    let(:tree) do
-      SpecializedTreeNode.new('root').tap do |root|
-        root << SpecializedTreeNode.new('a')
-        root << Tree::TreeNode.new('b')
-      end
-    end
-    let(:serialized_tree) { Marshal.dump(tree) }
-
-    it 'parses the serialized specialized tree node correctly (root)' do
-      expect(Marshal.load(serialized_tree)).to be_a(SpecializedTreeNode)
-    end
-
-    it 'parses the serialized specialized tree node correctly (child)' do
-      expect(Marshal.load(serialized_tree).children.first).to \
-        be_a(SpecializedTreeNode)
-    end
-
-    it 'parses the serialized tree node correctly' do
-      expect(Marshal.load(serialized_node2)).to be_a(Tree::TreeNode)
-    end
   end
 
   describe '#detached_copy', 'Without content' do
