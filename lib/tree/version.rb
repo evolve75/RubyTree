@@ -35,5 +35,5 @@
 
 module Tree
   # Rubytree Package Version
-  VERSION = '2.2.1pre'
+  VERSION = '3.0.0pre'
 end

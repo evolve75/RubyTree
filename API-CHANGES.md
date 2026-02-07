@@ -29,6 +29,10 @@ smooth transition to the new APIs.
 * [Tree::TreeNode#each_level][each_level] now returns a level-wise enumerator
   when called without a block.
 
+## Release 3.0.0 Changes
+
+* Minimum Ruby version is now 3.1 (support for 2.7 and 3.0 has been dropped).
+
 ## Release 2.1.0 Changes
 
 * Minimum Ruby version has been bumped to 2.7 and above

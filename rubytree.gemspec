@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=2.7'
+  s.required_ruby_version = '>=3.1'
 
   s.summary               = 'A generic tree data structure for Ruby.'
 
@@ -67,7 +67,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'json', '~> 2.18'
 
   # NOTE: Rake is added as a development and test dependency in the Gemfile.
-  s.add_development_dependency 'bundler', '~> 2.3'
+  s.add_development_dependency 'bundler', '~> 2.6'
   s.add_development_dependency 'rake', '~> 13.3'
   s.add_development_dependency 'rdoc', '~> 7.1'
   s.add_development_dependency 'rspec', '~> 3.13'
@@ -85,6 +85,8 @@ Gem::Specification.new do |s|
                     Thank you for installing RubyTree.
 
     Note::
+
+    - 3.0.0pre sets the minimum Ruby version to 3.1.
 
     - 2.2.0 is a minor update that improves tree integrity checks,
             traversal robustness, and node management edge cases.

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubytree (2.2.1pre)
+    rubytree (3.0.0pre)
       json (~> 2.18)
 
 GEM
@@ -91,7 +91,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 2.3)
+  bundler (~> 2.6)
   rake (~> 13.3)
   rdoc (~> 7.1)
   rspec (~> 3.13)
@@ -106,4 +106,4 @@ DEPENDENCIES
   yard (~> 0.9)
 
 BUNDLED WITH
-   2.3.4
+   2.6.9

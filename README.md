@@ -117,8 +117,7 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 2.7.x and above.
-
+* [Ruby][] 3.1.x and above. Ruby 2.7 and 3.0 are supported by RubyTree 2.2.0.
 
 * Run-time Dependencies:
 
