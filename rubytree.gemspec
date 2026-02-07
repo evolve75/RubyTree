@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
 
   s.metadata = {
     'rubygems_mfa_required' => 'true',
-    'github_repo' => 'ssh://github.com/evolve75/rubytree',
+    'github_repo' => 'https://github.com/evolve75/RubyTree',
     'source_code_uri' => 'https://github.com/evolve75/RubyTree',
     'changelog_uri' => 'https://github.com/evolve75/RubyTree/blob/master/CHANGELOG.md'
   }
