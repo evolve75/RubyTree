@@ -45,7 +45,9 @@ Gem::Specification.new do |s|
 
   s.metadata = {
     'rubygems_mfa_required' => 'true',
-    'github_repo' => 'ssh://github.com/evolve75/rubytree'
+    'github_repo' => 'ssh://github.com/evolve75/rubytree',
+    'source_code_uri' => 'https://github.com/evolve75/RubyTree',
+    'changelog_uri' => 'https://github.com/evolve75/RubyTree/blob/master/CHANGELOG.md'
   }
 
   s.files                = Dir['lib/**/*.rb']  # The actual code
