@@ -52,6 +52,13 @@ task :version do
   puts "Current Version: #{GEM_NAME}"
 end
 
+# ................................ Gem metadata
+desc 'Validate gemspec metadata and required fields'
+task :gemspec do
+  GEM_SPEC.validate
+  puts 'Gemspec is valid.'
+end
+
 require 'rake/clean'
 desc 'Remove all generated files.'
 task clean: 'gem:clobber_package'
