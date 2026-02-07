@@ -33,6 +33,7 @@ Available tree types include:
 * [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
   `tree/binarysearchtree`).
 * [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
+* [Treap][] under `Tree::TreapNode` (require `tree/treap`).
 * [Red-Black Tree][] under `Tree::RedBlackTreeNode` (require
   `tree/redblacktree`).
 
@@ -221,6 +222,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Binary tree]:https://en.wikipedia.org/wiki/Binary_tree
 [Binary Search Tree]:https://en.wikipedia.org/wiki/Binary_search_tree
 [AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
+[Treap]:https://en.wikipedia.org/wiki/Treap
 [Red-Black Tree]:https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 [Bundler]:https://bundler.io
 [Comparable]:https://ruby-doc.org/core/Comparable.html
