@@ -111,6 +111,63 @@ module TestTree
       end
     end
 
+    def test_add_node_to_self_as_child
+      root = Tree::TreeNode.new('root')
+
+      assert_raise(ArgumentError) { root << root }
+
+      child = Tree::TreeNode.new('child')
+      assert_raise(ArgumentError) { root << child << root }
+    end
+
+    def test_integer_node_names
+      @n_root = Tree::TreeNode.new(0, 'Root Node')
+      @n_child1 = Tree::TreeNode.new(1, 'Child Node 1')
+      @n_child2 = Tree::TreeNode.new(2, 'Child Node 2')
+      @n_child3 = Tree::TreeNode.new('three', 'Child Node 3')
+
+      @n_root << @n_child1
+      @n_root << @n_child2
+      @n_root << @n_child3
+
+      assert_not_equal(@n_root[1].name, 1)
+      assert_equal(@n_root[0].name, '1')
+      assert_equal(@n_root[1].name, '2')
+
+      assert_equal(@n_root['three'].name, 'three')
+    end
+
+    def test_indexed_access
+      setup_test_tree
+
+      assert_equal(@child1, @root[0], 'Should be the first child')
+      assert_equal(@child4, @root[2][0], 'Should be the grandchild')
+      assert_nil(@root['TEST'], 'Should be nil')
+      assert_nil(@root[99], 'Should be nil')
+      assert_raise(ArgumentError) { @root[nil] }
+    end
+
+    def test_index
+      assert_raise(ArgumentError) { @root[nil] }
+
+      @root << @child1
+      @root << @child2
+      assert_equal(@child1.name, @root['Child1'].name, 'Child 1 should be returned')
+      assert_equal(@child1.name, @root[0].name, 'Child 1 should be returned')
+      assert_equal(@child1.name, @root[-2].name, 'Child 1 should be returned')
+      assert_equal(@child1.name,
+                   @root[-@root.children.size].name, 'Child 1 should be returned')
+
+      assert_equal(@child2.name, @root['Child2'].name, 'Child 2 should be returned')
+      assert_equal(@child2.name, @root[1].name, 'Child 2 should be returned')
+      assert_equal(@child2.name, @root[-1].name, 'Child 2 should be returned')
+
+      assert_nil(@root['Some Random Name'], 'Should return nil')
+      assert_nil(@root[99], 'Should return nil')
+      assert_nil(@root[-(@root.children.size + 1)], 'Should return nil')
+      assert_nil(@root[-3], 'Should return nil')
+    end
+
     def test_add_at_specific_position
       assert(!@root.children?, 'Should not have any children')
 

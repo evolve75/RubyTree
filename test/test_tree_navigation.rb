@@ -58,6 +58,21 @@ module TestTree
       )
     end
 
+    def test_root
+      setup_test_tree
+
+      assert_same(@root, @root.root, "Root's root is self")
+      assert_same(@root, @child1.root, 'Root should be ROOT')
+      assert_same(@root, @child4.root, 'Root should be ROOT')
+    end
+
+    def test_is_root_eh
+      setup_test_tree
+
+      assert(@root.root?, 'The ROOT node must respond as the root node')
+      assert(!@child1.root?, 'Child 1 is not a root node')
+    end
+
     def test_children
       setup_test_tree
 

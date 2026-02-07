@@ -100,6 +100,17 @@ module TestTree
       assert(result_array.include?(@child4), 'Should have child 4')
     end
 
+    def test_single_node_becomes_leaf
+      setup_test_tree
+
+      leafs = @root.each_leaf
+      parents = leafs.collect(&:parent)
+      leafs.each(&:remove_from_parent!)
+      parents.each do |parent|
+        assert(parent.leaf?) unless parent.children?
+      end
+    end
+
     def test_each_level
       setup_test_tree
 
