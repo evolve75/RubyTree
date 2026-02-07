@@ -14,23 +14,6 @@ require 'spec_helper'
 class SpecializedTreeNode < Tree::TreeNode; end
 
 describe Tree do
-  shared_examples_for 'any detached node' do
-    it 'does not equal "Object.new"' do
-      expect(tree).not_to eq(Object.new)
-    end
-
-    it 'does not equal 1 or any other fixnum' do
-      expect(tree).not_to eq(1)
-    end
-
-    it 'identifies itself as a root node' do
-      expect(tree.root?).to be(true)
-    end
-
-    it 'does not have a parent node' do
-      expect(tree.parent).to be_nil
-    end
-  end
 
   describe '#initialize with empty name and nil content' do
     let(:tree) { Tree::TreeNode.new('') }
@@ -43,7 +26,7 @@ describe Tree do
       expect(tree.content).to be_nil
     end
 
-    it_behaves_like 'any detached node'
+    it_behaves_like 'detached node'
   end
 
   describe "#initialize with name 'A' and nil content" do
@@ -57,7 +40,7 @@ describe Tree do
       expect(tree.content).to be_nil
     end
 
-    it_behaves_like 'any detached node'
+    it_behaves_like 'detached node'
   end
 
   describe "#initialize with node name 'A' and some content" do
@@ -72,7 +55,7 @@ describe Tree do
       expect(tree.content).to eq(sample)
     end
 
-    it_behaves_like 'any detached node'
+    it_behaves_like 'detached node'
   end
 
   describe 'comparison' do
@@ -117,21 +100,11 @@ describe Tree do
     end
   end
 
-  shared_examples_for 'any cloned node' do
-    it 'is equal to the original' do
-      expect(clone).to eq tree
-    end
-
-    it 'is not identical to the original' do
-      expect(clone).not_to be tree
-    end
-  end
-
   describe '#detached_copy', 'Without content' do
     let(:tree) { Tree::TreeNode.new('A', nil) }
     let(:clone) { tree.detached_copy }
 
-    it_behaves_like 'any cloned node'
+    it_behaves_like 'cloned node'
   end
 
   describe '#detached_copy with clonable content' do
@@ -146,7 +119,7 @@ describe Tree do
       expect(clone.content).not_to be tree.content
     end
 
-    it_behaves_like 'any cloned node'
+    it_behaves_like 'cloned node'
   end
 
   describe '#detached_copy with unclonable content' do
@@ -157,7 +130,7 @@ describe Tree do
       expect(clone.content).to be tree.content
     end
 
-    it_behaves_like 'any cloned node'
+    it_behaves_like 'cloned node'
   end
 
   describe '#detached_copy with false as content' do
@@ -168,6 +141,6 @@ describe Tree do
       expect(clone.content).to be tree.content
     end
 
-    it_behaves_like 'any cloned node'
+    it_behaves_like 'cloned node'
   end
 end

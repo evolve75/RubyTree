@@ -35,12 +35,14 @@ require 'test/unit'
 require 'json'
 require_relative '../lib/tree/tree_deps'
 require_relative 'support/fixtures_shared'
+require_relative 'support/assertions'
 
 module TestTree
   # Test class for the Tree node.
   # noinspection RubyTooManyInstanceVariablesInspection
   class TestTreeNode < Test::Unit::TestCase
     include TreeTestFixtures
+    include TreeTestAssertions
     Person = Struct.new(:First, :last) # A simple structure to use as the content for the nodes.
 
     # Create this structure for the tests
@@ -96,13 +98,8 @@ module TestTree
 
     # This test is for the root alone - without any children being linked
     def test_root_setup
-      assert_not_nil(@root, 'Root cannot be nil')
-      assert_nil(@root.parent, 'Parent of root node should be nil')
-      assert_not_nil(@root.name, 'Name should not be nil')
-      assert_equal('ROOT', @root.name, "Name should be 'ROOT'")
-      assert_equal('Root Node', @root.content, "Content should be 'Root Node'")
+      assert_detached_node(@root, name: 'ROOT', content_provided: true, content: 'Root Node')
       assert(@root.to_s.include?('Content: Root Node'), 'to_s should include content value')
-      assert(@root.root?, 'Should identify as root')
       assert(!@root.children?, 'Cannot have any children')
       assert(@root.content?, 'This root should have content')
       assert_equal(1, @root.size, 'Number of nodes should be one')
@@ -1205,7 +1202,7 @@ module TestTree
       assert(@root.children?, 'The root should have children')
       copy_of_root = @root.detached_copy
       assert(!copy_of_root.children?, 'The copy should not have children')
-      assert_equal(@root.name, copy_of_root.name, 'The names should be equal')
+      assert_clone_of(@root, copy_of_root)
 
       # Try the same test with a child node
       assert(!@child3.root?, 'Child 3 is not a root')
@@ -1213,6 +1210,7 @@ module TestTree
       copy_of_child3 = @child3.detached_copy
       assert(copy_of_child3.root?, "Child 3's copy is a root")
       assert(!copy_of_child3.children?, "Child 3's copy does not have children")
+      assert_clone_of(@child3, copy_of_child3)
     end
 
     # Test the detached_subtree_copy method.

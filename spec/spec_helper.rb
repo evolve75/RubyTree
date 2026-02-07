@@ -11,6 +11,7 @@
 
 require 'tree'
 require_relative 'support/fixtures'
+require_relative 'support/shared_examples'
 
 if ENV['COVERAGE']
   begin
