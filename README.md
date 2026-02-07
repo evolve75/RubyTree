@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](https://badge.fury.io/rb/rubytree)
 ![Build State](https://github.com/evolve75/RubyTree/actions/workflows/ruby.yml/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
+[![Coverage](https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml/badge.svg)](https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml)
 
         __       _           _
        /__\_   _| |__  _   _| |_ _ __ ___  ___
