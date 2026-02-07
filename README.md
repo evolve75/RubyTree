@@ -30,7 +30,10 @@ access to the tree as a standard collection (iteration, comparison, etc.).
 Available tree types include:
 
 * [Binary tree][] with [in-order][] traversal support.
-* [Binary Heap][] under `Tree::BinaryHeapNode` (require `tree/binaryheap`).
+* [Binary Heap][] (min-heap) under `Tree::BinaryHeapNode` (require
+  `tree/binaryheap`).
+* [Binary Max Heap][] under `Tree::BinaryMaxHeapNode` (require
+  `tree/binarymaxheap`).
 * [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
   `tree/binarysearchtree`).
 * [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
@@ -224,6 +227,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [BSD]:https://opensource.org/licenses/bsd-license.php
 [Binary tree]:https://en.wikipedia.org/wiki/Binary_tree
 [Binary Heap]:https://en.wikipedia.org/wiki/Binary_heap
+[Binary Max Heap]:https://en.wikipedia.org/wiki/Binary_heap
 [Binary Search Tree]:https://en.wikipedia.org/wiki/Binary_search_tree
 [AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
 [Treap]:https://en.wikipedia.org/wiki/Treap

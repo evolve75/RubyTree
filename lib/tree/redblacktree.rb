@@ -459,7 +459,7 @@ module Tree
 
     # Fix deletion when the removed node was a left child.
     #
-    # @param [Tree::RedBlackTreeNode, nil] _current The current node.
+    # @param [Tree::RedBlackTreeNode, nil] current The current node.
     # @param [Tree::RedBlackTreeNode] parent The current parent.
     # @param [Tree::RedBlackTreeNode] root_node The tree root.
     # @return [Array<Tree::RedBlackTreeNode, Tree::RedBlackTreeNode>] New current and parent.
@@ -476,7 +476,7 @@ module Tree
 
     # Fix deletion when the removed node was a right child.
     #
-    # @param [Tree::RedBlackTreeNode, nil] _current The current node.
+    # @param [Tree::RedBlackTreeNode, nil] current The current node.
     # @param [Tree::RedBlackTreeNode] parent The current parent.
     # @param [Tree::RedBlackTreeNode] root_node The tree root.
     # @return [Array<Tree::RedBlackTreeNode, Tree::RedBlackTreeNode>] New current and parent.
@@ -529,7 +529,7 @@ module Tree
 
     # Handle the black-children sibling case on the left-delete path.
     #
-    # @param [Tree::RedBlackTreeNode, nil] current The current node.
+    # @param [Tree::RedBlackTreeNode, nil] _current The current node.
     # @param [Tree::RedBlackTreeNode] parent The current parent.
     # @param [Tree::RedBlackTreeNode, nil] sibling The sibling node.
     # @return [Array<Tree::RedBlackTreeNode, Tree::RedBlackTreeNode>] New current and parent.
@@ -540,7 +540,7 @@ module Tree
 
     # Handle the black-children sibling case on the right-delete path.
     #
-    # @param [Tree::RedBlackTreeNode, nil] current The current node.
+    # @param [Tree::RedBlackTreeNode, nil] _current The current node.
     # @param [Tree::RedBlackTreeNode] parent The current parent.
     # @param [Tree::RedBlackTreeNode, nil] sibling The sibling node.
     # @return [Array<Tree::RedBlackTreeNode, Tree::RedBlackTreeNode>] New current and parent.
