@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
 #

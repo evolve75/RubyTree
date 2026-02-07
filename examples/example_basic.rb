@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-#
 # example_basic.rb:: Basic usage of the tree library.
 #
 # Author:  Anupam Sengupta

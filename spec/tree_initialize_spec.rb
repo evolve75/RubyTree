@@ -1,8 +1,3 @@
-# The net is like a vast sea of lutefisk with tiny dinosaur brains embedded
-# in it here and there. Any given spoonful will likely have an IQ of 1, but
-# occasional spoonfuls may have an IQ more than six times that!
-#	-- James 'Kibo' Parry
-#
 # initialize_spec.rb
 #
 # Author:  Anupam Sengupta

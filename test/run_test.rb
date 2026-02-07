@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-#
 # run_test.rb:: Run all the tests from the Ruby command line.
 #
 # Author:  Anupam Sengupta

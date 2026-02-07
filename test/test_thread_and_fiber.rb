@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 # test_thread_and_fiber.rb - This file is part of the RubyTree package.
 #
 # Copyright (c) 2012, 2013, 2022 Anupam Sengupta

@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 # test_rubytree_require.rb - This file is part of the RubyTree package.
 #
 # Copyright (c) 2012, 2022 Anupam Sengupta

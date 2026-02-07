@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-#
 # spec_helper.rb
 #
 # Author:  Anupam Sengupta

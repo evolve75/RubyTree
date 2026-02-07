@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-#
 # tree_merge_handler.rb
 #
 # Author:  Anupam Sengupta

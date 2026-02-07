@@ -1,5 +1,3 @@
-#!/usr/bin/env ruby
-
 # test_subclassed_node.rb - This file is part of the RubyTree package.
 #
 # Copyright (c) 2012, 2017, 2022 Anupam Sengupta
