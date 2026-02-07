@@ -15,6 +15,9 @@ smooth transition to the new APIs.
   now treat `nil` child slots as empty, preventing binary trees with missing
   children from reporting or yielding phantom siblings.
 
+* Added [Tree::TreeNode#validate_acyclic!][validate_acyclic] and
+  [Tree::TreeNode#acyclic?][acyclic] to detect cycles in untrusted trees.
+
 ## Release 2.2.0 Changes
 
 * [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add
@@ -166,6 +169,7 @@ smooth transition to the new APIs.
 
 [access]: rdoc-ref:Tree::TreeNode#[]
 [add]: rdoc-ref:Tree::TreeNode#add
+[acyclic]: rdoc-ref:Tree::TreeNode#acyclic?
 [append]: rdoc-ref:Tree::TreeNode#<<
 [breadth_each]: rdoc-ref:Tree::TreeNode#breadth_each
 [btree_add]: rdoc-ref:Tree::BinaryTreeNode#add
@@ -192,3 +196,4 @@ smooth transition to the new APIs.
 [set_child_at]: rdoc-ref:Tree::BinaryTreeNode#set_child_at
 [siblings]: rdoc-ref:Tree::TreeNode#siblings
 [to_json]: rdoc-ref:Tree::Utils::JSONConverter#to_json
+[validate_acyclic]: rdoc-ref:Tree::TreeNode#validate_acyclic!

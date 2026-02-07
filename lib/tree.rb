@@ -199,6 +199,51 @@ module Tree
       parentage_array
     end
 
+    # @!attribute [r] acyclic?
+    # Returns +true+ if this (sub)tree has no cycles.
+    #
+    # @return [Boolean] +true+ if the (sub)tree is acyclic.
+    def acyclic?
+      validate_acyclic!
+      true
+    rescue ArgumentError
+      false
+    end
+
+    # Validates that the (sub)tree rooted at this node has no cycles.
+    #
+    # @raise [ArgumentError] Raised when a cycle is detected.
+    # @return [Tree::TreeNode] Returns +self+ when no cycle is found.
+    def validate_acyclic!
+      visited = {}
+      visiting = {}
+      stack = [[self, :enter]]
+
+      until stack.empty?
+        node, state = stack.pop
+        next unless node
+
+        if state == :exit
+          visiting.delete(node.object_id)
+          next
+        end
+
+        node_id = node.object_id
+        raise ArgumentError, 'Cycle detected in tree' if visiting.key?(node_id)
+        next if visited.key?(node_id)
+
+        visiting[node_id] = true
+        visited[node_id] = true
+
+        stack << [node, :exit]
+        node.children.reverse_each do |child|
+          stack << [child, :enter] if child
+        end
+      end
+
+      self
+    end
+
     # @!group Node Creation
 
     # Creates a new node with a name and optional content.

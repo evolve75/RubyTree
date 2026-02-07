@@ -416,5 +416,29 @@ module TestTree
       assert_equal('3', root2['3']['4'].parent.name)
       assert_nil(root1['2']['4'])
     end
+
+    def test_validate_acyclic
+      setup_test_tree
+
+      assert_equal(@root, @root.validate_acyclic!)
+      assert(@root.acyclic?, 'Expected the tree to be acyclic')
+    end
+
+    def test_validate_acyclic_detects_cycle
+      node_a = Tree::TreeNode.new('A')
+      node_b = Tree::TreeNode.new('B')
+
+      node_a.instance_variable_set(:@children, [node_b])
+      node_a.instance_variable_set(:@children_hash, { node_b.name => node_b })
+      node_b.instance_variable_set(:@parent, node_a)
+
+      node_b.instance_variable_set(:@children, [node_a])
+      node_b.instance_variable_set(:@children_hash, { node_a.name => node_a })
+      node_a.instance_variable_set(:@parent, node_b)
+
+      error = assert_raise(ArgumentError) { node_a.validate_acyclic! }
+      assert_match(/Cycle detected/, error.message)
+      assert_equal(false, node_a.acyclic?)
+    end
   end
 end
