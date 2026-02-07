@@ -134,6 +134,12 @@ namespace :test do
   end
 end
 
+# ................................ Benchmarks
+desc 'Run benchmarks'
+task :bench do
+  ruby 'test/benchmark_tree.rb'
+end
+
 # ................................ Emacs Tags
 namespace :tag do
   require 'rtagstask'
