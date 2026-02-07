@@ -31,10 +31,12 @@ smooth transition to the new APIs.
   (see #104).
 
 * Added per-tree validation toggles via `checks: false` on `Tree::TreeNode.new`
-  to allow disabling guard checks in performance-critical code paths. This is
-  potentially dangerous and can lead to unexpected behavior if invalid data
-  enters the tree. Only disable checks with clear performance benchmark data
-  supporting the risk (see #45).
+  to allow disabling guard checks in performance-critical code paths. Some
+  baseline guards (nil child checks, duplicate child name checks) are always
+  enforced to avoid corrupting the tree. Disabling checks is still potentially
+  dangerous and can lead to unexpected behavior if invalid data enters the tree.
+  Only disable checks with clear performance benchmark data supporting the risk
+  (see #45).
 
 ## Release 2.2.0 Changes
 

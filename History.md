@@ -23,9 +23,10 @@
   `HashWithIndifferentAccess` data (see #104).
 
 * Add a per-tree `checks: false` option to skip validation checks when
-  performance matters. This is risky and can yield unexpected behavior if
-  invalid data is introduced. Only disable checks with benchmark data that
-  justifies the risk (see #45).
+  performance matters. Some baseline guards (nil children, duplicate child
+  names) are always enforced to avoid corrupting the tree. This is still risky
+  and can yield unexpected behavior if invalid data is introduced. Only
+  disable checks with benchmark data that justifies the risk (see #45).
 
 ### 2.2.1pre / 2026-02-07
 

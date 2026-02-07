@@ -36,13 +36,22 @@ module TestTree
   class TestTreeChecks < Test::Unit::TestCase
     def test_checks_disabled_skips_validation
       root = Tree::TreeNode.new('root', nil, { checks: false })
-      child1 = Tree::TreeNode.new('dup', nil, { checks: false })
-      child2 = Tree::TreeNode.new('dup', nil, { checks: false })
+      child1 = Tree::TreeNode.new('dup-1', nil, { checks: false })
+      child2 = Tree::TreeNode.new('dup-2', nil, { checks: false })
 
       root.add(child1)
       assert_nothing_raised { root.add(child2) }
       assert_equal(2, root.children.size)
       assert_nil(root[nil])
+    end
+
+    def test_checks_disabled_still_enforces_duplicate_names
+      root = Tree::TreeNode.new('root', nil, { checks: false })
+      child1 = Tree::TreeNode.new('dup', nil, { checks: false })
+      child2 = Tree::TreeNode.new('dup', nil, { checks: false })
+
+      root.add(child1)
+      assert_raise(RuntimeError) { root.add(child2) }
     end
 
     def test_checks_enabled_validation_guards
@@ -72,8 +81,8 @@ module TestTree
       root.add(child)
       assert_equal(false, child.checks_enabled?)
 
-      dup = Tree::TreeNode.new('child')
-      assert_nothing_raised { root.add(dup) }
+      other = Tree::TreeNode.new('child2')
+      assert_nothing_raised { root.add(other) }
     end
   end
 end

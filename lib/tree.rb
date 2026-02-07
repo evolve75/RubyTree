@@ -256,10 +256,11 @@ module Tree
     #
     # @param [Object] content Content of the node.
     # @param [Hash, nil] options Optional settings such as { checks: false } to
-    #   disable validation checks for performance-critical usage. Disabling
-    #   checks is risky and can lead to unexpected behavior if invalid data is
-    #   added to the tree. Only disable checks with benchmark data that justifies
-    #   the risk.
+    #   disable validation checks for performance-critical usage. Some baseline
+    #   guards (nil children, duplicate child names) are always enforced to
+    #   avoid corrupting the tree. Disabling checks is risky and can lead to
+    #   unexpected behavior if invalid data is added to the tree. Only disable
+    #   checks with benchmark data that justifies the risk.
     #
     # @raise [ArgumentError] Raised if the node name is empty.
     #

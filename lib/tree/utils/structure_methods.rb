@@ -143,9 +143,9 @@ module Tree
       end
 
       def validate_add_child!(child)
+        raise ArgumentError, 'Attempting to add a nil node' unless child
         return unless checks_enabled?
 
-        raise ArgumentError, 'Attempting to add a nil node' unless child
         raise ArgumentError, 'Attempting add node to itself' if equal?(child)
         raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
 
@@ -155,8 +155,6 @@ module Tree
       end
 
       def ensure_unique_child_name!(child)
-        return unless checks_enabled?
-
         return unless @children_hash.include?(child.name)
 
         raise "Child #{child.name} already added!"
