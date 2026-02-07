@@ -5,7 +5,10 @@ inherit_from: .rubocop_todo.yml
 
 AllCops:
   NewCops: enable
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.1
+  Exclude:
+    - 'pkg/**/*'
+    - 'vendor/**/*'
 
 Lint/UselessAssignment:
   Exclude:
