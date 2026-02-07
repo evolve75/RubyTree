@@ -59,6 +59,10 @@ task :gemspec do
   puts 'Gemspec is valid.'
 end
 
+# ................................ Linting
+desc 'Run lint checks'
+task lint: %i[gemspec rubocop]
+
 require 'rake/clean'
 desc 'Remove all generated files.'
 task clean: 'gem:clobber_package'
