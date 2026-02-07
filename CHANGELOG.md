@@ -29,6 +29,10 @@ Changes section to scan for breaking or behavioral changes.
 * Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
   `HashWithIndifferentAccess` data (see #104).
 
+* `Tree::BinaryTreeNode#inordered_each` now returns an enumerator for
+  `inordered_each` (instead of `each`) when called without a block. This fixes
+  the behavior where `node.inordered_each.map` used pre-order traversal.
+
 * Add a per-tree `checks: false` option to skip validation checks when
   performance matters. Some baseline guards (nil children, duplicate child
   names) are always enforced to avoid corrupting the tree. This is still risky
@@ -507,6 +511,11 @@ smooth transition to the new APIs.
   redirect output (defaults to `$stdout`), and
   [Tree::TreeNode#print_tree_to_s][print_tree_to_s] returns the formatted
   output as a string.
+
+* [Tree::BinaryTreeNode#inordered_each][inordered_each] now returns an
+  enumerator for `inordered_each` (instead of `each`) when called without a
+  block. This fixes the behavior where `node.inordered_each.map` used pre-order
+  traversal.
 
 * Hash conversion now accepts hash-like inputs (objects responding to
   `to_hash`) to improve interoperability with frameworks such as Rails

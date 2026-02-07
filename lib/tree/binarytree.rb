@@ -171,7 +171,7 @@ module Tree
     # @see #postordered_each
     # noinspection RubyUnusedLocalVariable
     def inordered_each
-      return to_enum unless block_given?
+      return to_enum(:inordered_each) unless block_given?
 
       node_stack = []
       current_node = self
