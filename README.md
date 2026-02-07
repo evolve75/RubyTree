@@ -208,6 +208,12 @@ generate the documentation, and finally generate the gem file.
 Note that the documentation uses [Yard][], which will be
 downloaded and installed automatically by [Bundler][].
 
+### Running Benchmarks ###
+
+You can run the bundled benchmarks with:
+
+    $ bundle exec rake bench
+
 ## ACKNOWLEDGMENTS: ##
 
 A big thanks to the following contributors for helping improve **RubyTree**:
