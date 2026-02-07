@@ -64,17 +64,17 @@ Gem::Specification.new do |s|
                             '--main', 'README.md',
                             '--quiet']
 
-  s.add_runtime_dependency 'json', '~> 2.18'
+  s.add_dependency 'json', '~> 2.18'
 
   # NOTE: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler', '~> 2.6'
   s.add_development_dependency 'rake', '~> 13.3'
   s.add_development_dependency 'rdoc', '~> 7.1'
+  s.add_development_dependency 'rspec', '~> 3.13'
   s.add_development_dependency 'rtagstask', '~> 0.0'
   s.add_development_dependency 'rubocop', '~> 1.84'
-  s.add_development_dependency 'rubocop-rspec', '~> 3.0'
   s.add_development_dependency 'rubocop-rake', '~> 0.7'
-  s.add_development_dependency 'rspec', '~> 3.13'
+  s.add_development_dependency 'rubocop-rspec', '~> 3.0'
   s.add_development_dependency 'simplecov', '~> 0.22'
   s.add_development_dependency 'simplecov-lcov', '~> 0.9'
   s.add_development_dependency 'test-unit', '~> 3.7'

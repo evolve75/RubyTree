@@ -40,10 +40,12 @@ require_relative 'support/assertions'
 module TestTree
   # Test class for the Tree node.
   # noinspection RubyTooManyInstanceVariablesInspection
+  # rubocop:disable Metrics/ClassLength
   class TestTreeNode < Test::Unit::TestCase
     include TreeTestFixtures
     include TreeTestAssertions
-    Person = Struct.new(:First, :last) # A simple structure to use as the content for the nodes.
+
+    Person = Struct.new(:first_name, :last_name) # A simple structure to use as the content for the nodes.
 
     # Create this structure for the tests
     #
@@ -819,8 +821,7 @@ module TestTree
       assert_equal(5, @root.size, 'Should have five nodes')
       assert(@child3.children?, 'Should have children')
 
-      nodes = []
-      @root.each { |node| nodes << node }
+      nodes = @root.map { |node| node }
 
       assert_equal(5, nodes.length, 'Should have FIVE NODES')
       assert(nodes.include?(@root), 'Should have root')
@@ -1691,6 +1692,7 @@ module TestTree
       assert_equal(k.path_as_array, %w[j k])
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
 
 __END__

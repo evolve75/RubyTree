@@ -91,26 +91,21 @@ module Tree
       # An array of siblings for this node. This node is excluded.
       #
       # @note Nil child slots (e.g., in binary trees) are skipped.
-      def siblings
-        if block_given?
-          return self if root?
+      def siblings(&block)
+        return [] if root?
 
-          parent.send(:children_array).each do |sibling|
-            next unless sibling
-            next if sibling == self
+        siblings = []
+        parent.send(:children_array).each do |sibling|
+          next unless sibling
+          next if sibling == self
 
-            yield sibling
-          end
+          siblings << sibling
+        end
+
+        if block
+          siblings.each(&block)
           self
         else
-          return [] if root?
-
-          siblings = []
-          parent.send(:children_array).each do |my_sibling|
-            next unless my_sibling
-
-            siblings << my_sibling if my_sibling != self
-          end
           siblings
         end
       end

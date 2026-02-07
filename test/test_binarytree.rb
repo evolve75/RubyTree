@@ -42,6 +42,7 @@ module TestTree
   # Test class for the binary tree node.
   class TestBinaryTreeNode < Test::Unit::TestCase
     include TreeTestFixtures
+
     # Setup the test data scaffolding.
     def setup
       nodes = build_binary_tree_nodes

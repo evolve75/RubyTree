@@ -202,34 +202,49 @@ module Tree
     #
     # @raise [ArgumentError] If the index is out of limits.
     def set_child_at(child, at_index)
-      raise ArgumentError,
-            'A binary tree cannot have more than two children.' unless (0..1).include? at_index
+      validate_binary_index!(at_index)
 
       old_child = @children[at_index]
-      if old_child && old_child != child
-        still_present = @children.each_with_index.any? do |existing, idx|
-          idx != at_index && existing.equal?(old_child)
-        end
-
-        unless still_present
-          @children_hash.delete(old_child.name)
-          old_child.set_as_root!
-        end
-      end
+      detach_old_child(old_child, at_index) if old_child && old_child != child
 
       if child
-        child.parent&.remove!(child) unless child.parent == self
-        @children[at_index]        = child
-        @children_hash[child.name] = child # Assign the name mapping
-        child.parent               = self
+        attach_child(child, at_index)
       else
         @children[at_index] = nil
       end
+
       send(:invalidate_size_cache_upwards!)
       child
     end
 
     protected :set_child_at
+
+    private
+
+    def validate_binary_index!(at_index)
+      return if (0..1).include?(at_index)
+
+      raise ArgumentError, 'A binary tree cannot have more than two children.'
+    end
+
+    def detach_old_child(old_child, at_index)
+      still_present = @children.each_with_index.any? do |existing, idx|
+        idx != at_index && existing.equal?(old_child)
+      end
+      return if still_present
+
+      @children_hash.delete(old_child.name)
+      old_child.set_as_root!
+    end
+
+    def attach_child(child, at_index)
+      child.parent&.remove!(child) unless child.parent == self
+      @children[at_index] = child
+      @children_hash[child.name] = child
+      child.parent = self
+    end
+
+    public
 
     # Sets the left child of the receiver node. If a previous child existed, it
     # is replaced.

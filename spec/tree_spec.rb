@@ -12,7 +12,6 @@ require 'rspec'
 require 'spec_helper'
 
 describe Tree do
-
   describe '#initialize with empty name and nil content' do
     let(:tree) { Tree::TreeNode.new('') }
 
@@ -42,14 +41,14 @@ describe Tree do
   end
 
   describe "#initialize with node name 'A' and some content" do
-    sample = 'some content'
+    let(:sample) { 'some content' }
     let(:tree) { Tree::TreeNode.new('A', sample) }
 
     it 'creates the tree node with name as "A"' do
       expect(tree.name).to eq('A')
     end
 
-    it "has some content #{sample}" do
+    it 'has some content' do
       expect(tree.content).to eq(sample)
     end
 

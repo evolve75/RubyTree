@@ -39,6 +39,6 @@ if ENV['COVERAGE']
       enable_coverage :branch
     end
   rescue LoadError => e
-    puts "Could not load simplecov; continuing without code coverage #{e.cause}"
+    warn "Could not load simplecov; continuing without code coverage #{e.cause}"
   end
 end

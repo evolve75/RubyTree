@@ -32,6 +32,7 @@
 module Tree
   module Utils
     # Provides structure-modification helpers for TreeNode.
+    # rubocop:disable Metrics/ModuleLength
     module TreeStructureHandler
       # Convenience synonym for {Tree::TreeNode#add} method.
       def <<(child)
@@ -40,39 +41,12 @@ module Tree
 
       # Adds the specified child node to this node.
       def add(child, at_index = -1)
-        # Only handles the immediate child scenario
-        raise ArgumentError, 'Attempting to add a nil node' unless child
-
-        raise ArgumentError, 'Attempting add node to itself' if equal?(child)
-
-        raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
-
-        if (ancestors = parentage) && ancestors.include?(child)
-          raise ArgumentError, 'Attempting add ancestor as a child'
-        end
-
-        # Lazy man's unique test, won't test if children of child are unique in
-        # this tree too.
-        raise "Child #{child.name} already added!" if @children_hash.include?(child.name)
+        validate_add_child!(child)
+        ensure_unique_child_name!(child)
 
         child.parent&.remove! child # Detach from the old parent
-
-        if insertion_range.include?(at_index)
-          @children.insert(at_index, child)
-        else
-          message = [
-            'Attempting to insert a child at a non-existent location',
-            "(#{at_index})",
-            'when only positions from',
-            "#{insertion_range.min} to #{insertion_range.max} exist."
-          ].join(' ')
-          raise message
-        end
-
-        @children_hash[child.name] = child
-        child.parent = self
-        invalidate_size_cache_upwards!
-        child
+        insert_child_at!(child, at_index)
+        attach_child!(child)
       end
 
       # Return a range of valid insertion positions.  Used in the #add method.
@@ -97,11 +71,9 @@ module Tree
 
       # Renames the specified child node
       def rename_child(old_name, new_name)
-        raise ArgumentError,
-              "Invalid child name specified: #{old_name}" unless @children_hash.key?(old_name)
+        raise ArgumentError, "Invalid child name specified: #{old_name}" unless @children_hash.key?(old_name)
 
-        raise ArgumentError,
-              "Child name already exists: #{new_name}" if @children_hash.key?(new_name)
+        raise ArgumentError, "Child name already exists: #{new_name}" if @children_hash.key?(new_name)
 
         @children_hash[new_name] = @children_hash.delete(old_name)
         @children_hash[new_name].name = new_name
@@ -170,25 +142,45 @@ module Tree
         each(&:freeze)
       end
 
-      def clear_root_cache!
-        @root_cache = nil
-        return unless @children
+      def validate_add_child!(child)
+        raise ArgumentError, 'Attempting to add a nil node' unless child
+        raise ArgumentError, 'Attempting add node to itself' if equal?(child)
+        raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
 
-        children_array.each do |child|
-          child&.__send__(:clear_root_cache!)
-        end
+        return unless (ancestors = parentage) && ancestors.include?(child)
+
+        raise ArgumentError, 'Attempting add ancestor as a child'
       end
 
-      def invalidate_size_cache_upwards!
-        node = self
-        while node
-          node.instance_variable_set(:@size, nil)
-          node = node.parent
-        end
+      def ensure_unique_child_name!(child)
+        return unless @children_hash.include?(child.name)
+
+        raise "Child #{child.name} already added!"
       end
 
-      private :insertion_range, :clear_root_cache!, :invalidate_size_cache_upwards!
+      def insert_child_at!(child, at_index)
+        return @children.insert(at_index, child) if insertion_range.include?(at_index)
+
+        message = [
+          'Attempting to insert a child at a non-existent location',
+          "(#{at_index})",
+          'when only positions from',
+          "#{insertion_range.min} to #{insertion_range.max} exist."
+        ].join(' ')
+        raise message
+      end
+
+      def attach_child!(child)
+        @children_hash[child.name] = child
+        child.parent = self
+        invalidate_size_cache_upwards!
+        child
+      end
+
+      private :insertion_range, :validate_add_child!, :ensure_unique_child_name!,
+              :insert_child_at!, :attach_child!
       protected :parent=, :set_as_root!
     end
+    # rubocop:enable Metrics/ModuleLength
   end
 end

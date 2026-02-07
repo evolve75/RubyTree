@@ -63,15 +63,15 @@ if $PROGRAM_NAME == __FILE__
     end
 
     x.report('preorder traversal') do
-      tree.each { |_node| nil }
+      tree.each(&:object_id)
     end
 
     x.report('postorder traversal') do
-      tree.postordered_each { |_node| nil }
+      tree.postordered_each(&:object_id)
     end
 
     x.report('breadth traversal') do
-      tree.breadth_each { |_node| nil }
+      tree.breadth_each(&:object_id)
     end
 
     x.report('size') do

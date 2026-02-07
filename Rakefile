@@ -41,10 +41,10 @@ GEM_SPEC = Bundler.load_gemspec(File.join(__dir__, 'rubytree.gemspec'))
 
 PKG_NAME = GEM_SPEC.name
 PKG_VER  = GEM_SPEC.version
-GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
+GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem".freeze
 
 desc 'Default Task (Run the tests)'
-task :default => 'test:all'
+task default: 'test:all'
 
 desc 'Display the current gem version'
 task :version do
@@ -154,8 +154,6 @@ begin
 
   RuboCop::RakeTask.new(:rubocop) do |t|
     t.options = ['--display-cop-names']
-    t.requires << 'rubocop-rake'
-    t.requires << 'rubocop-rspec'
   end
 rescue LoadError
   # RuboCop not available.

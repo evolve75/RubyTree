@@ -39,6 +39,7 @@
 # frozen_string_literal: true
 
 require 'tree/tree_deps'
+require 'tree/utils/cache_methods'
 require 'tree/utils/structure_methods'
 require 'tree/utils/navigation_methods'
 require 'tree/utils/traversal_methods'
@@ -93,6 +94,7 @@ module Tree
     include Tree::Utils::JSONConverter
     include Tree::Utils::TreeMergeHandler
     include Tree::Utils::HashConverter
+    include Tree::Utils::TreeCacheHandler
     include Tree::Utils::TreeStructureHandler
     include Tree::Utils::TreeNavigationHandler
     include Tree::Utils::TreeTraversalHandler
@@ -371,6 +373,5 @@ module Tree
 
       name <=> other.name
     end
-
   end
 end
