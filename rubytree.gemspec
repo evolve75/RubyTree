@@ -101,6 +101,8 @@ Gem::Specification.new do |s|
     - 2.0.0 is a major release with BREAKING API changes.
             See `CHANGELOG.md` for details.
 
+    - For the full release history and API change notes, see `CHANGELOG.md`.
+
     ========================================================================
   END_MESSAGE
 end
