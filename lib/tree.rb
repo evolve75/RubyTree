@@ -604,7 +604,8 @@ module Tree
     def [](name_or_index)
       raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
 
-      if name_or_index.is_a?(Integer)
+      case name_or_index
+      in Integer
         @children[name_or_index]
       else
         @children_hash[name_or_index]
@@ -631,12 +632,14 @@ module Tree
       node_stack = [self] # Start with this node
 
       until node_stack.empty?
-        current = node_stack.shift # Pop the top-most node
+        current = node_stack.pop # Pop the top-most node
         next unless current # Might be 'nil' (esp. for binary trees)
 
         yield current # and process it
         # Stack children of the current node at top of the stack
-        node_stack = current.children.concat(node_stack)
+        current.children.reverse_each do |child|
+          node_stack << child if child
+        end
       end
 
       self if block_given?
@@ -680,7 +683,9 @@ module Tree
           peek_node.visited = true
           # Add the children to the stack. Use the marking structure.
           marked_children =
-            peek_node.node.children.compact.map { |node| marked_node.new(node, false) }
+            peek_node.node.children.filter_map do |node|
+              marked_node.new(node, false) if node
+            end
           node_stack = marked_children.concat(node_stack)
           next
         else
@@ -707,15 +712,19 @@ module Tree
       return to_enum(:breadth_each) unless block_given?
 
       node_queue = [self] # Create a queue with self as the initial entry
+      queue_index = 0
 
       # Use a queue to do breadth traversal
-      until node_queue.empty?
-        node_to_traverse = node_queue.shift
+      while queue_index < node_queue.length
+        node_to_traverse = node_queue[queue_index]
+        queue_index += 1
         next unless node_to_traverse
 
         yield node_to_traverse
         # Enqueue the children from left to right.
-        node_to_traverse.children { |child| node_queue.push child if child }
+        node_to_traverse.children.each do |child|
+          node_queue << child if child
+        end
       end
 
       self if block_given?
@@ -779,7 +788,7 @@ module Tree
         level = [self]
         until level.empty?
           yield level
-          level = level.map(&:children).flatten
+          level = level.flat_map(&:children).filter_map { |child| child }
         end
         self
       else
