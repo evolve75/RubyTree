@@ -143,6 +143,8 @@ module Tree
       end
 
       def validate_add_child!(child)
+        return unless checks_enabled?
+
         raise ArgumentError, 'Attempting to add a nil node' unless child
         raise ArgumentError, 'Attempting add node to itself' if equal?(child)
         raise ArgumentError, 'Attempting add root as a child' if child.equal?(root)
@@ -153,12 +155,22 @@ module Tree
       end
 
       def ensure_unique_child_name!(child)
+        return unless checks_enabled?
+
         return unless @children_hash.include?(child.name)
 
         raise "Child #{child.name} already added!"
       end
 
       def insert_child_at!(child, at_index)
+        unless checks_enabled?
+          max = @children.size
+          min = -(max + 1)
+          at_index = max if at_index > max
+          at_index = min if at_index < min
+          return @children.insert(at_index, child)
+        end
+
         return @children.insert(at_index, child) if insertion_range.include?(at_index)
 
         message = [
@@ -172,6 +184,7 @@ module Tree
 
       def attach_child!(child)
         @children_hash[child.name] = child
+        child.send(:checks_enabled=, checks_enabled?) if child.respond_to?(:checks_enabled=, true)
         child.parent = self
         invalidate_size_cache_upwards!
         child

@@ -30,6 +30,12 @@ smooth transition to the new APIs.
   `to_hash`) to improve interoperability with frameworks such as Rails
   (see #104).
 
+* Added per-tree validation toggles via `checks: false` on `Tree::TreeNode.new`
+  to allow disabling guard checks in performance-critical code paths. This is
+  potentially dangerous and can lead to unexpected behavior if invalid data
+  enters the tree. Only disable checks with clear performance benchmark data
+  supporting the risk (see #45).
+
 ## Release 2.2.0 Changes
 
 * [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add

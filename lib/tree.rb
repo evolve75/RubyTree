@@ -255,6 +255,11 @@ module Tree
     #   String (Integer names may cause *surprises*)
     #
     # @param [Object] content Content of the node.
+    # @param [Hash, nil] options Optional settings such as { checks: false } to
+    #   disable validation checks for performance-critical usage. Disabling
+    #   checks is risky and can lead to unexpected behavior if invalid data is
+    #   added to the tree. Only disable checks with benchmark data that justifies
+    #   the risk.
     #
     # @raise [ArgumentError] Raised if the node name is empty.
     #
@@ -264,8 +269,11 @@ module Tree
     #   _zero-based_ indexing convention.
     #
     # @see #[]
-    def initialize(name, content = nil)
-      raise ArgumentError, 'Node name HAS to be provided!' if name.nil?
+    def initialize(name, content = nil, options = nil)
+      options = {} unless options.is_a?(Hash)
+      @checks_enabled = options.fetch(:checks, true)
+
+      raise ArgumentError, 'Node name HAS to be provided!' if checks_enabled? && name.nil?
 
       name = name.to_s if name.is_a?(Integer)
       @name = name
@@ -287,7 +295,7 @@ module Tree
         rescue TypeError
           @content
         end
-      self.class.new(@name, cloned_content)
+      self.class.new(@name, cloned_content, { checks: @checks_enabled })
     end
 
     # Returns a copy of entire (sub-)tree from this node.
@@ -394,7 +402,7 @@ module Tree
     # @see #add
     # @see #initialize
     def [](name_or_index)
-      raise ArgumentError, 'Name_or_index needs to be provided!' if name_or_index.nil?
+      raise ArgumentError, 'Name_or_index needs to be provided!' if checks_enabled? && name_or_index.nil?
 
       case name_or_index
       in Integer
@@ -446,6 +454,14 @@ module Tree
 
       comparator.call
     end
+
+    # Returns +true+ when validation checks are enabled for this tree.
+    def checks_enabled?
+      @checks_enabled != false
+    end
+
+    attr_writer :checks_enabled
+    protected :checks_enabled=
 
     private
 
