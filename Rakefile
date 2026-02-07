@@ -63,6 +63,10 @@ end
 desc 'Run lint checks'
 task lint: %i[gemspec rubocop]
 
+# ................................ Release checks
+desc 'Run release checks (lint, tests, docs, package)'
+task 'release:check' => %i[lint test:all doc:yard gem:package]
+
 require 'rake/clean'
 desc 'Remove all generated files.'
 task clean: 'gem:clobber_package'
