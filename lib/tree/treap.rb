@@ -107,9 +107,9 @@ module Tree
       inserted
     end
 
-    # Alias for {#insert} to keep consistency with {Tree::TreeNode#add}.
+    # Alias for {#insert} to keep consistency with Tree::TreeNode#add.
     #
-    # This overrides {Tree::TreeNode#add}; the +at_index+ parameter is ignored
+    # This overrides Tree::TreeNode#add; the +at_index+ parameter is ignored
     # because treap nodes are inserted according to key ordering.
     #
     # @param [Tree::TreapNode] child The node to insert.
