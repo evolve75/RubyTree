@@ -77,7 +77,7 @@ module Tree
         json_hash
       end
 
-      # Creates a JSON representation of this node including all it's children.
+      # Creates a JSON representation of this node including all its children.
       # This requires the JSON gem to be available, or else the operation fails with
       # a warning message.  Uses the Hash output of #as_json method.
       #

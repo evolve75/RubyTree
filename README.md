@@ -77,6 +77,7 @@ See the [API][rt_doc] documentation for more details.
 
 # ..... Example starts.
 require 'tree'                 # Load the library
+require 'stringio'
 
 # ..... Create the root node first.
 # ..... Note that every node has a name and an optional content payload.
@@ -92,8 +93,13 @@ root_node << Tree::TreeNode.new("CHILD2", "Child2 Content")
 # ..... This is primarily used for debugging purposes.
 root_node.print_tree
 
+# ..... You can capture the output or request a formatted string.
+buffer = StringIO.new
+root_node.print_tree(io: buffer)
+output = root_node.print_tree_to_s
+
 # ..... Lets directly access children and grandchildren of the root.
-# ..... The can be "chained" for a given path to any depth.
+# ..... These can be "chained" for a given path to any depth.
 child1       = root_node["CHILD1"]
 grand_child1 = root_node["CHILD1"]["GRANDCHILD1"]
 
@@ -135,6 +141,10 @@ This example can also be found at
     * [Yard][] for the documentation
     * [RSpec][] for additional Ruby Spec test files
     * [RuboCop][] for linting the code
+
+Note: `Tree::TreeNode.new` accepts `{ checks: false }` to disable validation
+guards in performance-critical code paths. This is risky and should only be
+used when benchmark data clearly justifies the risk.
 
 ## INSTALL: ##
 

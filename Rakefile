@@ -68,7 +68,7 @@ namespace :doc do # ................................ Documentation
     require 'rdoc/task'
     Rake::RDocTask.new do |rdoc|
       rdoc.rdoc_dir = 'rdoc'
-      rdoc.title    = "RubyTree Documenation: #{PKG_NAME}-#{PKG_VER}"
+      rdoc.title    = "RubyTree Documentation: #{PKG_NAME}-#{PKG_VER}"
       rdoc.main     = 'README.md'
       rdoc.rdoc_files.include(GEM_SPEC.extra_rdoc_files)
       rdoc.rdoc_files.include('./lib/**/*.rb')

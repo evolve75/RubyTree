@@ -13,7 +13,8 @@
 * Cycle prevention in `add` eliminates the earlier `to_s`/`size` infinite-loop
   risk caused by cyclic graphs.
 
-* Add `cmp` for traversal/relationship-based comparison without changing the
+* Add `cmp` for traversal/relationship-based comparisons (`:each`,
+  `:breadth_each`, `:direct_or_sibling`, `:direct_only`) without changing the
   name-based `<=>` semantics.
 
 * Allow `print_tree` to write to a custom IO and add `print_tree_to_s` for

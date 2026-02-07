@@ -53,7 +53,7 @@ module Tree
   # == TreeNode Class Description
   #
   # This class models the nodes for an *N-ary* tree data structure. The
-  # nodes are *named*, and have a place-holder for the node data (i.e.,
+  # nodes are *named*, and have a placeholder for the node data (i.e.,
   # _content_ of the node). The node names are required to be *unique*
   # amongst the sibling/peer nodes. Note that the name is implicitly
   # used as an _ID_ within the data structure).
