@@ -117,7 +117,8 @@ This example can also be found at
 
 ## REQUIREMENTS: ##
 
-* [Ruby][] 3.1.x and above. Ruby 2.7 and 3.0 are supported by RubyTree 2.2.0.
+* [Ruby][] 3.1.x and above. RubyTree 2.2.0 is the last release that supports
+  Ruby 2.7 and 3.0.
 
 * Run-time Dependencies:
 
@@ -130,7 +131,7 @@ This example can also be found at
     * [Rake][] for building the package
     * [Yard][] for the documentation
     * [RSpec][] for additional Ruby Spec test files
-    * [Rubocop][] for linting the code
+    * [RuboCop][] for linting the code
 
 ## INSTALL: ##
 
@@ -254,6 +255,6 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [rt_site]:              https://rubytree.anupamsg.me "RubyTree Site"
 [tree_data_structure]:  https://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
 [RSpec]:                https://rspec.info/
-[Rubocop]:              https://rubocop.org/
+[RuboCop]:              https://rubocop.org/
 
 [TreeNode]:             rdoc-ref:Tree::TreeNode

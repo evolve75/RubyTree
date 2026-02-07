@@ -4,6 +4,9 @@
 
 * Drop support for Ruby 2.7 and 3.0. Minimum required version is now 3.1.
 
+* Treat `nil` child slots as empty in sibling/child checks to avoid phantom
+  nodes in sparse binary trees.
+
 ### 2.2.1pre / 2026-02-07
 
 * Simplified development dependency constraints while maintaining Ruby 2.7+
