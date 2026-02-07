@@ -43,9 +43,9 @@ module Tree
       alias has_children? children? # @todo: Aliased for eventual replacement
 
       # An array of all the immediate children of this node.
-      def children(&block)
+      def children(&)
         if block_given?
-          @children.each(&block)
+          @children.each(&)
           self
         else
           @children.clone
@@ -108,6 +108,7 @@ module Tree
           siblings = []
           parent.send(:children_array).each do |my_sibling|
             next unless my_sibling
+
             siblings << my_sibling if my_sibling != self
           end
           siblings
@@ -116,7 +117,7 @@ module Tree
 
       # +true+ if this node is the only child of its parent.
       def only_child?
-        root? ? true : parent.send(:children_array).count { |child| child } == 1
+        root? || parent.send(:children_array).one? { |child| child }
       end
 
       alias is_only_child? only_child? # @todo: Aliased for eventual replacement

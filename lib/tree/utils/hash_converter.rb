@@ -98,11 +98,9 @@ module Tree
         #                        values that are not hashes or nils.
 
         def from_hash(hash)
-          raise ArgumentError, 'Argument must be a type of hash'\
-                               unless hash.is_a?(Hash)
+          raise ArgumentError, 'Argument must be a type of hash' unless hash.is_a?(Hash)
 
-          raise ArgumentError, 'Hash must have one top-level element'\
-                               if hash.size != 1
+          raise ArgumentError, 'Hash must have one top-level element' if hash.size != 1
 
           root, children = hash.first
 
@@ -147,8 +145,7 @@ module Tree
       # @return [Array] Array of child nodes added
       # @see ClassMethods#from_hash
       def add_from_hash(children)
-        raise ArgumentError, 'Argument must be a type of hash'\
-                             unless children.is_a?(Hash)
+        raise ArgumentError, 'Argument must be a type of hash' unless children.is_a?(Hash)
 
         child_nodes = []
         children.each do |child, grandchildren|

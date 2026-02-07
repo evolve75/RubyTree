@@ -119,7 +119,7 @@ module Tree
     def add(child)
       raise ArgumentError, 'Already has two child nodes' if @children.size == 2
 
-      super(child)
+      super
     end
 
     # Instantiate and insert child nodes from data in a Ruby +Hash+
@@ -152,10 +152,9 @@ module Tree
     # @raise [ArgumentError] This exception is raised if a non-hash is passed.
     # @return [Array] Array of child nodes added
     def add_from_hash(hashed_subtree)
-      raise ArgumentError, 'Too many children'\
-                           if hashed_subtree.size + @children.size > 2
+      raise ArgumentError, 'Too many children' if hashed_subtree.size + @children.size > 2
 
-      super(hashed_subtree)
+      super
     end
 
     # Performs in-order traversal (including this node).
@@ -203,8 +202,8 @@ module Tree
     #
     # @raise [ArgumentError] If the index is out of limits.
     def set_child_at(child, at_index)
-      raise ArgumentError, 'A binary tree cannot have more than two children.'\
-                           unless (0..1).include? at_index
+      raise ArgumentError,
+            'A binary tree cannot have more than two children.' unless (0..1).include? at_index
 
       old_child = @children[at_index]
       if old_child && old_child != child

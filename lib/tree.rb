@@ -316,9 +316,11 @@ module Tree
     # @return [String] A string representation of the node.
     def to_s
       content_str = @content.nil? ? '<Empty>' : @content.to_s
-      "Node Name: #{@name} Content: #{content_str} " \
-        "Parent: #{root? ? '<None>' : @parent.name.to_s} "       \
+      [
+        "Node Name: #{@name} Content: #{content_str}",
+        "Parent: #{root? ? '<None>' : @parent.name}",
         "Children: #{@children.length} Total Nodes: #{size}"
+      ].join(' ')
     end
 
     # Returns the requested node from the set of immediate children.
@@ -354,6 +356,7 @@ module Tree
         @children_hash[name_or_index]
       end
     end
+
     # Provides a comparison operation for the nodes.
     #
     # Comparison is based on the natural ordering of the node name objects.

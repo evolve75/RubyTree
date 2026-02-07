@@ -53,18 +53,20 @@ module Tree
 
         # Lazy man's unique test, won't test if children of child are unique in
         # this tree too.
-        raise "Child #{child.name} already added!"\
-              if @children_hash.include?(child.name)
+        raise "Child #{child.name} already added!" if @children_hash.include?(child.name)
 
         child.parent&.remove! child # Detach from the old parent
 
         if insertion_range.include?(at_index)
           @children.insert(at_index, child)
         else
-          raise 'Attempting to insert a child at a non-existent location'\
-                " (#{at_index}) "\
-                'when only positions from '\
-                "#{insertion_range.min} to #{insertion_range.max} exist."
+          message = [
+            'Attempting to insert a child at a non-existent location',
+            "(#{at_index})",
+            'when only positions from',
+            "#{insertion_range.min} to #{insertion_range.max} exist."
+          ].join(' ')
+          raise message
         end
 
         @children_hash[child.name] = child
@@ -95,11 +97,11 @@ module Tree
 
       # Renames the specified child node
       def rename_child(old_name, new_name)
-        raise ArgumentError, "Invalid child name specified: #{old_name}"\
-              unless @children_hash.key?(old_name)
+        raise ArgumentError,
+              "Invalid child name specified: #{old_name}" unless @children_hash.key?(old_name)
 
-        raise ArgumentError, "Child name already exists: #{new_name}"\
-              if @children_hash.key?(new_name)
+        raise ArgumentError,
+              "Child name already exists: #{new_name}" if @children_hash.key?(new_name)
 
         @children_hash[new_name] = @children_hash.delete(old_name)
         @children_hash[new_name].name = new_name
@@ -180,7 +182,7 @@ module Tree
       def invalidate_size_cache_upwards!
         node = self
         while node
-          node.instance_variable_set(:@node_size, nil)
+          node.instance_variable_set(:@size, nil)
           node = node.parent
         end
       end

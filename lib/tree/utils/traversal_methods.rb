@@ -55,8 +55,8 @@ module Tree
       end
 
       # Traverses the (sub)tree rooted at this node in pre-ordered sequence.
-      def preordered_each(&block) # :yields: node
-        each(&block)
+      def preordered_each(&) # :yields: node
+        each(&)
       end
 
       # Traverses the (sub)tree rooted at this node in post-ordered sequence.
@@ -137,7 +137,7 @@ module Tree
                      block = lambda { |node, prefix|
                                puts "#{prefix} #{node.name}"
                              })
-        prefix = ''.dup # dup NEEDs to be invoked to make this mutable.
+        prefix = ''.dup # dup must be invoked to make this mutable.
 
         if root?
           prefix << '*'

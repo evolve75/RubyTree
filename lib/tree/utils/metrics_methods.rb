@@ -52,7 +52,7 @@ module Tree
       #
       # @return [Integer] Total number of nodes in this (sub)tree.
       def size
-        @node_size ||= count
+        @size ||= count
       end
 
       # @!attribute [r] length
