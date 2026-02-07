@@ -89,21 +89,10 @@ Gem::Specification.new do |s|
     Note::
 
     - 3.0.0pre sets the minimum Ruby version to 3.1.
-
-    - 2.2.0 is a minor update that improves tree integrity checks,
-            traversal robustness, and node management edge cases.
-
-    - 2.1.1 is a minor update that updates all dependencies and
-            Updates the guard clause for creating a tree from a hash.
-
-    - 2.1.0 is a minor update that brings all libraries to their
-            latest stable versions. This version no longer supports
-            Ruby 2.6 (minimum requirement is now >= 2.7).
-
+    - 2.2.0 improves tree integrity checks and traversal robustness.
     - 2.0.0 is a major release with BREAKING API changes.
-            See `CHANGELOG.md` for details.
 
-    - For the full release history and API change notes, see `CHANGELOG.md`.
+    For the full release history and API change notes, see `CHANGELOG.md`.
 
     ========================================================================
   END_MESSAGE
