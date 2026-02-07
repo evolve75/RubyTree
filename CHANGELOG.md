@@ -43,6 +43,9 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Binary Max-Heap implementation (`Tree::BinaryMaxHeapNode`) with ordered
   insert/extract operations.
 
+* Add a Fenwick Tree implementation (`Tree::FenwickTree`) with point updates
+  and prefix/range sums.
+
 * Add a Trie implementation (`Tree::TrieNode`) for prefix-based lookup.
 
 * Add a Splay Tree implementation (`Tree::SplayTreeNode`) with ordered
