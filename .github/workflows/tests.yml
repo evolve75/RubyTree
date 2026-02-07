@@ -17,4 +17,4 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - run: bundle exec rake clobber test:all gem:package
+      - run: bundle exec rake clobber test:all gem:package gemspec
