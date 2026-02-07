@@ -3,7 +3,7 @@
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
 #
-# Copyright (c) 2006, 2007, 2008, 2009, 2010, 2012, 2013, 2015, 2017, 2022 Anupam Sengupta
+# Copyright (c) 2006-2026 Anupam Sengupta
 #
 # All rights reserved.
 #

@@ -2,7 +2,7 @@
 #
 # Rakefile - This file is part of the RubyTree package.
 #
-# Copyright (c) 2006-2024  Anupam Sengupta
+# Copyright (c) 2006-2026  Anupam Sengupta
 #
 # All rights reserved.
 #

@@ -3,7 +3,7 @@
 #
 # Author:: Anupam Sengupta (anupamsg@gmail.com)
 #
-# Copyright (c) 2012-2024, 2026 Anupam Sengupta. All rights reserved.
+# Copyright (c) 2012-2026 Anupam Sengupta. All rights reserved.
 #
 # frozen_string_literal: true
 
