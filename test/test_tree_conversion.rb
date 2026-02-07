@@ -136,6 +136,25 @@ module TestTree
       assert_equal(2, interior_node.children.count)
     end
 
+    def test_from_hash_accepts_hash_like_inputs
+      hash_like = Class.new do
+        def initialize(payload)
+          @payload = payload
+        end
+
+        def to_hash
+          @payload
+        end
+      end
+
+      input = hash_like.new({ A: hash_like.new({ B: nil }) })
+      tree = Tree::TreeNode.from_hash(input)
+
+      assert_equal(:A, tree.name)
+      assert_equal(true, tree.root?)
+      assert_equal(true, tree[:B].leaf?)
+    end
+
     def test_add_from_hash
       tree = Tree::TreeNode.new(:A)
 

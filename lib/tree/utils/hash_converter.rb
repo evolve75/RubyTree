@@ -54,6 +54,12 @@ module Tree
       # class methods on any class mixing in the {Tree::Utils::HashConverter}
       # module.
       module ClassMethods
+        def normalize_hash_input(value)
+          return value.to_hash if value.respond_to?(:to_hash)
+
+          value
+        end
+
         # Factory method builds a {Tree::TreeNode} from a +Hash+.
         #
         # This method will interpret each key of your +Hash+ as a {Tree::TreeNode}.
@@ -98,11 +104,13 @@ module Tree
         #                        values that are not hashes or nils.
 
         def from_hash(hash)
+          hash = normalize_hash_input(hash)
           raise ArgumentError, 'Argument must be a type of hash' unless hash.is_a?(Hash)
 
           raise ArgumentError, 'Hash must have one top-level element' if hash.size != 1
 
           root, children = hash.first
+          children = normalize_hash_input(children)
 
           case children
           in Hash | nil
@@ -145,6 +153,7 @@ module Tree
       # @return [Array] Array of child nodes added
       # @see ClassMethods#from_hash
       def add_from_hash(children)
+        children = self.class.normalize_hash_input(children)
         raise ArgumentError, 'Argument must be a type of hash' unless children.is_a?(Hash)
 
         child_nodes = []

@@ -19,6 +19,9 @@
 * Allow `print_tree` to write to a custom IO and add `print_tree_to_s` for
   string output.
 
+* Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
+  `HashWithIndifferentAccess` data (see #104).
+
 ### 2.2.1pre / 2026-02-07
 
 * Simplified development dependency constraints while maintaining Ruby 2.7+

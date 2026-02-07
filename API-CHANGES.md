@@ -26,6 +26,10 @@ smooth transition to the new APIs.
   [Tree::TreeNode#print_tree_to_s][print_tree_to_s] returns the formatted
   output as a string.
 
+* Hash conversion now accepts hash-like inputs (objects responding to
+  `to_hash`) to improve interoperability with frameworks such as Rails
+  (see #104).
+
 ## Release 2.2.0 Changes
 
 * [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add
