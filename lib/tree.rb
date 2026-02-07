@@ -127,14 +127,13 @@ module Tree
     # Root node for the (sub)tree to which this node belongs.
     # A root node's root is itself.
     #
-    # @note This walks the parent chain each call; if this is on a hot path,
-    #       consider caching the result at the caller.
-    #
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
-      root = self
-      root = root.parent until root.root?
-      root
+      return @root_cache if @root_cache
+
+      root_node = self
+      root_node = root_node.parent until root_node.root?
+      @root_cache = root_node
     end
 
     # @!attribute [r] root?
@@ -232,9 +231,9 @@ module Tree
       @name = name
       @content = content
 
-      set_as_root!
       @children_hash = {}
       @children = []
+      set_as_root!
     end
 
     # Returns a copy of this node, with its parent and children links removed.
@@ -422,6 +421,7 @@ module Tree
 
       @children_hash[child.name] = child
       child.parent = self
+      invalidate_size_cache_upwards!
       child
     end
 
@@ -514,6 +514,7 @@ module Tree
       @children_hash.delete(child.name)
       @children.delete(child)
       child.set_as_root!
+      invalidate_size_cache_upwards!
       child
     end
 
@@ -526,6 +527,8 @@ module Tree
     def parent=(parent) # :nodoc:
       @parent = parent
       @node_depth = nil
+      clear_root_cache!
+      invalidate_size_cache_upwards!
     end
 
     protected :parent=, :name=
@@ -559,6 +562,7 @@ module Tree
 
       @children_hash.clear
       @children.clear
+      invalidate_size_cache_upwards!
       self
     end
 
@@ -570,6 +574,25 @@ module Tree
     end
 
     protected :set_as_root!
+
+    def clear_root_cache!
+      @root_cache = nil
+      return unless @children
+
+      children_array.each do |child|
+        child&.__send__(:clear_root_cache!)
+      end
+    end
+
+    def invalidate_size_cache_upwards!
+      node = self
+      while node
+        node.instance_variable_set(:@node_size, nil)
+        node = node.parent
+      end
+    end
+
+    private :clear_root_cache!, :invalidate_size_cache_upwards!
 
     # Freezes all nodes in the (sub)tree rooted at this node.
     #
@@ -642,7 +665,7 @@ module Tree
 
         yield current # and process it
         # Stack children of the current node at top of the stack
-        current.children.reverse_each do |child|
+        current.send(:children_array).reverse_each do |child|
           node_stack << child if child
         end
       end
@@ -676,25 +699,22 @@ module Tree
     def postordered_each
       return to_enum(:postordered_each) unless block_given?
 
-      # Using a marked node in order to skip adding the children of nodes that
-      # have already been visited. This allows the stack depth to be controlled,
-      # and also allows stateful backtracking.
-      marked_node = Struct.new(:node, :visited)
-      node_stack = [marked_node.new(self, false)] # Start with self
+      node_stack = [self] # Start with self
+      visited = [false]
 
       until node_stack.empty?
-        peek_node = node_stack[0]
-        if peek_node.node.children? && !peek_node.visited
-          peek_node.visited = true
-          # Add the children to the stack. Use the marking structure.
-          marked_children =
-            peek_node.node.children.filter_map do |node|
-              marked_node.new(node, false) if node
-            end
-          node_stack = marked_children.concat(node_stack)
-          next
+        peek_node = node_stack[-1]
+        if peek_node.children? && !visited[-1]
+          visited[-1] = true
+          peek_node.send(:children_array).reverse_each do |child|
+            next unless child
+
+            node_stack << child
+            visited << false
+          end
         else
-          yield node_stack.shift.node # Pop and yield the current node
+          yield node_stack.pop
+          visited.pop
         end
       end
 
@@ -727,7 +747,7 @@ module Tree
 
         yield node_to_traverse
         # Enqueue the children from left to right.
-        node_to_traverse.children.each do |child|
+        node_to_traverse.send(:children_array).each do |child|
           node_queue << child if child
         end
       end
@@ -755,6 +775,12 @@ module Tree
         @children.clone
       end
     end
+
+    def children_array
+      @children
+    end
+
+    private :children_array
 
     # Yields every leaf node of the (sub)tree rooted at this node to the
     # specified block.
@@ -793,7 +819,7 @@ module Tree
         level = [self]
         until level.empty?
           yield level
-          level = level.flat_map(&:children).filter_map { |child| child }
+          level = level.flat_map { |node| node.send(:children_array) }.filter_map { |child| child }
         end
         self
       else
@@ -810,7 +836,7 @@ module Tree
     #
     # @return [Tree::TreeNode] The first child, or +nil+ if none is present.
     def first_child
-      @children.first
+      children_array.first
     end
 
     # Last child of this node.
@@ -818,7 +844,7 @@ module Tree
     #
     # @return [Tree::TreeNode] The last child, or +nil+ if none is present.
     def last_child
-      @children.last
+      children_array.last
     end
 
     # @!group Navigating the Sibling Nodes
@@ -836,7 +862,7 @@ module Tree
     # @see #first_sibling?
     # @see #last_sibling
     def first_sibling
-      root? ? self : parent.children.first
+      root? ? self : parent.send(:children_array).first
     end
 
     # Returns +true+ if this node is the first sibling at its level.
@@ -864,7 +890,7 @@ module Tree
     # @see #last_sibling?
     # @see #first_sibling
     def last_sibling
-      root? ? self : parent.children.last
+      root? ? self : parent.send(:children_array).last
     end
 
     # Returns +true+ if this node is the last sibling at its level.
@@ -897,7 +923,9 @@ module Tree
     # @see #last_sibling
     def siblings
       if block_given?
-        parent.children.each do |sibling|
+        return self if root?
+
+        parent.send(:children_array).each do |sibling|
           next unless sibling
           next if sibling == self
 
@@ -908,7 +936,7 @@ module Tree
         return [] if root?
 
         siblings = []
-        parent.children do |my_sibling|
+        parent.send(:children_array).each do |my_sibling|
           next unless my_sibling
           siblings << my_sibling if my_sibling != self
         end
@@ -924,7 +952,7 @@ module Tree
     #
     # @see #siblings
     def only_child?
-      root? ? true : parent.children.size == 1
+      root? ? true : parent.send(:children_array).count { |child| child } == 1
     end
 
     alias is_only_child? only_child? # @todo: Aliased for eventual replacement
@@ -942,8 +970,9 @@ module Tree
     def next_sibling
       return nil if root?
 
-      idx = parent.children.index(self)
-      parent.children.at(idx + 1) if idx
+      siblings = parent.send(:children_array)
+      idx = siblings.index(self)
+      siblings.at(idx + 1) if idx
     end
 
     # Previous sibling of this node.
@@ -959,8 +988,9 @@ module Tree
     def previous_sibling
       return nil if root?
 
-      idx = parent.children.index(self)
-      parent.children.at(idx - 1) if idx&.positive?
+      siblings = parent.send(:children_array)
+      idx = siblings.index(self)
+      siblings.at(idx - 1) if idx&.positive?
     end
 
     # @!endgroup

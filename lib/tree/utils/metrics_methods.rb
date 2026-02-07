@@ -51,9 +51,9 @@ module Tree
       # Size:: Total number nodes in the subtree including this node.
       #
       # @return [Integer] Total number of nodes in this (sub)tree.
-    def size
-      count
-    end
+      def size
+        @node_size ||= count
+      end
 
       # @!attribute [r] length
       # Convenience synonym for {#size}.

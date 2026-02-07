@@ -226,6 +226,7 @@ module Tree
       else
         @children[at_index] = nil
       end
+      send(:invalidate_size_cache_upwards!)
       child
     end
 
