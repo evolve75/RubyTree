@@ -1,14 +1,14 @@
 # History of Changes
 
+### 3.0.0pre / 2026-02-07
+
+* Drop support for Ruby 2.7 and 3.0. Minimum required version is now 3.1.
+
 ### 2.2.1pre / 2026-02-07
 
 * Simplified development dependency constraints while maintaining Ruby 2.7+
   compatibility. Some upstream updates (e.g., `diff-lcs` 2.x, `erb` 6.x) remain
   on current versions due to Ruby 2.7 support.
-
-### 3.0.0pre / 2026-02-07
-
-* Drop support for Ruby 2.7 and 3.0. Minimum required version is now 3.1.
 
 ### 2.2.0 / 2026-02-06
 
