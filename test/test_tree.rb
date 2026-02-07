@@ -80,6 +80,7 @@ module TestTree
       assert_equal(0, @root.in_degree, 'Root should have an in-degree of 0')
       assert_equal(0, @root.node_height, "Root's height before adding any children is 0")
       assert_raise(ArgumentError) { Tree::TreeNode.new(nil) }
+      assert_raise(ArgumentError) { Tree::TreeNode.new('ROOT', nil, :bad) }
     end
 
     def test_root

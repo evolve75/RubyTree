@@ -271,7 +271,9 @@ module Tree
     #
     # @see #[]
     def initialize(name, content = nil, options = nil)
-      options = {} unless options.is_a?(Hash)
+      raise ArgumentError, 'Options must be a hash' if options && !options.is_a?(Hash)
+
+      options ||= {}
       @checks_enabled = options.fetch(:checks, true)
 
       raise ArgumentError, 'Node name HAS to be provided!' if checks_enabled? && name.nil?
