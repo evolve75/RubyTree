@@ -127,6 +127,9 @@ module Tree
     # Root node for the (sub)tree to which this node belongs.
     # A root node's root is itself.
     #
+    # @note This walks the parent chain each call; if this is on a hot path,
+    #       consider caching the result at the caller.
+    #
     # @return [Tree::TreeNode] Root of the (sub)tree.
     def root
       root = self
@@ -191,11 +194,13 @@ module Tree
     # @!attribute [r] children?
     # +true+ if the this node has any child node.
     #
+    # @note Nil child slots (e.g., in binary trees) do not count as children.
+    #
     # @return [Boolean] +true+ if child nodes exist.
     #
     # @see #leaf?
     def children?
-      !@children.empty?
+      @children.any?
     end
 
     alias has_children? children? # @todo: Aliased for eventual replacement
@@ -879,6 +884,8 @@ module Tree
     # If a block is provided, yields each of the sibling nodes to the block.
     # The root always has +nil+ siblings.
     #
+    # @note Nil child slots (e.g., in binary trees) are skipped.
+    #
     # @yieldparam sibling [Tree::TreeNode] Each sibling node.
     #
     # @return [Array<Tree::TreeNode>] Array of siblings of this node. Will
@@ -890,13 +897,19 @@ module Tree
     # @see #last_sibling
     def siblings
       if block_given?
-        parent.children.each { |sibling| yield sibling if sibling != self }
+        parent.children.each do |sibling|
+          next unless sibling
+          next if sibling == self
+
+          yield sibling
+        end
         self
       else
         return [] if root?
 
         siblings = []
         parent.children do |my_sibling|
+          next unless my_sibling
           siblings << my_sibling if my_sibling != self
         end
         siblings

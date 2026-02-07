@@ -7,6 +7,14 @@ _Note_: API changes are expected to reduce significantly after the `1.x`
 release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
+## Release 3.0.0 Changes
+
+* Minimum Ruby version is now 3.1 (support for 2.7 and 3.0 has been dropped).
+
+* [Tree::TreeNode#children?][children] and [Tree::TreeNode#siblings][siblings]
+  now treat `nil` child slots as empty, preventing binary trees with missing
+  children from reporting or yielding phantom siblings.
+
 ## Release 2.2.0 Changes
 
 * [Tree::TreeNode#add][add] now raises `ArgumentError` when attempting to add
@@ -28,10 +36,6 @@ smooth transition to the new APIs.
 
 * [Tree::TreeNode#each_level][each_level] now returns a level-wise enumerator
   when called without a block.
-
-## Release 3.0.0 Changes
-
-* Minimum Ruby version is now 3.1 (support for 2.7 and 3.0 has been dropped).
 
 ## Release 2.1.0 Changes
 
@@ -165,6 +169,7 @@ smooth transition to the new APIs.
 [append]: rdoc-ref:Tree::TreeNode#<<
 [breadth_each]: rdoc-ref:Tree::TreeNode#breadth_each
 [btree_add]: rdoc-ref:Tree::BinaryTreeNode#add
+[children]: rdoc-ref:Tree::TreeNode#children?
 [depth]: rdoc-ref:Tree::Utils::TreeMetricsHandler#depth
 [detached_subtree_copy]: rdoc-ref:Tree::TreeNode#detached_subtree_copy
 [dup]: rdoc-ref:Tree::TreeNode#dup

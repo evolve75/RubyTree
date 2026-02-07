@@ -236,6 +236,21 @@ module TestTree
       assert_nil(@root['A Child at Left'], 'Lookup by old left name should be nil')
     end
 
+    def test_nil_children_slots
+      @root << @left_child1
+      @root << @right_child1
+
+      @root.left_child = nil
+      assert(@root.children?, 'Root should still have a right child')
+
+      collected = []
+      @root.right_child.siblings { |sibling| collected << sibling }
+      assert_equal([], collected, 'Nil sibling slots should not be yielded')
+
+      @root.right_child = nil
+      assert(!@root.children?, 'Root should report no children once all slots are nil')
+    end
+
     # Test right_child= method.
     def test_right_child_equals
       @root << @left_child1
