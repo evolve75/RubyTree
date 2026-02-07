@@ -39,10 +39,8 @@ The home page for **RubyTree** is at [rubytree.anupamsg.me][rt_site].
 
 ## WHAT'S NEW: ##
 
-See [History](./History.md) for the detailed Changelog.
-
-See [API-CHANGES](./API-CHANGES.md) for the detailed description of
-API level changes.
+See [CHANGELOG](./CHANGELOG.md) for the detailed release history and API
+change notes.
 
 Cycle creation via `add` is prevented, and explicit cycle validation helpers
 are available for untrusted input (see `validate_acyclic!` and `acyclic?`).

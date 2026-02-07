@@ -59,7 +59,7 @@ Gem::Specification.new do |s|
 
   s.require_paths        = ['lib']
 
-  s.extra_rdoc_files     = %w[README.md LICENSE.md API-CHANGES.md History.md]
+  s.extra_rdoc_files     = %w[README.md LICENSE.md CHANGELOG.md]
   s.rdoc_options         = ['--title', "Rubytree Documentation: #{s.name}-#{s.version}",
                             '--main', 'README.md',
                             '--quiet']
@@ -99,7 +99,7 @@ Gem::Specification.new do |s|
             Ruby 2.6 (minimum requirement is now >= 2.7).
 
     - 2.0.0 is a major release with BREAKING API changes.
-            See `API-CHANGES.md` for details.
+            See `CHANGELOG.md` for details.
 
     ========================================================================
   END_MESSAGE
