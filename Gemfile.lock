@@ -98,7 +98,7 @@ DEPENDENCIES
   rtagstask (~> 0.0)
   rubocop (~> 1.84)
   rubocop-rake (~> 0.7)
-  rubocop-rspec (~> 3.9)
+  rubocop-rspec (~> 3.0)
   rubytree!
   simplecov (~> 0.22)
   simplecov-lcov (~> 0.9)

@@ -35,8 +35,8 @@
 # frozen_string_literal: true
 
 require 'rubygems'
+require 'bundler'
 
-# @todo: Check if Bundler needs to be `require`d.
 GEM_SPEC = Bundler.load_gemspec(File.join(__dir__, 'rubytree.gemspec'))
 
 PKG_NAME = GEM_SPEC.name
@@ -44,14 +44,7 @@ PKG_VER  = GEM_SPEC.version
 GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
 
 desc 'Default Task (Run the tests)'
-task :default do
-  if ENV['COVERAGE']
-    Rake::Task['test:coverage'].invoke
-  else
-    Rake::Task['test:unit'].invoke
-    Rake::Task['spec'].invoke
-  end
-end
+task :default => 'test:all'
 
 desc 'Display the current gem version'
 task :version do
@@ -71,7 +64,6 @@ end
 
 namespace :doc do # ................................ Documentation
   begin
-    gem 'rdoc', '>= 6.4.0' # To get around a stupid bug in Ruby 1.9.2 Rake.
     require 'rdoc/task'
     Rake::RDocTask.new do |rdoc|
       rdoc.rdoc_dir = 'rdoc'
@@ -153,31 +145,18 @@ rescue LoadError
 end
 
 # ................................ Gem related
-namespace :gem do
-  require 'rubygems/package_task'
-  Gem::PackageTask.new(GEM_SPEC) do |pkg|
-    pkg.need_zip = true
-    pkg.need_tar = true
-  end
-
-  desc 'Push the gem into the Rubygems and Github repositories'
-  task push: :gem do
-    github_repo = 'https://rubygems.pkg.github.com/evolve75'
-
-    # This pushes to the standard RubyGems registry
-    sh "gem push pkg/#{GEM_NAME}"
-
-    # For github, the credentials key is assumed to be github
-    # See: https://docs.github.com/en/packages/working-with-a-github-packages-registry/
-    sh "gem push --key github --host #{github_repo} pkg/#{GEM_NAME}"
-  end
-end
+require 'bundler/gem_helper'
+Bundler::GemHelper.install_tasks
 
 # ................................ Ruby linting
-require 'rubocop/rake_task'
+begin
+  require 'rubocop/rake_task'
 
-RuboCop::RakeTask.new(:rubocop) do |t|
-  t.options = ['--display-cop-names']
-  t.requires << 'rubocop-rake'
-  t.requires << 'rubocop-rspec'
+  RuboCop::RakeTask.new(:rubocop) do |t|
+    t.options = ['--display-cop-names']
+    t.requires << 'rubocop-rake'
+    t.requires << 'rubocop-rspec'
+  end
+rescue LoadError
+  # RuboCop not available.
 end
