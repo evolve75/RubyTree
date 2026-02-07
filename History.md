@@ -7,6 +7,12 @@
 * Treat `nil` child slots as empty in sibling/child checks to avoid phantom
   nodes in sparse binary trees.
 
+* Add explicit cycle validation helpers (`validate_acyclic!`, `acyclic?`) for
+  untrusted input.
+
+* Cycle prevention in `add` eliminates the earlier `to_s`/`size` infinite-loop
+  risk caused by cyclic graphs.
+
 ### 2.2.1pre / 2026-02-07
 
 * Simplified development dependency constraints while maintaining Ruby 2.7+

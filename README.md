@@ -44,6 +44,9 @@ See [History](./History.md) for the detailed Changelog.
 See [API-CHANGES](./API-CHANGES.md) for the detailed description of
 API level changes.
 
+Cycle creation via `add` is prevented, and explicit cycle validation helpers
+are available for untrusted input (see `validate_acyclic!` and `acyclic?`).
+
 ## GETTING STARTED: ##
 
 This is a basic usage example of the library to create and manipulate a tree.
