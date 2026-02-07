@@ -32,6 +32,7 @@ Available tree types include:
 * [Binary tree][] with [in-order][] traversal support.
 * [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
   `tree/binarysearchtree`).
+* [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
 * [Red-Black Tree][] under `Tree::RedBlackTreeNode` (require
   `tree/redblacktree`).
 
@@ -219,6 +220,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [BSD]:https://opensource.org/licenses/bsd-license.php
 [Binary tree]:https://en.wikipedia.org/wiki/Binary_tree
 [Binary Search Tree]:https://en.wikipedia.org/wiki/Binary_search_tree
+[AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
 [Red-Black Tree]:https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 [Bundler]:https://bundler.io
 [Comparable]:https://ruby-doc.org/core/Comparable.html

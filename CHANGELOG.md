@@ -31,6 +31,9 @@ Changes section to scan for breaking or behavioral changes.
 * Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
   `HashWithIndifferentAccess` data (see #104).
 
+* Add an AVL Tree implementation (`Tree::AvlTreeNode`) with ordered
+  insert/search/delete operations.
+
 * Add a Red-Black Tree implementation (`Tree::RedBlackTreeNode`) with ordered
   insert/search/delete operations.
 
@@ -489,6 +492,7 @@ This is a primarily a bug-fix release, with some packaging changes.
 [previous_sibling]: rdoc-ref:Tree::TreeNode#previous_sibling
 [print_tree]: rdoc-ref:Tree::TreeNode#print_tree
 [remove]: rdoc-ref:Tree::TreeNode#remove!
+[avl_tree_node]: rdoc-ref:Tree::AvlTreeNode
 [red_black_tree_node]: rdoc-ref:Tree::RedBlackTreeNode
 [rename]: rdoc-ref:Tree::TreeNode#rename
 [rename_child]: rdoc-ref:Tree::TreeNode#rename_child
@@ -531,6 +535,9 @@ smooth transition to the new APIs.
 * Hash conversion now accepts hash-like inputs (objects responding to
   `to_hash`) to improve interoperability with frameworks such as Rails
   (see #104).
+
+* Added [Tree::AvlTreeNode][avl_tree_node] for a balanced binary search tree
+  using AVL rotations.
 
 * Added [Tree::RedBlackTreeNode][red_black_tree_node] for a balanced binary
   search tree with red-black invariants.
