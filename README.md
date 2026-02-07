@@ -1,8 +1,7 @@
 # **RubyTree** #
 
-[![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
-![Build State](https://github.com/evolve75/rubytree/actions/workflows/ruby.yml/badge.svg)
-[![Code Climate](https://codeclimate.com/github/evolve75/RubyTree.png)](https://codeclimate.com/github/evolve75/RubyTree)
+[![Gem Version](https://badge.fury.io/rb/rubytree.png)](https://badge.fury.io/rb/rubytree)
+![Build State](https://github.com/evolve75/RubyTree/actions/workflows/ruby.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
 
         __       _           _
@@ -157,10 +156,6 @@ Documentation for the latest released version is available at:
 
 [rubytree.anupamsg.me/rdoc][rt_doc]
 
-Documentation for the latest git HEAD is available at:
-
-[rdoc.info/projects/evolve75/RubyTree][rt_doc@head]
-
 Note that the documentation is formatted using [Yard][].
 
 ## DEVELOPERS: ##
@@ -180,10 +175,6 @@ hosted on [github.com][rt@github].
 The git repository is available at [github.com/evolve75/RubyTree][rt@github].
 
 For cloning the git repository, use one of the following commands:
-
-    $ git clone git://github.com/evolve75/RubyTree.git    # using ssh
-
-or
 
     $ git clone https://github.com/evolve75/RubyTree.git  # using https
 
@@ -218,7 +209,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
    duplicate node names in the tree (globally unique names).
 6. [Paul de Courcel](https://github.com/pdecourcel) for adding the
    `postordered_each` method.
-7. [Jen Hamon](http://www.github.com/jhamon) for adding the `from_hash` method.
+7. [Jen Hamon](https://github.com/jhamon) for adding the `from_hash` method.
 8. [Evan Sharp](https://github.com/packetmonkey) for adding the `rename` and
    `rename_child` methods.
 9. [Aidan Steele](https://github.com/aidansteele) for performance improvements
@@ -241,29 +232,29 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [LICENSE.md](./LICENSE.md) for details.
 
 
-[BSD]:                  http://opensource.org/licenses/bsd-license.php "BSD License"
-[Binary tree]:          http://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
-[Bundler]:              http://bundler.io "Bundler"
-[Comparable]:           http://ruby-doc.org/core/Comparable.html "Comparable mix-in"
-[Enumerable]:           http://ruby-doc.org/core/Enumerable.html "Enumerable mix-in"
+[BSD]:                  https://opensource.org/licenses/bsd-license.php "BSD License"
+[Binary tree]:          https://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
+[Bundler]:              https://bundler.io "Bundler"
+[Comparable]:           https://ruby-doc.org/core/Comparable.html "Comparable mix-in"
+[Enumerable]:           https://ruby-doc.org/core/Enumerable.html "Enumerable mix-in"
 [JSON]:                 https://rubygems.org/gems/json "JSON"
 [Rake]:                 https://rubygems.org/gems/rake "Rake"
-[Ruby]:                 http://www.ruby-lang.org "Ruby Programming Language"
-[SCM]:                  http://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
-[Yard]:                 http://yardoc.org "Yard Document Generator"
-[breadth-first]:        http://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
-[git]:                  http://git-scm.com "Git SCM"
-[in-order]:             http://en.wikipedia.org/wiki/Tree_traversal#In-order "In-order (symmetric) Traversal"
-[marshaling]:           http://ruby-doc.org/core/Marshal.html "Marshaling in Ruby"
-[post-order]:           http://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
-[pre-order]:            http://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
-[rt@github]:            http://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
-[rt_doc@head]:          http://rdoc.info/projects/evolve75/RubyTree "RubyTree Documentation for VCS Head"
-[rt_doc]:               http://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
-[rt_gem]:               http://rubygems.org/gems/rubytree "RubyTree Gem"
-[rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
-[tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
-[RSpec]:                https://relishapp.com/rspec/
+[Ruby]:                 https://www.ruby-lang.org "Ruby Programming Language"
+[SCM]:                  https://en.wikipedia.org/wiki/Source_Code_Management "Source Code Management"
+[Yard]:                 https://yardoc.org "Yard Document Generator"
+[breadth-first]:        https://en.wikipedia.org/wiki/Breadth-first_search "Breadth-first (level-first) Traversal"
+[git]:                  https://git-scm.com "Git SCM"
+[in-order]:             https://en.wikipedia.org/wiki/Tree_traversal#In-order "In-order (symmetric) Traversal"
+[marshaling]:           https://ruby-doc.org/core/Marshal.html "Marshaling in Ruby"
+[post-order]:           https://en.wikipedia.org/wiki/Tree_traversal#Post-order "Post-ordered Traversal"
+[pre-order]:            https://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
+[rt@github]:            https://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
+[rt_doc@head]:          https://rdoc.info/projects/evolve75/RubyTree "RubyTree Documentation for VCS Head"
+[rt_doc]:               https://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
+[rt_gem]:               https://rubygems.org/gems/rubytree "RubyTree Gem"
+[rt_site]:              https://rubytree.anupamsg.me "RubyTree Site"
+[tree_data_structure]:  https://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
+[RSpec]:                https://rspec.info/
 [Rubocop]:              https://rubocop.org/
 
 [TreeNode]:             rdoc-ref:Tree::TreeNode
