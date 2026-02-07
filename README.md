@@ -28,6 +28,8 @@ access to the tree as a standard collection (iteration, comparison, etc.).
 A [Binary tree][] is also provided, which provides the [in-order][] traversal in
 addition to the other methods. A [Binary Search Tree][] implementation is
 available under `Tree::BinarySearchTreeNode` (require `tree/binarysearchtree`).
+A [Red-Black Tree][] implementation is available under
+`Tree::RedBlackTreeNode` (require `tree/redblacktree`).
 
 **RubyTree** supports importing from, and exporting to [JSON][], and also
 supports the Ruby's standard object [marshaling][].
@@ -253,6 +255,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [BSD]:                  https://opensource.org/licenses/bsd-license.php "BSD License"
 [Binary tree]:          https://en.wikipedia.org/wiki/Binary_tree "Binary Tree Data Structure"
 [Binary Search Tree]:   https://en.wikipedia.org/wiki/Binary_search_tree "Binary Search Tree Data Structure"
+[Red-Black Tree]:       https://en.wikipedia.org/wiki/Red%E2%80%93black_tree "Red-Black Tree Data Structure"
 [Bundler]:              https://bundler.io "Bundler"
 [Comparable]:           https://ruby-doc.org/core/Comparable.html "Comparable mix-in"
 [Enumerable]:           https://ruby-doc.org/core/Enumerable.html "Enumerable mix-in"

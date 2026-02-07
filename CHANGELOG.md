@@ -29,6 +29,9 @@ Changes section to scan for breaking or behavioral changes.
 * Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
   `HashWithIndifferentAccess` data (see #104).
 
+* Add a Red-Black Tree implementation (`Tree::RedBlackTreeNode`) with ordered
+  insert/search/delete operations.
+
 * `Tree::BinaryTreeNode#inordered_each` now returns an enumerator for
   `inordered_each` (instead of `each`) when called without a block. This fixes
   the behavior where `node.inordered_each.map` used pre-order traversal.
@@ -479,6 +482,7 @@ This is a primarily a bug-fix release, with some packaging changes.
 [previous_sibling]: rdoc-ref:Tree::TreeNode#previous_sibling
 [print_tree]: rdoc-ref:Tree::TreeNode#print_tree
 [remove]: rdoc-ref:Tree::TreeNode#remove!
+[red_black_tree_node]: rdoc-ref:Tree::RedBlackTreeNode
 [rename]: rdoc-ref:Tree::TreeNode#rename
 [rename_child]: rdoc-ref:Tree::TreeNode#rename_child
 [siblings]: rdoc-ref:Tree::TreeNode#siblings
@@ -520,6 +524,9 @@ smooth transition to the new APIs.
 * Hash conversion now accepts hash-like inputs (objects responding to
   `to_hash`) to improve interoperability with frameworks such as Rails
   (see #104).
+
+* Added [Tree::RedBlackTreeNode][red_black_tree_node] for a balanced binary
+  search tree with red-black invariants.
 
 * Added per-tree validation toggles via `checks: false` on `Tree::TreeNode.new`
   to allow disabling guard checks in performance-critical code paths. Some
