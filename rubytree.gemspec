@@ -47,7 +47,8 @@ Gem::Specification.new do |s|
     'rubygems_mfa_required' => 'true',
     'github_repo' => 'https://github.com/evolve75/RubyTree',
     'source_code_uri' => 'https://github.com/evolve75/RubyTree',
-    'changelog_uri' => 'https://github.com/evolve75/RubyTree/blob/master/CHANGELOG.md'
+    'changelog_uri' => 'https://github.com/evolve75/RubyTree/blob/master/CHANGELOG.md',
+    'bug_tracker_uri' => 'https://github.com/evolve75/RubyTree/issues'
   }
 
   s.files                = Dir['lib/**/*.rb']  # The actual code
