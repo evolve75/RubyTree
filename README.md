@@ -35,6 +35,7 @@ Available tree types include:
 * [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
 * [Treap][] under `Tree::TreapNode` (require `tree/treap`).
 * [Trie][] under `Tree::TrieNode` (require `tree/trie`).
+* [Splay Tree][] under `Tree::SplayTreeNode` (require `tree/splaytree`).
 * [Red-Black Tree][] under `Tree::RedBlackTreeNode` (require
   `tree/redblacktree`).
 
@@ -225,6 +226,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
 [Treap]:https://en.wikipedia.org/wiki/Treap
 [Trie]:https://en.wikipedia.org/wiki/Trie
+[Splay Tree]:https://en.wikipedia.org/wiki/Splay_tree
 [Red-Black Tree]:https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 [Bundler]:https://bundler.io
 [Comparable]:https://ruby-doc.org/core/Comparable.html
