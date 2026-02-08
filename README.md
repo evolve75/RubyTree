@@ -37,6 +37,7 @@ Available tree types include:
 * [Fenwick Tree][] (binary indexed tree) under `Tree::FenwickTree` (require
   `tree/fenwicktree`).
 * [Segment Tree][] under `Tree::SegmentTree` (require `tree/segmenttree`).
+* [B-Tree][] under `Tree::BTree` (require `tree/btree`, key/value pairs).
 * [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
   `tree/binarysearchtree`).
 * [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
@@ -234,6 +235,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Binary Search Tree]:https://en.wikipedia.org/wiki/Binary_search_tree
 [Fenwick Tree]:https://en.wikipedia.org/wiki/Fenwick_tree
 [Segment Tree]:https://en.wikipedia.org/wiki/Segment_tree
+[B-Tree]:https://en.wikipedia.org/wiki/B-tree
 [AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
 [Treap]:https://en.wikipedia.org/wiki/Treap
 [Trie]:https://en.wikipedia.org/wiki/Trie

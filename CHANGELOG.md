@@ -49,6 +49,9 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Segment Tree implementation (`Tree::SegmentTree`) with point updates
   and range sum queries.
 
+* Add a B-tree implementation (`Tree::BTree`) with ordered insert/search/delete
+  operations over key/value pairs.
+
 * Add a Trie implementation (`Tree::TrieNode`) for prefix-based lookup.
 
 * Add a Splay Tree implementation (`Tree::SplayTreeNode`) with ordered
