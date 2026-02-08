@@ -321,8 +321,19 @@ module Tree
     # Returns a {marshal-dump}[http://ruby-doc.org/core-1.8.7/Marshal.html]
     # representation of the (sub)tree rooted at this node.
     #
+    # Use +Marshal.dump+ and +Marshal.load+; the Marshal hook methods are
+    # private and not part of the public API.
+    #
     def marshal_dump
       collect(&:create_dump_rep)
+    end
+
+    # Returns a Marshal-ready string for this tree node.
+    #
+    # @param [Integer] _depth Marshal depth (unused).
+    # @return [String] Marshaled dump payload.
+    def _dump(_depth)
+      Marshal.dump(marshal_dump)
     end
 
     # Creates a dump representation of this node and returns the same as
@@ -344,27 +355,55 @@ module Tree
     # the Marshal#load method, and should *not* be used with untrusted user
     # provided data.
     #
-    # @todo This method probably should be a class method. It currently clobbers
-    #       self and makes itself the root.
-    #
-    def marshal_load(dumped_tree_array)
+    # @param [Array<Hash>] dumped_tree_array The marshaled tree representation.
+    # @return [Tree::TreeNode] Root node of the reconstructed tree.
+    # @!visibility private
+    def self.marshal_load(dumped_tree_array)
       nodes = {}
-      dumped_tree_array.each do |node_hash|
-        name        = node_hash[:name]
-        parent_name = node_hash[:parent]
-        content     = Marshal.load(node_hash[:content])
+      root = nil
 
+      dumped_tree_array.each do |node_hash|
+        name = node_hash[:name]
+        parent_name = node_hash[:parent]
+
+        content = Marshal.load(node_hash[:content])
+
+        nodes[name] = current_node = new(name, content)
         if parent_name
-          nodes[name] = current_node = self.class.new(name, content)
           nodes[parent_name].add current_node
         else
-          # This is the root node, hence initialize self.
-          initialize(name, content)
-
-          nodes[name] = self # Add self to the list of nodes
+          root = current_node
         end
       end
+
+      root
     end
+
+    # Loads a marshaled tree from the Marshal payload.
+    #
+    # @param [String, Array<Hash>] dumped_data The marshaled dump payload.
+    # @return [Tree::TreeNode] Root node of the reconstructed tree.
+    # @!visibility private
+    def self._load(dumped_data)
+      dumped_tree_array =
+        dumped_data.is_a?(String) ? Marshal.load(dumped_data) : dumped_data
+
+      marshal_load(dumped_tree_array)
+    end
+    private_class_method :marshal_load, :_load
+
+    # Loads a marshaled dump into this instance (used by Marshal).
+    #
+    # @param [Array<Hash>] dumped_tree_array The marshaled tree representation.
+    # @return [Tree::TreeNode] The receiver.
+    # @!visibility private
+    def marshal_load(dumped_tree_array)
+      loaded_root = self.class.send(:marshal_load, dumped_tree_array)
+      initialize(loaded_root.name, loaded_root.content, { checks: loaded_root.checks_enabled? })
+      loaded_root.children.each { |child| add(child) }
+      self
+    end
+    private :marshal_load
 
     # @!endgroup
 

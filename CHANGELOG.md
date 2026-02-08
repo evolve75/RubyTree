@@ -6,6 +6,21 @@ Changes section to scan for breaking or behavioral changes.
 
 ## Release History
 
+### 3.0.0pre / 2026-02-08
+
+* `Tree::TreeNode#each_leaf` now returns an enumerator when called without a
+  block, matching other traversal methods.
+
+* Marshal loading now uses a class-level loader (`Tree::TreeNode._load` +
+  `Tree::TreeNode.marshal_load`) to avoid clobbering the receiver. Existing
+  Marshal payloads remain supported.
+
+* Marshal loading hooks (`Tree::TreeNode._load`, `Tree::TreeNode.marshal_load`,
+  `Tree::TreeNode#marshal_load`) are now private; use `Marshal.dump` and
+  `Marshal.load` instead.
+
+* Reduce intermediate allocations in `Tree::TreeNode#each_level` traversal.
+
 ### 3.0.0pre / 2026-02-07
 
 * Drop support for Ruby 2.7 and 3.0. Minimum required version is now 3.1.
@@ -531,6 +546,9 @@ This is a primarily a bug-fix release, with some packaging changes.
 [trie_node]: rdoc-ref:Tree::TrieNode
 [splay_tree_node]: rdoc-ref:Tree::SplayTreeNode
 [red_black_tree_node]: rdoc-ref:Tree::RedBlackTreeNode
+[each_leaf]: rdoc-ref:Tree::TreeNode#each_leaf
+[tree_node_load]: rdoc-ref:Tree::TreeNode._load
+[tree_node_marshal_load]: rdoc-ref:Tree::TreeNode.marshal_load
 [rename]: rdoc-ref:Tree::TreeNode#rename
 [rename_child]: rdoc-ref:Tree::TreeNode#rename_child
 [siblings]: rdoc-ref:Tree::TreeNode#siblings
@@ -568,6 +586,18 @@ smooth transition to the new APIs.
   enumerator for `inordered_each` (instead of `each`) when called without a
   block. This fixes the behavior where `node.inordered_each.map` used pre-order
   traversal.
+
+* [Tree::TreeNode#each_leaf][each_leaf] now returns an enumerator when called
+  without a block, matching the other traversal helpers.
+
+* Marshal loading now uses the class-level
+  [Tree::TreeNode._load][tree_node_load] and
+  [Tree::TreeNode.marshal_load][tree_node_marshal_load] helpers, returning a
+  new tree instead of mutating the receiver.
+
+* Marshal loading hooks (`Tree::TreeNode._load`,
+  `Tree::TreeNode.marshal_load`, `Tree::TreeNode#marshal_load`) are now
+  private; use `Marshal.dump` and `Marshal.load` instead.
 
 * Hash conversion now accepts hash-like inputs (objects responding to
   `to_hash`) to improve interoperability with frameworks such as Rails

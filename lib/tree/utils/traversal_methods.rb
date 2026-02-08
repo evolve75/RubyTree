@@ -111,13 +111,14 @@ module Tree
       end
 
       # Yields every leaf node of the (sub)tree rooted at this node.
+      #
+      # @return [Tree::TreeNode] The receiver, if a block is given.
+      # @return [Enumerator] An enumerator, if no block is given.
       def each_leaf
-        if block_given?
-          each { |node| yield(node) if node.leaf? }
-          self
-        else
-          self.select(&:leaf?)
-        end
+        return to_enum(:each_leaf) unless block_given?
+
+        each { |node| yield(node) if node.leaf? }
+        self
       end
 
       # Yields every level of the (sub)tree rooted at this node.
@@ -126,7 +127,13 @@ module Tree
           level = [self]
           until level.empty?
             yield level
-            level = level.flat_map { |node| node.send(:children_array) }.filter_map { |child| child }
+            next_level = []
+            level.each do |node|
+              node.send(:children_array).each do |child|
+                next_level << child if child
+              end
+            end
+            level = next_level
           end
           self
         else

@@ -90,8 +90,11 @@ module TestTree
       assert(result_array.include?(@child4), 'Should have child 4')
 
       result_array.clear
-      result_array = @root.each_leaf
-      assert_equal(Array, result_array.class)
+      enum = @root.each_leaf
+      assert_equal(Enumerator, enum.class) if defined?(Enumerator.class)
+      assert_equal(Enumerable::Enumerator, enum.class) if defined?(Enumerable::Enumerator.class)
+
+      result_array = enum.to_a
       assert_equal(3, result_array.length, 'Should have THREE LEAF NODES')
       assert(!result_array.include?(@root), 'Should not have root')
       assert(result_array.include?(@child1), 'Should have child 1')
@@ -103,7 +106,7 @@ module TestTree
     def test_single_node_becomes_leaf
       setup_test_tree
 
-      leafs = @root.each_leaf
+      leafs = @root.each_leaf.to_a
       parents = leafs.collect(&:parent)
       leafs.each(&:remove_from_parent!)
       parents.each do |parent|
