@@ -53,6 +53,10 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Segment Tree implementation (`Tree::SegmentTree`) with point updates
   and range sum queries.
 
+* Expand `Tree::SegmentTree` with a TreeNode-like API subset (Enumerable,
+  Comparable, array-style accessors, and hash/JSON serialization) aligned with
+  segment tree semantics.
+
 * Add a B-tree implementation (`Tree::BTree`) with ordered insert/search/delete
   operations over key/value pairs.
 

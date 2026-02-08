@@ -36,6 +36,8 @@
 #
 # frozen_string_literal: true
 
+require 'json'
+
 module Tree
   # Provides a Segment Tree implementation for range sum queries.
   #
@@ -43,9 +45,19 @@ module Tree
   # - point updates
   # - range sum queries in O(log n)
   #
+  # Unlike {Tree::TreeNode}, this class does not inherit from TreeNode and does
+  # not expose parent/child navigation. It provides a TreeNode-like API subset
+  # where it maps to segment tree semantics, including Enumerable iteration,
+  # JSON/hash serialization, and comparison by ordered values.
+  #
+  # Iteration yields values in index order, not internal tree nodes.
+  #
   # Indices are zero-based for public methods.
   #
   class SegmentTree
+    include Enumerable
+    include Comparable
+
     # @!attribute [r] size
     # Size of the tree (number of elements).
     #
@@ -79,6 +91,19 @@ module Tree
     # @return [Integer] The number of elements tracked by the tree.
     def length
       size
+    end
+
+    # Iterate over values in index order.
+    #
+    # @yieldparam value [Numeric] Value at each index.
+    #
+    # @return [Tree::SegmentTree] The receiver, if a block is given.
+    # @return [Enumerator] An enumerator, if no block is given.
+    def each(&)
+      return to_enum(:each) unless block_given?
+
+      0.upto(@size - 1) { |index| yield self[index] }
+      self
     end
 
     # Set the value at the specified index.
@@ -122,24 +147,142 @@ module Tree
       range_sum(index, index)
     end
 
+    # Set the value at the specified index.
+    #
+    # This is a convenience alias for {#update} to match array-style APIs.
+    #
+    # @param [Integer] index Zero-based index to update.
+    # @param [Numeric] value The value to set.
+    #
+    # @return [Numeric] The stored value at the index.
+    def []=(index, value)
+      update(index, value)
+      self[index]
+    end
+
+    # Returns all values in index order.
+    #
+    # @return [Array<Numeric>] Values in index order.
+    def values
+      to_a
+    end
+
+    # Returns all indices in order.
+    #
+    # @return [Array<Integer>] Indices in order.
+    def keys
+      (0...@size).to_a
+    end
+
+    # Returns all values as an Array.
+    #
+    # @return [Array<Numeric>] Values in index order.
+    def to_a
+      map { |value| value }
+    end
+
+    # Returns a Hash representation of the tree.
+    #
+    # @return [Hash] Hash representation of the segment tree.
+    def to_h
+      {
+        size: size,
+        values: to_a
+      }
+    end
+
+    # Build a segment tree from a Hash representation.
+    #
+    # @param [Hash] hash Hash representation of a segment tree.
+    # @return [Tree::SegmentTree] The constructed tree.
+    def self.from_hash(hash)
+      raise ArgumentError, 'Segment tree hash input must be a Hash.' unless hash.is_a?(Hash)
+
+      size = if hash.key?(:size)
+               hash[:size]
+             else
+               hash.fetch('size')
+             end
+      values = if hash.key?(:values)
+                 hash[:values]
+               elsif hash.key?('values')
+                 hash['values']
+               end
+      new(size, values)
+    end
+
+    # JSON serialization for the segment tree.
+    #
+    # @param [Hash] _options JSON serialization options.
+    # @return [Hash] Hash representation for JSON serialization.
+    def as_json(_options = {})
+      to_h
+    end
+
+    # Serialize the segment tree to JSON.
+    #
+    # @param [Array] args JSON.generate arguments.
+    # @return [String] JSON representation of the tree.
+    def to_json(*args)
+      JSON.generate(as_json, *args)
+    end
+
+    # Create a segment tree from a JSON hash.
+    #
+    # @param [Hash] json_hash JSON hash representation.
+    # @return [Tree::SegmentTree] The constructed tree.
+    def self.json_create(json_hash)
+      from_hash(json_hash)
+    end
+
+    # Compare segment trees by their ordered values.
+    #
+    # @param [Tree::SegmentTree] other The segment tree to compare.
+    # @return [Integer, nil] -1, 0, 1, or +nil+ if not comparable.
+    def <=>(other)
+      return nil unless other.is_a?(Tree::SegmentTree)
+
+      to_a <=> other.to_a
+    end
+
     private
 
+    # Validate the size for the tree.
+    #
+    # @param [Integer] size The size to validate.
+    # @raise [ArgumentError] If the size is invalid.
     def validate_size!(size)
       return if size.is_a?(Integer) && size.positive?
 
       raise ArgumentError, 'Segment tree size must be a positive integer.'
     end
 
+    # Validate an index for access.
+    #
+    # @param [Integer] index The index to validate.
+    # @raise [ArgumentError] If the index is out of range.
     def validate_index!(index)
       return if index.is_a?(Integer) && index.between?(0, @size - 1)
 
       raise ArgumentError, 'Segment tree index out of range.'
     end
 
+    # Validate a value for updates.
+    #
+    # @param [Numeric] value The value to validate.
+    # @raise [ArgumentError] If the value is nil.
     def validate_value!(value)
       raise ArgumentError, 'Segment tree value must not be nil.' if value.nil?
     end
 
+    # Update a node in the segment tree.
+    #
+    # @param [Integer] node Internal node index.
+    # @param [Integer] left Left bound for this node.
+    # @param [Integer] right Right bound for this node.
+    # @param [Integer] target Target index to update.
+    # @param [Numeric] value Value to set.
+    # @return [void]
     def update_node(node, left, right, target, value)
       if left == right
         @tree[node] = value
@@ -156,6 +299,14 @@ module Tree
       @tree[node] = @tree[node * 2] + @tree[(node * 2) + 1]
     end
 
+    # Query the sum over a range in the segment tree.
+    #
+    # @param [Integer] node Internal node index.
+    # @param [Integer] left Left bound for this node.
+    # @param [Integer] right Right bound for this node.
+    # @param [Integer] range_left Left bound of the query.
+    # @param [Integer] range_right Right bound of the query.
+    # @return [Numeric] Sum over the range.
     def query_sum(node, left, right, range_left, range_right)
       return @tree[node] if range_left <= left && right <= range_right
       return 0 if right < range_left || left > range_right
