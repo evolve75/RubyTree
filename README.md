@@ -36,6 +36,7 @@ Available tree types include:
   `tree/binarymaxheap`).
 * [Fenwick Tree][] (binary indexed tree) under `Tree::FenwickTree` (require
   `tree/fenwicktree`).
+* [Segment Tree][] under `Tree::SegmentTree` (require `tree/segmenttree`).
 * [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
   `tree/binarysearchtree`).
 * [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
@@ -232,6 +233,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Binary Max Heap]:https://en.wikipedia.org/wiki/Binary_heap
 [Binary Search Tree]:https://en.wikipedia.org/wiki/Binary_search_tree
 [Fenwick Tree]:https://en.wikipedia.org/wiki/Fenwick_tree
+[Segment Tree]:https://en.wikipedia.org/wiki/Segment_tree
 [AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
 [Treap]:https://en.wikipedia.org/wiki/Treap
 [Trie]:https://en.wikipedia.org/wiki/Trie

@@ -46,6 +46,9 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Fenwick Tree implementation (`Tree::FenwickTree`) with point updates
   and prefix/range sums.
 
+* Add a Segment Tree implementation (`Tree::SegmentTree`) with point updates
+  and range sum queries.
+
 * Add a Trie implementation (`Tree::TrieNode`) for prefix-based lookup.
 
 * Add a Splay Tree implementation (`Tree::SplayTreeNode`) with ordered
