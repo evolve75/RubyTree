@@ -19,6 +19,7 @@ help you choose a tree type that fits your data shape and performance needs.
 - [Binary Tree (Tree::BinaryTreeNode)](#binary-tree-treebinarytreenode)
 - [Binary Search Tree (Tree::BinarySearchTreeNode)](#binary-search-tree-treebinarysearchtreenode)
 - [AVL Tree (Tree::AvlTreeNode)](#avl-tree-treeavltreenode)
+- [AA Tree (Tree::AATree)](#aa-tree-treeaatree)
 - [Red-Black Tree (Tree::RedBlackTreeNode)](#red-black-tree-treeredblacktreenode)
 - [Treap (Tree::TreapNode)](#treap-treetreapnode)
 - [Splay Tree (Tree::SplayTreeNode)](#splay-tree-treesplaytreenode)
@@ -36,6 +37,7 @@ If you want:
 - A general hierarchy without ordering, use `Tree::TreeNode`.
 - Sorted data with predictable performance, use `Tree::AvlTreeNode` or
   `Tree::RedBlackTreeNode`.
+- A simpler balanced BST with fewer rotation cases, use `Tree::AATree`.
 - Sorted data with locality of access, use `Tree::SplayTreeNode`.
 - Simple sorted data without strict balance, use `Tree::BinarySearchTreeNode`.
 - Priority queues, use `Tree::BinaryHeapNode` (min-heap) or
@@ -55,6 +57,7 @@ Abbreviations used in the table map to the Ruby types in the sections below.
 | BinaryTree | No     | N/A               | add/visit    | Low      | Binary shape     |
 | BST        | Yes    | Worst O(n)        | s/i/d        | Low      | Simple order     |
 | AVL        | Yes    | Strong O(log n)   | s/i/d        | Med      | Predictable      |
+| AA         | Yes    | Strong O(log n)   | s/i/d        | Med      | Simple balance   |
 | RBT        | Yes    | Strong O(log n)   | s/i/d        | Med      | Frequent updates |
 | Treap      | Yes    | Expected O(log n) | s/i/d        | Med      | Simple balance   |
 | Splay      | Yes    | Amort O(log n)    | s/i/d        | Med      | Locality         |
@@ -79,6 +82,7 @@ Typical costs:
 
 - Binary search tree: O(log n) average, O(n) worst-case.
 - AVL / Red-black: O(log n) worst-case for search/insert/delete.
+- AA tree: O(log n) worst-case for search/insert/delete.
 - Treap: O(log n) expected for search/insert/delete.
 - Splay: O(log n) amortized.
 - Binary heap: O(log n) insert/extract, O(1) peek.
@@ -110,7 +114,8 @@ conventions, while array-backed trees (Fenwick, Segment) and multi-entry trees
   `Tree::BinarySearchTreeNode`, `Tree::AvlTreeNode`, `Tree::RedBlackTreeNode`,
   `Tree::TreapNode`, `Tree::SplayTreeNode`, `Tree::BinaryHeapNode`,
   `Tree::BinaryMaxHeapNode`, `Tree::TrieNode`.
-- Non-TreeNode types: `Tree::FenwickTree`, `Tree::SegmentTree`, `Tree::BTree`.
+- Non-TreeNode types: `Tree::AATree`, `Tree::FenwickTree`,
+  `Tree::SegmentTree`, `Tree::BTree`.
 
 These non-TreeNode types provide a TreeNode-like subset where it fits their
 semantics (Enumerable iteration, Comparable, and serialization).
@@ -138,6 +143,11 @@ bst.insert(3)
 require 'tree/avltree'
 avl = Tree::AvlTreeNode.new(10)
 avl.insert(5)
+
+# AA tree (key/value)
+require 'tree/aatree'
+aa = Tree::AATree.new([[10, 'root'], [5, 'left']])
+aa.insert(12, 'right')
 
 # Red-black tree
 require 'tree/redblacktree'
@@ -343,6 +353,46 @@ rotations (consider Red-Black).
 **References:**
 - [AVL tree](https://en.wikipedia.org/wiki/AVL_tree)
 - [AVL tree (USF)](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html)
+
+## AA Tree (Tree::AATree)
+
+**Ruby type:** `Tree::AATree` (require `tree/aatree`)
+
+**Description:** A balanced binary search tree that simplifies red-black
+trees by using a single level field and two operations (skew and split) to
+restore balance. In RubyTree, the AA tree is a key/value container rather than
+an individual node type, providing a TreeNode-like API subset where it fits.
+
+**Motivation:** Choose this when you want a balanced BST with simpler
+rebalancing logic than AVL or Red-Black trees.
+
+**When not to use:** Avoid if you need the most widely used balanced BST
+behavior (Red-Black) or tighter balance (AVL).
+
+**Structure:**
+
+```text
+    30
+   /  \
+  20  40
+    \
+    25
+
+```
+
+**Uses:**
+- Ordered maps/sets with simpler balancing rules
+- Educational balanced tree implementations
+
+**API notes:** Provides `insert`, `search`, `delete`, `[]`, and `[]=`, along
+with traversal helpers that yield key/value entries.
+
+**TreeNode differences:** Does not inherit TreeNode and does not expose parent/
+child navigation. It yields key/value entries during traversal and focuses on
+map-like usage rather than node manipulation.
+
+**References:**
+- [AA tree](https://en.wikipedia.org/wiki/AA_tree)
 
 ## Red-Black Tree (Tree::RedBlackTreeNode)
 
@@ -675,7 +725,3 @@ so node content and traversal are tailored to prefix semantics.
 **References:**
 - [Trie](https://en.wikipedia.org/wiki/Trie)
 - [Trie (Princeton)](https://algs4.cs.princeton.edu/52trie/)
-
-[toc-bst]: #binary-search-tree-treebinarysearchtreenode
-[toc-rbt]: #red-black-tree-treeredblacktreenode
-[toc-maxheap]: #binary-max-heap-treebinarymaxheapnode

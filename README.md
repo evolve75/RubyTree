@@ -41,6 +41,7 @@ Available tree types include:
 * [Binary Search Tree][] under `Tree::BinarySearchTreeNode` (require
   `tree/binarysearchtree`).
 * [AVL Tree][] under `Tree::AvlTreeNode` (require `tree/avltree`).
+* [AA Tree][] under `Tree::AATree` (require `tree/aatree`).
 * [Treap][] under `Tree::TreapNode` (require `tree/treap`).
 * [Trie][] under `Tree::TrieNode` (require `tree/trie`).
 * [Splay Tree][] under `Tree::SplayTreeNode` (require `tree/splaytree`).
@@ -240,6 +241,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Segment Tree]:https://en.wikipedia.org/wiki/Segment_tree
 [B-Tree]:https://en.wikipedia.org/wiki/B-tree
 [AVL Tree]:https://en.wikipedia.org/wiki/AVL_tree
+[AA Tree]:https://en.wikipedia.org/wiki/AA_tree
 [Treap]:https://en.wikipedia.org/wiki/Treap
 [Trie]:https://en.wikipedia.org/wiki/Trie
 [Splay Tree]:https://en.wikipedia.org/wiki/Splay_tree

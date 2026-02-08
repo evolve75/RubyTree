@@ -34,6 +34,9 @@ Changes section to scan for breaking or behavioral changes.
 * Add an AVL Tree implementation (`Tree::AvlTreeNode`) with ordered
   insert/search/delete operations.
 
+* Add an AA Tree implementation (`Tree::AATree`) with ordered
+  insert/search/delete operations.
+
 * Add a Treap implementation (`Tree::TreapNode`) with ordered
   insert/search/delete operations.
 
