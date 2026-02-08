@@ -8,22 +8,13 @@ Changes section to scan for breaking or behavioral changes.
 
 ### 3.0.0pre / 2026-02-08
 
-* `Tree::TreeNode#each_leaf` now returns an enumerator when called without a
-  block, matching other traversal methods.
-
-* Marshal loading now uses a class-level loader (`Tree::TreeNode._load` +
-  `Tree::TreeNode.marshal_load`) to avoid clobbering the receiver. Existing
-  Marshal payloads remain supported.
-
-* Marshal loading hooks (`Tree::TreeNode._load`, `Tree::TreeNode.marshal_load`,
-  `Tree::TreeNode#marshal_load`) are now private; use `Marshal.dump` and
-  `Marshal.load` instead.
-
-* Reduce intermediate allocations in `Tree::TreeNode#each_level` traversal.
-
-### 3.0.0pre / 2026-02-07
-
 * Drop support for Ruby 2.7 and 3.0. Minimum required version is now 3.1.
+
+* Add a per-tree `checks: false` option to skip validation checks when
+  performance matters. Some baseline guards (nil children, duplicate child
+  names) are always enforced to avoid corrupting the tree. This is still risky
+  and can yield unexpected behavior if invalid data is introduced. Only
+  disable checks with benchmark data that justifies the risk (see #45).
 
 * Treat `nil` child slots as empty in sibling/child checks to avoid phantom
   nodes in sparse binary trees.
@@ -46,34 +37,18 @@ Changes section to scan for breaking or behavioral changes.
 * Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
   `HashWithIndifferentAccess` data (see #104).
 
-* Add an AVL Tree implementation (`Tree::AvlTreeNode`) with ordered
-  insert/search/delete operations.
+* Add AVL, AA, Treap, Binary Heap, and Binary Max-Heap implementations with
+  ordered insert/search/delete or insert/extract operations.
 
-* Add an AA Tree implementation (`Tree::AATree`) with ordered
-  insert/search/delete operations.
+* Add a Fenwick Tree implementation (`Tree::FenwickTree`) with point updates,
+  prefix/range sums, and a TreeNode-like API subset (Enumerable, Comparable,
+  array-style accessors, and hash/JSON serialization) aligned with Fenwick
+  semantics.
 
-* Add a Treap implementation (`Tree::TreapNode`) with ordered
-  insert/search/delete operations.
-
-* Add a Binary Heap implementation (`Tree::BinaryHeapNode`) with ordered
-  insert/extract operations.
-
-* Add a Binary Max-Heap implementation (`Tree::BinaryMaxHeapNode`) with ordered
-  insert/extract operations.
-
-* Add a Fenwick Tree implementation (`Tree::FenwickTree`) with point updates
-  and prefix/range sums.
-
-* Expand `Tree::FenwickTree` with a TreeNode-like API subset (Enumerable,
-  Comparable, array-style accessors, and hash/JSON serialization) aligned with
-  Fenwick semantics.
-
-* Add a Segment Tree implementation (`Tree::SegmentTree`) with point updates
-  and range sum queries.
-
-* Expand `Tree::SegmentTree` with a TreeNode-like API subset (Enumerable,
-  Comparable, array-style accessors, and hash/JSON serialization) aligned with
-  segment tree semantics.
+* Add a Segment Tree implementation (`Tree::SegmentTree`) with point updates,
+  range sum queries, and a TreeNode-like API subset (Enumerable, Comparable,
+  array-style accessors, and hash/JSON serialization) aligned with segment tree
+  semantics.
 
 * Add a B-tree implementation (`Tree::BTree`) with ordered insert/search/delete
   operations over key/value pairs.
@@ -90,11 +65,16 @@ Changes section to scan for breaking or behavioral changes.
   `inordered_each` (instead of `each`) when called without a block. This fixes
   the behavior where `node.inordered_each.map` used pre-order traversal.
 
-* Add a per-tree `checks: false` option to skip validation checks when
-  performance matters. Some baseline guards (nil children, duplicate child
-  names) are always enforced to avoid corrupting the tree. This is still risky
-  and can yield unexpected behavior if invalid data is introduced. Only
-  disable checks with benchmark data that justifies the risk (see #45).
+* `Tree::TreeNode#each_leaf` now returns an enumerator when called without a
+  block, matching other traversal methods.
+
+* Reduce intermediate allocations in `Tree::TreeNode#each_level` traversal.
+
+* Marshal loading now uses class-level hooks to avoid clobbering the receiver.
+  Existing Marshal payloads remain supported.
+
+* Marshal loading hooks are private; use `Marshal.dump` and `Marshal.load`
+  instead.
 
 ### 2.2.1pre / 2026-02-07
 
@@ -321,7 +301,7 @@ This is a feature and bug-fix release.
 * Structural changes in the code to refactor out the non-core functions into
   modules (mostly by extracting out non-core code as `mixins`).
 
-* Significant refactoring of the documentation. The [Yard][] tags are now
+* Significant refactoring of the documentation. The [YARD][] tags are now
   extensively used.
 
 * Basic support built-in for including example code in the gem. This will be
@@ -412,10 +392,10 @@ This is a primarily a bug-fix release, with some packaging changes.
 * Converted the exceptions thrown on invalid arguments to [ArgumentError][]
   instead of [RuntimeError][].
 
-* Converted the documentation to [Yard][] format.
+* Converted the documentation to [YARD][] format.
 
 * Added new methods for converting to/from [JSON][] format. Thanks to Dirk
-  [Breuer][] for this [fork](http://github.com/galaxycats/).
+  Breuer for the galaxycats fork.
 
 * Added a separate API changes section in CHANGELOG.md.
 
@@ -492,25 +472,24 @@ This is a primarily a bug-fix release, with some packaging changes.
 [pr-9]: https://github.com/evolve75/RubyTree/pull/9
 [pr-35]: https://github.com/evolve75/RubyTree/pull/35
 
-[ArgumentError]: http://www.ruby-doc.org/core-2.0.0/ArgumentError.html
+[ArgumentError]: https://ruby-doc.org/core/ArgumentError.html
 [Bundler]: https://bundler.io
-[Comparable]: http://ruby-doc.org/core-1.8.7/Comparable.html
-[Enumerator]: http://ruby-doc.org/core-1.8.7/Enumerable.html
-[Hoe]: http://www.zenspider.com/projects/hoe.html
-[JSON]: http://www.json.org
-[RuntimeError]: http://www.ruby-doc.org/core-2.0.0/RuntimeError.html
-[Yard]: http://yardoc.org
+[Comparable]: https://ruby-doc.org/core/Comparable.html
+[Enumerator]: https://ruby-doc.org/core/Enumerable.html
+[Hoe]: https://www.zenspider.com/projects/hoe.html
+[JSON]: https://www.json.org/
+[RuntimeError]: https://ruby-doc.org/core/RuntimeError.html
+[YARD]: https://yardoc.org
 [ZenTest]: https://github.com/seattlerb/zentest
 [dep-warning]: https://github.com/schmidt/structured_warnings
 [gem-testers]: https://github.com/rubygems/gem-testers
 [gemspec]: https://guides.rubygems.org/specification-reference/
 [reek]: https://github.com/troessner/reek
-[structured-warnings]: http://github.com/schmidt/structured_warnings
+[structured-warnings]: https://github.com/schmidt/structured_warnings
 [travis-ci]: https://travis-ci.org
 [workflow]: https://docs.github.com/en/actions/using-workflows
 
 [Aidan]: https://github.com/aidansteele
-[Breuer]: http://github.com/railsbros-dirk
 [Darren]: https://github.com/dazoakley
 [Eric]: https://github.com/escline
 [Evan]: https://github.com/packetmonkey
@@ -547,8 +526,6 @@ This is a primarily a bug-fix release, with some packaging changes.
 [splay_tree_node]: rdoc-ref:Tree::SplayTreeNode
 [red_black_tree_node]: rdoc-ref:Tree::RedBlackTreeNode
 [each_leaf]: rdoc-ref:Tree::TreeNode#each_leaf
-[tree_node_load]: rdoc-ref:Tree::TreeNode._load
-[tree_node_marshal_load]: rdoc-ref:Tree::TreeNode.marshal_load
 [rename]: rdoc-ref:Tree::TreeNode#rename
 [rename_child]: rdoc-ref:Tree::TreeNode#rename_child
 [siblings]: rdoc-ref:Tree::TreeNode#siblings
@@ -590,14 +567,11 @@ smooth transition to the new APIs.
 * [Tree::TreeNode#each_leaf][each_leaf] now returns an enumerator when called
   without a block, matching the other traversal helpers.
 
-* Marshal loading now uses the class-level
-  [Tree::TreeNode._load][tree_node_load] and
-  [Tree::TreeNode.marshal_load][tree_node_marshal_load] helpers, returning a
-  new tree instead of mutating the receiver.
+* Marshal loading now uses class-level hooks, returning a new tree instead of
+  mutating the receiver.
 
-* Marshal loading hooks (`Tree::TreeNode._load`,
-  `Tree::TreeNode.marshal_load`, `Tree::TreeNode#marshal_load`) are now
-  private; use `Marshal.dump` and `Marshal.load` instead.
+* Marshal loading hooks are now private; use `Marshal.dump` and `Marshal.load`
+  instead.
 
 * Hash conversion now accepts hash-like inputs (objects responding to
   `to_hash`) to improve interoperability with frameworks such as Rails
@@ -701,15 +675,15 @@ smooth transition to the new APIs.
   [Tree::BinaryTreeNode#inordered_each][inordered_each] method.
 
 * `RubyTree` now mixes in the
-  [Comparable](http://ruby-doc.org/core-1.8.7/Comparable.html) module.
+  [Comparable][] module.
 
 * The traversal methods ([Tree::TreeNode#each][each],
   [Tree::TreeNode#preordered_each][preordered_each],
   [Tree::TreeNode#postordered_each][postordered_each] and
   [Tree::TreeNode#breadth_each][breadth_each] now correctly return an
-  [Enumerator](rdoc-ref:http://ruby-doc.org/core-1.8.7/Enumerable.html) as the
-  return value when no block is given, and return the receiver node if a block
-  was provided. This is consistent with how the standard Ruby collections work.
+  [Enumerator][] as the return value when no block is given, and return the
+  receiver node if a block was provided. This is consistent with how the
+  standard Ruby collections work.
 
 ## Release 0.8.3 Changes
 
@@ -758,7 +732,7 @@ smooth transition to the new APIs.
 
 * Added new methods [Tree::TreeNode#to_json][to_json] and
   [Tree::TreeNode#json_create][json_create] to convert to/from the JSON format.
-  Thanks to [Dirk](http://github.com/railsbros-dirk) for this change.
+  Thanks to Dirk Breuer for this change.
 
 ## Release 0.6.1 Changes
 

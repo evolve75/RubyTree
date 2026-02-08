@@ -159,7 +159,7 @@ Development dependencies (not required for installing the gem):
 
 * [Bundler][] for creating the stable build environment
 * [Rake][] for building the package
-* [Yard][] for the documentation
+* [YARD][] for the documentation
 * [RSpec][] for additional Ruby Spec test files
 * [RuboCop][] for linting the code
 
@@ -194,7 +194,7 @@ Documentation for the latest released version is available at:
 
 [rubytree.anupamsg.me/rdoc][rt_doc]
 
-Note that the documentation is formatted using [Yard][].
+Note that the documentation is formatted using [YARD][].
 
 Contributor setup and workflows are documented in
 [CONTRIBUTING.md](./CONTRIBUTING.md).
@@ -252,7 +252,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [JSON]:https://rubygems.org/gems/json
 [Rake]:https://rubygems.org/gems/rake
 [Ruby]:https://www.ruby-lang.org
-[Yard]:https://yardoc.org
+[YARD]:https://yardoc.org
 [breadth-first]:https://en.wikipedia.org/wiki/Breadth-first_search
 [git]:https://git-scm.com
 [in-order]:https://en.wikipedia.org/wiki/Tree_traversal#In-order
@@ -268,7 +268,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [RuboCop]:https://rubocop.org/
 [TreeNode]:rdoc-ref:Tree::TreeNode
 [bb]:https://github.com/evolve75/RubyTree/actions/workflows/ruby.yml/badge.svg
-[c]:http://github.com/evolve75/RubyTree/actions/workflows/coverage.yml/badge.svg
+[c]:https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml/badge.svg
 [cl]:https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml
 [gem_version_badge]:https://badge.fury.io/rb/rubytree.png
 [gem_version_link]:https://badge.fury.io/rb/rubytree
