@@ -47,6 +47,9 @@ Available tree types include:
 * [Red-Black Tree][] under `Tree::RedBlackTreeNode` (require
   `tree/redblacktree`).
 
+See [TREE_TYPES](./TREE_TYPES.md) for detailed descriptions, ASCII diagrams,
+and use cases for each tree type.
+
 **RubyTree** supports importing from, and exporting to [JSON][], and also
 supports the Ruby's standard object [marshaling][].
 
