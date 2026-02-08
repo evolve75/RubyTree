@@ -46,6 +46,10 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Fenwick Tree implementation (`Tree::FenwickTree`) with point updates
   and prefix/range sums.
 
+* Expand `Tree::FenwickTree` with a TreeNode-like API subset (Enumerable,
+  Comparable, array-style accessors, and hash/JSON serialization) aligned with
+  Fenwick semantics.
+
 * Add a Segment Tree implementation (`Tree::SegmentTree`) with point updates
   and range sum queries.
 

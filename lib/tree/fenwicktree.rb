@@ -37,6 +37,8 @@
 #
 # frozen_string_literal: true
 
+require 'json'
+
 module Tree
   # Provides a Fenwick (binary indexed) tree implementation.
   #
@@ -45,9 +47,19 @@ module Tree
   # - prefix sums in O(log n)
   # - range sums in O(log n)
   #
+  # Unlike {Tree::TreeNode}, this class does not inherit from TreeNode and does
+  # not expose parent/child navigation. It provides a TreeNode-like API subset
+  # where it maps to Fenwick tree semantics, including Enumerable iteration,
+  # JSON/hash serialization, and comparison by ordered values.
+  #
+  # Iteration yields values in index order, not internal tree nodes.
+  #
   # Indices are zero-based for public methods.
   #
   class FenwickTree
+    include Enumerable
+    include Comparable
+
     # @!attribute [r] size
     # Size of the tree (number of elements).
     #
@@ -81,6 +93,19 @@ module Tree
     # @return [Integer] The number of elements tracked by the tree.
     def length
       size
+    end
+
+    # Iterate over values in index order.
+    #
+    # @yieldparam value [Numeric] Value at each index.
+    #
+    # @return [Tree::FenwickTree] The receiver, if a block is given.
+    # @return [Enumerator] An enumerator, if no block is given.
+    def each(&)
+      return to_enum(:each) unless block_given?
+
+      0.upto(@size - 1) { |index| yield self[index] }
+      self
     end
 
     # Add a delta to the value at the specified index.
@@ -149,20 +174,130 @@ module Tree
       range_sum(index, index)
     end
 
+    # Add a delta to the value at the specified index.
+    #
+    # This is a convenience alias for {#update} to match array-style APIs.
+    #
+    # @param [Integer] index Zero-based index to update.
+    # @param [Numeric] delta The value to add.
+    #
+    # @return [Numeric] The updated value at the index.
+    def []=(index, delta)
+      update(index, delta)
+      self[index]
+    end
+
+    # Returns all values in index order.
+    #
+    # @return [Array<Numeric>] Values in index order.
+    def values
+      to_a
+    end
+
+    # Returns all indices in order.
+    #
+    # @return [Array<Integer>] Indices in order.
+    def keys
+      (0...@size).to_a
+    end
+
+    # Returns all values as an Array.
+    #
+    # @return [Array<Numeric>] Values in index order.
+    def to_a
+      map { |value| value }
+    end
+
+    # Returns a Hash representation of the tree.
+    #
+    # @return [Hash] Hash representation of the Fenwick tree.
+    def to_h
+      {
+        size: size,
+        values: to_a
+      }
+    end
+
+    # Build a Fenwick tree from a Hash representation.
+    #
+    # @param [Hash] hash Hash representation of a Fenwick tree.
+    # @return [Tree::FenwickTree] The constructed tree.
+    def self.from_hash(hash)
+      raise ArgumentError, 'Fenwick tree hash input must be a Hash.' unless hash.is_a?(Hash)
+
+      size = if hash.key?(:size)
+               hash[:size]
+             else
+               hash.fetch('size')
+             end
+      values = if hash.key?(:values)
+                 hash[:values]
+               elsif hash.key?('values')
+                 hash['values']
+               end
+      new(size, values)
+    end
+
+    # JSON serialization for the Fenwick tree.
+    #
+    # @param [Hash] _options JSON serialization options.
+    # @return [Hash] Hash representation for JSON serialization.
+    def as_json(_options = {})
+      to_h
+    end
+
+    # Serialize the Fenwick tree to JSON.
+    #
+    # @param [Array] args JSON.generate arguments.
+    # @return [String] JSON representation of the tree.
+    def to_json(*args)
+      JSON.generate(as_json, *args)
+    end
+
+    # Create a Fenwick tree from a JSON hash.
+    #
+    # @param [Hash] json_hash JSON hash representation.
+    # @return [Tree::FenwickTree] The constructed tree.
+    def self.json_create(json_hash)
+      from_hash(json_hash)
+    end
+
+    # Compare Fenwick trees by their ordered values.
+    #
+    # @param [Tree::FenwickTree] other The Fenwick tree to compare.
+    # @return [Integer, nil] -1, 0, 1, or +nil+ if not comparable.
+    def <=>(other)
+      return nil unless other.is_a?(Tree::FenwickTree)
+
+      to_a <=> other.to_a
+    end
+
     private
 
+    # Validate the size for the tree.
+    #
+    # @param [Integer] size The size to validate.
+    # @raise [ArgumentError] If the size is invalid.
     def validate_size!(size)
       return if size.is_a?(Integer) && size.positive?
 
       raise ArgumentError, 'Fenwick tree size must be a positive integer.'
     end
 
+    # Validate an index for access.
+    #
+    # @param [Integer] index The index to validate.
+    # @raise [ArgumentError] If the index is out of range.
     def validate_index!(index)
       return if index.is_a?(Integer) && index.between?(0, @size - 1)
 
       raise ArgumentError, 'Fenwick tree index out of range.'
     end
 
+    # Validate a delta for updates.
+    #
+    # @param [Numeric] delta The delta to validate.
+    # @raise [ArgumentError] If the delta is nil.
     def validate_delta!(delta)
       raise ArgumentError, 'Update delta must not be nil.' if delta.nil?
     end

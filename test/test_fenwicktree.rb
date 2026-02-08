@@ -75,5 +75,50 @@ module TestTree
 
       assert_equal(5, tree[4])
     end
+
+    def test_index_writer_adds_delta
+      tree = build_tree([1, 2, 3])
+      tree[1] = 5
+
+      assert_equal(7, tree[1])
+    end
+
+    def test_each_yields_values
+      tree = build_tree([3, 1, 4])
+
+      assert_equal([3, 1, 4], tree.each.to_a)
+    end
+
+    def test_keys
+      tree = build_tree([1, 2, 3])
+
+      assert_equal([0, 1, 2], tree.keys)
+    end
+
+    def test_values
+      tree = build_tree([2, 4, 6])
+
+      assert_equal([2, 4, 6], tree.values)
+    end
+
+    def test_to_h_round_trip
+      tree = build_tree([1, 3, 5])
+      copy = Tree::FenwickTree.from_hash(tree.to_h)
+
+      assert_equal([1, 3, 5], copy.to_a)
+    end
+
+    def test_as_json
+      tree = build_tree([1, 2])
+
+      assert_equal(tree.to_h, tree.as_json)
+    end
+
+    def test_comparable
+      left = build_tree([1, 2, 3])
+      right = build_tree([1, 2, 4])
+
+      assert_equal(-1, left <=> right)
+    end
   end
 end
