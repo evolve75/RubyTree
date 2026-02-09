@@ -48,12 +48,44 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the binary tree implementation.
 require 'tree/binarytree'
 
+# Create the root node.
 root = Tree::BinaryTreeNode.new('A', 'A')
+# Assign the left child.
 root.left_child = Tree::BinaryTreeNode.new('B', 'B')
+# Assign the right child.
 root.right_child = Tree::BinaryTreeNode.new('C', 'C')
 
+# Traverse in-order to show left-root-right.
 puts "in-order: #{root.inordered_each.map(&:name).inspect}"
+
+# Traverse breadth-first to show level order.
+puts "breadth: #{root.breadth_each.map(&:name).inspect}"
+
+# Read left child directly.
 puts "left child: #{root.left_child.name}"
+# Read right child directly.
 puts "right child: #{root.right_child.name}"
+
+# Remove the left child.
+root.remove!(root.left_child)
+# Show traversal after removal.
+puts "after remove: #{root.breadth_each.map(&:name).inspect}"
+
+# Serialize to a hash.
+serialized_hash = root.to_h
+# Rebuild from the hash.
+rebuilt_from_hash = Tree::BinaryTreeNode.from_hash(serialized_hash)
+# Show rebuilt traversal.
+puts "from_hash in-order: #{rebuilt_from_hash.inordered_each.map(&:name).inspect}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt traversal.
+puts "from_json in-order: #{rebuilt_from_json.inordered_each.map(&:name).inspect}"

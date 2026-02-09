@@ -41,16 +41,46 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the order-statistic tree implementation.
 require 'tree/orderstatistictree'
 
+# Create the root node.
 root = Tree::OrderStatisticTreeNode.new('root', 8)
+# Insert left subtree values.
 root.insert('n4', 4)
+# Insert right subtree values.
 root.insert('n12', 12)
+# Insert remaining values.
 root.insert('n2', 2)
+# Insert remaining values.
 root.insert('n6', 6)
+# Insert remaining values.
 root.insert('n10', 10)
+# Insert remaining values.
 root.insert('n14', 14)
 
+# Traverse in-order to show sorted keys.
+puts "in-order: #{root.inordered_each.map(&:content).inspect}"
+
+# Query the rank of a key.
 puts "rank(10): #{root.rank(10)}"
+
+# Select the smallest key.
 puts "select(0): #{root.select(0).content}"
+
+# Select the third key.
 puts "select(2): #{root.select(2).content}"
+
+# Delete a key and rebalance.
+root.delete(2)
+# Show traversal after deletion.
+puts "after delete 2: #{root.inordered_each.map(&:content).inspect}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt traversal.
+puts "from_json in-order: #{rebuilt_from_json.inordered_each.map(&:content).inspect}"

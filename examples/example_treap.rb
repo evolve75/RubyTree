@@ -42,12 +42,32 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the treap implementation.
 require 'tree/treap'
 
+# Create the root node with an explicit priority.
 root = Tree::TreapNode.new('root', 5, priority: 10)
+# Insert the left child with a higher priority value.
 root.insert('n2', 2, priority: 20)
+# Insert the right child with a higher priority value.
 root.insert('n8', 8, priority: 30)
 
-puts "search 8: #{root.search(8).content}"
-root.delete(2)
+# Traverse in-order to show sorted keys.
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"
+
+# Search for a key.
+puts "search 8: #{root.search(8).content}"
+
+# Delete a key.
+root.delete(2)
+# Show traversal after deletion.
+puts "after delete 2: #{root.inordered_each.map(&:content).inspect}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt traversal.
+puts "from_json in-order: #{rebuilt_from_json.inordered_each.map(&:content).inspect}"

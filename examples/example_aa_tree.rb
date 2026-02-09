@@ -44,19 +44,42 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the AA-tree implementation.
 require 'tree/aatree'
 
+# Create a tree with the root and its direct children.
 tree = Tree::AATree.new([[30, 'thirty'], [20, 'twenty'], [40, 'forty']])
-
+# Insert the right child under 20 to match the structure.
 tree.insert(25, 'twenty-five')
+
+# Traverse keys in sorted order.
+puts "keys: #{tree.keys.inspect}"
+
+# Search for an existing key.
 puts "value for 20: #{tree.search(20)}"
 
-# Bracket access uses the key.
-puts "value for 30: #{tree[30]}"
-
+# Update a value using bracket assignment.
 tree[30] = 'THIRTY'
+# Confirm the updated value.
 puts "updated value for 30: #{tree.search(30)}"
 
+# Delete a key from the tree.
 removed = tree.delete(25)
+# Report the deleted value.
 puts "removed: #{removed}"
-puts "keys: #{tree.keys.inspect}"
+
+# Serialize to a hash.
+serialized_hash = tree.to_h
+# Rebuild from the hash.
+rebuilt_from_hash = Tree::AATree.from_hash(serialized_hash)
+# Show the rebuilt keys.
+puts "from_hash keys: #{rebuilt_from_hash.keys.inspect}"
+
+# Serialize to JSON.
+serialized_json = tree.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show the JSON-rebuilt keys.
+puts "from_json keys: #{rebuilt_from_json.keys.inspect}"

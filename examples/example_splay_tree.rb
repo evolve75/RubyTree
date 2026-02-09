@@ -43,12 +43,32 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the splay tree implementation.
 require 'tree/splaytree'
 
+# Create the root node.
 root = Tree::SplayTreeNode.new('root', 2)
+# Insert the left child.
 root.insert('n1', 1)
+# Insert the right child.
 root.insert('n3', 3)
 
+# Access a key to trigger splaying.
 puts "search 2: #{root.search(2).content}"
-root.delete(1)
+
+# Traverse in-order to show sorted keys.
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"
+
+# Delete a key.
+root.delete(1)
+# Show traversal after deletion.
+puts "after delete 1: #{root.inordered_each.map(&:content).inspect}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt traversal.
+puts "from_json in-order: #{rebuilt_from_json.inordered_each.map(&:content).inspect}"

@@ -40,16 +40,43 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the Fenwick tree implementation.
 require 'tree/fenwicktree'
 
+# Seed values for indices 0..7.
 values = [1, 2, 3, 4, 5, 6, 7, 8]
+# Create a Fenwick tree from the values.
 tree = Tree::FenwickTree.new(values.length, values)
 
+# Query a prefix sum.
 puts "sum(3): #{tree.sum(3)}"
+
+# Query a range sum.
 puts "range_sum(1, 3): #{tree.range_sum(1, 3)}"
 
-# update adds a delta to the index.
+# Apply a delta update to index 2.
 tree.update(2, 5)
-puts "after update index 2: #{tree.sum(3)}"
+# Query the prefix sum after the update.
+puts "after update sum(3): #{tree.sum(3)}"
 
+# Read the value at index 4.
 puts "tree[4]: #{tree[4]}"
+
+# Iterate over all values.
+puts "values: #{tree.each.to_a.inspect}"
+
+# Serialize to a hash.
+serialized_hash = tree.to_h
+# Rebuild from the hash.
+rebuilt_from_hash = Tree::FenwickTree.from_hash(serialized_hash)
+# Show rebuilt values.
+puts "from_hash values: #{rebuilt_from_hash.to_a.inspect}"
+
+# Serialize to JSON.
+serialized_json = tree.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt values.
+puts "from_json values: #{rebuilt_from_json.to_a.inspect}"

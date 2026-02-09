@@ -43,14 +43,46 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the interval tree implementation.
 require 'tree/intervaltree'
 
+# Create the root interval.
 root = Tree::IntervalTreeNode.new('root', 10..20)
+# Insert the left interval.
 root.insert('left', 5..12)
+# Insert the right interval.
 root.insert('right', 30..40)
 
+# Traverse in-order to show sorted intervals.
+puts "in-order: #{root.inordered_each.map(&:content).inspect}"
+
+# Search for overlaps with a range.
 overlaps = root.search_overlaps(11..13).map(&:content)
+# Display overlapping intervals.
 puts "overlaps: #{overlaps.inspect}"
 
+# Search for intervals that contain a point.
 points = root.search_point(6).map(&:content)
+# Display point query results.
 puts "point 6: #{points.inspect}"
+
+# Delete an interval.
+root.delete(5..12)
+# Show traversal after deletion.
+puts "after delete: #{root.inordered_each.map(&:content).inspect}"
+
+# Serialize to a hash.
+serialized_hash = root.to_h
+# Rebuild from the hash.
+rebuilt_from_hash = Tree::IntervalTreeNode.from_hash(serialized_hash)
+# Show rebuilt traversal.
+puts "from_hash in-order: #{rebuilt_from_hash.inordered_each.map(&:content).inspect}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON into a hash for inspection.
+parsed_json = JSON.parse(serialized_json)
+# Show parsed JSON keys.
+puts "json keys: #{parsed_json.keys.inspect}"

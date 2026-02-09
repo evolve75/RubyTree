@@ -43,16 +43,43 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the binary search tree implementation.
 require 'tree/binarysearchtree'
 
+# Create the root node.
 root = Tree::BinarySearchTreeNode.new('root', 8)
+# Insert the left subtree root.
 root.insert('n3', 3)
+# Insert the right subtree root.
 root.insert('n10', 10)
+# Insert the left-left node.
 root.insert('n1', 1)
+# Insert the left-right node.
 root.insert('n6', 6)
 
+# Traverse in-order to show sorted keys.
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"
+
+# Search for a key.
 puts "search 10: #{root.search(10).content}"
 
+# Delete a leaf node.
 root.delete(1)
+# Show traversal after deletion.
 puts "after delete 1: #{root.inordered_each.map(&:content).inspect}"
+
+# Serialize to a hash.
+serialized_hash = root.to_h
+# Rebuild from the hash.
+rebuilt_from_hash = Tree::BinarySearchTreeNode.from_hash(serialized_hash)
+# Show rebuilt traversal.
+puts "from_hash in-order: #{rebuilt_from_hash.inordered_each.map(&:content).inspect}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt traversal.
+puts "from_json in-order: #{rebuilt_from_json.inordered_each.map(&:content).inspect}"

@@ -43,15 +43,40 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the segment tree implementation.
 require 'tree/segmenttree'
 
+# Seed values for indices 0..7.
 values = [1, 2, 3, 4, 5, 6, 7, 8]
+# Create a segment tree from the values.
 tree = Tree::SegmentTree.new(values.length, values)
 
+# Query a range sum.
 puts "range_sum(1, 3): #{tree.range_sum(1, 3)}"
 
-# update sets the value at the index.
+# Update the value at index 2.
 tree.update(2, 10)
-puts "after update index 2: #{tree.range_sum(1, 3)}"
+# Query the range sum after the update.
+puts "after update range_sum(1, 3): #{tree.range_sum(1, 3)}"
 
+# Read the value at index 4.
 puts "tree[4]: #{tree[4]}"
+
+# Iterate over all values.
+puts "values: #{tree.each.to_a.inspect}"
+
+# Serialize to a hash.
+serialized_hash = tree.to_h
+# Rebuild from the hash.
+rebuilt_from_hash = Tree::SegmentTree.from_hash(serialized_hash)
+# Show rebuilt values.
+puts "from_hash values: #{rebuilt_from_hash.to_a.inspect}"
+
+# Serialize to JSON.
+serialized_json = tree.to_json
+# Parse JSON back into a tree instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show JSON-rebuilt values.
+puts "from_json values: #{rebuilt_from_json.to_a.inspect}"

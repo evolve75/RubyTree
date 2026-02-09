@@ -45,15 +45,35 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized trees.
+require 'json'
+# Load the trie implementation.
 require 'tree/trie'
 
+# Create the root node.
 root = Tree::TrieNode.new('')
+# Insert the word that builds the c-a-t path.
 root.insert('cat')
+# Insert the single-letter word for d.
 root.insert('d')
 
+# Check if a word exists.
 puts "include? cat: #{root.include?('cat')}"
+
+# Check for a prefix.
 puts "prefix? c: #{root.prefix?('c')}"
+
+# List words with a prefix.
 puts "words with 'c': #{root.words_with_prefix('c').inspect}"
 
+# Delete a word.
 root.delete('cat')
+# Confirm deletion.
 puts "include? cat: #{root.include?('cat')}"
+
+# Serialize to JSON.
+serialized_json = root.to_json
+# Parse JSON back into a trie instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show the rebuilt words for prefix.
+puts "from_json words with 'd': #{rebuilt_from_json.words_with_prefix('d').inspect}"

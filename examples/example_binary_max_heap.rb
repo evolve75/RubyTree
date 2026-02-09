@@ -43,19 +43,51 @@
 #
 # frozen_string_literal: true
 
+# Load JSON for parsing serialized heaps.
+require 'json'
+# Load the binary max-heap implementation.
 require 'tree/binarymaxheap'
 
+# Create the heap root.
 heap = Tree::BinaryMaxHeapNode.new('root', 9)
+# Insert values to match the heap structure.
 heap.insert('n7', 7)
+# Insert another value.
 heap.insert('n6', 6)
+# Insert another value.
 heap.insert('n3', 3)
+# Insert another value.
 heap.insert('n2', 2)
+# Insert the last value.
 heap.insert('n1', 1)
 
+# Peek at the maximum value.
 puts "peek: #{heap.peek}"
 
+# Traverse by breadth to show heap shape.
+breadth_values = heap.breadth_each.map(&:content)
+# Display the breadth traversal.
+puts "breadth: #{breadth_values.inspect}"
+
+# Extract values in heap order.
 extracted = []
-while (value = heap.extract)
+# Loop until the heap is empty.
+loop do
+  # Extract the current maximum.
+  value = heap.extract
+  # Stop when extraction returns nil.
+  break unless value
+
+  # Collect the extracted value.
   extracted << value
+  # Close the extraction loop.
 end
+# Display extracted values.
 puts "extracted: #{extracted.inspect}"
+
+# Serialize to JSON.
+serialized_json = heap.to_json
+# Parse JSON back into a heap instance.
+rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+# Show the rebuilt heap root value.
+puts "from_json root: #{rebuilt_from_json.content}"

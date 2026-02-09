@@ -10,6 +10,8 @@ Changes section to scan for breaking or behavioral changes.
 
 * Add runnable example scripts for each supported tree type under `examples/`
   and refresh the core `Tree::TreeNode` example header.
+* Expand examples with traversal, update/delete, and JSON round-trip steps
+  while aligning example data with the diagrammed structures.
 
 ### 3.0.0pre / 2026-02-08
 
