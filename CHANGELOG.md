@@ -19,6 +19,12 @@ Changes section to scan for breaking or behavioral changes.
 * Treat `nil` child slots as empty in sibling/child checks to avoid phantom
   nodes in sparse binary trees.
 
+* Skip `nil` child slots when converting to Hash/JSON to avoid errors when
+  serializing sparse binary trees.
+
+* Allow `Tree::BinaryTreeNode#add` and `#add_from_hash` to reuse `nil` child
+  slots instead of rejecting additional inserts.
+
 * Add explicit cycle validation helpers (`validate_acyclic!`, `acyclic?`) for
   untrusted input.
 

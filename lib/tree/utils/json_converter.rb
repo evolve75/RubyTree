@@ -73,7 +73,8 @@ module Tree
           JSON.create_id => self.class.name
         }
 
-        json_hash['children'] = children if children?
+        compact_children = children_compact
+        json_hash['children'] = compact_children if compact_children.any?
 
         json_hash
       end
@@ -122,6 +123,8 @@ module Tree
           node = new(json_hash['name'], json_hash['content'])
 
           json_hash['children']&.each do |child|
+            next unless child
+
             node << child
           end
 

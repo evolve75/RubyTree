@@ -117,6 +117,10 @@ module Tree
     # @raise [ArgumentError] This exception is raised if two children are
     #                        already present.
     def add(child)
+      if (nil_index = @children.index(nil))
+        return set_child_at(child, nil_index)
+      end
+
       raise ArgumentError, 'Already has two child nodes' if @children.size == 2
 
       super
@@ -152,7 +156,8 @@ module Tree
     # @raise [ArgumentError] This exception is raised if a non-hash is passed.
     # @return [Array] Array of child nodes added
     def add_from_hash(hashed_subtree)
-      raise ArgumentError, 'Too many children' if hashed_subtree.size + @children.size > 2
+      existing_children = @children.compact.size
+      raise ArgumentError, 'Too many children' if hashed_subtree.size + existing_children > 2
 
       super
     end

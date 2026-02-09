@@ -189,7 +189,7 @@ module Tree
         key = content? ? [name, content] : name
 
         children_hash = {}
-        children do |child|
+        children_compact do |child|
           children_hash.merge! child.to_h
         end
 
