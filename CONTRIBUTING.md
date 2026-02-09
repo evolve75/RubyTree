@@ -24,6 +24,10 @@ Development dependencies (not required for installing the gem):
 * [mdl][] for markdown linting
 * [RuboCop][] for linting the code
 
+If RubyGems warns about ambiguous `stringio` specs in your dev gemset,
+remove the extra versions in this repo’s gemset (for example):
+`gem cleanup stringio`.
+
 ## Getting the Source
 
 You can download the latest released source code as a tar or zip file, as

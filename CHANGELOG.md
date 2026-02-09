@@ -13,6 +13,8 @@ Changes section to scan for breaking or behavioral changes.
 * Expand examples with traversal, update/delete, and JSON round-trip steps
   while aligning example data with the diagrammed structures.
 * Link to the full examples directory from the README.
+* Note that ambiguous `stringio` spec warnings can be resolved by removing
+  extra versions (for example, `gem cleanup stringio`).
 
 ### 3.0.0pre / 2026-02-08
 
