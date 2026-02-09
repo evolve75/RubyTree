@@ -153,6 +153,9 @@ root_node.remove!(child1)
 This example can also be found at
 [examples/example_basic.rb](examples/example_basic.rb).
 
+Additional runnable examples for every supported tree type are available in
+the [examples/](examples/) directory.
+
 ## Requirements
 
 * [Ruby][] 3.1.x and above. RubyTree 2.2.0 is the last release that supports
