@@ -54,6 +54,9 @@ and use cases for each tree type.
 **RubyTree** supports importing from, and exporting to [JSON][], and also
 supports the Ruby's standard object [marshaling][].
 
+Note: `Marshal.load` and `JSON.parse(..., create_additions: true)` can execute
+code or instantiate objects; do not use them with untrusted input.
+
 This is a [BSD licensed][BSD] open source project, and is hosted at
 [github.com/evolve75/RubyTree][rt@github], and is available as a standard gem
 from [rubygems.org/gems/rubytree][rt_gem].

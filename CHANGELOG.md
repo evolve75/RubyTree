@@ -78,6 +78,8 @@ Changes section to scan for breaking or behavioral changes.
 
 * Remove unused node-depth cache invalidation to avoid misleading state.
 
+* Document Marshal/JSON safety caveats and refresh header years.
+
 * Marshal loading now uses class-level hooks to avoid clobbering the receiver.
   Existing Marshal payloads remain supported.
 

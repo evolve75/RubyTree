@@ -7,7 +7,7 @@
 #
 # Time-stamp: <2022-06-20 22:16:39 anupam>
 #
-# Copyright (C) 2014, 2015, 2022, 2022 Jen Hamon (http://www.github.com/jhamon) and
+# Copyright (C) 2014, 2015, 2022 Jen Hamon (http://www.github.com/jhamon) and
 #                    Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
