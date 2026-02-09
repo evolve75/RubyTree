@@ -49,6 +49,8 @@ Available tree types include:
   `tree/redblacktree`).
 * [Interval Tree][] under `Tree::IntervalTreeNode` (require
   `tree/intervaltree`).
+* [Order-Statistic Tree][] under `Tree::OrderStatisticTreeNode` (require
+  `tree/orderstatistictree`).
 
 See [TREE_TYPES](./TREE_TYPES.md) for detailed descriptions, ASCII diagrams,
 and use cases for each tree type.
@@ -252,6 +254,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [Splay Tree]:https://en.wikipedia.org/wiki/Splay_tree
 [Red-Black Tree]:https://en.wikipedia.org/wiki/Red%E2%80%93black_tree
 [Interval Tree]:https://en.wikipedia.org/wiki/Interval_tree
+[Order-Statistic Tree]:https://en.wikipedia.org/wiki/Order_statistic_tree
 [Bundler]:https://bundler.io
 [Comparable]:https://ruby-doc.org/core/Comparable.html
 [Enumerable]:https://ruby-doc.org/core/Enumerable.html

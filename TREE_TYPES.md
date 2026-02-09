@@ -22,6 +22,7 @@ help you choose a tree type that fits your data shape and performance needs.
 - [AA Tree (Tree::AATree)](#aa-tree-treeaatree)
 - [Red-Black Tree (Tree::RedBlackTreeNode)](#red-black-tree-treeredblacktreenode)
 - [Interval Tree (Tree::IntervalTreeNode)](#interval-tree-treeintervaltreenode)
+- [Order-Statistic Tree (Tree::OrderStatisticTreeNode)](#order-statistic-tree-treeorderstatistictreenode)
 - [Treap (Tree::TreapNode)](#treap-treetreapnode)
 - [Splay Tree (Tree::SplayTreeNode)](#splay-tree-treesplaytreenode)
 - [Binary Heap (Tree::BinaryHeapNode)](#binary-heap-treebinaryheapnode)
@@ -42,6 +43,7 @@ If you want:
 - Sorted data with locality of access, use `Tree::SplayTreeNode`.
 - Simple sorted data without strict balance, use `Tree::BinarySearchTreeNode`.
 - Interval overlap queries, use `Tree::IntervalTreeNode`.
+- Rank/select queries, use `Tree::OrderStatisticTreeNode`.
 - Priority queues, use `Tree::BinaryHeapNode` (min-heap) or
   `Tree::BinaryMaxHeapNode` (max-heap).
 - Fast prefix/range sums on arrays, use `Tree::FenwickTree`.
@@ -66,6 +68,7 @@ Abbreviations used in the table map to the Ruby types in the sections below.
 | Min-Heap   | No     | Heap              | peek/ins/ext | Low      | Priority queue   |
 | Max-Heap   | No     | Heap              | peek/ins/ext | Low      | Priority queue   |
 | Interval   | Yes    | Strong O(log n)   | s/i/d/query  | Med      | Overlaps         |
+| OrderStat  | Yes    | Strong O(log n)   | s/i/d/rank   | Med      | Rank/select      |
 | Fenwick    | N/A    | Prefix            | update/sum   | Low      | Prefix sums      |
 | Segment    | N/A    | Range             | update/query | Med      | Range queries    |
 | B-Tree     | Yes    | Strong O(log n)   | s/i/d        | Med/High | Large datasets   |
@@ -89,6 +92,7 @@ Typical costs:
 - Treap: O(log n) expected for search/insert/delete.
 - Splay: O(log n) amortized.
 - Interval tree: O(log n) search/insert/delete; overlap queries are O(log n + k).
+- Order-statistic tree: O(log n) search/insert/delete/rank/select.
 - Binary heap: O(log n) insert/extract, O(1) peek.
 - Fenwick: O(log n) point update, O(log n) prefix/range sum.
 - Segment tree: O(log n) point update, O(log n) range query.
@@ -117,7 +121,8 @@ conventions, while array-backed trees (Fenwick, Segment) and multi-entry trees
 - TreeNode-derived types: `Tree::TreeNode`, `Tree::BinaryTreeNode`,
   `Tree::BinarySearchTreeNode`, `Tree::AvlTreeNode`, `Tree::RedBlackTreeNode`,
   `Tree::IntervalTreeNode`, `Tree::TreapNode`, `Tree::SplayTreeNode`,
-  `Tree::BinaryHeapNode`, `Tree::BinaryMaxHeapNode`, `Tree::TrieNode`.
+  `Tree::OrderStatisticTreeNode`, `Tree::BinaryHeapNode`,
+  `Tree::BinaryMaxHeapNode`, `Tree::TrieNode`.
 - Non-TreeNode types: `Tree::AATree`, `Tree::FenwickTree`,
   `Tree::SegmentTree`, `Tree::BTree`.
 
@@ -163,6 +168,12 @@ require 'tree/intervaltree'
 intervals = Tree::IntervalTreeNode.new('root', 10..20)
 intervals.insert('b', 15..25)
 intervals.search_overlaps(18..19)
+
+# Order-statistic tree
+require 'tree/orderstatistictree'
+ost = Tree::OrderStatisticTreeNode.new('root', 10)
+ost.insert('a', 5)
+ost.rank(10)
 
 # Treap
 require 'tree/treap'
@@ -475,6 +486,38 @@ subtree max-end tracking.
 
 **References:**
 - [Interval tree](https://en.wikipedia.org/wiki/Interval_tree)
+
+## Order-Statistic Tree (Tree::OrderStatisticTreeNode)
+
+**Ruby type:** `Tree::OrderStatisticTreeNode` (require `tree/orderstatistictree`)
+
+**Description:** A red-black tree augmented with subtree sizes to support
+rank and select queries.
+
+**Motivation:** Use this when you need to answer "how many keys are smaller"
+or retrieve a key by rank.
+
+**When not to use:** Avoid if you only need ordered search without rank/select.
+
+**Structure:**
+
+```text
+     8(size=7)
+    /        \
+  4(size=3)  12(size=3)
+
+```
+
+**Uses:**
+- Order statistics (rank, percentile lookup)
+- Median/quantile queries on dynamic data
+
+**API notes:** TreeNode API plus `rank` and `select` (zero-based).
+
+**TreeNode differences:** Inherits TreeNode, adds subtree-size tracking.
+
+**References:**
+- [Order statistic tree](https://en.wikipedia.org/wiki/Order_statistic_tree)
 
 ## Treap (Tree::TreapNode)
 
