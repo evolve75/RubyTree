@@ -74,12 +74,16 @@ module Tree
       #
       # - Height from a root node is height of the entire tree.
       # - The height of a leaf node is zero.
+      # - Nil child slots (e.g., in sparse binary trees) are ignored.
       #
       # @return [Integer] Height of the node.
       def node_height
         return 0 if leaf?
 
-        1 + @children.collect(&:node_height).max
+        child_heights = @children.compact.map(&:node_height)
+        return 0 if child_heights.empty?
+
+        1 + child_heights.max
       end
 
       # @!attribute [r] node_depth

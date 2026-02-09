@@ -70,6 +70,9 @@ Changes section to scan for breaking or behavioral changes.
 
 * Reduce intermediate allocations in `Tree::TreeNode#each_level` traversal.
 
+* Ignore nil child slots in `Tree::TreeNode#node_height` so sparse binary trees
+  compute heights correctly.
+
 * Marshal loading now uses class-level hooks to avoid clobbering the receiver.
   Existing Marshal payloads remain supported.
 
@@ -325,7 +328,7 @@ This is a primarily a bug-fix release, with some packaging changes.
   support Rails' `JSON` encoding, by pulling in the changes from
   [Eric Cline][Eric].
 
-* Partial fix for [bug-5][]. This is to prevent infinite looping if an existing
+* Partial fix for bug-5 (issue link unavailable). This is to prevent infinite looping if an existing
   node is added again elsewhere in the tree.
 
 * Fixed the issue with using `integers` as node names, and its interaction
@@ -459,7 +462,6 @@ This is a primarily a bug-fix release, with some packaging changes.
 
 * Minor code refactoring. Changes in the `Rakefile`.
 
-[bug-5]: https://github.com/evolve75/RubyTree/issues/5
 [bug-6]: https://github.com/evolve75/RubyTree/issues/6
 [bug-7]: https://github.com/evolve75/RubyTree/issues/7
 [bug-12]: https://github.com/evolve75/RubyTree/issues/12

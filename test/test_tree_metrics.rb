@@ -31,6 +31,7 @@
 
 require 'test/unit'
 require_relative '../lib/tree/tree_deps'
+require_relative '../lib/tree/binarytree'
 require_relative 'support/fixtures_shared'
 
 module TestTree
@@ -87,6 +88,16 @@ module TestTree
       assert_equal(2, @child2.node_height, 'This should be of height 2')
       assert_equal(1, @child3.node_height, 'This should be of height 1')
       assert_equal(0, @child4.node_height, 'This should be of height 0')
+    end
+
+    def test_node_height_with_sparse_binary_tree
+      root = Tree::BinaryTreeNode.new('Root')
+      right_child = Tree::BinaryTreeNode.new('Right')
+
+      root.right_child = right_child
+
+      assert_equal(1, root.node_height, 'Root height should include the right child')
+      assert_equal(0, right_child.node_height, 'Right child height should be 0')
     end
 
     def test_node_depth
