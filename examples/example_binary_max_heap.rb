@@ -45,10 +45,12 @@
 
 require 'tree/binarymaxheap'
 
-heap = Tree::BinaryMaxHeapNode.new('root', 5)
-heap.insert('n1', 2)
-heap.insert('n2', 8)
-heap.insert('n3', 1)
+heap = Tree::BinaryMaxHeapNode.new('root', 9)
+heap.insert('n7', 7)
+heap.insert('n6', 6)
+heap.insert('n3', 3)
+heap.insert('n2', 2)
+heap.insert('n1', 1)
 
 puts "peek: #{heap.peek}"
 

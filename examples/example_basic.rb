@@ -60,9 +60,9 @@ root_node.print_tree
 
 # ..... Now insert the child nodes. Note that you can "chain" the child
 # ..... insertions for a given path to any depth.
-root_node << Tree::TreeNode.new('CHILD1', 'Child1 Content') \
-          << Tree::TreeNode.new('GRANDCHILD1', 'GrandChild1 Content')
-root_node << Tree::TreeNode.new('CHILD2', 'Child2 Content')
+root_node << Tree::TreeNode.new('CHILD 1', 'Child1 Content') \
+          << Tree::TreeNode.new('GRANDCHILD 1', 'GrandChild1 Content')
+root_node << Tree::TreeNode.new('CHILD 2', 'Child2 Content')
 
 # ..... Lets print the representation to stdout. This is primarily used for
 # ..... debugging purposes.
@@ -70,8 +70,8 @@ root_node.print_tree
 
 # ..... Lets directly access children and grandchildren of the root. The can be
 # ..... "chained" for a given path to any depth.
-child1       = root_node['CHILD1']
-grand_child1 = root_node['CHILD1']['GRANDCHILD1']
+child1       = root_node['CHILD 1']
+grand_child1 = root_node['CHILD 1']['GRANDCHILD 1']
 
 # ..... Now lets retrieve siblings of the current node as an array.
 siblings_of_child1 = child1.siblings

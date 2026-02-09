@@ -49,12 +49,11 @@ require 'tree/trie'
 
 root = Tree::TrieNode.new('')
 root.insert('cat')
-root.insert('car')
-root.insert('cart')
+root.insert('d')
 
 puts "include? cat: #{root.include?('cat')}"
-puts "prefix? ca: #{root.prefix?('ca')}"
-puts "words with 'car': #{root.words_with_prefix('car').inspect}"
+puts "prefix? c: #{root.prefix?('c')}"
+puts "words with 'c': #{root.words_with_prefix('c').inspect}"
 
-root.delete('cart')
-puts "include? cart: #{root.include?('cart')}"
+root.delete('cat')
+puts "include? cat: #{root.include?('cat')}"

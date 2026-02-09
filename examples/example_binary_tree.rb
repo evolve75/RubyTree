@@ -50,10 +50,9 @@
 
 require 'tree/binarytree'
 
-root = Tree::BinaryTreeNode.new('root', 'root')
-root.left_child = Tree::BinaryTreeNode.new('left', 'L')
-root.right_child = Tree::BinaryTreeNode.new('right', 'R')
-root.left_child.left_child = Tree::BinaryTreeNode.new('left.left', 'LL')
+root = Tree::BinaryTreeNode.new('A', 'A')
+root.left_child = Tree::BinaryTreeNode.new('B', 'B')
+root.right_child = Tree::BinaryTreeNode.new('C', 'C')
 
 puts "in-order: #{root.inordered_each.map(&:name).inspect}"
 puts "left child: #{root.left_child.name}"

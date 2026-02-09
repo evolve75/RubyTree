@@ -44,11 +44,10 @@
 
 require 'tree/treap'
 
-root = Tree::TreapNode.new('root', 10)
-root.insert('n5', 5)
-root.insert('n15', 15)
-root.insert('n12', 12)
+root = Tree::TreapNode.new('root', 5, priority: 10)
+root.insert('n2', 2, priority: 20)
+root.insert('n8', 8, priority: 30)
 
-puts "search 12: #{root.search(12).content}"
-root.delete(5)
+puts "search 8: #{root.search(8).content}"
+root.delete(2)
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"

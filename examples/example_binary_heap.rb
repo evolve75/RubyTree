@@ -45,10 +45,12 @@
 
 require 'tree/binaryheap'
 
-heap = Tree::BinaryHeapNode.new('root', 5)
-heap.insert('n1', 2)
-heap.insert('n2', 8)
-heap.insert('n3', 1)
+heap = Tree::BinaryHeapNode.new('root', 1)
+heap.insert('n3', 3)
+heap.insert('n5', 5)
+heap.insert('n7', 7)
+heap.insert('n9', 9)
+heap.insert('n6', 6)
 
 puts "peek: #{heap.peek}"
 

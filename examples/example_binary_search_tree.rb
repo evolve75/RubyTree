@@ -45,13 +45,14 @@
 
 require 'tree/binarysearchtree'
 
-root = Tree::BinarySearchTreeNode.new('root', 10)
-root.insert('n5', 5)
-root.insert('n15', 15)
-root.insert('n12', 12)
+root = Tree::BinarySearchTreeNode.new('root', 8)
+root.insert('n3', 3)
+root.insert('n10', 10)
+root.insert('n1', 1)
+root.insert('n6', 6)
 
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"
-puts "search 15: #{root.search(15).content}"
+puts "search 10: #{root.search(10).content}"
 
-root.delete(5)
-puts "after delete 5: #{root.inordered_each.map(&:content).inspect}"
+root.delete(1)
+puts "after delete 1: #{root.inordered_each.map(&:content).inspect}"

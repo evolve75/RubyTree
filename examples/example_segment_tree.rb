@@ -45,7 +45,7 @@
 
 require 'tree/segmenttree'
 
-values = [1, 2, 3, 4, 5]
+values = [1, 2, 3, 4, 5, 6, 7, 8]
 tree = Tree::SegmentTree.new(values.length, values)
 
 puts "range_sum(1, 3): #{tree.range_sum(1, 3)}"

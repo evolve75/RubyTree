@@ -44,12 +44,24 @@
 
 require 'tree/btree'
 
-pairs = [[10, 'ten'], [5, 'five'], [20, 'twenty']]
+pairs = [
+  [10, 'ten'],
+  [20, 'twenty'],
+  [30, 'thirty'],
+  [1, 'one'],
+  [5, 'five'],
+  [12, 'twelve'],
+  [18, 'eighteen'],
+  [22, 'twenty-two'],
+  [26, 'twenty-six'],
+  [35, 'thirty-five'],
+  [40, 'forty']
+]
 entries = pairs.map { |key, value| { key: key, value: value } }
 tree = Tree::BTree.new(2, entries)
 
-tree.insert(15, 'fifteen')
-puts "search 20: #{tree.search(20)}"
+tree.insert(18, 'eighteen')
+puts "search 22: #{tree.search(22)}"
 
 # Bracket access uses the key.
 puts "value for 10: #{tree[10]}"
@@ -57,5 +69,5 @@ puts "value for 10: #{tree[10]}"
 tree[10] = 'TEN'
 puts "updated value for 10: #{tree.search(10)}"
 
-tree.delete(5)
+tree.delete(1)
 puts "keys: #{tree.keys.inspect}"

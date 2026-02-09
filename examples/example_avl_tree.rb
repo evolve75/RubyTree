@@ -46,13 +46,16 @@
 
 require 'tree/avltree'
 
-root = Tree::AvlTreeNode.new('root', 10)
-root.insert('n5', 5)
-root.insert('n15', 15)
+root = Tree::AvlTreeNode.new('root', 4)
 root.insert('n2', 2)
+root.insert('n6', 6)
+root.insert('n1', 1)
+root.insert('n3', 3)
+root.insert('n5', 5)
+root.insert('n7', 7)
 
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"
-puts "search 15: #{root.search(15).content}"
+puts "search 6: #{root.search(6).content}"
 
-root.delete(5)
-puts "after delete 5: #{root.inordered_each.map(&:content).inspect}"
+root.delete(2)
+puts "after delete 2: #{root.inordered_each.map(&:content).inspect}"

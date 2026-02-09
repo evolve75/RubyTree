@@ -8,9 +8,9 @@
 # Structure:
 #
 #     (after access)
-#        x
+#        2
 #       / \
-#      A   B
+#      1   3
 #
 # Author:: Anupam Sengupta (https://github.com/evolve75)
 #
@@ -45,11 +45,10 @@
 
 require 'tree/splaytree'
 
-root = Tree::SplayTreeNode.new('root', 10)
-root.insert('n5', 5)
-root.insert('n15', 15)
-root.insert('n12', 12)
+root = Tree::SplayTreeNode.new('root', 2)
+root.insert('n1', 1)
+root.insert('n3', 3)
 
-puts "search 12: #{root.search(12).content}"
-root.delete(5)
+puts "search 2: #{root.search(2).content}"
+root.delete(1)
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"

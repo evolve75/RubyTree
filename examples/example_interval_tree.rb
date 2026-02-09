@@ -46,10 +46,10 @@
 require 'tree/intervaltree'
 
 root = Tree::IntervalTreeNode.new('root', 10..20)
-root.insert('a', 15..25)
-root.insert('b', 5..8)
+root.insert('left', 5..12)
+root.insert('right', 30..40)
 
-overlaps = root.search_overlaps(18..19).map(&:content)
+overlaps = root.search_overlaps(11..13).map(&:content)
 puts "overlaps: #{overlaps.inspect}"
 
 points = root.search_point(6).map(&:content)

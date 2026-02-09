@@ -43,10 +43,13 @@
 
 require 'tree/orderstatistictree'
 
-root = Tree::OrderStatisticTreeNode.new('root', 10)
-root.insert('n5', 5)
-root.insert('n15', 15)
+root = Tree::OrderStatisticTreeNode.new('root', 8)
+root.insert('n4', 4)
+root.insert('n12', 12)
 root.insert('n2', 2)
+root.insert('n6', 6)
+root.insert('n10', 10)
+root.insert('n14', 14)
 
 puts "rank(10): #{root.rank(10)}"
 puts "select(0): #{root.select(0).content}"

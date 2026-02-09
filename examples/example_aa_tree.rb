@@ -46,17 +46,17 @@
 
 require 'tree/aatree'
 
-tree = Tree::AATree.new([[10, 'ten'], [5, 'five']])
+tree = Tree::AATree.new([[30, 'thirty'], [20, 'twenty'], [40, 'forty']])
 
-tree.insert(15, 'fifteen')
-puts "value for 5: #{tree.search(5)}"
+tree.insert(25, 'twenty-five')
+puts "value for 20: #{tree.search(20)}"
 
 # Bracket access uses the key.
-puts "value for 10: #{tree[10]}"
+puts "value for 30: #{tree[30]}"
 
-tree[10] = 'TEN'
-puts "updated value for 10: #{tree.search(10)}"
+tree[30] = 'THIRTY'
+puts "updated value for 30: #{tree.search(30)}"
 
-removed = tree.delete(5)
+removed = tree.delete(25)
 puts "removed: #{removed}"
 puts "keys: #{tree.keys.inspect}"

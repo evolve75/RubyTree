@@ -45,13 +45,16 @@
 
 require 'tree/redblacktree'
 
-root = Tree::RedBlackTreeNode.new('root', 10)
-root.insert('n5', 5)
-root.insert('n15', 15)
+root = Tree::RedBlackTreeNode.new('root', 8)
+root.insert('n4', 4)
 root.insert('n12', 12)
+root.insert('n2', 2)
+root.insert('n6', 6)
+root.insert('n10', 10)
+root.insert('n14', 14)
 
 puts "in-order: #{root.inordered_each.map(&:content).inspect}"
-puts "search 12: #{root.search(12).content}"
+puts "search 10: #{root.search(10).content}"
 
-root.delete(5)
-puts "after delete 5: #{root.inordered_each.map(&:content).inspect}"
+root.delete(2)
+puts "after delete 2: #{root.inordered_each.map(&:content).inspect}"

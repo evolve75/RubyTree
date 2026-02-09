@@ -42,7 +42,7 @@
 
 require 'tree/fenwicktree'
 
-values = [1, 2, 3, 4, 5]
+values = [1, 2, 3, 4, 5, 6, 7, 8]
 tree = Tree::FenwickTree.new(values.length, values)
 
 puts "sum(3): #{tree.sum(3)}"
