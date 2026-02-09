@@ -1,6 +1,6 @@
-# rubytree_deps.rb - This file is part of the RubyTree package.
+# tree_deps.rb - This file is part of the RubyTree package.
 #
-# = rubytree_deps.rb - Dependencies for RubyTree
+# = tree_deps.rb - Dependencies for RubyTree
 #
 # Centralizes and lists the dependencies for the RubyTree gem.
 #
