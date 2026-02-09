@@ -108,7 +108,6 @@ module Tree
       # Protected method to set the parent node for this node.
       def parent=(parent) # :nodoc:
         @parent = parent
-        @node_depth = nil
         clear_root_cache!
         invalidate_size_cache_upwards!
       end
