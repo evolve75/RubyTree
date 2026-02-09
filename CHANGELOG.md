@@ -6,6 +6,11 @@ Changes section to scan for breaking or behavioral changes.
 
 ## Release History
 
+### 3.0.0pre / 2026-02-09
+
+* Add runnable example scripts for each supported tree type under `examples/`
+  and refresh the core `Tree::TreeNode` example header.
+
 ### 3.0.0pre / 2026-02-08
 
 * Drop support for Ruby 2.7 and 3.0. Minimum required version is now 3.1.
