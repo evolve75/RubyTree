@@ -61,6 +61,9 @@ Changes section to scan for breaking or behavioral changes.
 * Add a Red-Black Tree implementation (`Tree::RedBlackTreeNode`) with ordered
   insert/search/delete operations.
 
+* Add an Interval Tree implementation (`Tree::IntervalTreeNode`) with
+  overlap and point query helpers.
+
 * `Tree::BinaryTreeNode#inordered_each` now returns an enumerator for
   `inordered_each` (instead of `each`) when called without a block. This fixes
   the behavior where `node.inordered_each.map` used pre-order traversal.
