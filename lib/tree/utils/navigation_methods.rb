@@ -43,12 +43,27 @@ module Tree
       alias has_children? children? # @todo: Aliased for eventual replacement
 
       # An array of all the immediate children of this node.
+      #
+      # @note Nil child slots (e.g., in sparse binary trees) are preserved. Use
+      # {#children_compact} when you want only the non-nil child nodes.
       def children(&)
         if block_given?
           @children.each(&)
           self
         else
           @children.clone
+        end
+      end
+
+      # An array of all the immediate non-nil children of this node.
+      #
+      # @note This is useful for sparse binary trees that retain nil child slots.
+      def children_compact(&)
+        if block_given?
+          @children.compact.each(&)
+          self
+        else
+          @children.compact
         end
       end
 

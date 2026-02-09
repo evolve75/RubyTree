@@ -31,6 +31,7 @@
 
 require 'test/unit'
 require_relative '../lib/tree/tree_deps'
+require_relative '../lib/tree/binarytree'
 require_relative 'support/fixtures_shared'
 
 module TestTree
@@ -103,6 +104,34 @@ module TestTree
       assert_equal(result_array[1], @child2, 'Should have child 2')
       assert_equal(result_array[2], @child3, 'Should have child 3')
       assert(!result_array.include?(@child4), 'Should not have child 4')
+    end
+
+    def test_children_compact
+      setup_test_tree
+
+      compact_children = @root.children_compact
+      assert_equal(3, compact_children.length, 'Should have three direct children')
+      assert_equal([@child1, @child2, @child3], compact_children)
+
+      result_array = []
+      result = @root.children_compact { |child| result_array << child }
+      assert_equal(@root, result)
+      assert_equal([@child1, @child2, @child3], result_array)
+    end
+
+    def test_children_compact_with_sparse_binary_tree
+      root = Tree::BinaryTreeNode.new('Root')
+      right_child = Tree::BinaryTreeNode.new('Right')
+
+      root.right_child = right_child
+
+      raw_children = root.children
+      assert_equal(2, raw_children.length, 'Binary tree should have two child slots')
+      assert_nil(raw_children.first, 'Left child slot should be nil')
+      assert_equal(right_child, raw_children.last, 'Right child should be present')
+
+      compact_children = root.children_compact
+      assert_equal([right_child], compact_children)
     end
 
     def test_first_child

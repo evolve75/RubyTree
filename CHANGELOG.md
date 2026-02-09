@@ -73,6 +73,9 @@ Changes section to scan for breaking or behavioral changes.
 * Ignore nil child slots in `Tree::TreeNode#node_height` so sparse binary trees
   compute heights correctly.
 
+* Add `Tree::TreeNode#children_compact` to return non-nil child nodes while
+  retaining `children` behavior for sparse binary trees.
+
 * Marshal loading now uses class-level hooks to avoid clobbering the receiver.
   Existing Marshal payloads remain supported.
 
