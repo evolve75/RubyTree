@@ -35,3 +35,18 @@ jobs:
         if: matrix.ruby == '3.4'
       - run: bundle exec rake gemspec
       - run: bundle exec rake gem:package
+
+  quality:
+    name: Quality Checks (Ruby 3.4)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - name: Install Semgrep
+        run: python -m pip install semgrep
+      - run: bundle exec rake lint
+      - run: bundle exec rake doc:check
+      - run: bundle exec rake security
