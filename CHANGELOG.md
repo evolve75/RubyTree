@@ -40,6 +40,9 @@ Changes section to scan for breaking or behavioral changes.
   `[key, value]`, `{ key:, value: }`, and `Entry` inputs.
 * Clarify in docs that `Tree::FenwickTree` and `Tree::SegmentTree` do not
   support `<<`, and add tests asserting that unsupported behavior.
+* Refresh development dependencies with a conservative lockfile update by
+  upgrading `rdoc` from `7.1.0` to `7.2.0` within existing version
+  constraints.
 
 ### 3.0.0pre / 2026-02-09
 
