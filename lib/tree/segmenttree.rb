@@ -37,6 +37,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require_relative 'utils/array_tree_api_methods'
 
 module Tree
   # Provides a Segment Tree implementation for range sum queries.
@@ -61,6 +62,7 @@ module Tree
   class SegmentTree
     include Enumerable
     include Comparable
+    include Tree::Utils::ArrayTreeApiMethods
 
     # @!attribute [r] size
     # Size of the tree (number of elements).
@@ -88,26 +90,6 @@ module Tree
 
         update(index, value)
       end
-    end
-
-    # Convenience synonym for {#size}.
-    #
-    # @return [Integer] The number of elements tracked by the tree.
-    def length
-      size
-    end
-
-    # Iterate over values in index order.
-    #
-    # @yieldparam value [Numeric] Value at each index.
-    #
-    # @return [Tree::SegmentTree] The receiver, if a block is given.
-    # @return [Enumerator] An enumerator, if no block is given.
-    def each(&)
-      return to_enum(:each) unless block_given?
-
-      0.upto(@size - 1) { |index| yield self[index] }
-      self
     end
 
     # Set the value at the specified index.
@@ -173,37 +155,6 @@ module Tree
       self[index]
     end
 
-    # Returns all values in index order.
-    #
-    # @return [Array<Numeric>] Values in index order.
-    def values
-      to_a
-    end
-
-    # Returns all indices in order.
-    #
-    # @return [Array<Integer>] Indices in order.
-    def keys
-      (0...@size).to_a
-    end
-
-    # Returns all values as an Array.
-    #
-    # @return [Array<Numeric>] Values in index order.
-    def to_a
-      map { |value| value }
-    end
-
-    # Returns a Hash representation of the tree.
-    #
-    # @return [Hash] Hash representation of the segment tree.
-    def to_h
-      {
-        size: size,
-        values: to_a
-      }
-    end
-
     # Build a segment tree from a Hash representation.
     #
     # @param [Hash] hash Hash representation of a segment tree.
@@ -224,38 +175,12 @@ module Tree
       new(size, values)
     end
 
-    # JSON serialization for the segment tree.
-    #
-    # @param [Hash] _options JSON serialization options.
-    # @return [Hash] Hash representation for JSON serialization.
-    def as_json(_options = {})
-      to_h
-    end
-
-    # Serialize the segment tree to JSON.
-    #
-    # @param [Array] args JSON.generate arguments.
-    # @return [String] JSON representation of the tree.
-    def to_json(*args)
-      JSON.generate(as_json, *args)
-    end
-
     # Create a segment tree from a JSON hash.
     #
     # @param [Hash] json_hash JSON hash representation.
     # @return [Tree::SegmentTree] The constructed tree.
     def self.json_create(json_hash)
       from_hash(json_hash)
-    end
-
-    # Compare segment trees by their ordered values.
-    #
-    # @param [Tree::SegmentTree] other The segment tree to compare.
-    # @return [Integer, nil] -1, 0, 1, or +nil+ if not comparable.
-    def <=>(other)
-      return nil unless other.is_a?(Tree::SegmentTree)
-
-      to_a <=> other.to_a
     end
 
     private

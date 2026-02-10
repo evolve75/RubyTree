@@ -17,6 +17,9 @@ Changes section to scan for breaking or behavioral changes.
 * Refactor shared binary heap internals into
   `Tree::Utils::HeapSharedMethods` to reduce duplication between min-heap and
   max-heap implementations without changing public behavior.
+* Refactor shared array-backed tree API helpers into
+  `Tree::Utils::ArrayTreeApiMethods` and use it in `Tree::FenwickTree` and
+  `Tree::SegmentTree` without changing public behavior.
 * Make `Tree::TrieNode#<<` use trie word-insert semantics (`insert(word)`)
   instead of generic child-node attachment semantics.
 * Add `<<` insertion shorthand to `Tree::AATree` and `Tree::BTree` for

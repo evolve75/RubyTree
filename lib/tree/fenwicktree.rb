@@ -38,6 +38,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require_relative 'utils/array_tree_api_methods'
 
 module Tree
   # Provides a Fenwick (binary indexed) tree implementation.
@@ -63,6 +64,7 @@ module Tree
   class FenwickTree
     include Enumerable
     include Comparable
+    include Tree::Utils::ArrayTreeApiMethods
 
     # @!attribute [r] size
     # Size of the tree (number of elements).
@@ -90,26 +92,6 @@ module Tree
 
         update(index, value)
       end
-    end
-
-    # Convenience synonym for {#size}.
-    #
-    # @return [Integer] The number of elements tracked by the tree.
-    def length
-      size
-    end
-
-    # Iterate over values in index order.
-    #
-    # @yieldparam value [Numeric] Value at each index.
-    #
-    # @return [Tree::FenwickTree] The receiver, if a block is given.
-    # @return [Enumerator] An enumerator, if no block is given.
-    def each(&)
-      return to_enum(:each) unless block_given?
-
-      0.upto(@size - 1) { |index| yield self[index] }
-      self
     end
 
     # Add a delta to the value at the specified index.
@@ -200,37 +182,6 @@ module Tree
       self[index]
     end
 
-    # Returns all values in index order.
-    #
-    # @return [Array<Numeric>] Values in index order.
-    def values
-      to_a
-    end
-
-    # Returns all indices in order.
-    #
-    # @return [Array<Integer>] Indices in order.
-    def keys
-      (0...@size).to_a
-    end
-
-    # Returns all values as an Array.
-    #
-    # @return [Array<Numeric>] Values in index order.
-    def to_a
-      map { |value| value }
-    end
-
-    # Returns a Hash representation of the tree.
-    #
-    # @return [Hash] Hash representation of the Fenwick tree.
-    def to_h
-      {
-        size: size,
-        values: to_a
-      }
-    end
-
     # Build a Fenwick tree from a Hash representation.
     #
     # @param [Hash] hash Hash representation of a Fenwick tree.
@@ -251,38 +202,12 @@ module Tree
       new(size, values)
     end
 
-    # JSON serialization for the Fenwick tree.
-    #
-    # @param [Hash] _options JSON serialization options.
-    # @return [Hash] Hash representation for JSON serialization.
-    def as_json(_options = {})
-      to_h
-    end
-
-    # Serialize the Fenwick tree to JSON.
-    #
-    # @param [Array] args JSON.generate arguments.
-    # @return [String] JSON representation of the tree.
-    def to_json(*args)
-      JSON.generate(as_json, *args)
-    end
-
     # Create a Fenwick tree from a JSON hash.
     #
     # @param [Hash] json_hash JSON hash representation.
     # @return [Tree::FenwickTree] The constructed tree.
     def self.json_create(json_hash)
       from_hash(json_hash)
-    end
-
-    # Compare Fenwick trees by their ordered values.
-    #
-    # @param [Tree::FenwickTree] other The Fenwick tree to compare.
-    # @return [Integer, nil] -1, 0, 1, or +nil+ if not comparable.
-    def <=>(other)
-      return nil unless other.is_a?(Tree::FenwickTree)
-
-      to_a <=> other.to_a
     end
 
     private
