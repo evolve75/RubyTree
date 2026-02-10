@@ -52,10 +52,9 @@ require 'tree/trie'
 
 # Create the root node.
 root = Tree::TrieNode.new('')
-# Insert the word that builds the c-a-t path.
-root.insert('cat')
-# Insert the single-letter word for d.
-root.insert('d')
+# Insert words with the natural shovel syntax.
+root << 'cat'
+root << 'd'
 
 # Check if a word exists.
 puts "include? cat: #{root.include?('cat')}"

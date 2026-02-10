@@ -50,28 +50,18 @@ require 'tree/btree'
 # Create an empty B-tree with minimum degree 2.
 tree = Tree::BTree.new(2)
 
-# Insert the root entries.
-tree.insert(10, 'ten')
-# Insert the next root entry.
-tree.insert(20, 'twenty')
-# Insert the next root entry.
-tree.insert(30, 'thirty')
-# Insert values that will populate the left child.
-tree.insert(1, 'one')
-# Insert values that will populate the left child.
-tree.insert(5, 'five')
-# Insert values that will populate the second child.
-tree.insert(12, 'twelve')
-# Insert values that will populate the second child.
-tree.insert(18, 'eighteen')
-# Insert values that will populate the third child.
-tree.insert(22, 'twenty-two')
-# Insert values that will populate the third child.
-tree.insert(26, 'twenty-six')
-# Insert values that will populate the fourth child.
-tree.insert(35, 'thirty-five')
-# Insert values that will populate the fourth child.
-tree.insert(40, 'forty')
+# Insert entries using the shovel shorthand.
+tree << [10, 'ten']
+tree << [20, 'twenty']
+tree << [30, 'thirty']
+tree << [1, 'one']
+tree << [5, 'five']
+tree << [12, 'twelve']
+tree << [18, 'eighteen']
+tree << [22, 'twenty-two']
+tree << [26, 'twenty-six']
+tree << [35, 'thirty-five']
+tree << [40, 'forty']
 
 # Traverse keys in order.
 puts "keys: #{tree.keys.inspect}"
@@ -80,7 +70,7 @@ puts "keys: #{tree.keys.inspect}"
 puts "search 22: #{tree.search(22)}"
 
 # Insert a new key/value pair.
-tree.insert(28, 'twenty-eight')
+tree << [28, 'twenty-eight']
 # Show keys after insertion.
 puts "after insert keys: #{tree.keys.inspect}"
 

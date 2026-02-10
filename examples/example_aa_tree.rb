@@ -51,8 +51,8 @@ require 'tree/aatree'
 
 # Create a tree with the root and its direct children.
 tree = Tree::AATree.new([[30, 'thirty'], [20, 'twenty'], [40, 'forty']])
-# Insert the right child under 20 to match the structure.
-tree.insert(25, 'twenty-five')
+# Insert the right child under 20 using the shovel shorthand.
+tree << [25, 'twenty-five']
 
 # Traverse keys in sorted order.
 puts "keys: #{tree.keys.inspect}"
