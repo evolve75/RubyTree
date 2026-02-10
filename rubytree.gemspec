@@ -76,7 +76,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.13'
   s.add_development_dependency 'rtagstask', '~> 0.0'
   s.add_development_dependency 'awesome_bot', '~> 1.20'
-  s.add_development_dependency 'mdl', '~> 0.13'
+  s.add_development_dependency 'mdl', '~> 0.14'
   s.add_development_dependency 'rubocop', '~> 1.84'
   s.add_development_dependency 'rubocop-rake', '~> 0.7'
   s.add_development_dependency 'rubocop-rspec', '~> 3.0'

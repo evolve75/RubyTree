@@ -43,6 +43,8 @@ Changes section to scan for breaking or behavioral changes.
 * Refresh development dependencies with a conservative lockfile update by
   upgrading `rdoc` from `7.1.0` to `7.2.0` within existing version
   constraints.
+* Raise the `mdl` development dependency constraint from `~> 0.13` to
+  `~> 0.14` while retaining Ruby 3.1 compatibility.
 
 ### 3.0.0pre / 2026-02-09
 
