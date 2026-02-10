@@ -52,6 +52,16 @@ Available tree types include:
 * [Order-Statistic Tree][] under `Tree::OrderStatisticTreeNode` (require
   `tree/orderstatistictree`).
 
+Insertion operator (`<<`) support:
+
+* Supported:
+  `Tree::TreeNode` and TreeNode-derived node types,
+  `Tree::AATree`, `Tree::BTree`.
+* Not supported:
+  `Tree::FenwickTree`, `Tree::SegmentTree`.
+  These classes use explicit indexed updates (`update`, `[]=`) rather than
+  append-style insertion semantics.
+
 See [TREE_TYPES](./TREE_TYPES.md) for detailed descriptions, ASCII diagrams,
 and use cases for each tree type.
 

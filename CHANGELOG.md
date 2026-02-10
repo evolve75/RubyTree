@@ -12,6 +12,8 @@ Changes section to scan for breaking or behavioral changes.
   instead of generic child-node attachment semantics.
 * Add `<<` insertion shorthand to `Tree::AATree` and `Tree::BTree` for
   `[key, value]`, `{ key:, value: }`, and `Entry` inputs.
+* Clarify in docs that `Tree::FenwickTree` and `Tree::SegmentTree` do not
+  support `<<`, and add tests asserting that unsupported behavior.
 
 ### 3.0.0pre / 2026-02-09
 

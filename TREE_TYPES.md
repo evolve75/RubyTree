@@ -129,6 +129,14 @@ conventions, while array-backed trees (Fenwick, Segment) and multi-entry trees
 These non-TreeNode types provide a TreeNode-like subset where it fits their
 semantics (Enumerable iteration, Comparable, and serialization).
 
+`<<` insertion support:
+
+- Supported:
+  `Tree::TreeNode` and TreeNode-derived node types, `Tree::AATree`,
+  `Tree::BTree`.
+- Not supported:
+  `Tree::FenwickTree`, `Tree::SegmentTree` (use `update` / `[]=`).
+
 ## Quick Examples
 
 ```ruby

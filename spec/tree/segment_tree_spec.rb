@@ -93,4 +93,16 @@ RSpec.describe Tree::SegmentTree do
       expect(left < right).to be(true)
     end
   end
+
+  describe '<<' do
+    it 'is not supported' do
+      tree = build_tree([1, 2, 3])
+      expect(tree.respond_to?(:<<)).to be(false)
+    end
+
+    it 'raises when called' do
+      tree = build_tree([1, 2, 3])
+      expect { tree << 4 }.to raise_error(NoMethodError)
+    end
+  end
 end

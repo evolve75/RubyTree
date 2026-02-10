@@ -120,5 +120,12 @@ module TestTree
 
       assert_equal(-1, left <=> right)
     end
+
+    def test_shovel_operator_not_supported
+      tree = build_tree([1, 2, 3])
+
+      assert_equal(false, tree.respond_to?(:<<))
+      assert_raise(NoMethodError) { tree << 4 }
+    end
   end
 end
