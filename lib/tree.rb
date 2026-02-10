@@ -161,7 +161,7 @@ module Tree
     #
     # @return [Boolean] +true+ if the node has content.
     def content?
-      @content != nil
+      !@content.nil?
     end
 
     alias has_content? content? # @todo: Aliased for eventual replacement

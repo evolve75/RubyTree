@@ -70,7 +70,7 @@ module Tree
     #
     # @return [Boolean] +true+ if this is a terminal node.
     def terminal?
-      @terminal == true
+      @terminal
     end
 
     # Inserts a word into the trie.
@@ -119,7 +119,7 @@ module Tree
     def include?(word)
       validate_word!(word)
       node = find_node(word)
-      node&.terminal? == true
+      !!node&.terminal?
     end
 
     # Alias for {#include?} to support search-oriented naming.
@@ -173,7 +173,7 @@ module Tree
     # @param [Boolean] value The terminal flag value.
     # @return [void]
     def terminal=(value)
-      @terminal = value == true
+      @terminal = value.equal?(true)
     end
 
     # Validate that the word is a non-empty string.
