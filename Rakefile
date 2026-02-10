@@ -66,6 +66,24 @@ end
 desc 'Run lint checks'
 task lint: %i[gemspec rubocop]
 
+# ................................ Security checks
+desc 'Run security checks (bundler-audit, semgrep)'
+task :security do
+  sh('bundle', 'exec', 'bundler-audit', 'check', '--update')
+
+  semgrep_available = system('command -v semgrep >/dev/null 2>&1')
+  unless semgrep_available
+    warn 'WARN: semgrep not found; skipping semgrep security scan.'
+    return
+  end
+
+  env = {}
+  default_cert = '/etc/ssl/cert.pem'
+  env['SSL_CERT_FILE'] = default_cert if ENV['SSL_CERT_FILE'].nil? && File.exist?(default_cert)
+
+  sh(env, 'semgrep', '--config', 'p/r2c-security-audit', '--config', 'p/ruby', 'lib')
+end
+
 # ................................ Release checks
 desc 'Run release checks (lint, tests, docs, package)'
 task 'release:check' => %i[lint test:all doc:yard gem:package]

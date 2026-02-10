@@ -10,6 +10,9 @@ GEM
     ast (2.4.3)
     awesome_bot (1.20.0)
       parallel (= 1.20.1)
+    bundler-audit (0.9.3)
+      bundler (>= 1.2.0)
+      thor (~> 1.0)
     cgi (0.5.1)
     chef-utils (19.1.164)
       concurrent-ruby
@@ -99,9 +102,10 @@ GEM
     simplecov-html (0.13.2)
     simplecov-lcov (0.9.0)
     simplecov_json_formatter (0.1.4)
-    stringio (3.0.1)
+    stringio (3.2.0)
     test-unit (3.7.7)
       power_assert
+    thor (1.5.0)
     tomlrb (2.0.4)
     tsort (0.2.0)
     unicode-display_width (3.2.0)
@@ -115,6 +119,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_bot (~> 1.20)
   bundler (~> 2.6)
+  bundler-audit (~> 0.9)
   mdl (~> 0.13)
   rake (~> 13.3)
   rdoc (~> 7.1)
@@ -126,6 +131,7 @@ DEPENDENCIES
   rubytree!
   simplecov (~> 0.22)
   simplecov-lcov (~> 0.9)
+  stringio (~> 3.0, >= 3.0.1.1)
   test-unit (~> 3.7)
   yard (~> 0.9)
 

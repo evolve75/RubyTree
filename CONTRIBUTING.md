@@ -23,6 +23,8 @@ Development dependencies (not required for installing the gem):
 * [awesome_bot][] for markdown link checking
 * [mdl][] for markdown linting
 * [RuboCop][] for linting the code
+* [bundler-audit][] for security advisory checks
+* [Semgrep][] for security-focused static analysis (optional)
 
 If RubyGems warns about ambiguous `stringio` specs in your dev gemset,
 remove the extra versions in this repo’s gemset (for example):
@@ -77,6 +79,9 @@ installed automatically by [Bundler][].
 * Run `bundle exec rake lint` and `bundle exec rake test:all` before proposing
   changes. Resolve all RuboCop offenses before committing.
 * Run `bundle exec rake doc:check` when modifying markdown documentation.
+* Run `bundle exec rake security` for dependency and static security checks.
+  Semgrep is optional; if it is not installed, the task will warn and skip it.
+  If Semgrep fails to download rules, set `SSL_CERT_FILE=/etc/ssl/cert.pem`.
 * Update `CHANGELOG.md` for notable changes and API behavior changes.
 * Update `README.md` when introducing new capabilities or new tree types.
 * Ensure YARD documentation exists for new or modified modules, classes, and
@@ -108,6 +113,7 @@ bundle exec rake bench
 [Bundler]: https://bundler.io
 [contributor_covenant]: https://www.contributor-covenant.org/version/2/1/
 [awesome_bot]: https://github.com/dkhamsing/awesome_bot
+[bundler-audit]: https://github.com/rubysec/bundler-audit
 [github_issues]: https://github.com/evolve75/RubyTree/issues
 [mdl]: https://github.com/markdownlint/markdownlint
 [Rake]: https://rubygems.org/gems/rake
@@ -115,6 +121,7 @@ bundle exec rake bench
 [RSpec]: https://rspec.info/
 [RuboCop]: https://rubocop.org/
 [SCM]: https://en.wikipedia.org/wiki/Source_Code_Management
+[Semgrep]: https://semgrep.dev
 [Yard]: https://yardoc.org
 [git]: https://git-scm.com
 [rt@github]: https://github.com/evolve75/RubyTree

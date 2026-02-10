@@ -88,6 +88,13 @@ Changes section to scan for breaking or behavioral changes.
 * Accept hash-like inputs (`to_hash`) in hash conversion to support Rails
   `HashWithIndifferentAccess` data (see #104).
 
+* Add `bundler-audit` to support security-focused dependency checks.
+
+* Pin `stringio` to `>= 3.0.1.1` in development to address CVE-2024-27280.
+
+* Add a `rake security` task that runs `bundler-audit` and Semgrep (when
+  installed).
+
 * Add AVL, AA, Treap, Binary Heap, and Binary Max-Heap implementations with
   ordered insert/search/delete or insert/extract operations.
 
