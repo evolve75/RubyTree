@@ -43,88 +43,42 @@ RSpec.describe Tree::RedBlackTreeNode do
 
   def build_tree(values)
     root = described_class.new('root', values.first)
-    values.drop(1).each_with_index do |value, idx|
-      root.insert("n#{idx}", value)
+    values.drop(1).each_with_index do |value, index|
+      root.insert("n#{index}", value)
     end
     root
   end
 
-  describe 'inserts' do
-    let(:root) { build_tree([10, 5, 15, 12, 18, 2, 8, 6, 1]) }
+  let(:root) { build_tree([10, 5, 15, 12, 18, 2, 8]) }
 
-    it 'keeps in-order traversal sorted' do
+  it 'finds inserted keys' do
+    expect(root.search(15).content).to eq(15)
+  end
+
+  it 'returns nil for missing keys' do
+    expect(root.search(7)).to be_nil
+  end
+
+  it 'keeps in-order traversal sorted' do
+    expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
+  end
+
+  it 'maintains red-black invariants after inserts' do
+    expect(red_black_valid?(root)).to be(true)
+  end
+
+  describe 'delete usage' do
+    before { root.delete(12) }
+
+    it 'removes deleted keys from search' do
+      expect(root.search(12)).to be_nil
+    end
+
+    it 'keeps in-order traversal sorted after delete' do
       expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
     end
 
-    it 'keeps red-black invariants' do
-      expect(red_black_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'search' do
-    let(:root) { build_tree([10, 5, 15]) }
-
-    it 'finds an existing key' do
-      expect(root.search(15).content).to eq(15)
-    end
-
-    it 'returns nil for a missing key' do
-      expect(root.search(7)).to be_nil
-    end
-  end
-
-  describe 'delete leaf' do
-    let(:root) { build_tree([10, 5, 15, 2]) }
-
-    before { root.delete(2) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
-    end
-
-    it 'keeps red-black invariants' do
-      expect(red_black_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'delete node with one child' do
-    let(:root) { build_tree([10, 5, 2]) }
-
-    before { root.delete(5) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
-    end
-
-    it 'keeps red-black invariants' do
-      expect(red_black_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'delete node with two children' do
-    let(:root) { build_tree([10, 5, 15, 12, 18, 2]) }
-
-    before { root.delete(15) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
-    end
-
-    it 'keeps red-black invariants' do
-      expect(red_black_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'delete root' do
-    let(:root) { build_tree([10, 5, 15, 12]) }
-
-    before { root.delete(10) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
-    end
-
-    it 'keeps red-black invariants' do
+    it 'maintains red-black invariants after delete' do
       expect(red_black_valid?(root)).to be(true)
     end
   end

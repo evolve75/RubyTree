@@ -180,7 +180,8 @@ Development dependencies (not required for installing the gem):
 * [Bundler][] for creating the stable build environment
 * [Rake][] for building the package
 * [YARD][] for the documentation
-* [RSpec][] for additional Ruby Spec test files
+* Test::Unit for exhaustive edge-case and regression coverage in `test/`
+* [RSpec][] for readable common API usage examples in `spec/`
 * [RuboCop][] for linting the code
 
 Note: `Tree::TreeNode.new` accepts `{ checks: false }` to disable validation

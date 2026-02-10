@@ -1,5 +1,8 @@
 # RSpec Coverage Notes
 
-RSpec examples in this repository focus on small, readable behavior checks
-such as initialization and cloning. API-level and regression coverage lives
+RSpec examples in this repository focus on readable, common API usage flows
+for each tree type (construction, typical mutations, and representative
+queries/traversals).
+
+Edge-case matrices, exhaustive invariants, and regression contracts live
 primarily in the Test::Unit suite under `test/`.

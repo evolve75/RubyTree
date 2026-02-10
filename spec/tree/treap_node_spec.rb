@@ -41,88 +41,42 @@ RSpec.describe Tree::TreapNode do
   def build_tree(pairs)
     first_key, first_priority = pairs.first
     root = described_class.new('root', first_key, priority: first_priority)
-    pairs.drop(1).each_with_index do |(key, priority), idx|
-      root.insert("n#{idx}", key, priority: priority)
+    pairs.drop(1).each_with_index do |(key, priority), index|
+      root.insert("n#{index}", key, priority: priority)
     end
     root
   end
 
-  describe 'inserts' do
-    let(:root) { build_tree([[10, 50], [5, 30], [15, 70], [12, 40], [18, 90], [2, 10]]) }
+  let(:root) { build_tree([[10, 50], [5, 30], [15, 70], [12, 40], [18, 90], [2, 10]]) }
 
-    it 'keeps in-order traversal sorted' do
+  it 'finds inserted keys' do
+    expect(root.search(15).content).to eq(15)
+  end
+
+  it 'returns nil for missing keys' do
+    expect(root.search(7)).to be_nil
+  end
+
+  it 'keeps in-order traversal sorted' do
+    expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
+  end
+
+  it 'maintains treap invariants after inserts' do
+    expect(treap_valid?(root)).to be(true)
+  end
+
+  describe 'delete usage' do
+    before { root.delete(12) }
+
+    it 'removes deleted keys from search' do
+      expect(root.search(12)).to be_nil
+    end
+
+    it 'keeps in-order traversal sorted after delete' do
       expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
     end
 
-    it 'maintains treap invariants' do
-      expect(treap_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'search' do
-    let(:root) { build_tree([[10, 50], [5, 30], [15, 70]]) }
-
-    it 'finds an existing key' do
-      expect(root.search(15).content).to eq(15)
-    end
-
-    it 'returns nil for a missing key' do
-      expect(root.search(7)).to be_nil
-    end
-  end
-
-  describe 'delete leaf' do
-    let(:root) { build_tree([[10, 50], [5, 30], [15, 70], [2, 10]]) }
-
-    before { root.delete(2) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
-    end
-
-    it 'maintains treap invariants' do
-      expect(treap_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'delete node with one child' do
-    let(:root) { build_tree([[10, 50], [5, 30], [2, 40]]) }
-
-    before { root.delete(5) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
-    end
-
-    it 'maintains treap invariants' do
-      expect(treap_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'delete node with two children' do
-    let(:root) { build_tree([[10, 50], [5, 30], [15, 70], [12, 40], [18, 90], [2, 10]]) }
-
-    before { root.delete(15) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root)).to eq(inorder_contents(root).sort)
-    end
-
-    it 'maintains treap invariants' do
-      expect(treap_valid?(root)).to be(true)
-    end
-  end
-
-  describe 'delete root' do
-    let(:root) { build_tree([[10, 50], [5, 30], [15, 70], [12, 40]]) }
-
-    before { root.delete(10) }
-
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
-    end
-
-    it 'maintains treap invariants' do
+    it 'maintains treap invariants after delete' do
       expect(treap_valid?(root)).to be(true)
     end
   end
