@@ -24,6 +24,8 @@ Changes section to scan for breaking or behavioral changes.
   `Tree::Utils::BinarySearchNodeAccessors` and use it in
   `BinarySearchTreeNode`, `AvlTreeNode`, `RedBlackTreeNode`,
   `SplayTreeNode`, and `TreapNode` without changing public behavior.
+* Add Phase 4 stabilization tests covering alias error-parity, empty-structure
+  edge behavior, and strict comparable contracts across tree families.
 * Make `Tree::TrieNode#<<` use trie word-insert semantics (`insert(word)`)
   instead of generic child-node attachment semantics.
 * Add `<<` insertion shorthand to `Tree::AATree` and `Tree::BTree` for
