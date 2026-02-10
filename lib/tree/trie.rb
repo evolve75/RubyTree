@@ -122,6 +122,9 @@ module Tree
       node&.terminal? == true
     end
 
+    # Alias for {#include?} to support search-oriented naming.
+    alias search include?
+
     # Returns +true+ if the trie includes the specified prefix.
     #
     # @param [String] prefix The prefix to look up.

@@ -176,6 +176,14 @@ module Tree
       entry&.value
     end
 
+    # Alias for {#search} to support lookup-oriented naming.
+    #
+    # @param [Object] key The key to search for.
+    # @return [Object, nil] The matching value, or +nil+.
+    def lookup(key)
+      search(key)
+    end
+
     # Delete a key from the B-tree.
     #
     # @param [Object] key The key to delete.

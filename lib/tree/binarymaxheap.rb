@@ -125,6 +125,13 @@ module Tree
       removed
     end
 
+    # Alias for {#extract} using priority-queue naming.
+    #
+    # @return [Object, nil] The removed maximum value, or +nil+ if empty.
+    def pop
+      extract
+    end
+
     # Searches for a node matching the specified key (content).
     #
     # @param [Object] key The search key (node content).

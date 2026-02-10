@@ -169,6 +169,15 @@ module Tree
       sum(right) - sum(left - 1)
     end
 
+    # Alias for {#range_sum} with query-oriented naming.
+    #
+    # @param [Integer] left The starting index.
+    # @param [Integer] right The ending index.
+    # @return [Numeric] Sum in the specified range.
+    def query(left, right)
+      range_sum(left, right)
+    end
+
     # Read the value at the specified index.
     #
     # @param [Integer] index Zero-based index.

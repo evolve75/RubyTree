@@ -8,6 +8,12 @@ Changes section to scan for breaking or behavioral changes.
 
 ### 3.0.0pre / 2026-02-10
 
+* Add non-breaking API aliases for consistency:
+  `Tree::AATree#lookup`, `Tree::BTree#lookup`,
+  `Tree::FenwickTree#query`, `Tree::SegmentTree#query`,
+  `Tree::BinaryHeapNode#pop`, `Tree::BinaryMaxHeapNode#pop`,
+  and `Tree::TrieNode#search`.
+* Add alias-focused regression tests to lock these compatibility contracts.
 * Make `Tree::TrieNode#<<` use trie word-insert semantics (`insert(word)`)
   instead of generic child-node attachment semantics.
 * Add `<<` insertion shorthand to `Tree::AATree` and `Tree::BTree` for
