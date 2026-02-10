@@ -56,6 +56,10 @@ module Tree
   #
   # Indices are zero-based for public methods.
   #
+  # @note The +<<+ operator is intentionally not supported for this class.
+  #   Fenwick trees require explicit indexed updates via {#update} or {#[]=},
+  #   and do not model append-style insertion semantics.
+  #
   class FenwickTree
     include Enumerable
     include Comparable

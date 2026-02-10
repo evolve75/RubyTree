@@ -207,4 +207,20 @@ RSpec.describe Tree::BTree do
       expect(tree <=> 123).to be_nil
     end
   end
+
+  describe '<<' do
+    it 'returns the inserted entry' do
+      tree = described_class.new(2)
+      inserted = tree << [10, 'a']
+
+      expect(inserted.key).to eq(10)
+    end
+
+    it 'stores the inserted key/value pair' do
+      tree = described_class.new(2)
+      tree << [10, 'a']
+
+      expect(tree.search(10)).to eq('a')
+    end
+  end
 end

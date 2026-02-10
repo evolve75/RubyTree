@@ -175,5 +175,13 @@ module TestTree
 
       assert_kind_of(Hash, tree.as_json)
     end
+
+    def test_shovel_inserts_entry_pair
+      tree = Tree::BTree.new(2)
+      inserted = tree << [10, 'a']
+
+      assert_equal(10, inserted.key)
+      assert_equal('a', tree.search(10))
+    end
   end
 end

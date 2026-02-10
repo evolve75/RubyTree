@@ -125,7 +125,7 @@ module Tree
           json_hash['children']&.each do |child|
             next unless child
 
-            node << child
+            node.add(child)
           end
 
           node

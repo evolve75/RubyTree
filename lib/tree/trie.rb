@@ -97,6 +97,21 @@ module Tree
       current
     end
 
+    # Insert a word into the trie using natural +<<+ syntax.
+    #
+    # This overrides {Tree::TreeNode#<<}. For trie nodes, +<<+ inserts a word
+    # (string) instead of attaching a child node directly.
+    #
+    # @param [String] word The word to insert.
+    # @return [Tree::TrieNode] The terminal node for the inserted word.
+    #
+    # @raise [ArgumentError] If the word is empty or not a string.
+    #
+    # @see #insert
+    def <<(word)
+      insert(word)
+    end
+
     # Returns +true+ if the trie includes the specified word.
     #
     # @param [String] word The word to look up.

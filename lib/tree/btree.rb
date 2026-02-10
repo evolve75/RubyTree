@@ -152,6 +152,18 @@ module Tree
       insert_non_full(root, Entry.new(key, value))
     end
 
+    # Insert an entry using natural +<<+ syntax.
+    #
+    # @param [Array, Hash, Tree::BTree::Entry] entry Input entry as
+    #   +[key, value]+, +{ key:, value: }+, or {Tree::BTree::Entry}.
+    # @return [Tree::BTree::Entry] The inserted entry.
+    #
+    # @raise [ArgumentError] If the input format is unsupported.
+    def <<(entry)
+      key, value = entry_to_pair(entry)
+      insert(key, value)
+    end
+
     # Search for a key in the B-tree.
     #
     # @param [Object] key The key to search for.
@@ -350,6 +362,48 @@ module Tree
     end
 
     private
+
+    # Convert a supported entry input into a key/value pair.
+    #
+    # @param [Array, Hash, Tree::BTree::Entry] entry Input entry.
+    # @return [Array<Object, Object>] The +[key, value]+ pair.
+    #
+    # @raise [ArgumentError] If the input format is unsupported.
+    def entry_to_pair(entry)
+      return [entry.key, entry.value] if entry.is_a?(Entry)
+      return array_entry_to_pair(entry) if entry.is_a?(Array)
+      return hash_entry_to_pair(entry) if entry.is_a?(Hash)
+
+      raise ArgumentError, 'B-tree << expects [key, value], { key:, value: }, or Entry.'
+    end
+
+    # Convert an array entry into a key/value pair.
+    #
+    # @param [Array] entry Input as +[key, value]+.
+    # @return [Array<Object, Object>] The +[key, value]+ pair.
+    #
+    # @raise [ArgumentError] If the array shape is invalid.
+    def array_entry_to_pair(entry)
+      raise ArgumentError, 'B-tree << expects [key, value].' unless entry.length == 2
+
+      [entry[0], entry[1]]
+    end
+
+    # Convert a hash entry into a key/value pair.
+    #
+    # @param [Hash] entry Input as +{ key:, value: }+.
+    # @return [Array<Object, Object>] The +[key, value]+ pair.
+    #
+    # @raise [ArgumentError] If the hash shape is invalid.
+    def hash_entry_to_pair(entry)
+      has_symbol_key = entry.key?(:key)
+      has_string_key = entry.key?('key')
+      raise ArgumentError, 'B-tree << expects { key:, value: }.' unless has_symbol_key || has_string_key
+
+      key = has_symbol_key ? entry[:key] : entry['key']
+      value = entry.key?(:value) ? entry[:value] : entry['value']
+      [key, value]
+    end
 
     # Maximum entries per node.
     #

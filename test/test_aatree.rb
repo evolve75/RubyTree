@@ -95,5 +95,13 @@ module TestTree
       tree = build_tree([])
       assert_raise(ArgumentError) { tree.insert(nil, 'a') }
     end
+
+    def test_shovel_inserts_entry_pair
+      tree = build_tree([])
+      inserted = tree << [10, 'a']
+
+      assert_equal(10, inserted.key)
+      assert_equal('a', tree.search(10))
+    end
   end
 end

@@ -155,4 +155,20 @@ RSpec.describe Tree::AATree do
       expect { tree.insert(nil, 'a') }.to raise_error(ArgumentError)
     end
   end
+
+  describe '<<' do
+    it 'returns the inserted entry' do
+      tree = build_tree([])
+      inserted = tree << [10, 'a']
+
+      expect(inserted.key).to eq(10)
+    end
+
+    it 'stores the inserted key/value pair' do
+      tree = build_tree([])
+      tree << [10, 'a']
+
+      expect(tree.search(10)).to eq('a')
+    end
+  end
 end

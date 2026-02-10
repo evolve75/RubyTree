@@ -80,4 +80,20 @@ RSpec.describe Tree::TrieNode do
       expect(root.words_with_prefix('do')).to eq(%w[dog])
     end
   end
+
+  describe '<<' do
+    it 'inserts a word' do
+      root = described_class.new('')
+      root << 'cat'
+
+      expect(root.include?('cat')).to be(true)
+    end
+
+    it 'returns the terminal node for the inserted word' do
+      root = described_class.new('')
+      terminal = root << 'cat'
+
+      expect(terminal.terminal?).to be(true)
+    end
+  end
 end

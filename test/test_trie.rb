@@ -75,5 +75,13 @@ module TestTree
       assert_equal(%w[car cart cat], root.words_with_prefix('ca').sort)
       assert_equal(%w[dog], root.words_with_prefix('do'))
     end
+
+    def test_shovel_inserts_word
+      root = Tree::TrieNode.new('')
+      terminal = root << 'cat'
+
+      assert_equal(true, root.include?('cat'))
+      assert_equal(true, terminal.terminal?)
+    end
   end
 end

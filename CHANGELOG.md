@@ -6,6 +6,13 @@ Changes section to scan for breaking or behavioral changes.
 
 ## Release History
 
+### 3.0.0pre / 2026-02-10
+
+* Make `Tree::TrieNode#<<` use trie word-insert semantics (`insert(word)`)
+  instead of generic child-node attachment semantics.
+* Add `<<` insertion shorthand to `Tree::AATree` and `Tree::BTree` for
+  `[key, value]`, `{ key:, value: }`, and `Entry` inputs.
+
 ### 3.0.0pre / 2026-02-09
 
 * Add runnable example scripts for each supported tree type under `examples/`
