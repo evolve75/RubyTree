@@ -38,6 +38,7 @@
 # frozen_string_literal: true
 
 require_relative 'binarytree'
+require_relative 'utils/binary_search_node_accessors'
 
 module Tree
   # Provides a Splay Tree implementation. This node allows only two child nodes
@@ -55,6 +56,8 @@ module Tree
   # This inherits from the {Tree::BinaryTreeNode} class.
   #
   class SplayTreeNode < BinaryTreeNode
+    include Tree::Utils::BinarySearchNodeAccessors
+
     # Inserts the specified node into the splay tree, based on the node content.
     #
     # @param [Tree::SplayTreeNode, String, Symbol] node_or_name The node
@@ -135,32 +138,6 @@ module Tree
       removed = node.detached_copy
       node.send(:delete_root!)
       removed
-    end
-
-    # Returns the minimum node in the subtree rooted at this node.
-    #
-    # @return [Tree::SplayTreeNode] The minimum node in the subtree.
-    def min_node
-      current = self
-      current = current.left_child while current.left_child
-      current
-    end
-
-    # Returns the maximum node in the subtree rooted at this node.
-    #
-    # @return [Tree::SplayTreeNode] The maximum node in the subtree.
-    def max_node
-      current = self
-      current = current.right_child while current.right_child
-      current
-    end
-
-    # Returns the splay key for this node (the content).
-    #
-    # @return [Object] The node content used as the splay key.
-    def key
-      validate_key!(@content)
-      @content
     end
 
     private

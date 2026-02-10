@@ -38,6 +38,7 @@
 # frozen_string_literal: true
 
 require_relative 'binarytree'
+require_relative 'utils/binary_search_node_accessors'
 
 module Tree
   # Provides a Treap implementation. This node allows only two child nodes
@@ -58,6 +59,8 @@ module Tree
   # This inherits from the {Tree::BinaryTreeNode} class.
   #
   class TreapNode < BinaryTreeNode
+    include Tree::Utils::BinarySearchNodeAccessors
+
     # @!group Core Attributes
 
     # @!attribute [r] priority
@@ -161,32 +164,6 @@ module Tree
       removed = node.detached_copy
       node.send(:delete_node!)
       removed
-    end
-
-    # Returns the minimum node in the subtree rooted at this node.
-    #
-    # @return [Tree::TreapNode] The minimum node in the subtree.
-    def min_node
-      current = self
-      current = current.left_child while current.left_child
-      current
-    end
-
-    # Returns the maximum node in the subtree rooted at this node.
-    #
-    # @return [Tree::TreapNode] The maximum node in the subtree.
-    def max_node
-      current = self
-      current = current.right_child while current.right_child
-      current
-    end
-
-    # Returns the treap key for this node (the content).
-    #
-    # @return [Object] The node content used as the treap key.
-    def key
-      validate_key!(@content)
-      @content
     end
 
     private

@@ -38,6 +38,7 @@
 # frozen_string_literal: true
 
 require_relative 'binarytree'
+require_relative 'utils/binary_search_node_accessors'
 
 module Tree
   # Provides a Red-Black Tree implementation. This node allows only two child
@@ -55,6 +56,8 @@ module Tree
   #   root after modifications.
   #
   class RedBlackTreeNode < BinaryTreeNode
+    include Tree::Utils::BinarySearchNodeAccessors
+
     # @!group Core Attributes
 
     # @!attribute [r] color
@@ -152,32 +155,6 @@ module Tree
       node.send(:delete_node!)
       root.color = :black if root&.content
       removed
-    end
-
-    # Returns the minimum node in the subtree rooted at this node.
-    #
-    # @return [Tree::RedBlackTreeNode] The minimum node in the subtree.
-    def min_node
-      current = self
-      current = current.left_child while current.left_child
-      current
-    end
-
-    # Returns the maximum node in the subtree rooted at this node.
-    #
-    # @return [Tree::RedBlackTreeNode] The maximum node in the subtree.
-    def max_node
-      current = self
-      current = current.right_child while current.right_child
-      current
-    end
-
-    # Returns the RB tree key for this node (the content).
-    #
-    # @return [Object] The node content used as the RB tree key.
-    def key
-      validate_key!(@content)
-      @content
     end
 
     protected

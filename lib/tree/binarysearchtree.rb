@@ -38,6 +38,7 @@
 # frozen_string_literal: true
 
 require_relative 'binarytree'
+require_relative 'utils/binary_search_node_accessors'
 
 module Tree
   # Provides a Binary Search Tree (BST) implementation. This node allows only
@@ -50,6 +51,8 @@ module Tree
   # This inherits from the {Tree::BinaryTreeNode} class.
   #
   class BinarySearchTreeNode < BinaryTreeNode
+    include Tree::Utils::BinarySearchNodeAccessors
+
     # Inserts the specified node into the BST, based on the node content.
     #
     # @param [Tree::BinarySearchTreeNode, String, Symbol] node_or_name The node
@@ -129,32 +132,6 @@ module Tree
       removed = node.detached_copy
       node.send(:delete_node!)
       removed
-    end
-
-    # Returns the minimum node in the subtree rooted at this node.
-    #
-    # @return [Tree::BinarySearchTreeNode] The minimum node in the subtree.
-    def min_node
-      current = self
-      current = current.left_child while current.left_child
-      current
-    end
-
-    # Returns the maximum node in the subtree rooted at this node.
-    #
-    # @return [Tree::BinarySearchTreeNode] The maximum node in the subtree.
-    def max_node
-      current = self
-      current = current.right_child while current.right_child
-      current
-    end
-
-    # Returns the BST key for this node (the content).
-    #
-    # @return [Object] The node content used as the BST key.
-    def key
-      validate_key!(@content)
-      @content
     end
 
     private

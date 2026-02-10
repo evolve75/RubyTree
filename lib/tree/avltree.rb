@@ -38,6 +38,7 @@
 # frozen_string_literal: true
 
 require_relative 'binarytree'
+require_relative 'utils/binary_search_node_accessors'
 
 module Tree
   # Provides an AVL Tree implementation. This node allows only two child nodes
@@ -54,6 +55,8 @@ module Tree
   # This inherits from the {Tree::BinaryTreeNode} class.
   #
   class AvlTreeNode < BinaryTreeNode
+    include Tree::Utils::BinarySearchNodeAccessors
+
     # @!group Core Attributes
 
     # @!attribute [r] height
@@ -146,32 +149,6 @@ module Tree
       rebalance_start = node.send(:delete_node!)
       rebalance_upwards(rebalance_start)
       removed
-    end
-
-    # Returns the minimum node in the subtree rooted at this node.
-    #
-    # @return [Tree::AvlTreeNode] The minimum node in the subtree.
-    def min_node
-      current = self
-      current = current.left_child while current.left_child
-      current
-    end
-
-    # Returns the maximum node in the subtree rooted at this node.
-    #
-    # @return [Tree::AvlTreeNode] The maximum node in the subtree.
-    def max_node
-      current = self
-      current = current.right_child while current.right_child
-      current
-    end
-
-    # Returns the AVL key for this node (the content).
-    #
-    # @return [Object] The node content used as the AVL key.
-    def key
-      validate_key!(@content)
-      @content
     end
 
     private
