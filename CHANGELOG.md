@@ -11,6 +11,8 @@ Changes section to scan for breaking or behavioral changes.
 * Rationalize RSpec coverage for core tree families so specs emphasize common
   API usage readability, while exhaustive edge-case and regression coverage
   remains in the Test::Unit suite.
+* Continue RSpec rationalization across the remaining overlapping tree-family
+  specs to keep examples usage-oriented and reduce duplicate scenario matrices.
 * Add non-breaking API aliases for consistency:
   `Tree::AATree#lookup`, `Tree::BTree#lookup`,
   `Tree::FenwickTree#query`, `Tree::SegmentTree#query`,

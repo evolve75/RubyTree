@@ -21,57 +21,33 @@ RSpec.describe Tree::SplayTreeNode do
 
   def build_tree(values)
     root = described_class.new('root', values.first)
-    values.drop(1).each_with_index do |value, idx|
-      root.insert("n#{idx}", value)
+    values.drop(1).each_with_index do |value, index|
+      root.insert("n#{index}", value)
     end
     root
   end
 
-  describe 'inserts' do
-    let(:root) { build_tree([10, 5, 15, 12, 18, 2, 8, 6, 1]) }
+  let(:root) { build_tree([10, 5, 15, 12, 18, 2, 8]) }
 
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
-    end
-
-    it 'maintains BST invariants' do
-      expect(bst_valid?(root.root, nil, nil)).to be(true)
-    end
+  it 'keeps in-order traversal sorted after inserts' do
+    expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
   end
 
-  describe 'search' do
-    let(:root) { build_tree([10, 5, 15, 12]) }
-
-    it 'finds an existing key' do
-      expect(root.search(15).content).to eq(15)
-    end
-
-    it 'splays the found key to root' do
-      root.search(12)
-      expect(root.root.content).to eq(12)
-    end
-
-    it 'returns nil for a missing key' do
-      expect(root.search(7)).to be_nil
-    end
+  it 'maintains BST invariants after inserts' do
+    expect(bst_valid?(root.root, nil, nil)).to be(true)
   end
 
-  describe 'delete' do
-    let(:root) { build_tree([10, 5, 15, 12, 18, 2]) }
+  it 'finds existing keys' do
+    expect(root.search(15).content).to eq(15)
+  end
 
-    it 'removes a leaf node' do
-      root.delete(2)
-      expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
-    end
+  it 'splays found keys to the root' do
+    root.search(12)
+    expect(root.root.content).to eq(12)
+  end
 
-    it 'removes a node with one child' do
-      root.delete(5)
-      expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
-    end
-
-    it 'removes a node with two children' do
-      root.delete(15)
-      expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
-    end
+  it 'supports delete in common mutation flows' do
+    root.delete(15)
+    expect(inorder_contents(root.root)).to eq(inorder_contents(root.root).sort)
   end
 end

@@ -11,84 +11,36 @@ RSpec.describe Tree::BinarySearchTreeNode do
     result
   end
 
-  def build_leaf_tree
-    root = described_class.new('root', 10)
-    root.insert('n5', 5)
-    root.insert('n15', 15)
-    root.insert('n2', 2)
+  def build_tree(values)
+    root = described_class.new('root', values.first)
+    values.drop(1).each_with_index do |value, index|
+      root.insert("n#{index}", value)
+    end
     root
   end
 
-  def build_one_child_tree
-    root = described_class.new('root', 10)
-    root.insert('n5', 5)
-    root.insert('n2', 2)
-    root
-  end
-
-  def build_two_children_tree
-    root = described_class.new('root', 10)
-    root.insert('n5', 5)
-    root.insert('n15', 15)
-    root.insert('n12', 12)
-    root.insert('n18', 18)
-    root.insert('n2', 2)
-    root
-  end
-
-  def build_root_single_child_tree
-    root = described_class.new('root', 10)
-    root.insert('n5', 5)
-    root
-  end
-
-  def build_root_leaf_tree
-    described_class.new('root', 10)
-  end
+  let(:root) { build_tree([10, 5, 15, 12, 18, 2]) }
 
   it 'orders inserts by key' do
-    expect(inorder_contents(build_two_children_tree)).to eq([2, 5, 10, 12, 15, 18])
+    expect(inorder_contents(root)).to eq([2, 5, 10, 12, 15, 18])
   end
 
-  it 'finds a matching key' do
-    expect(build_two_children_tree.search(15).name).to eq('n15')
+  it 'finds matching keys' do
+    expect(root.search(15).content).to eq(15)
   end
 
-  it 'returns nil for a missing key' do
-    expect(build_two_children_tree.search(7)).to be_nil
+  it 'returns nil for missing keys' do
+    expect(root.search(7)).to be_nil
   end
 
-  it 'returns the removed node when deleting a leaf' do
-    expect(build_leaf_tree.delete(2).content).to eq(2)
-  end
+  describe 'delete usage' do
+    it 'returns the removed node' do
+      expect(root.delete(2).content).to eq(2)
+    end
 
-  it 'updates order when deleting a leaf' do
-    root = build_leaf_tree
-    root.delete(2)
-    expect(inorder_contents(root)).to eq([5, 10, 15])
-  end
-
-  it 'updates order when deleting a node with one child' do
-    root = build_one_child_tree
-    root.delete(5)
-    expect(inorder_contents(root)).to eq([2, 10])
-  end
-
-  it 'updates order when deleting a node with two children' do
-    root = build_two_children_tree
-    root.delete(15)
-    expect(inorder_contents(root)).to eq([2, 5, 10, 12, 18])
-  end
-
-  it 'replaces root content when deleting root with one child' do
-    root = build_root_single_child_tree
-    root.delete(10)
-    expect(root.content).to eq(5)
-  end
-
-  it 'clears root content when deleting a root leaf' do
-    root = build_root_leaf_tree
-    root.delete(10)
-    expect(root.content).to be_nil
+    it 'removes deleted keys from traversal results' do
+      root.delete(15)
+      expect(inorder_contents(root)).to eq([2, 5, 10, 12, 18])
+    end
   end
 end

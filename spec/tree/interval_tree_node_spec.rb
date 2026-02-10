@@ -7,16 +7,10 @@ require 'tree/intervaltree'
 RSpec.describe Tree::IntervalTreeNode do
   def build_tree(intervals)
     root = described_class.new('root', intervals.first)
-    intervals.drop(1).each_with_index do |interval, idx|
-      root.insert("n#{idx}", interval)
+    intervals.drop(1).each_with_index do |interval, index|
+      root.insert("n#{index}", interval)
     end
     root
-  end
-
-  def inorder_keys(node)
-    result = []
-    node.inordered_each { |entry| result << entry.key }
-    result
   end
 
   def max_end_valid?(node)
@@ -28,45 +22,24 @@ RSpec.describe Tree::IntervalTreeNode do
     max_end_valid?(node.left_child) && max_end_valid?(node.right_child)
   end
 
-  describe 'inserts' do
-    let(:root) { build_tree([15..20, 10..30, 17..19, 5..20, 12..15, 30..40]) }
+  let(:root) { build_tree([15..20, 10..30, 17..19, 5..20, 12..15, 30..40]) }
 
-    it 'keeps in-order traversal sorted' do
-      expect(inorder_keys(root)).to eq(inorder_keys(root).sort)
-    end
-
-    it 'maintains max_end across the subtree' do
-      expect(max_end_valid?(root)).to be(true)
-    end
+  it 'supports overlap queries for common usage' do
+    results = root.search_overlaps(14..16).map(&:content)
+    expect(results.sort_by(&:begin)).to eq([5..20, 10..30, 12..15, 15..20])
   end
 
-  describe 'search_overlaps' do
-    let(:root) { build_tree([15..20, 10..30, 17..19, 5..20, 12..15, 30..40]) }
-
-    it 'returns all overlapping intervals' do
-      results = root.search_overlaps(14..16).map(&:content)
-      expected = [15..20, 10..30, 5..20, 12..15]
-      expect(results.sort_by(&:begin)).to eq(expected.sort_by(&:begin))
-    end
+  it 'supports point queries for common usage' do
+    results = root.search_point(17).map(&:content)
+    expect(results.sort_by(&:begin)).to eq([5..20, 10..30, 15..20, 17..19])
   end
 
-  describe 'search_point' do
-    let(:root) { build_tree([15..20, 10..30, 17..19, 5..20, 12..15, 30..40]) }
-
-    it 'returns all intervals covering the point' do
-      results = root.search_point(17).map(&:content)
-      expected = [15..20, 10..30, 17..19, 5..20]
-      expect(results.sort_by(&:begin)).to eq(expected.sort_by(&:begin))
-    end
+  it 'maintains max_end metadata after inserts' do
+    expect(max_end_valid?(root)).to be(true)
   end
 
-  describe 'delete' do
-    let(:root) { build_tree([15..20, 10..30, 17..19, 5..20, 12..15, 30..40]) }
-
-    before { root.delete(10..30) }
-
-    it 'maintains max_end across the subtree' do
-      expect(max_end_valid?(root)).to be(true)
-    end
+  it 'maintains max_end metadata after delete' do
+    root.delete(10..30)
+    expect(max_end_valid?(root)).to be(true)
   end
 end
