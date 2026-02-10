@@ -14,6 +14,9 @@ Changes section to scan for breaking or behavioral changes.
   `Tree::BinaryHeapNode#pop`, `Tree::BinaryMaxHeapNode#pop`,
   and `Tree::TrieNode#search`.
 * Add alias-focused regression tests to lock these compatibility contracts.
+* Refactor shared binary heap internals into
+  `Tree::Utils::HeapSharedMethods` to reduce duplication between min-heap and
+  max-heap implementations without changing public behavior.
 * Make `Tree::TrieNode#<<` use trie word-insert semantics (`insert(word)`)
   instead of generic child-node attachment semantics.
 * Add `<<` insertion shorthand to `Tree::AATree` and `Tree::BTree` for
