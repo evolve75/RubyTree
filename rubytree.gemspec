@@ -12,7 +12,7 @@ require File.join(__dir__, '/lib/tree/version')
 Gem::Specification.new do |s|
   s.name                  = 'rubytree'
   s.version               = Tree::VERSION
-  s.license               = 'BSD-2-Clause'
+  s.license               = 'BSD-3-Clause'
   # NOTE: s.date should NOT be assigned. It is automatically set to pkg date.
   s.platform              = Gem::Platform::RUBY
   s.author                = 'Anupam Sengupta'

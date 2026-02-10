@@ -71,7 +71,7 @@ supports the Ruby's standard object [marshaling][].
 Note: `Marshal.load` and `JSON.parse(..., create_additions: true)` can execute
 code or instantiate objects; do not use them with untrusted input.
 
-This is a [BSD licensed][BSD] open source project, and is hosted at
+This is a [BSD-3 licensed][BSD] open source project, and is hosted at
 [github.com/evolve75/RubyTree][rt@github], and is available as a standard gem
 from [rubygems.org/gems/rubytree][rt_gem].
 
@@ -253,7 +253,25 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 **RubyTree** is licensed under the terms of the [BSD][] license. See
 [LICENSE.md](./LICENSE.md) for details.
 
-[BSD]:https://opensource.org/licenses/bsd-license.php
+### License Change FAQ
+
+1. What changed?
+   RubyTree now standardizes on BSD-3-Clause.
+
+2. Why was this changed?
+   BSD-3-Clause adds an explicit non-endorsement clause to prevent
+   misrepresentation, so third parties cannot imply maintainer or project
+   endorsement of derived products without prior written permission.
+
+3. Does this impact end users of the gem?
+   There is no runtime or API impact for gem users. This is a legal/compliance
+   clarification only.
+
+4. Does this impact redistributors or downstream packages?
+   Redistributors should continue to retain copyright and disclaimer text and
+   must not imply endorsement by RubyTree maintainers/contributors.
+
+[BSD]:https://opensource.org/license/bsd-3-clause/
 [Binary tree]:https://en.wikipedia.org/wiki/Binary_tree
 [Binary Heap]:https://en.wikipedia.org/wiki/Binary_heap
 [Binary Max Heap]:https://en.wikipedia.org/wiki/Binary_heap

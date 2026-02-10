@@ -8,6 +8,9 @@ Changes section to scan for breaking or behavioral changes.
 
 ### 3.0.0pre / 2026-02-10
 
+* Standardize project licensing text on BSD-3-Clause and add an explicit
+  non-endorsement clause to prevent misrepresentation of maintainer/project
+  endorsement in derived products.
 * Rationalize RSpec coverage for core tree families so specs emphasize common
   API usage readability, while exhaustive edge-case and regression coverage
   remains in the Test::Unit suite.
