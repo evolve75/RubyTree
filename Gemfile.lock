@@ -111,7 +111,7 @@ GEM
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
-    yard (0.9.38)
+    yard (0.9.43)
 
 PLATFORMS
   ruby
@@ -133,7 +133,7 @@ DEPENDENCIES
   simplecov-lcov (~> 0.9)
   stringio (~> 3.0, >= 3.0.1.1)
   test-unit (~> 3.7)
-  yard (~> 0.9)
+  yard (~> 0.9, >= 0.9.42)
 
 BUNDLED WITH
    2.6.9

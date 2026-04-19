@@ -84,7 +84,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov-lcov', '~> 0.9'
   s.add_development_dependency 'stringio', '~> 3.0', '>= 3.0.1.1'
   s.add_development_dependency 'test-unit', '~> 3.7'
-  s.add_development_dependency 'yard', '~> 0.9'
+  s.add_development_dependency 'yard', '~> 0.9', '>= 0.9.42'
   s.add_development_dependency 'bundler-audit', '~> 0.9'
 
   s.post_install_message = <<-END_MESSAGE
