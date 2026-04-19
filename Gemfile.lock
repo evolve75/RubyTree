@@ -91,7 +91,7 @@ DEPENDENCIES
   simplecov (~> 0.22)
   simplecov-lcov (~> 0.8)
   test-unit (~> 3.6)
-  yard (~> 0.0, >= 0.9.37)
+  yard (~> 0.0, >= 0.9.42)
 
 BUNDLED WITH
    2.3.4
