@@ -10,6 +10,8 @@
 
 name: Test Coveralls
 on: ["push", "pull_request"]
+permissions:
+  contents: read
 
 env:
   COVERAGE: true
