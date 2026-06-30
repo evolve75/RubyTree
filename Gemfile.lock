@@ -73,7 +73,7 @@ GEM
     unicode-display_width (3.1.2)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    yard (0.9.42)
+    yard (0.9.44)
 
 PLATFORMS
   ruby
