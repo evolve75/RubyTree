@@ -78,7 +78,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'simplecov', '~> 0.22'
   s.add_development_dependency 'simplecov-lcov', '~> 0.8'
   s.add_development_dependency 'test-unit', '~> 3.6'
-  s.add_development_dependency 'yard', '~> 0.0', '>= 0.9.42'
+  s.add_development_dependency 'yard', '~> 0.0', '>= 0.9.44'
 
   s.post_install_message = <<-END_MESSAGE
     ========================================================================
