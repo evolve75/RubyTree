@@ -8,6 +8,13 @@
 # rubygems.org (Manage Gem > Trusted Publishers), pointing at this
 # repository and this workflow file name.
 #
+# Tag push triggers cannot be scoped to a branch directly (a tag ref has no
+# branch of its own), so a release tag pushed from anywhere still fires this
+# workflow. The "Verify tag is reachable from master" step guards against
+# that: it fails the job before anything is published if the tagged commit
+# is not on master, so an accidental release tag on another branch is
+# harmless.
+#
 # This runs as a Github Action.
 
 name: Release to RubyGems
@@ -27,6 +34,15 @@ jobs:
     steps:
       - name: Clone Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify tag is reachable from master
+        run: |
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/master; then
+            echo "::error::Tag $GITHUB_REF_NAME (commit $GITHUB_SHA) is not on master. Refusing to publish."
+            exit 1
+          fi
 
       - name: Setup Ruby and bundler dependencies
         uses: ruby/setup-ruby@v1
