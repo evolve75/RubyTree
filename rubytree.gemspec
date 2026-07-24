@@ -64,7 +64,7 @@ Gem::Specification.new do |s|
                             '--main', 'README.md',
                             '--quiet']
 
-  s.add_runtime_dependency 'json', '~> 2.0', '> 2.9'
+  s.add_runtime_dependency 'json', '~> 2.0', '>= 2.19.9'
 
   # NOTE: Rake is added as a development and test dependency in the Gemfile.
   s.add_development_dependency 'bundler', '~> 2.3'
