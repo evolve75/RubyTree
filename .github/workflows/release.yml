@@ -1,0 +1,44 @@
+# Publish the RubyTree gem to RubyGems.org on a release tag.
+#
+# Uses RubyGems trusted publishing (OIDC) instead of a stored API key, so
+# there is no long-lived RubyGems credential held by this repository or by
+# any maintainer's machine for automated releases.
+#
+# A Trusted Publisher must be configured for the `rubytree` gem at
+# rubygems.org (Manage Gem > Trusted Publishers), pointing at this
+# repository and this workflow file name.
+#
+# This runs as a Github Action.
+
+name: Release to RubyGems
+
+on:
+  push:
+    tags:
+      - "R*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby and bundler dependencies
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          ruby-version: ".ruby-version"
+
+      - name: Configure RubyGems trusted-publishing credentials
+        uses: rubygems/configure-rubygems-credentials@main
+
+      - name: Build gem package
+        run: bundle exec rake gem:package
+
+      - name: Push to RubyGems.org
+        run: gem push pkg/*.gem
