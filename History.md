@@ -1,5 +1,11 @@
 # History of Changes
 
+### 2.2.1 / 2026-07-24
+
+* Bump the `json` runtime dependency to 2.19.9+, fixing a heap buffer
+  overflow when generating to a streamed IO
+  ([CVE-2026-54696](https://github.com/ruby/json/security/advisories/GHSA-x2f5-4prf-w687)).
+
 ### 2.2.0 / 2026-02-06
 
 * Prevent cycles by rejecting attempts to add an ancestor as a child.
