@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
 
       - name: Setup Ruby and bundler dependencies
         uses: ruby/setup-ruby@v1
