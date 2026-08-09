@@ -15,6 +15,10 @@
 # is not on master, so an accidental release tag on another branch is
 # harmless.
 #
+# After publishing to RubyGems.org, the workflow also creates the matching
+# GitHub Release (with auto-generated notes), so a single tag push produces
+# both artifacts together.
+#
 # This runs as a Github Action.
 
 name: Release to RubyGems
@@ -25,7 +29,7 @@ on:
       - "R*"
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
@@ -58,3 +62,9 @@ jobs:
 
       - name: Push to RubyGems.org
         run: gem push pkg/*.gem
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: gh release create "$TAG_NAME" --generate-notes
