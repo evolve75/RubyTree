@@ -6,6 +6,13 @@ Changes section to scan for breaking or behavioral changes.
 
 ## Release History
 
+### 3.0.0pre / 2026-08-09
+
+* Bump the `json` runtime dependency to `2.21.2`+, fixing a use-after-free in
+  `JSON::ResumableParser#partial_value` that could crash on truncated
+  duplicate-key streams
+  ([CVE-2026-71847](https://github.com/ruby/json/security/advisories/GHSA-9hj4-r449-hfvc)).
+
 ### 3.0.0pre / 2026-07-24
 
 * Bump the `json` runtime dependency to `2.19.9`+, fixing a heap buffer
