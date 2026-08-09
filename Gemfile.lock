@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    rubytree (2.2.1)
-      json (~> 2.0, >= 2.19.9)
+    rubytree (2.2.2)
+      json (~> 2.0, >= 2.21.2)
 
 GEM
   remote: https://rubygems.org/
@@ -11,7 +11,7 @@ GEM
     date (3.4.1)
     diff-lcs (1.5.1)
     docile (1.4.1)
-    json (2.21.1)
+    json (2.21.2)
     language_server-protocol (3.17.0.3)
     parallel (1.26.3)
     parser (3.3.6.0)
