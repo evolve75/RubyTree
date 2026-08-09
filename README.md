@@ -1,6 +1,7 @@
 # RubyTree
 
 [![Gem Version][gem_version_badge]][gem_version_link]
+[![Gem Downloads][gem_downloads_badge]][gem_downloads_link]
 ![Build State][bb]
 [![Coverage][c]][cl]
 
@@ -340,3 +341,5 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [cl]:https://github.com/evolve75/RubyTree/actions/workflows/coverage.yml
 [gem_version_badge]:https://badge.fury.io/rb/rubytree.png
 [gem_version_link]:https://badge.fury.io/rb/rubytree
+[gem_downloads_badge]:https://img.shields.io/gem/dt/rubytree
+[gem_downloads_link]:https://rubygems.org/gems/rubytree
