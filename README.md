@@ -213,7 +213,7 @@ ri Tree::TreeNode
 
 Documentation for the latest released version is available at:
 
-[rubytree.anupamsg.me/rdoc][rt_doc]
+[rubytree.anupamsg.me/doc][rt_doc]
 
 Note that the documentation is formatted using [YARD][].
 
@@ -301,7 +301,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [post-order]:https://en.wikipedia.org/wiki/Tree_traversal#Post-order
 [pre-order]:https://en.wikipedia.org/wiki/Tree_traversal#Pre-order
 [rt@github]:https://github.com/evolve75/RubyTree
-[rt_doc]:https://rubytree.anupamsg.me/rdoc
+[rt_doc]:https://rubytree.anupamsg.me/doc/
 [rt_gem]:https://rubygems.org/gems/rubytree
 [rt_site]:https://rubytree.anupamsg.me
 [tree_data_structure]:https://en.wikipedia.org/wiki/Tree_data_structure
