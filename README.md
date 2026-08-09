@@ -2,7 +2,6 @@
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
 ![Build State](https://github.com/evolve75/rubytree/actions/workflows/ruby.yml/badge.svg)
-[![Code Climate](https://codeclimate.com/github/evolve75/RubyTree.png)](https://codeclimate.com/github/evolve75/RubyTree)
 [![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
 
         __       _           _
@@ -55,7 +54,7 @@ See the [API][rt_doc] documentation for more details.
 #
 # example_basic.rb:: Basic usage of the tree library.
 #
-# Copyright (C) 2013-2022 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2013-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # The following example implements this tree structure:
 #

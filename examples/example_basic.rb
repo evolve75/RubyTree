@@ -4,7 +4,7 @@
 #
 # Author:  Anupam Sengupta
 # Time-stamp: <2022-06-19 22:52:29 anupam>
-# Copyright (C) 2013, 2015, 2022 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2013-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # The following example implements this tree structure:
 #
