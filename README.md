@@ -196,8 +196,9 @@ the [examples/](examples/) directory.
 
 ## Requirements
 
-* [Ruby][] 3.1.x and above. RubyTree 2.2.0 is the last release that supports
-  Ruby 2.7 and 3.0.
+* [Ruby][] 3.1.x and above. All `2.y.z` releases continue to support Ruby
+  2.7 and 3.0; the Ruby 3.1+ requirement begins with the `3.x` release
+  line.
 
 Run-time dependencies:
 
