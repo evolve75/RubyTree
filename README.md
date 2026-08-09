@@ -155,7 +155,7 @@ command at the terminal to view the text mode ri documentation:
 
 Documentation for the latest released version is available at:
 
-[rubytree.anupamsg.me/rdoc][rt_doc]
+[rubytree.anupamsg.me/doc][rt_doc]
 
 Documentation for the latest git HEAD is available at:
 
@@ -259,7 +259,7 @@ A big thanks to the following contributors for helping improve **RubyTree**:
 [pre-order]:            http://en.wikipedia.org/wiki/Tree_traversal#Pre-order "Pre-ordered Traversal"
 [rt@github]:            http://github.com/evolve75/RubyTree "RubyTree Project Page on Github"
 [rt_doc@head]:          http://rdoc.info/projects/evolve75/RubyTree "RubyTree Documentation for VCS Head"
-[rt_doc]:               http://rubytree.anupamsg.me/rdoc "RubyTree Documentation"
+[rt_doc]:               https://rubytree.anupamsg.me/doc/ "RubyTree Documentation"
 [rt_gem]:               http://rubygems.org/gems/rubytree "RubyTree Gem"
 [rt_site]:              http://rubytree.anupamsg.me "RubyTree Site"
 [tree_data_structure]:  http://en.wikipedia.org/wiki/Tree_data_structure "Tree Data Structure"
