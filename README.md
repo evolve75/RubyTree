@@ -1,6 +1,7 @@
 # **RubyTree** #
 
 [![Gem Version](https://badge.fury.io/rb/rubytree.png)](http://badge.fury.io/rb/rubytree)
+[![Gem Downloads](https://img.shields.io/gem/dt/rubytree)](https://rubygems.org/gems/rubytree)
 ![Build State](https://github.com/evolve75/rubytree/actions/workflows/ruby.yml/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/evolve75/RubyTree/badge.png)](https://coveralls.io/r/evolve75/RubyTree)
 
