@@ -8,6 +8,16 @@ Changes section to scan for breaking or behavioral changes.
 
 ### 3.0.0pre / 2026-08-09
 
+* Raise the minimum Ruby version from 3.1 to 3.3. Ruby 3.1 reached upstream
+  end-of-life in March 2025; 3.3 is the oldest release still receiving
+  security maintenance as of this change.
+
+* Fix `Tree::BTree`'s entry-traversal helpers to use a named `&block`
+  parameter instead of anonymous `&` forwarding, working around a Ruby
+  3.3.0 parser bug (fixed in later 3.3.x patches) that raised a
+  `SyntaxError` when an anonymous block was forwarded into a nested block
+  that re-referenced it.
+
 * Bump the `json` runtime dependency to `2.21.2`+, fixing a use-after-free in
   `JSON::ResumableParser#partial_value` that could crash on truncated
   duplicate-key streams

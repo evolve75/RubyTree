@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.email                 = 'anupamsg@gmail.com'
   s.homepage              = 'http://rubytree.anupamsg.me'
 
-  s.required_ruby_version = '>=3.1'
+  s.required_ruby_version = '>=3.3'
 
   s.summary               = 'A generic tree data structure for Ruby.'
 
@@ -93,7 +93,7 @@ Gem::Specification.new do |s|
 
     Note::
 
-    - 3.0.0pre sets the minimum Ruby version to 3.1.
+    - 3.0.0pre sets the minimum Ruby version to 3.3.
     - 2.2.0 improves tree integrity checks and traversal robustness.
     - 2.0.0 is a major release with BREAKING API changes.
 

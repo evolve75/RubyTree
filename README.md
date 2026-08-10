@@ -196,8 +196,8 @@ the [examples/](examples/) directory.
 
 ## Requirements
 
-* [Ruby][] 3.1.x and above. All `2.y.z` releases continue to support Ruby
-  2.7 and 3.0; the Ruby 3.1+ requirement begins with the `3.x` release
+* [Ruby][] 3.3.x and above. All `2.y.z` releases continue to support Ruby
+  2.7 and 3.0; the Ruby 3.3+ requirement begins with the `3.x` release
   line.
 
 Run-time dependencies:

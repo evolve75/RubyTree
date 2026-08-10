@@ -13,10 +13,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - ruby: "3.1"
-            experimental: false
-          - ruby: "3.2"
-            experimental: false
           - ruby: "3.3"
             experimental: false
           - ruby: "3.4"

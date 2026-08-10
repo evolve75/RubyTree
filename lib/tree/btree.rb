@@ -706,22 +706,28 @@ module Tree
       total
     end
 
+    # rubocop:disable Style/ArgumentsForwarding
+    # Named &block (not anonymous &) below works around a Ruby 3.3.0 parser
+    # bug where forwarding an anonymous block into a nested block that
+    # re-references it raises "anonymous block parameter is also used
+    # within block" (fixed in later 3.3.x patches, absent in 3.1 and 3.4).
+
     # In-order traversal of entries.
     #
     # @param [Tree::BTree::Node] node Subtree root.
     # @yieldparam entry [Tree::BTree::Entry] Entry in traversal order.
     # @return [void]
-    def inorder_entries(node, &)
+    def inorder_entries(node, &block)
       if node.leaf
-        node.entries.each(&)
+        node.entries.each(&block)
         return
       end
 
       node.entries.each_with_index do |entry, index|
-        inorder_entries(node.children[index], &)
+        inorder_entries(node.children[index], &block)
         yield entry
       end
-      inorder_entries(node.children[node.entries.length], &)
+      inorder_entries(node.children[node.entries.length], &block)
     end
 
     # Pre-order traversal of entries.
@@ -729,11 +735,11 @@ module Tree
     # @param [Tree::BTree::Node] node Subtree root.
     # @yieldparam entry [Tree::BTree::Entry] Entry in traversal order.
     # @return [void]
-    def preorder_entries(node, &)
-      node.entries.each(&)
+    def preorder_entries(node, &block)
+      node.entries.each(&block)
       return if node.leaf
 
-      node.children.each { |child| preorder_entries(child, &) }
+      node.children.each { |child| preorder_entries(child, &block) }
     end
 
     # Post-order traversal of entries.
@@ -741,10 +747,11 @@ module Tree
     # @param [Tree::BTree::Node] node Subtree root.
     # @yieldparam entry [Tree::BTree::Entry] Entry in traversal order.
     # @return [void]
-    def postorder_entries(node, &)
-      node.children.each { |child| postorder_entries(child, &) } unless node.leaf
-      node.entries.each(&)
+    def postorder_entries(node, &block)
+      node.children.each { |child| postorder_entries(child, &block) } unless node.leaf
+      node.entries.each(&block)
     end
+    # rubocop:enable Style/ArgumentsForwarding
 
     # Breadth-first traversal of entries.
     #
