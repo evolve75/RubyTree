@@ -42,6 +42,9 @@ GEM_SPEC = Bundler.load_gemspec(File.join(__dir__, 'rubytree.gemspec'))
 PKG_NAME = GEM_SPEC.name
 PKG_VER  = GEM_SPEC.version
 GEM_NAME = "#{PKG_NAME}-#{PKG_VER}.gem"
+MARKDOWN_FILES = Dir['**/*.md'].reject do |path|
+  path.start_with?('vendor/', 'pkg/')
+end.sort
 
 desc 'Default Task (Run the tests)'
 task :default do
@@ -98,6 +101,19 @@ namespace :doc do # ................................ Documentation
   task :clobber_yard do
     rm_rf 'doc'
   end
+
+  desc 'Run markdown lint checks'
+  task :lint do
+    sh('mdl', '--config', '.mdlrc', *MARKDOWN_FILES)
+  end
+
+  desc 'Validate http(s) links in markdown files'
+  task :links do
+    sh('awesome_bot', *MARKDOWN_FILES, '--allow-redirect', '--allow-dupe')
+  end
+
+  desc 'Run markdown lint and link checks'
+  task check: %i[lint links]
 end
 
 desc 'Run the unit tests'
@@ -180,4 +196,33 @@ RuboCop::RakeTask.new(:rubocop) do |t|
   t.options = ['--display-cop-names']
   t.requires << 'rubocop-rake'
   t.requires << 'rubocop-rspec'
+end
+
+# ................................ Gem metadata
+desc 'Validate gemspec metadata and required fields'
+task :gemspec do
+  GEM_SPEC.validate
+  puts 'Gemspec is valid.'
+end
+
+# ................................ Linting
+desc 'Run lint checks'
+task lint: %i[gemspec rubocop]
+
+# ................................ Security checks
+desc 'Run security checks (bundler-audit, semgrep)'
+task :security do
+  sh('bundle', 'exec', 'bundler-audit', 'check', '--update')
+
+  semgrep_available = system('command -v semgrep >/dev/null 2>&1')
+  unless semgrep_available
+    warn 'WARN: semgrep not found; skipping semgrep security scan.'
+    return
+  end
+
+  env = {}
+  default_cert = '/etc/ssl/cert.pem'
+  env['SSL_CERT_FILE'] = default_cert if ENV['SSL_CERT_FILE'].nil? && File.exist?(default_cert)
+
+  sh(env, 'semgrep', '--config', 'p/r2c-security-audit', '--config', 'p/ruby', 'lib')
 end
