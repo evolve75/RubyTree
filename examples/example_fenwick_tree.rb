@@ -77,6 +77,6 @@ puts "from_hash values: #{rebuilt_from_hash.to_a.inspect}"
 # Serialize to JSON.
 serialized_json = tree.to_json
 # Parse JSON back into a tree instance.
-rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+rebuilt_from_json = Tree::FenwickTree.from_hash(JSON.parse(serialized_json))
 # Show JSON-rebuilt values.
 puts "from_json values: #{rebuilt_from_json.to_a.inspect}"

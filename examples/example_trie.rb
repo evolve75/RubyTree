@@ -47,6 +47,7 @@
 
 # Load JSON for parsing serialized trees.
 require 'json'
+require 'tree'
 # Load the trie implementation.
 require 'tree/trie'
 
@@ -73,6 +74,6 @@ puts "include? cat: #{root.include?('cat')}"
 # Serialize to JSON.
 serialized_json = root.to_json
 # Parse JSON back into a trie instance.
-rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+rebuilt_from_json = Tree::TreeNode.from_json(serialized_json)
 # Show the rebuilt words for prefix.
 puts "from_json words with 'd': #{rebuilt_from_json.words_with_prefix('d').inspect}"

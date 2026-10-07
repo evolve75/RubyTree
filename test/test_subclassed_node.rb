@@ -1,6 +1,6 @@
 # test_subclassed_node.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2012, 2017, 2022 Anupam Sengupta
+# Copyright (C) 2012-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -45,6 +45,22 @@ module TestTree
     def test_detached_copy_same_clz
       root = MyNode.new('Root')
       assert_equal(MyNode, root.detached_copy.class)
+    end
+
+    def test_from_json_same_clz
+      root = MyNode.new('Root')
+      root << MyNode.new('Child')
+
+      tree = MyNode.from_json(root.to_json)
+
+      assert_equal(MyNode, tree.class)
+      assert_equal(MyNode, tree['Child'].class)
+    end
+
+    def test_from_json_via_base_class
+      tree = Tree::TreeNode.from_json(MyNode.new('Root').to_json)
+
+      assert_equal(MyNode, tree.class)
     end
   end
 end

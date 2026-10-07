@@ -80,6 +80,6 @@ puts "from_hash keys: #{rebuilt_from_hash.keys.inspect}"
 # Serialize to JSON.
 serialized_json = tree.to_json
 # Parse JSON back into a tree instance.
-rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+rebuilt_from_json = Tree::AATree.from_hash(JSON.parse(serialized_json))
 # Show the JSON-rebuilt keys.
 puts "from_json keys: #{rebuilt_from_json.keys.inspect}"

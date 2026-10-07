@@ -6,6 +6,13 @@ Changes section to scan for breaking or behavioral changes.
 
 ## Release History
 
+### 3.0.0pre / 2026-10-07
+
+* Add support for both the json gem 2.x and 3.x while preserving the serialized
+  `json_class` format.
+
+* Add `Tree::TreeNode.from_json` to rebuild trees from JSON documents.
+
 ### 3.0.0pre / 2026-08-09
 
 * Raise the minimum Ruby version from 3.1 to 3.3. Ruby 3.1 reached upstream
@@ -642,6 +649,9 @@ release. In most cases, an alternative will be provided to ensure relatively
 smooth transition to the new APIs.
 
 ## Release 3.0.0 Changes
+
+* Added `Tree::TreeNode.from_json` to rebuild tree nodes from JSON documents
+  using the json gem 2.x or 3.x.
 
 * Minimum Ruby version is now 3.1 (support for 2.7 and 3.0 has been dropped).
 

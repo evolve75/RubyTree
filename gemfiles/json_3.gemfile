@@ -1,0 +1,9 @@
+# Copyright (C) 2026 Anupam Sengupta <anupamsg@gmail.com>
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# Bundler variant for testing the json gem 3.x compatibility line.
+
+eval_gemfile File.expand_path('../Gemfile', __dir__)
+
+gem 'json', '~> 3.0'

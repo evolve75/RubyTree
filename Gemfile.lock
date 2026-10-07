@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     rubytree (3.0.0pre)
-      json (~> 2.19, >= 2.21.2)
+      json (>= 2.21.2, < 4)
 
 GEM
   remote: https://rubygems.org/

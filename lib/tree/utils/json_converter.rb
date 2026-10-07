@@ -6,7 +6,7 @@
 #
 # Time-stamp: <2023-12-27 12:46:07 anupam>
 #
-# Copyright (C) 2012, 2013, 2014, 2015, 2022, 2023 Anupam Sengupta <anupamsg@gmail.com>
+# Copyright (C) 2012-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -44,6 +44,10 @@ module Tree
     # Provides utility methods to convert a {Tree::TreeNode} to and from
     # JSON[http://flori.github.com/json/].
     module JSONConverter
+      # The hash key containing the class name for a serialized tree node.
+      # This matches the json gem 2.x default and preserves the existing format.
+      JSON_CLASS_KEY = 'json_class'
+
       # Extend the base class with the converter class methods.
       def self.included(base)
         base.extend(ClassMethods)
@@ -70,7 +74,7 @@ module Tree
         json_hash = {
           name: name,
           content: content,
-          JSON.create_id => self.class.name
+          JSON_CLASS_KEY => self.class.name
         }
 
         compact_children = children_compact
@@ -88,7 +92,7 @@ module Tree
       #
       # @return The JSON representation of this subtree.
       #
-      # @see ClassMethods#json_create
+      # @see ClassMethods#from_json
       # @see #as_json
       # @see http://flori.github.com/json
       def to_json(*args)
@@ -98,17 +102,58 @@ module Tree
       # ClassMethods for the {JSONConverter} module. Will become class methods in
       # the +include+ target.
       module ClassMethods
+        # Parses a JSON document and returns the tree it describes.
+        #
+        #   tree = Tree::TreeNode.from_json(json_string)
+        #
+        # This works with both the json gem 2.x and 3.x. It rebuilds hashes
+        # only in the tree's +children+ arrays, leaving node content intact.
+        # The legacy +JSON.parse(json_string, create_additions: true)+ form
+        # remains available with json 2.x; json 3.x removed that option.
+        #
+        # @param [String] source The JSON document to parse.
+        #
+        # @return [Tree::TreeNode] The parsed root node.
+        #
+        # @raise [ArgumentError] The document root does not describe this class
+        #                        or one of its subclasses.
+        # @raise [JSON::ParserError] The document is not valid JSON.
+        #
+        # @see #json_rebuild_nodes
+        # @see JSONConverter#to_json
+        def from_json(source)
+          tree = json_rebuild_nodes(JSON.parse(source))
+          return tree if tree.is_a?(self)
+
+          raise ArgumentError, "JSON document does not describe a #{self} tree"
+        end
+
+        # Resolves a json_class tag to this class or one of its subclasses.
+        #
+        # @param [String, nil] class_name The class name from a JSON tag.
+        #
+        # @return [Class, nil] The matching tree node class, or +nil+.
+        def json_node_class(class_name)
+          return nil unless class_name.is_a?(String)
+
+          node_class = Object.const_get(class_name)
+          node_class if node_class.is_a?(Class) && node_class <= self
+        rescue NameError
+          nil
+        end
+        private :json_node_class
+
         # Helper method to create a Tree::TreeNode instance from the JSON hash
         # representation.  Note that this method should *NOT* be called directly.
         # Instead, to convert the JSON hash back to a tree, do:
         #
-        #   tree = JSON.parse(the_json_hash, create_additions: true)
+        #   tree = Tree::TreeNode.from_json(json_string)
         #
         # This operation requires the {JSON gem}[http://flori.github.com/json/] to
         # be available, or else the operation fails with a warning message.
         #
-        # Note the +create_additions: true+ option, which is *required* for
-        # successfully parsing the string or hash.
+        # With json 2.x, this method also serves the legacy +create_additions+
+        # parser hook. json 3.x removed that mechanism.
         #
         # @author Dirk Breuer (http://github.com/railsbros-dirk)
         # @since 0.7.0
@@ -117,7 +162,8 @@ module Tree
         #
         # @return [Tree::TreeNode] The created tree.
         #
-        # @see #to_json
+        # @see #from_json
+        # @see JSONConverter#to_json
         # @see http://flori.github.com/json
         def json_create(json_hash)
           node = new(json_hash['name'], json_hash['content'])
@@ -129,6 +175,32 @@ module Tree
           end
 
           node
+        end
+
+        private
+
+        # Rebuilds hashes reached through serialized child arrays. This leaves
+        # arbitrary node content untouched even when it contains +json_class+.
+        #
+        # @param [Object] object A value parsed from JSON.
+        #
+        # @return [Object] A rebuilt node or the unchanged value.
+        #
+        # @see #from_json
+        def json_rebuild_nodes(object)
+          return object unless object.is_a?(Hash)
+
+          node_class = json_node_class(object[JSON_CLASS_KEY])
+          return object unless node_class
+
+          node_data = object.dup
+          if node_data['children'].is_a?(Array)
+            node_data['children'] = node_data['children'].map do |child|
+              json_rebuild_nodes(child)
+            end
+          end
+
+          node_class.json_create(node_data)
         end
       end
     end

@@ -21,7 +21,7 @@
 #
 # Author:: Anupam Sengupta (https://github.com/evolve75)
 #
-# Copyright (c) 2006-2026 Anupam Sengupta. All rights reserved.
+# Copyright (C) 2013-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -109,7 +109,7 @@ puts "from_hash root: #{from_hash.name}"
 # Serialize the tree to JSON.
 tree_json = root_node.to_json
 # Parse JSON back into a tree instance.
-from_json = JSON.parse(tree_json, create_additions: true)
+from_json = Tree::TreeNode.from_json(tree_json)
 # Display the JSON rebuilt root name.
 puts "from_json root: #{from_json.name}"
 

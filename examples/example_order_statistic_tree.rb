@@ -43,6 +43,7 @@
 
 # Load JSON for parsing serialized trees.
 require 'json'
+require 'tree'
 # Load the order-statistic tree implementation.
 require 'tree/orderstatistictree'
 
@@ -81,6 +82,6 @@ puts "after delete 2: #{root.inordered_each.map(&:content).inspect}"
 # Serialize to JSON.
 serialized_json = root.to_json
 # Parse JSON back into a tree instance.
-rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+rebuilt_from_json = Tree::TreeNode.from_json(serialized_json)
 # Show JSON-rebuilt traversal.
 puts "from_json in-order: #{rebuilt_from_json.inordered_each.map(&:content).inspect}"

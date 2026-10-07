@@ -1,7 +1,7 @@
 # test_binarytree.rb - This file is part of the RubyTree package.
 #
 #
-# Copyright (c) 2006-2026 Anupam Sengupta
+# Copyright (C) 2007-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # All rights reserved.
 #
@@ -62,6 +62,19 @@ module TestTree
       assert_nil(@root.left_child, 'The initial left child of root should be nil')
       assert_nil(@root.right_child, 'The initial right child of root should be nil')
       assert_equal(@root.children.size, 0, 'Initially no children should be present')
+    end
+
+    def test_json_round_trip
+      @root << @left_child1
+      @left_child1 << Tree::BinaryTreeNode.new('C', 'Grand child')
+      @root << @right_child1
+
+      tree = Tree::BinaryTreeNode.from_json(@root.to_json)
+
+      assert_equal(Tree::BinaryTreeNode, tree.class)
+      assert_equal(@left_child1.name, tree.left_child.name)
+      assert_equal(@right_child1.name, tree.right_child.name)
+      assert_equal('C', tree.left_child.left_child.name)
     end
 
     def test_from_hash

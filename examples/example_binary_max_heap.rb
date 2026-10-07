@@ -45,6 +45,7 @@
 
 # Load JSON for parsing serialized heaps.
 require 'json'
+require 'tree'
 # Load the binary max-heap implementation.
 require 'tree/binarymaxheap'
 
@@ -88,6 +89,6 @@ puts "extracted: #{extracted.inspect}"
 # Serialize to JSON.
 serialized_json = heap.to_json
 # Parse JSON back into a heap instance.
-rebuilt_from_json = JSON.parse(serialized_json, create_additions: true)
+rebuilt_from_json = Tree::TreeNode.from_json(serialized_json)
 # Show the rebuilt heap root value.
 puts "from_json root: #{rebuilt_from_json.content}"

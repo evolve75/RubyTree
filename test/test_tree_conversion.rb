@@ -1,6 +1,6 @@
 # test_tree_conversion.rb - This file is part of the RubyTree package.
 #
-# Copyright (c) 2026 Anupam Sengupta. All rights reserved.
+# Copyright (C) 2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # Redistribution and use in source and binary forms, with or without modification,
 # are permitted provided that the following conditions are met:
@@ -246,16 +246,16 @@ module TestTree
       expected_json = {
         'name' => 'ROOT',
         'content' => 'Root Node',
-        JSON.create_id => 'Tree::TreeNode',
+        'json_class' => 'Tree::TreeNode',
         'children' => [
-          { 'name' => 'Child1', 'content' => 'Child Node 1', JSON.create_id => 'Tree::TreeNode' },
-          { 'name' => 'Child2', 'content' => 'Child Node 2', JSON.create_id => 'Tree::TreeNode' },
+          { 'name' => 'Child1', 'content' => 'Child Node 1', 'json_class' => 'Tree::TreeNode' },
+          { 'name' => 'Child2', 'content' => 'Child Node 2', 'json_class' => 'Tree::TreeNode' },
           {
             'name' => 'Child3',
             'content' => 'Child Node 3',
-            JSON.create_id => 'Tree::TreeNode',
+            'json_class' => 'Tree::TreeNode',
             'children' => [
-              { 'name' => 'Child4', 'content' => 'Grand Child 1', JSON.create_id => 'Tree::TreeNode' }
+              { 'name' => 'Child4', 'content' => 'Grand Child 1', 'json_class' => 'Tree::TreeNode' }
             ]
           }
         ]
@@ -268,22 +268,22 @@ module TestTree
       tree_as_json = {
         'name' => 'ROOT',
         'content' => 'Root Node',
-        JSON.create_id => 'Tree::TreeNode',
+        'json_class' => 'Tree::TreeNode',
         'children' => [
-          { 'name' => 'Child1', 'content' => 'Child Node 1', JSON.create_id => 'Tree::TreeNode' },
-          { 'name' => 'Child2', 'content' => 'Child Node 2', JSON.create_id => 'Tree::TreeNode' },
+          { 'name' => 'Child1', 'content' => 'Child Node 1', 'json_class' => 'Tree::TreeNode' },
+          { 'name' => 'Child2', 'content' => 'Child Node 2', 'json_class' => 'Tree::TreeNode' },
           {
             'name' => 'Child3',
             'content' => 'Child Node 3',
-            JSON.create_id => 'Tree::TreeNode',
+            'json_class' => 'Tree::TreeNode',
             'children' => [
-              { 'name' => 'Child4', 'content' => 'Grand Child 1', JSON.create_id => 'Tree::TreeNode' }
+              { 'name' => 'Child4', 'content' => 'Grand Child 1', 'json_class' => 'Tree::TreeNode' }
             ]
           }
         ]
       }.to_json
 
-      tree = JSON.parse(tree_as_json, create_additions: true)
+      tree = Tree::TreeNode.from_json(tree_as_json)
 
       assert_equal(@root.name, tree.root.name, 'Root should be returned')
       assert_equal(@child1.name, tree[0].name, 'Child 1 should be returned')
@@ -300,12 +300,52 @@ module TestTree
 
       j = root_node.to_json
 
-      k = JSON.parse(j, create_additions: true)
+      k = Tree::TreeNode.from_json(j)
 
       assert_equal(k.name, root_node.name, 'Root should be returned')
       assert_equal(k[0].name, root_node[0].name, 'Child 1 should be returned')
       assert_equal(k[0][0].name, root_node[0][0].name, 'Grand Child 1 should be returned')
       assert_equal(k[1].name, root_node[1].name, 'Child 2 should be returned')
+    end
+
+    def test_json_create_additions_on_json2
+      omit_unless(JSON.respond_to?(:create_id),
+                  'create_additions was removed by the json gem 3.x')
+      setup_test_tree
+
+      tree = JSON.parse(@root.to_json, create_additions: true)
+
+      assert_equal(@root.name, tree.name)
+      assert_equal(@child4.name, tree[2][0].name)
+    end
+
+    def test_from_json_rejects_foreign_class
+      document = { 'json_class' => 'String', 'raw' => [112, 119, 110] }.to_json
+
+      assert_raise(ArgumentError) { Tree::TreeNode.from_json(document) }
+    end
+
+    def test_from_json_keeps_untagged_content
+      root_node = Tree::TreeNode.new('ROOT', { 'key' => 'value' })
+
+      tree = Tree::TreeNode.from_json(root_node.to_json)
+
+      assert_equal({ 'key' => 'value' }, tree.content)
+    end
+
+    def test_from_json_keeps_tree_tagged_content
+      content = { 'json_class' => 'Tree::TreeNode', 'name' => 'payload', 'content' => 'data' }
+      root_node = Tree::TreeNode.new('ROOT', content)
+
+      tree = Tree::TreeNode.from_json(root_node.to_json)
+
+      assert_equal(content, tree.content)
+    end
+
+    def test_from_json_rejects_unknown_class
+      document = { 'json_class' => 'Missing::TreeNode', 'name' => 'ROOT' }.to_json
+
+      assert_raise(ArgumentError) { Tree::TreeNode.from_json(document) }
     end
   end
 end

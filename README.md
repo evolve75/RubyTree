@@ -69,8 +69,9 @@ and use cases for each tree type.
 **RubyTree** supports importing from, and exporting to [JSON][], and also
 supports the Ruby's standard object [marshaling][].
 
-Note: `Marshal.load` and `JSON.parse(..., create_additions: true)` can execute
-code or instantiate objects; do not use them with untrusted input.
+Note: `Marshal.load` and the legacy `JSON.parse(..., create_additions: true)`
+path in json 2.x can instantiate arbitrary Ruby classes; use them only with
+trusted input. Use `Tree::TreeNode.from_json` to rebuild a tree.
 
 This is a [BSD-3 licensed][BSD] open source project, and is hosted at
 [github.com/evolve75/RubyTree][rt@github], and is available as a standard gem
@@ -115,7 +116,7 @@ See the [API][rt_doc] documentation for more details.
 #
 # Author:: Anupam Sengupta (https://github.com/evolve75)
 #
-# Copyright (c) 2006-2026 Anupam Sengupta. All rights reserved.
+# Copyright (C) 2013-2026 Anupam Sengupta <anupamsg@gmail.com>
 #
 # frozen_string_literal: true
 
@@ -178,7 +179,7 @@ puts "from_hash root: #{from_hash.name}"
 # Serialize the tree to JSON.
 tree_json = root_node.to_json
 # Parse JSON back into a tree instance.
-from_json = JSON.parse(tree_json, create_additions: true)
+from_json = Tree::TreeNode.from_json(tree_json)
 # Display the JSON rebuilt root name.
 puts "from_json root: #{from_json.name}"
 
@@ -202,7 +203,7 @@ the [examples/](examples/) directory.
 
 Run-time dependencies:
 
-* [JSON][] for converting to/from the JSON format
+* [JSON][] 2.x or 3.x for converting to/from the JSON format
 
 Development dependencies (not required for installing the gem):
 
