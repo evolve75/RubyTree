@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubytree (2.2.2)
+    rubytree (2.2.3)
       json (>= 2.21.2, < 4)
 
 GEM

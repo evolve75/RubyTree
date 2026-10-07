@@ -1,5 +1,11 @@
 # History of Changes
 
+### 2.2.3 / 2026-10-07
+
+* Add support for the `json` gem 3.x while preserving compatibility with 2.x.
+
+* Add `Tree::TreeNode.from_json` to rebuild trees from JSON documents.
+
 ### 2.2.2 / 2026-08-09
 
 * Bump the `json` runtime dependency to 2.21.2+, fixing a use-after-free in
