@@ -123,7 +123,7 @@ This example can also be found at
 
 * Run-time Dependencies:
 
-    * [JSON][] for converting to/from the JSON format
+    * [JSON][] (2.x or 3.x) for converting to/from the JSON format
 
 
 * Development dependencies (not required for installing the gem):

@@ -48,6 +48,22 @@ module TestTree
       root = MyNode.new('Root')
       assert_equal(MyNode, root.detached_copy.class)
     end
+
+    def test_from_json_same_clz
+      root = MyNode.new('Root')
+      root << MyNode.new('Child')
+
+      tree = MyNode.from_json(root.to_json)
+
+      assert_equal(MyNode, tree.class)
+      assert_equal(MyNode, tree['Child'].class)
+    end
+
+    def test_from_json_via_base_class
+      tree = Tree::TreeNode.from_json(MyNode.new('Root').to_json)
+
+      assert_equal(MyNode, tree.class)
+    end
   end
 end
 

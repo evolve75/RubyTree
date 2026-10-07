@@ -196,6 +196,19 @@ module TestTree
       assert_equal(Enumerable::Enumerator, f.inordered_each.class) if defined?(Enumerable::Enumerator.class)
     end
 
+    # Test the JSON round trip, which has to rebuild binary tree nodes.
+    def test_json_round_trip
+      @root << @left_child1 << Tree::BinaryTreeNode.new('C', 'Grand child')
+      @root << @right_child1
+
+      tree = Tree::BinaryTreeNode.from_json(@root.to_json)
+
+      assert_equal(Tree::BinaryTreeNode, tree.class)
+      assert_equal(@left_child1.name, tree.left_child.name)
+      assert_equal(@right_child1.name, tree.right_child.name)
+      assert_equal('C', tree.left_child.left_child.name)
+    end
+
     # Test the left_child method.
     def test_left_child
       @root << @left_child1

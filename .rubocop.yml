@@ -3,6 +3,11 @@
 # Inherit from the working file.
 inherit_from: .rubocop_todo.yml
 
+# Load the rake and rspec extensions as plugins.
+plugins:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
   NewCops: enable
   TargetRubyVersion: 2.7
