@@ -43,7 +43,21 @@ module Tree
   module Utils
     # Provides utility methods to convert a {Tree::TreeNode} to and from
     # JSON[http://flori.github.com/json/].
+    #
+    # Every serialized node carries its Ruby class name under the +json_class+
+    # key. With the json gem 2.x this is the key the gem inspects itself when
+    # parsing with +create_additions: true+. The json gem 3.x removed that
+    # option together with the +JSON.create_id+ accessor, so RubyTree emits the
+    # key on its own and rebuilds the nodes through {ClassMethods#from_json},
+    # which relies on the +on_load+ parser callback available in both the json
+    # gem 2.x and 3.x.
     module JSONConverter
+      # The hash key which carries the Ruby class name of a serialized node.
+      # Equals the default +JSON.create_id+ of the json gem 2.x, so documents
+      # written by earlier RubyTree versions stay readable.
+      JSON_CLASS_KEY = 'json_class'
+
+      # Extend the base class with the converter class methods.
       def self.included(base)
         base.extend(ClassMethods)
       end
@@ -69,7 +83,7 @@ module Tree
         json_hash = {
           name: name,
           content: content,
-          JSON.create_id => self.class.name
+          JSON_CLASS_KEY => self.class.name
         }
 
         json_hash['children'] = children if children?
@@ -86,7 +100,7 @@ module Tree
       #
       # @return The JSON representation of this subtree.
       #
-      # @see ClassMethods#json_create
+      # @see ClassMethods#from_json
       # @see #as_json
       # @see http://flori.github.com/json
       def to_json(*args)
@@ -96,17 +110,93 @@ module Tree
       # ClassMethods for the {JSONConverter} module. Will become class methods in
       # the +include+ target.
       module ClassMethods
+        # Parses a JSON document and returns the tree it describes.
+        #
+        #   tree = Tree::TreeNode.from_json(json_string)
+        #
+        # The nodes are rebuilt from the hashes tagged with the +json_class+
+        # key, see {#json_on_load} for the rules. The document root must
+        # describe a node of this class, or of one of its subclasses.
+        #
+        # This works with both the json gem 2.x and 3.x. With the json gem 2.x
+        # the legacy +JSON.parse(json_string, create_additions: true)+ keeps
+        # working as well, but the json gem 3.x removed that option.
+        #
+        # @param [String] source The JSON document to parse.
+        #
+        # @return [Tree::TreeNode] The root node of the parsed tree.
+        #
+        # @raise [ArgumentError] This exception is raised if the document does
+        #                        not describe a node of this class.
+        #
+        # @raise [JSON::ParserError] This exception is raised if the document
+        #                            is not valid JSON.
+        #
+        # @see #json_on_load
+        # @see JSONConverter#to_json
+        def from_json(source)
+          tree = JSON.parse(source, on_load: method(:json_on_load).to_proc)
+          return tree if tree.is_a?(self)
+
+          raise ArgumentError, "JSON document does not describe a #{self} tree"
+        end
+
+        # Rebuilds a node from its parsed JSON hash. This is the +on_load+
+        # callback for the parser of the json gem, used by {#from_json} and
+        # available for custom parser setups (the parser expects a +Proc+):
+        #
+        #   on_load = Tree::TreeNode.method(:json_on_load).to_proc
+        #   tree = JSON::Coder.new(on_load: on_load).load(json_string)
+        #
+        # The parser invokes the callback for every parsed value, innermost
+        # first, so the +children+ of a node hash are already nodes by the
+        # time the hash of their parent arrives here. Only hashes whose
+        # +json_class+ names this class or one of its subclasses are turned
+        # into nodes, any other value is returned untouched. This keeps the
+        # deserialization scoped to tree nodes, unlike the global
+        # +create_additions+ mechanism of the json gem 2.x which instantiated
+        # any class named in a document.
+        #
+        # @param [Object] object A value produced by the JSON parser.
+        #
+        # @return [Tree::TreeNode, Object] The node for a tagged hash, or the
+        #                                  unchanged value otherwise.
+        #
+        # @see #from_json
+        # @see #json_create
+        def json_on_load(object)
+          return object unless object.is_a?(Hash)
+
+          node_class = json_node_class(object[JSON_CLASS_KEY])
+          node_class ? node_class.json_create(object) : object
+        end
+
+        # Resolves the class named by a +json_class+ tag, limited to this
+        # class and its subclasses.
+        #
+        # @param [String, nil] class_name The class name found in the tag.
+        #
+        # @return [Class, nil] The node class, or +nil+ when the tag is
+        #                      missing, unknown or names a foreign class.
+        def json_node_class(class_name)
+          return nil unless class_name.is_a?(String)
+
+          node_class = Object.const_get(class_name)
+          node_class if node_class.is_a?(Class) && node_class <= self
+        rescue NameError
+          nil
+        end
+
         # Helper method to create a Tree::TreeNode instance from the JSON hash
         # representation.  Note that this method should *NOT* be called directly.
-        # Instead, to convert the JSON hash back to a tree, do:
+        # Instead, to convert a JSON document back to a tree, do:
         #
-        #   tree = JSON.parse(the_json_hash, create_additions: true)
+        #   tree = Tree::TreeNode.from_json(the_json_string)
         #
-        # This operation requires the {JSON gem}[http://flori.github.com/json/] to
-        # be available, or else the operation fails with a warning message.
-        #
-        # Note the +create_additions: true+ option, which is *required* for
-        # successfully parsing the string or hash.
+        # With the json gem 2.x this method also serves as the hook of the
+        # +create_additions+ mechanism, so the legacy
+        # +JSON.parse(the_json_string, create_additions: true)+ keeps working
+        # there. The json gem 3.x removed that mechanism.
         #
         # @author Dirk Breuer (http://github.com/railsbros-dirk)
         # @since 0.7.0
@@ -115,8 +205,9 @@ module Tree
         #
         # @return [Tree::TreeNode] The created tree.
         #
-        # @see #to_json
-        # @see http://flori.github.com/json
+        # @see #from_json
+        # @see #json_on_load
+        # @see JSONConverter#to_json
         def json_create(json_hash)
           node = new(json_hash['name'], json_hash['content'])
 

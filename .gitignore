@@ -11,3 +11,4 @@ tmp/
 vendor/
 .idea/
 Gemfile.lock
+gemfiles/*.lock

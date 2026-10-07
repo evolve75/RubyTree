@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+# Variant of the main Gemfile which pins the json gem to its 2.x line. The
+# test matrix selects it through the BUNDLE_GEMFILE environment variable.
+eval_gemfile File.expand_path('../Gemfile', __dir__)
+
+# JSON Implementation for Ruby
+gem 'json', '~> 2.21'
