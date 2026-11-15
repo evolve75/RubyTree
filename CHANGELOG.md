@@ -13,6 +13,9 @@ Changes section to scan for breaking or behavioral changes.
 
 * Add `Tree::TreeNode.from_json` to rebuild trees from JSON documents.
 
+* Trim the coverage workflow's Ruby matrix to 3.3 and 3.4 so it matches the
+  gemspec's minimum Ruby version and `tests.yml`.
+
 ### 3.0.0pre / 2026-08-09
 
 * Raise the minimum Ruby version from 3.1 to 3.3. Ruby 3.1 reached upstream
