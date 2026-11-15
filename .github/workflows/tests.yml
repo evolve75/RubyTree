@@ -37,6 +37,9 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+          # The gemspec needs bundler ~> 2.6 and the lockfiles are bundled with
+          # 2.6.9; Ruby 3.3 ships 2.5.x and ruby-head ships 4.x.
+          bundler: "2.6.9"
           bundler-cache: true
       - run: rm -rf pkg
       - run: bundle exec rake clobber

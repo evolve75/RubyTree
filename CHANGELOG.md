@@ -16,6 +16,9 @@ Changes section to scan for breaking or behavioral changes.
 * Trim the coverage workflow's Ruby matrix to 3.3 and 3.4 so it matches the
   gemspec's minimum Ruby version and `tests.yml`.
 
+* Pin Bundler to 2.6.9 in the `Build and Test` workflow so the Ruby 3.3 and
+  `ruby-head` jobs satisfy the gemspec's `bundler ~> 2.6` requirement.
+
 ### 3.0.0pre / 2026-08-09
 
 * Raise the minimum Ruby version from 3.1 to 3.3. Ruby 3.1 reached upstream
